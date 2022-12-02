@@ -1,0 +1,28 @@
+﻿<UserControl x:Class="JYCalculator.Views.UserControls.SkillFreqCTDataGrid"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:JYCalculator.Views.UserControls"
+             xmlns:dgx="urn:tom-englert.de/DataGridExtensions"
+             x:Name="skillFreqCTDataGrid"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Grid>
+        <DataGrid
+            dgx:DataGridFilter.IsAutoFilterEnabled="True"
+            AutoGenerateColumns="False"
+            FrozenColumnCount="1"
+            ItemsSource="{Binding}"
+            VerticalScrollBarVisibility="Auto">
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding Path=Name}" Header="Name" />
+                <DataGridTextColumn Binding="{Binding Path=AddCT, StringFormat={}{0:P2}}" Header="会心提高" />
+
+                <DataGridTextColumn Binding="{Binding Path=CT, StringFormat={}{0:P2}}" Header="会心" />
+                <DataGridTextColumn Binding="{Binding Path=Freq, StringFormat={}{0:F4}}" Header="频率" />
+
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</UserControl>

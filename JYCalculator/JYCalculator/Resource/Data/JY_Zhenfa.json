@@ -1,0 +1,310 @@
+{
+    "None": {
+        "Name": "None",
+        "IconID": -1,
+        "ItemName": "无阵法",
+        "DescName": "无",
+        "Buff_dict": null,
+        "BuffZ5_dict": null
+    },
+    "JC_Zhen": {
+        "Name": "JC_Zhen",
+        "IconID": 1798,
+        "ItemName": "北斗七星阵",
+        "DescName": "北斗七星阵",
+        "KungFu": "太虚剑意",
+        "Desc": "一重粗识：阅历提高5%，声望提高5%，外功会心几率提高3%。\n二重略懂：无双提高2%。\n三重巧熟：外功会心效果等级提高15%。\n四重精妙：外功招式会心则可使阵眼额外获得一格气。\n五重游刃：阵眼施展续气招式会心，则小队成员外功会心几率提高1%，最多叠加五层。\n六重忘我：被会心攻击则可使阵眼外功基础攻击力提高20%，持续8秒。",
+        "Buff_dict": {
+            "atFormationEffect": 0,
+            "atPhysicsCriticalStrikeBaseRate": 300,
+            "atAddReputationPercent": 50,
+            "atAddExpPercent": 50,
+            "atStrainRate": 20,
+            "atPhysicsCriticalDamagePowerBaseKiloNumRate": 150
+        },
+        "BuffZ5_dict": {
+            "atPhysicsCriticalStrikeBaseRate": 100
+        },
+        "Z5_max_stack": 5,
+        "Z5_default_stack": 5,
+        "Z5_cover": 1.0,
+        "BuffID": "947_6",
+        "BuffZ5ID": "950_1"
+    },
+    "TC_Zhen": {
+        "Name": "TC_Zhen",
+        "IconID": 1804,
+        "ItemName": "卫公折冲阵",
+        "DescName": "卫公折冲阵",
+        "KungFu": "傲血战意",
+        "Desc": "一重粗识：阅历提高5%，声望提高5%，外功基础攻击力提高5%。\n二重略懂：外功破防提高20%。\n三重巧熟：御劲提高3%。\n四重精妙：招式会心攻击则使阵眼力道提高1%，最多叠加五层。\n五重游刃：阵眼施展“撼如雷”，则外功基础攻击力提高5%。\n六重忘我：若重伤，则阵眼招式必会心。",
+        "Buff_dict": {
+            "atFormationEffect": 0,
+            "atPhysicsAttackPowerPercent": 50,
+            "atAddReputationPercent": 50,
+            "atAddExpPercent": 50,
+            "atPhysicsOvercomePercent": 200,
+            "atToughnessBaseRate": 300
+        },
+        "BuffZ5_dict": {
+            "atPhysicsAttackPowerPercent": 51
+        },
+        "Z5_max_stack": 1,
+        "Z5_default_stack": 1,
+        "Z5_cover": 0.5,
+        "BuffID": "930_6",
+        "BuffZ5ID": "936_1"
+    },
+    "CJ_Zhen": {
+        "Name": "CJ_Zhen",
+        "IconID": 2546,
+        "ItemName": "依山观澜阵",
+        "DescName": "依山观澜阵",
+        "KungFu": "山居剑意/问水诀",
+        "Desc": "一重粗识：阅历提高5%，声望提高5%，身法提高3%。\n二重略懂：外功基础攻击力提高5%。\n三重巧熟：外功会心效果提高20%。\n四重精妙：小队成员外功招式会心则阵眼获得3点剑气值。\n五重游刃：阵眼使用招式“莺鸣柳”则全队获得移动速度提高20%气劲持续5秒。\n六重忘我：小队成员闪避则阵眼获得外功会心率提高20%，持续5秒。",
+        "Buff_dict": {
+            "atFormationEffect": 0,
+            "atAddReputationPercent": 50,
+            "atAddExpPercent": 50,
+            "atAgilityBasePercentAdd": 30,
+            "atPhysicsAttackPowerPercent": 51,
+            "atPhysicsCriticalDamagePowerBaseKiloNumRate": 204
+        },
+        "BuffZ5_dict": {
+            "atMoveSpeedPercent": 204
+        },
+        "Z5_max_stack": 1,
+        "Z5_default_stack": 1,
+        "Z5_cover": 0.5,
+        "BuffID": "1924_6",
+        "BuffZ5ID": "1925_1"
+    },
+    "JY_Zhen": {
+        "Name": "JY_Zhen",
+        "IconID": 3144,
+        "ItemName": "流星赶月阵",
+        "DescName": "流星赶月阵",
+        "KungFu": "惊羽诀",
+        "Desc": "一重粗识：阅历提高5%，声望提高5%，力道提高3%。\n二重略懂：无双提高2%。\n三重巧熟：外功破防等级提高20%。\n四重精妙：外功招式会心则使阵眼恢复10点神机值。\n五重游刃：阵眼施展“追命箭”，则小队成员外功会心几率提高5%，持续10秒。\n六重忘我：若目标重伤，则阵眼下一个伤害招式会心率提高20%，并击倒目标。",
+        "Buff_dict": {
+            "atFormationEffect": 0,
+            "atAddExpPercent": 50,
+            "atAddReputationPercent": 50,
+            "atStrengthBasePercentAdd": 30,
+            "atStrainRate": 20,
+            "atPhysicsOvercomePercent": 205
+        },
+        "BuffZ5_dict": {
+            "atPhysicsCriticalStrikeBaseRate": 500
+        },
+        "Z5_max_stack": 1,
+        "Z5_default_stack": 1,
+        "Z5_cover": 1.0,
+        "BuffID": "3306_6",
+        "BuffZ5ID": "3308_1"
+    },
+    "JY_Zhen#Self": {
+        "Name": "JY_Zhen#Self",
+        "IconID": 3144,
+        "ItemName": "流星赶月阵(自)",
+        "DescName": "流星赶月阵",
+        "KungFu": "惊羽诀",
+        "Desc": "一重粗识：阅历提高5%，声望提高5%，力道提高3%。\n二重略懂：无双提高2%。\n三重巧熟：外功破防等级提高20%。\n四重精妙：外功招式会心则使阵眼恢复10点神机值。\n五重游刃：阵眼施展“追命箭”，则小队成员外功会心几率提高5%，持续10秒。\n六重忘我：若目标重伤，则阵眼下一个伤害招式会心率提高20%，并击倒目标。",
+        "Buff_dict": {
+            "atFormationEffect": 0,
+            "atAddExpPercent": 50,
+            "atAddReputationPercent": 50,
+            "atStrengthBasePercentAdd": 30,
+            "atStrainRate": 20,
+            "atPhysicsOvercomePercent": 205
+        },
+        "BuffZ5_dict": {
+            "atPhysicsCriticalStrikeBaseRate": 500
+        },
+        "Z5_max_stack": 1,
+        "Z5_default_stack": 1,
+        "Z5_cover": 1.0,
+        "BuffID": "3306_6",
+        "BuffZ5ID": "3308_1"
+    },
+    "TL_Zhen": {
+        "Name": "TL_Zhen",
+        "IconID": 3152,
+        "ItemName": "千机百变阵",
+        "DescName": "千机百变阵",
+        "KungFu": "天罗诡道",
+        "Desc": "一重粗识：阅历提高5%，声望提高5%，内功基础攻击提高5%。\n二重略懂：无视目标5%防御等级。\n三重巧熟：受到的外功伤害降低5%，会心效果提高15%。\n四重精妙：内功招式会心则使阵眼恢复10点神机值。\n五重游刃：施展耗能量技能，则使小队成员会心几率提高5%，持续4秒。\n六重忘我：若重伤，则阵眼移动速度提高50%，受到的伤害降低50%，持续5秒。",
+        "Buff_dict": {
+            "atFormationEffect": 0,
+            "atAddExpPercent": 50,
+            "atAddReputationPercent": 50,
+            "atMagicAttackPowerPercent": 51,
+            "atAllShieldIgnorePercent": 52,
+            "atPhysicsDamageCoefficient": -51,
+            "atPhysicsCriticalDamagePowerBaseKiloNumRate": 150,
+            "atMagicCriticalDamagePowerBaseKiloNumRate": 150
+        },
+        "BuffZ5_dict": {
+            "atLunarCriticalStrikeBaseRate": 500,
+            "atNeutralCriticalStrikeBaseRate": 500,
+            "atPoisonCriticalStrikeBaseRate": 500,
+            "atSolarCriticalStrikeBaseRate": 500,
+            "atPhysicsCriticalStrikeBaseRate": 500
+        },
+        "Z5_max_stack": 1,
+        "Z5_default_stack": 1,
+        "Z5_cover": 1.0,
+        "BuffID": "3307_6",
+        "BuffZ5ID": "3310_1"
+    },
+    "GB_Zhen": {
+        "Name": "GB_Zhen",
+        "IconID": 4612,
+        "ItemName": "降龙伏虎阵",
+        "DescName": "降龙伏虎阵",
+        "KungFu": "笑尘诀",
+        "Desc": "一重粗识：阅历提高5%，声望提高5%，外功基础攻击提高5%。\n二重略懂：外功破防提高10%。\n三重巧熟：移动速度提高5%。\n四重精妙：招式会心则阵眼外功破防值提高30%。\n五重游刃：阵眼施展“龙战于野”，则外功破防值提高770点，最多叠5层，持续20秒。\n六重忘我：小队成员被会心攻击则可使阵眼外功攻击提高20%。",
+        "Buff_dict": {
+            "atFormationEffect": 0,
+            "atAddExpPercent": 50,
+            "atAddReputationPercent": 50,
+            "atPhysicsAttackPowerPercent": 50,
+            "atPhysicsOvercomePercent": 102,
+            "atMoveSpeedPercent": 51
+        },
+        "BuffZ5_dict": {
+            "atPhysicsOvercomeBase": 770
+        },
+        "Z5_max_stack": 5,
+        "Z5_default_stack": 5,
+        "Z5_cover": 1.0,
+        "BuffID": "6342_6",
+        "BuffZ5ID": "6345_1"
+    },
+    "CY_Zhen": {
+        "Name": "CY_Zhen",
+        "IconID": 6446,
+        "ItemName": "锋凌横绝阵",
+        "DescName": "锋凌横绝阵",
+        "KungFu": "分山劲",
+        "Desc": "一重粗识：阅历提高5%，声望提高5%，外功会心几率提高3%。\n二重略懂：无双等级提高2%。\n三重巧熟：化劲率提高3%。\n四重精妙：外功招式会心则阵眼外功破防提高15%。\n五重游刃：阵眼施展“绝刀”，使小队成员外功会心效果提高2%，最多叠加5层，持续30秒。\n六重忘我：小队成员被击则阵眼获得外功基础攻击力提高10%，持续5秒。",
+        "Buff_dict": {
+            "atFormationEffect": 0,
+            "atAddExpPercent": 50,
+            "atAddReputationPercent": 50,
+            "atPhysicsCriticalStrikeBaseRate": 300,
+            "atStrainRate": 20,
+            "atDecriticalDamagePowerBaseKiloNumRate": 31
+        },
+        "BuffZ5_dict": {
+            "atPhysicsCriticalDamagePowerBaseKiloNumRate": 20
+        },
+        "Z5_max_stack": 5,
+        "Z5_default_stack": 5,
+        "Z5_cover": 1.0,
+        "BuffID": "8402_1",
+        "BuffZ5ID": "8403_1"
+    },
+    "BD_Zhen": {
+        "Name": "BD_Zhen",
+        "IconID": 8426,
+        "ItemName": "霜岚洗锋阵",
+        "DescName": "霜岚洗锋阵",
+        "KungFu": "北傲诀",
+        "Desc": "一重粗识：阅历提高5%，声望提高5%，外功基础攻击提高5%。\n二重略懂：无双提高2%。\n三重巧熟：外功破防等级提高10%。\n四重精妙：小队成员招式会心则使阵眼回复1点能量。\n五重游刃：施展耗能量技能，则使小队成员会心几率提高5%，持续4秒。\n六重忘我：小队成员受到会心攻击则使阵眼下一招式会心几率提高20%，持续4秒。",
+        "Buff_dict": {
+            "atFormationEffect": 0,
+            "atAddExpPercent": 50,
+            "atAddReputationPercent": 50,
+            "atPhysicsAttackPowerPercent": 50,
+            "atStrainRate": 20,
+            "atPhysicsOvercomePercent": 102
+        },
+        "BuffZ5_dict": {
+            "atLunarCriticalStrikeBaseRate": 500,
+            "atNeutralCriticalStrikeBaseRate": 500,
+            "atPoisonCriticalStrikeBaseRate": 500,
+            "atSolarCriticalStrikeBaseRate": 500,
+            "atPhysicsCriticalStrikeBaseRate": 500
+        },
+        "Z5_max_stack": 1,
+        "Z5_default_stack": 1,
+        "Z5_cover": 1.0,
+        "BuffID": "10954_6",
+        "BuffZ5ID": "11158_1"
+    },
+    "PL_Zhen": {
+        "Name": "PL_Zhen",
+        "IconID": 11194,
+        "ItemName": "墟海引归阵",
+        "DescName": "墟海引归阵",
+        "KungFu": "凌海诀",
+        "Desc": "一重粗识：阅历提高5%，声望提高5%，外功会心几率提高3%。\n二重略懂：外功基础攻击力提高10%。\n三重巧熟：招式释放距离增加1尺，外功破防等级提高10%。\n四重精妙：小队成员外功招式会心则使阵眼外功基础攻击力提高10%，持续4秒。\n五重游刃：施展“九霄踏云步”套路下招式，则小队移动速度提高20%，持续5秒。\n六重忘我：小队成员被会心攻击则阵眼外功会心效果提高20%，持续5秒。",
+        "Buff_dict": {
+            "atFormationEffect": 0,
+            "atPhysicsAttackPowerPercent": 102,
+            "atAddExpPercent": 50,
+            "atAddReputationPercent": 50,
+            "atPhysicsCriticalStrikeBaseRate": 300,
+            "atMaxSkillRadiusAdd": 64,
+            "atPhysicsOvercomePercent": 102
+        },
+        "BuffZ5_dict": {
+            "atMoveSpeedPercent": 205
+        },
+        "Z5_max_stack": 1,
+        "Z5_default_stack": 1,
+        "Z5_cover": 1.0,
+        "BuffID": "14074_6",
+        "BuffZ5ID": "14093_1"
+    },
+    "LX_Zhen": {
+        "Name": "LX_Zhen",
+        "IconID": 12130,
+        "ItemName": "龙皇雪风阵",
+        "DescName": "龙皇雪风阵",
+        "KungFu": "隐龙诀",
+        "Desc": "一重粗识：阅历提高5%，声望提高5%，外功基础攻击力提高5%。\n二重略懂：外功会心几率提高3%。\n三重巧熟：移动速度提高10%，外功会心效果提高15%。\n四重精妙：招式会心则阵眼外功会心效果提高10%，持续4秒。\n五重游刃：施展“乱天狼”则使小队成员外功基础攻击力提高10%，持续5秒。\n六重忘我：小队成员被会心攻击则阵眼外功会心提高10%，持续5秒。",
+        "Buff_dict": {
+            "atFormationEffect": 0,
+            "atPhysicsCriticalStrikeBaseRate": 300,
+            "atAddExpPercent": 50,
+            "atAddReputationPercent": 50,
+            "atPhysicsAttackPowerPercent": 50,
+            "atMoveSpeedPercent": 103,
+            "atPhysicsCriticalDamagePowerBaseKiloNumRate": 154
+        },
+        "BuffZ5_dict": {
+            "atPhysicsAttackPowerPercent": 102
+        },
+        "Z5_max_stack": 1,
+        "Z5_default_stack": 1,
+        "Z5_cover": 0.5,
+        "BuffID": "15957_6",
+        "BuffZ5ID": "15961_1"
+    },
+    "DZ_Zhen": {
+        "Name": "DZ_Zhen",
+        "IconID": 18185,
+        "ItemName": "横云破锋阵",
+        "DescName": "横云破锋阵",
+        "KungFu": "孤锋诀",
+        "Desc": "一重粗识：阅历提高5%，声望提高5%，外功基础攻击提高5%。\n二重略懂：破招点数提高1516点。\n三重巧熟：外功破防等级提高25%。\n四重精妙：小队成员招式会心则使阵眼会心效果提高10%。\n五重游刃：阵眼施展“灭影追风”时，小队成员伤害将无视目标10%减伤效果。\n六重忘我：小队成员重伤时，阵眼将立刻获得“识破”效果及100点“锐意”。",
+        "Buff_dict": {
+            "atFormationEffect": 0,
+            "atAddExpPercent": 50,
+            "atAddReputationPercent": 50,
+            "atPhysicsAttackPowerPercent": 50,
+            "atSurplusValueBase": 1516,
+            "atPhysicsOvercomePercent": 256
+        },
+        "BuffZ5_dict": {
+            "atDecayAllTypeResistPercent": -102
+        },
+        "Z5_max_stack": 1,
+        "Z5_default_stack": 1,
+        "Z5_cover": 0.3,
+        "BuffID": "24578_6",
+        "BuffZ5ID": "24582_1"
+    }
+}

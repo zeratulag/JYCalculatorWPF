@@ -1,0 +1,18 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33122.133
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "JX3CalculatorShared", "JX3CalculatorShared\JX3CalculatorShared.shproj", "{EC7F565D-F295-4A92-94DF-4A430784C27D}"
+EndProject
+Global
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {507DE1E5-0B66-4C4A-B35E-D8FBD96C9C28}
+	EndGlobalSection
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		JX3CalculatorShared\JX3CalculatorShared.projitems*{ec7f565d-f295-4a92-94df-4a430784c27d}*SharedItemsImports = 13
+	EndGlobalSection
+EndGlobal

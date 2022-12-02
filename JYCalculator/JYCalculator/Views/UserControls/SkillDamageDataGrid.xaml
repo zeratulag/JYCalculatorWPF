@@ -1,0 +1,46 @@
+﻿<UserControl
+    x:Class="JYCalculator.Views.UserControls.SkillDamageDataGrid"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:dgx="urn:tom-englert.de/DataGridExtensions"
+    xmlns:local="clr-namespace:JYCalculator.Views.UserControls"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    x:Name="skillDamageDataGrid"
+    d:DesignHeight="300"
+    d:DesignWidth="400"
+    mc:Ignorable="d">
+    <Grid>
+        <DataGrid
+            dgx:DataGridFilter.IsAutoFilterEnabled="True"
+            AutoGenerateColumns="False"
+            FrozenColumnCount="1"
+            ItemsSource="{Binding}"
+            VerticalScrollBarVisibility="Auto">
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding Path=Name}" Header="Name" />
+                <DataGridTextColumn Binding="{Binding Path=SkillName}" Header="技能" />
+
+                <DataGridTextColumn Binding="{Binding Path=StdPhysicsDmg, StringFormat={}{0:F1}}" Header="基准外伤" />
+
+                <DataGridTextColumn Binding="{Binding Path=ClosingPDef, StringFormat={}{0:F1}}" Header="外防" />
+
+                <DataGridTextColumn Binding="{Binding Path=BearPDef, StringFormat={}{0:P2}}" Header="外承伤" />
+
+                <DataGridTextColumn Binding="{Binding Path=RealPhysicsDmg, StringFormat={}{0:F1}}" Header="实际外伤" />
+                <DataGridTextColumn Binding="{Binding Path=RealDmg, StringFormat={}{0:F1}}" Header="实际伤害" />
+
+                <DataGridTextColumn Binding="{Binding Path=CT, StringFormat={}{0:P2}}" Header="会心" />
+                <DataGridTextColumn Binding="{Binding Path=CF, StringFormat={}{0:P2}}" Header="会效" />
+                <DataGridTextColumn Binding="{Binding Path=Expect, StringFormat={}{0:F3}}" Header="期望" />
+
+                <DataGridTextColumn Binding="{Binding Path=FinalEDamage, StringFormat={}{0:F1}}" Header="期望伤害" />
+                <DataGridTextColumn Binding="{Binding Path=RelativeDamage, StringFormat={}{0:F2}}" Header="相对伤害" />
+
+                <DataGridTextColumn Binding="{Binding Path=Freq, StringFormat={}{0:F3}}" Header="频率" />
+                <DataGridTextColumn Binding="{Binding Path=DPS, StringFormat={}{0:F1}}" Header="DPS" />
+
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</UserControl>

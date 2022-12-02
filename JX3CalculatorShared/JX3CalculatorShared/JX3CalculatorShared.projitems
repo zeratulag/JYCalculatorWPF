@@ -1,0 +1,112 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects Condition="'$(MSBuildVersion)' == '' Or '$(MSBuildVersion)' &lt; '16.0'">$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>ec7f565d-f295-4a92-94df-4a430784c27d</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>JX3CalculatorShared</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Common\Annotations.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Common\Common.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Common\CommonInterface.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Globals\GlobalEnums.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Globals\Globals.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\BigFMConfigModelBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\EquipOptionConfigModelBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\QiXueConfigModelBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Src\CalculatorShells\BuffShellInput.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Src\Class\AttrProfit.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Src\Class\BigFM.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Src\Class\Ability.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Src\Class\AbilityGenreBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Src\Class\AppMetaInfo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Src\Class\AttrCollection.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Src\Class\AttrModifier.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Src\Class\AttrTemplate.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Src\Class\BaseBuff.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Src\Class\BaseBuffGroup.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Src\Class\Buff.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Src\Class\BuffCoverDFBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Src\Class\BuffCoverItem.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Src\Class\CombatStatItem.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Src\Class\DPSTable.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Src\Class\DPSTableItem.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Src\Class\EquipOption.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Src\Class\FightTimeSummaryBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Src\Class\FightTimeSummaryItem.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Src\Class\HasteBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Src\Class\ItemDT.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Src\Class\QiXueSkill.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Src\Class\Recipe.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Src\Class\SetOption.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Src\Class\SkillRecipeGroup.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Src\Data\AtItemClass.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Src\Data\AtLoader.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Src\Data\CalculatorSettings.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Src\Data\DataLoader.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Src\Data\ItemClass.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Src\Data\SkillInfoItem.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Src\Data\SkillModifier.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Src\Data\TabParser.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Src\Data\SkillEventItem.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Src\Data\ZhenFa.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Src\DB\BigFMDBBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Src\DB\BuffDBBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Src\DB\EquipOptionDBBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Src\DB\ItemDTDBBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Src\DB\QiXueDBBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Src\DB\SetOptionDBBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Src\DB\SkillModifierDBBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Src\DB\ZhenFaDBBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Src\Class\JBPZPanelBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Src\Class\JBPZPlanBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Src\Class\SkillFreqDict.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Src\Class\SkillNumDict.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utils\BindingTool.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utils\ClassExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utils\DictTool.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utils\EnumTool.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utils\HashSetTool.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utils\IEnumerableTool.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utils\ImportTool.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utils\ReflectionTool.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utils\StringTool.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utils\ValueDictTool.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Commands.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Common\AbsDependViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Common\AbsViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Main\BuffViewModel\AllBuffConfigViewModelBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Main\BuffViewModel\BuffConfigViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Main\BuffViewModel\BuffViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Common\CheckBoxViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Common\CollectionViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Common\ComboBoxViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Main\FightOptionViewModels\AbilityViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Main\FightOptionViewModels\FightOptionConfigViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Main\FightOptionViewModels\ZhenFaViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Main\InitInputViewModels\BigFMConfigViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Main\InitInputViewModels\EquipOptionSlotViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Main\ItemDTViewModels\ItemDTConfigViewModelBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Main\ItemDTViewModels\ItemDTSlotViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Main\MiJiViewModels\MiJiViewModelBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Main\QiXueViewModels\QiXueSlotViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\Converter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\InputDialog.xaml.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\ViewGlobals.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\ViewTool.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="$(MSBuildThisFileDirectory)ViewModels\Main\" />
+    <Folder Include="$(MSBuildThisFileDirectory)ViewModels\Common\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Views\UserControls\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="$(MSBuildThisFileDirectory)Views\InputDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33110.190
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JYCalculator", "JYCalculator\JYCalculator.csproj", "{14A9FDDA-4103-4F58-9D9C-2FAC0AF472C0}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "JX3CalculatorShared", "..\JX3CalculatorShared\JX3CalculatorShared\JX3CalculatorShared.shproj", "{EC7F565D-F295-4A92-94DF-4A430784C27D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{14A9FDDA-4103-4F58-9D9C-2FAC0AF472C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{14A9FDDA-4103-4F58-9D9C-2FAC0AF472C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{14A9FDDA-4103-4F58-9D9C-2FAC0AF472C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{14A9FDDA-4103-4F58-9D9C-2FAC0AF472C0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1CFDA4E1-6113-4AD6-8992-FCC859F6CF8A}
+	EndGlobalSection
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		..\JX3CalculatorShared\JX3CalculatorShared\JX3CalculatorShared.projitems*{14a9fdda-4103-4f58-9d9c-2fac0af472c0}*SharedItemsImports = 4
+		..\JX3CalculatorShared\JX3CalculatorShared\JX3CalculatorShared.projitems*{ec7f565d-f295-4a92-94df-4a430784c27d}*SharedItemsImports = 13
+	EndGlobalSection
+EndGlobal
