@@ -1,5 +1,5 @@
 ﻿<Window
-    x:Class="JYCalculator.MainWindow"
+    x:Class="JYCalculator.Views.MainWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:chart="clr-namespace:Syncfusion.UI.Xaml.Charts;assembly=Syncfusion.SfChart.WPF"
@@ -7,6 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:sf="http://schemas.syncfusion.com/wpf"
     xmlns:uc="clr-namespace:JYCalculator.Views.UserControls"
+    xmlns:local="clr-namespace:JYCalculator.Views"
     xmlns:xc="http://schemas.xceed.com/wpf/xaml/toolkit"
     x:Name="JYMainWindow"
     Title="{Binding Path=Title}"
@@ -21,6 +22,7 @@
         <KeyBinding Command="{Binding Path=SaveCurrentCmd}" Gesture="Ctrl+S" />
         <KeyBinding Command="{Binding Path=OpenFileCmd}" Gesture="Ctrl+O" />
         <KeyBinding Command="{Binding Path=NewCmd}" Gesture="Ctrl+N" />
+        <KeyBinding Command="{Binding Path=ImportJBPanelCmd}" Gesture="Ctrl+I" />
     </Window.InputBindings>
 
     <DockPanel>
@@ -46,7 +48,7 @@
 
                 <Separator />
                 <MenuItem Header="导入">
-                    <MenuItem Command="{Binding Path=ImportJBPanelCmd}" Header="JX3BOX面板" />
+                    <MenuItem Command="{Binding Path=ImportJBPanelCmd}" Header="JX3BOX面板" InputGestureText="Ctrl+I"/>
                 </MenuItem>
 
                 <MenuItem Header="导出" />
@@ -60,6 +62,10 @@
                     Command="{Binding Path=OpenHelpCmd}"
                     CommandParameter="JB"
                     Header="使用帮助(_H)" />
+                <MenuItem
+                    Command="{Binding Path=OpenHelpCmd}"
+                    CommandParameter="JY"
+                    Header="入门攻略(_T)" />
                 <Separator />
                 <MenuItem
                     Command="{Binding Path=OpenHelpCmd}"
@@ -68,16 +74,15 @@
                 <Separator />
                 <MenuItem
                     Command="{Binding Path=OpenHelpCmd}"
+                    CommandParameter="JB"
+                    Header="检查更新(_U)" />
+                <MenuItem
+                    Command="{Binding Path=OpenHelpCmd}"
                     CommandParameter="Git"
                     Header="项目主页(_G)" />
 
-                <MenuItem
-                    Command="{Binding Path=OpenHelpCmd}"
-                    CommandParameter="JB"
-                    Header="检查更新(_U)" />
-
-                <MenuItem Header="关于(_A)" 
-                          Command="{Binding Path=ShowAboutCmd}"/>
+                <MenuItem Header="关于(_A)"
+                          Command="{Binding Path=ShowAboutCmd}" />
 
             </MenuItem>
 
@@ -246,10 +251,11 @@
                                         DockPanel.Dock="Top"
                                         Header="操作">
                                         <StackPanel Orientation="Vertical">
-                                            <Button
+                                            <Button Margin="10 10"
+                                                    Padding="5 5"
                                                 x:Name="InitChar_ImportJB"
                                                 Command="{Binding Path=ImportJBPanelCmd}"
-                                                Content="导入JX3BOX&#xa;配装数据(推荐)" />
+                                                Content="导入JX3BOX配装属性" />
                                         </StackPanel>
                                     </GroupBox>
 
@@ -593,7 +599,7 @@
                         x:Name="Expander_ItemDT"
                         IsExpanded="True"
                         Style="{StaticResource Style.MultiLineHeaderedExpander}">
-                        <ScrollViewer MaxHeight="250">
+                        <ScrollViewer MaxHeight="200">
                             <ItemsControl x:Name="ItemsControl_ItemDT" Style="{StaticResource Style.ItemDT}" />
                         </ScrollViewer>
                     </Expander>
@@ -632,8 +638,8 @@
                             <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
 
-                        <TextBox
-                            Name="DPS_txb"
+                        <TextBlock
+                            Name="FinalDPS_txb"
                             Grid.Column="0"
                             MinHeight="50"
                             Margin="10,20,10,0"
@@ -642,8 +648,15 @@
                             FontSize="24"
                             FontWeight="Bold"
                             Foreground="Red"
-                            Style="{StaticResource Style.TextBlockBox}"
-                            Text="{Binding Path=FinalDPStxt}" />
+                            Text="{Binding Path=FinalDPStxt}"
+                            MouseLeftButtonDown="FinalDPS_txb_MouseDown"
+                            ToolTip="点击复制"/>
+                        <Popup x:Name="CopyTextblock_pop" StaysOpen="False" Placement="Mouse" PopupAnimation="Slide" AllowsTransparency="True">
+                            <Border BorderBrush="Beige" BorderThickness="2" Background="White">
+                                <TextBlock Margin="5">已复制！</TextBlock>
+                            </Border>
+
+                        </Popup>
 
                         <Expander Grid.Column="1" ExpandDirection="Right">
                             <DataGrid
@@ -736,7 +749,9 @@
                     x:Name="GroupBox_Profit"
                     Grid.Row="1"
                     MinWidth="400"
-                    Header="属性收益">
+                    Header="属性收益"
+                    MouseLeftButtonDown="GroupBox_Profit_MouseDown"
+                    ToolTip="点击复制">
 
                     <Expander IsExpanded="True">
                         <Expander.Header>
@@ -744,8 +759,9 @@
                                 FontSize="14"
                                 FontWeight="Bold"
                                 Foreground="Red"
+                                Text="{Binding Path=ProfitOrderDesc}" 
                                 Style="{StaticResource Style.TextBlockBox}"
-                                Text="{Binding Path=ProfitOrderDesc}" />
+                                />
                         </Expander.Header>
                         <StackPanel Orientation="Vertical">
 

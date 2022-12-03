@@ -67,17 +67,20 @@
     <Compile Include="$(MSBuildThisFileDirectory)Src\Class\SkillNumDict.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\BindingTool.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\ClassExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utils\CommandTool.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\DictTool.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\EnumTool.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\HashSetTool.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\IEnumerableTool.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\ImportTool.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utils\MiscTools.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\ReflectionTool.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\StringTool.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\ValueDictTool.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Commands.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Common\AbsDependViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Common\AbsViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Main\AboutDialogViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Main\BuffViewModel\AllBuffConfigViewModelBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Main\BuffViewModel\BuffConfigViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Main\BuffViewModel\BuffViewModel.cs" />
@@ -94,16 +97,20 @@
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Main\MiJiViewModels\MiJiViewModelBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Main\QiXueViewModels\QiXueSlotViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\Converter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\Dialogs\AboutDialog.xaml.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\InputDialog.xaml.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\ViewGlobals.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\ViewTool.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="$(MSBuildThisFileDirectory)ViewModels\Main\" />
     <Folder Include="$(MSBuildThisFileDirectory)ViewModels\Common\" />
     <Folder Include="$(MSBuildThisFileDirectory)Views\UserControls\" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="$(MSBuildThisFileDirectory)Views\Dialogs\AboutDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="$(MSBuildThisFileDirectory)Views\InputDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

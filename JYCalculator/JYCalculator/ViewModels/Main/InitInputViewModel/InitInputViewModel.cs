@@ -65,7 +65,7 @@ namespace JYCalculator.ViewModels
 
             while (!end)
             {
-                InputDialog dialog = new InputDialog("导入JX3BOX配装属性");
+                ImportJBDialog dialog = new ImportJBDialog("");
                 if (dialog.ShowDialog() == true)
                 {
                     jsontxt = dialog.Answer;

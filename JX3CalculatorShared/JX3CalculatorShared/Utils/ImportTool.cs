@@ -67,11 +67,13 @@ namespace JX3CalculatorShared.Utils
         /// 从Resource中读取所有文本内容，以字符串返回，如同读取一个外部文本文件一样，统一使用UTF8编码
         /// </summary>
         /// <param name="path">路径</param>
+        /// <param name="encode">编码，默认UTF8</param>
         /// <returns>字符串</returns>
-        public static string ReadAllTextFromResource(string path)
+        public static string ReadAllTextFromResource(string path, Encoding encode = null)
         {
             var s = GetStreamFromResource(path);
-            var res = s.ReadToEnd(Encoding.UTF8);
+            Encoding encoding = encode ?? Encoding.UTF8;
+            var res = s.ReadToEnd(encoding);
             return res;
         }
 
@@ -106,7 +108,7 @@ namespace JX3CalculatorShared.Utils
         /// <returns></returns>
         public static T ReadJSON<T>(string path) where T : class, new()
         {
-            var txt = ReadAllTextFromResource(path);
+            var txt = ReadAllTextFromResource(path, Encoding.UTF8);
             var res = JsonConvert.DeserializeObject<T>(txt);
             return res;
         }

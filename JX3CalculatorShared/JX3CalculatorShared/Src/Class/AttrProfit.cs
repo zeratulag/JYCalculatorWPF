@@ -78,7 +78,7 @@ namespace JX3CalculatorShared.Src.Class
                     }
                     else
                     {
-                        sep = "=";
+                        sep = "≈";
                     }
                 }
             }

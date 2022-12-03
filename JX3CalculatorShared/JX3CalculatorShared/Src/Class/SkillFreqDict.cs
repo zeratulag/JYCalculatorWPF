@@ -76,6 +76,17 @@ namespace JX3CalculatorShared.Src
             Data.Add(key, freq);
         }
 
+
+        /// <summary>
+        /// 为已有技能增加频率
+        /// </summary>
+        /// <param name="key">技能key</param>
+        /// <param name="freq">技能频率</param>
+        public void AddSkillFreq(string key, double freq)
+        {
+            Data[key] += freq;
+        }
+
         /// <summary>
         /// 按照间隔增加技能
         /// </summary>

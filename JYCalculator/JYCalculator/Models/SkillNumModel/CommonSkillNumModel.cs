@@ -117,15 +117,15 @@ namespace JYCalculator.Models
         {
             if (QiXue.星落如雨)
             {
-                var cx = SkillHaste.ZX_DOT;
+                var zx = SkillHaste.ZX_DOT;
                 double interval;
                 if (IsBigXW)
                 {
-                    interval = cx.XWIntervalTime;
+                    interval = zx.XWIntervalTime;
                 }
                 else
                 {
-                    interval = cx.IntervalTime;
+                    interval = zx.IntervalTime;
                 }
 
                 Num.ZX_DOT = Math.Min(Num.ZX * 3, Num._Time / interval);
@@ -269,6 +269,12 @@ namespace JYCalculator.Models
                 var coef = CWInterval / Total_Interval_Time; // 损失系数, ~ 0.94
                 FinalSkillFreq.AppplyFreqChange(coef);
                 var new_GF = FinalSkillFreq.RefreshJYGFFreq();
+                FinalSkillFreq.AddSkillFreq("ZX", ZX_Extra_Num / Total_Interval_Time); // 增加逐星频率
+
+                if (QiXue.星落如雨)
+                {
+                    FinalSkillFreq["ZX_DOT"] += 3 / Total_Interval_Time; // 逐星DOT本身也增加
+                }
             }
 
             FinalSkillFreq.AddByFreq("_CW_DOT_Hit", CW_DOTHitPerCW / Total_Interval_Time);

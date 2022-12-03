@@ -179,7 +179,9 @@ namespace JYCalculator.Src.Class
             DP *= k;
             ZM *= k;
             ZM_SF *= k;
+
             ZX *= k;
+            ZX_DOT *= k;
 
             _BYCast *= k;
             SetLHBYNums(_BYCast);

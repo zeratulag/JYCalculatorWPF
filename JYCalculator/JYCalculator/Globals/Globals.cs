@@ -1,9 +1,13 @@
 ﻿using System;
 using System.Collections.Immutable;
+using System.IO;
 using JYCalculator.Class;
 using System.Reflection;
+using System.Text;
 using JX3CalculatorShared.Class;
 using JX3CalculatorShared.Globals;
+using JX3CalculatorShared.Utils;
+using Syncfusion.Windows.Shared;
 
 
 namespace JYCalculator.Globals
@@ -16,6 +20,9 @@ namespace JYCalculator.Globals
         public const string ZHENFA_PATH = DATA_FOLDER + "JY_Zhenfa.json";
         public const string SETTING_PATH = DATA_FOLDER + "JY_Setting.json";
         public const string AT_PATH = DATA_FOLDER + "TM_Ats.xlsx";
+
+        public const string BUILD_PATH = DATA_FOLDER + "BuildDate.txt";
+
         public const string XinFa = "惊羽诀";
         public const string GameVersion = "横刀断浪";
 
@@ -23,13 +30,15 @@ namespace JYCalculator.Globals
 
         public const string GitHubURL = @"https://github.com/zeratulag/JYCalculatorWPF"; // GitHub主页
 
-        public const string SinaWBURL = @"https://weibo.com/zeratulag/home"; // 个人主页
+        public const string JYTutorialURL = @"https://www.jx3box.com/bps/46381"; // 当前版本惊羽攻略
+        public const string TMTutorialURL = @"https://www.jx3box.com/bps/21041"; // 个人作品合集
 
         public static readonly ImmutableDictionary<string, string> URLDict; // URL 字典，方便Cmd调用
 
         public static readonly AppMetaInfo CurrentAppMeta;
         public static readonly Version AppVersion;
         public static readonly string MainTitle;
+        public static readonly DateTime BuildDateTime; // 构建时间
         
 
         static JYAppStatic()
@@ -38,12 +47,18 @@ namespace JYCalculator.Globals
             CurrentAppMeta =
                 new AppMetaInfo(AppVersion, XinFa, GameVersion, StaticData.CurrentLevel);
             var version = AppVersion.ToString();
-            MainTitle = $"惊羽诀计算器 Pro（v{version} 公测版本，数据仅供参考！）";
+
+            var dateTimestr = ImportTool.ReadAllTextFromResource(BUILD_PATH, Encoding.Default);
+            BuildDateTime = DateTime.Parse(dateTimestr);
+
+            MainTitle = $"惊羽诀计算器 Pro（v{version} 公测版）";
 
             var urlB = ImmutableDictionary.CreateBuilder<string, string>();
             urlB.Add("JB", JX3BOXURL);
             urlB.Add("Git", GitHubURL);
-            urlB.Add("WB", SinaWBURL);
+            urlB.Add("WB", AppStatic.SinaWBURL);
+            urlB.Add("JY", JYTutorialURL);
+            urlB.Add("TM", TMTutorialURL);
             URLDict = urlB.ToImmutable();
         }
     }

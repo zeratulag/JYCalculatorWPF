@@ -13,6 +13,7 @@ namespace JX3CalculatorShared.Globals
         public const string DATA_FOLDER = "Resource/Data/";
         public const string RESOURCE_ICON_FOLDER = "Resource/Icons/";
         public const string RESOURCE_ICON_URI = URI_PREFIX + RESOURCE_ICON_FOLDER;
+        public const string SinaWBURL = @"https://weibo.com/zeratulag/home"; // 个人主页
     }
 
     public static class StaticData

@@ -5,13 +5,15 @@ using System.Windows.Input;
 using JX3CalculatorShared.Views;
 using JYCalculator.Models;
 using JYCalculator.Src;
-using JYCalculator.Views;
 using JYCalculator.ViewModels;
-using JYCalculator.Views.Dialogs;
 using Newtonsoft.Json;
 using System.ComponentModel;
+using System.Windows.Controls.Primitives;
+using JX3CalculatorShared.Views.Dialogs;
+using System.Windows.Controls;
+using System.Windows.Media;
 
-namespace JYCalculator
+namespace JYCalculator.Views
 {
     /// <summary>
     /// MainWindow.xaml 的交互逻辑
@@ -22,10 +24,11 @@ namespace JYCalculator
 
         MainWindowHelper Helper;
         private readonly MainWindowViewModels _VMs;
-
         private readonly DebugMainWindow _DebugMainWindow = null;
-
         private readonly AboutDialog _AboutDialog = null;
+        private readonly AboutDialogViewModel _AboutVM = null;
+
+
         #endregion
 
         public MainWindow()
@@ -37,6 +40,7 @@ namespace JYCalculator
             _VMs = new MainWindowViewModels(this);
 
             _AboutDialog = new AboutDialog();
+            _AboutVM = new AboutDialogViewModel();
 
             BindViewModels();
 
@@ -82,6 +86,7 @@ namespace JYCalculator
             BindComboBoxes();
             BindMiJi();
             BindDPS();
+            _AboutDialog.DataContext = _AboutVM;
         }
 
 
@@ -242,7 +247,30 @@ namespace JYCalculator
         {
             var confirmed = _VMs.CanExit();
             e.Cancel = !confirmed;  // cancels the window close
+            if (confirmed)
+            {
+                Application.Current.Shutdown();
+            }
         }
 
+        private void FinalDPS_txb_MouseDown(object sender, RoutedEventArgs e)
+        {
+            Clipboard.SetText(_VMs.CalcShell.FinalDPStxtF);
+            CopyTextblock_pop.IsOpen = true;
+        }
+
+        // 复制TextBlock
+        private void TextBlock_MouseDown(object sender, RoutedEventArgs e)
+        {
+            var obj = (TextBlock)sender;
+            Clipboard.SetText(obj.Text);
+            CopyTextblock_pop.IsOpen = true;
+        }
+
+        private void GroupBox_Profit_MouseDown(object sender, RoutedEventArgs e)
+        {
+            Clipboard.SetText(_VMs.ProfitOrderDesc);
+            CopyTextblock_pop.IsOpen = true;
+        }
     }
 }

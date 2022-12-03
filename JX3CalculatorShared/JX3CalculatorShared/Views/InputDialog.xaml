@@ -5,14 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
         Title="输入" WindowStartupLocation="CenterScreen"
-        Width="500" Height="300"
+        Width="500" Height="350"
+        ShowInTaskbar="False"
+        ResizeMode="NoResize"
         ContentRendered="Window_ContentRendered">
 
     <Grid Margin="15">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="*" />
-        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
@@ -20,22 +18,44 @@
         </Grid.RowDefinitions>
         <Grid.Resources>
             <Style TargetType="Button">
-                <Setter Property="Width" Value="60"/>
-                <Setter Property="Height" Value="30"/>
-                <Setter Property="VerticalAlignment" Value="Bottom"/>
+                <Setter Property="Width" Value="60" />
+                <Setter Property="Height" Value="30" />
+                <Setter Property="VerticalAlignment" Value="Bottom" />
 
             </Style>
         </Grid.Resources>
 
-        <Label Name="lblQuestion" Grid.Column="0" Grid.ColumnSpan="2">Question:</Label>
-        <TextBox Name="txtAnswer" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1" MinWidth="400"  MinHeight="200" MaxHeight="400"
-                 TextWrapping="Wrap" VerticalScrollBarVisibility="Visible">Answer</TextBox>
+        <Label Name="lblQuestion">Question:</Label>
+        <TextBox Name="txtAnswer" Grid.Row="1" MinWidth="400" Height="200" Margin="0,10,0,10"
+                 TextWrapping="Wrap" VerticalScrollBarVisibility="Visible">
+            Answer
+        </TextBox>
 
-        <Button Grid.Row="2" Grid.Column="0" Margin="0,0,10,0" Name="btnPaste" Click="btnPaste_Click">粘贴</Button>
+        <DockPanel Grid.Row="2">
+            <Button DockPanel.Dock="Left"
+                    Name="btnPaste"
+                    Margin="0,0,0,0"
+                    Click="btnPaste_Click">
+                粘贴
+            </Button>
 
-        <StackPanel Grid.Row="2" Grid.ColumnSpan="2" HorizontalAlignment="Right" Orientation="Horizontal">
-            <Button IsDefault="True" Name="btnDialogOk" Click="btnDialogOk_Click" Margin="0, 10,10,0">确定</Button>
-            <Button IsCancel="True" Name="btnDialogCancel" Click="btnDialogCancel_Click">取消</Button>
-        </StackPanel>
+            <StackPanel DockPanel.Dock="Right"
+                        HorizontalAlignment="Right"
+                        Orientation="Horizontal">
+                <Button DockPanel.Dock="Right"
+                        Name="btnDialogOk"
+                        Margin="0,10,10,0"
+                        Click="btnDialogOk_Click"
+                        IsDefault="True">
+                    确定
+                </Button>
+                <Button DockPanel.Dock="Right"
+                        Name="btnDialogCancel"
+                        Click="btnDialogCancel_Click"
+                        IsCancel="True">
+                    取消
+                </Button>
+            </StackPanel>
+        </DockPanel>
     </Grid>
 </Window>

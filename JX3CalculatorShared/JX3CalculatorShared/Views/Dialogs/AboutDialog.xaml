@@ -1,0 +1,87 @@
+﻿<Window x:Class="JX3CalculatorShared.Views.Dialogs.AboutDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        x:Name="aboutDialog"
+        WindowStartupLocation="CenterScreen"
+        mc:Ignorable="d"
+        ShowInTaskbar="False"
+        ResizeMode ="NoResize"
+        Title="关于计算器" Height="360" Width="600">
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+		</Grid.RowDefinitions>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="110"/>
+			<ColumnDefinition Width="20"/>
+			<ColumnDefinition Width="*"/>
+		</Grid.ColumnDefinitions>
+		<Grid.Resources>
+			<Style TargetType="TextBlock">
+				<Style.Setters>
+					<Setter Property="FontSize" Value="14"/>
+				</Style.Setters>
+			</Style>
+		</Grid.Resources>
+
+        <Image Grid.Row="0" Grid.Column="0" Grid.RowSpan="5" x:Name="Head_Img" MouseLeftButtonDown="Head_Img_MouseDown"
+               Source="pack://application:,,,/Resource/Images/MyHead.jpg" Height="100" Width="100" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,0,40"></Image>
+
+		<TextBlock Grid.Row="0" Grid.Column="2" TextWrapping="Wrap">
+			<Run Text="{Binding Path=MainName}" FontWeight="Bold" FontSize="16"></Run>
+            <LineBreak/>
+            <LineBreak/>
+            <Run Text="作者：Zeratulag"/>
+			<Run Text="&#x09;&#x09;开发平台：.NET WPF"/>
+            <LineBreak/>
+
+            <Run Text="资料片："/>
+            <Run Text="{Binding Path=GameDLC}"/>
+			<Run Text="&#x09;构建时间："/>
+			<Run Text="{Binding Path=BuildDateTime}"/>
+
+			<LineBreak/>
+            <Run>鸣谢：</Run>
+            <Run Text="{Binding Path=ThanksTo}"></Run>
+            <LineBreak/>
+			<Run>All rights reserved.</Run>
+		</TextBlock>
+
+		<TextBlock Grid.Row="1" Grid.Column="2" Margin="0 5">
+            最新发布地址：<LineBreak/>
+            <Hyperlink RequestNavigate="HandleLinkClick" NavigateUri="{Binding JBUrl}">
+                <TextBlock Text="{Binding Path=JBUrl}" />
+            </Hyperlink>
+        </TextBlock>
+
+		<TextBlock Grid.Row="2" Grid.Column="2" Margin="0 5">
+            开源项目主页：<LineBreak/>
+            <Hyperlink RequestNavigate="HandleLinkClick" NavigateUri="{Binding GitUrl}">
+                <TextBlock Text="{Binding Path=GitUrl}" />
+            </Hyperlink>
+        </TextBlock>
+
+        <TextBlock Grid.Row="3" Grid.Column="2" Margin="0 5">
+            唐门PVE攻略集：<LineBreak/>
+            <Hyperlink RequestNavigate="HandleLinkClick" NavigateUri="{Binding TMUrl}">
+                <TextBlock Text="{Binding Path=TMUrl}" />
+            </Hyperlink>
+        </TextBlock>
+
+        <TextBlock Grid.Row="4" Grid.Column="2" TextWrapping="Wrap" Margin="0 10">
+			<Run>声明：计算器只是木桩伤害的模拟，</Run>
+			<Run Foreground="Red" FontWeight="Bold">仅能用于配装参考，不能用于其他用途，</Run>
+            <Run>严禁使用本计算器进行跨心法/门派比较，</Run>
+            <Run>请勿使用本计算器牟利。</Run>
+            <LineBreak/>
+            <Run>一切数据仅供参考，最终解释权归作者所有。</Run>
+		</TextBlock>
+
+	</Grid>
+</Window>

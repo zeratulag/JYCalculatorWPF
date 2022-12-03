@@ -374,6 +374,8 @@
     <Compile Include="Src\Class\InitCharacter.cs" />
     <Compile Include="Src\Class\JYSkillCountItem.cs" />
     <Compile Include="Utils\PeriodClassTool.cs" />
+    <Compile Include="ViewModels\AboutDialogViewModel.cs" />
+    <Compile Include="ViewModels\AboutDialogViewModelBase.cs" />
     <Compile Include="ViewModels\Debug\FightTimeSummaryViewModel.cs" />
     <Compile Include="ViewModels\Main\BuffViewModels\AllBuffConfigViewModel.cs" />
     <Compile Include="ViewModels\Main\FightOptionViewModels\FightOptionConfigViewModel.cs" />
@@ -392,8 +394,8 @@
     <Compile Include="Views\DebugMainWindow.xaml.cs">
       <DependentUpon>DebugMainWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Dialogs\AboutDialog.xaml.cs">
-      <DependentUpon>AboutDialog.xaml</DependentUpon>
+    <Compile Include="Views\ImportJBDialog.xaml.cs">
+      <DependentUpon>ImportJBDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -426,9 +428,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Dialogs\AboutDialog.xaml">
-      <SubType>Designer</SubType>
+    <Page Include="Views\ImportJBDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -663,7 +665,15 @@
   <ItemGroup>
     <Resource Include="Resource\Images\MyHead.jpg" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Resource\Data\BuildDate.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Views\Dialogs\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resource\Images\ImportJBTutorial.png" />
+  </ItemGroup>
   <Import Project="..\..\JX3CalculatorShared\JX3CalculatorShared\JX3CalculatorShared.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\..\..\NuGetPackages\Fody.6.6.4\build\Fody.targets" Condition="Exists('..\..\..\NuGetPackages\Fody.6.6.4\build\Fody.targets')" />
@@ -682,4 +692,7 @@
   <Import Project="..\..\..\NuGetPackages\Costura.Fody.5.7.0\build\Costura.Fody.targets" Condition="Exists('..\..\..\NuGetPackages\Costura.Fody.5.7.0\build\Costura.Fody.targets')" />
   <Import Project="..\..\..\NuGetPackages\CommunityToolkit.Mvvm.8.0.0\build\netstandard2.0\CommunityToolkit.Mvvm.targets" Condition="Exists('..\..\..\NuGetPackages\CommunityToolkit.Mvvm.8.0.0\build\netstandard2.0\CommunityToolkit.Mvvm.targets')" />
   <Import Project="..\..\..\NuGetPackages\NETStandard.Library.2.0.3\build\netstandard2.0\NETStandard.Library.targets" Condition="Exists('..\..\..\NuGetPackages\NETStandard.Library.2.0.3\build\netstandard2.0\NETStandard.Library.targets')" />
+  <PropertyGroup>
+    <PreBuildEvent>echo %25date%25 %25time%25 &gt; "$(ProjectDir)\Resource\Data\BuildDate.txt"</PreBuildEvent>
+  </PropertyGroup>
 </Project>

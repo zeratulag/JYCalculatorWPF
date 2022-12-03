@@ -21,6 +21,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using JYCalculator.Globals;
+using JYCalculator.Views;
 
 namespace JYCalculator.ViewModels
 {
@@ -571,15 +572,9 @@ namespace JYCalculator.ViewModels
 
         #region 帮助菜单栏
 
-        public void OpenUrl(string url)
-        {
-            System.Diagnostics.Process.Start(url);
-        }
-
         public void OpenHelp(string para)
         {
-            string url = JYAppStatic.URLDict[para];
-            OpenUrl(url);
+            CommandTool.OpenDictUrl( JYAppStatic.URLDict, para);
         }
 
 
@@ -597,7 +592,7 @@ namespace JYCalculator.ViewModels
         protected bool _DirtyExit()
         {
             bool canExit = true;
-            var msgResult = MessageBox.Show("保存当前计算方案？", "None", MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
+            var msgResult = MessageBox.Show("当前计算方案尚未保存，是否立刻保存？", "Calculator", MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
 
             switch (msgResult)
             {

@@ -15,8 +15,6 @@
         <views:QualityToInternalBorderColorConverter x:Key="QualityToInternalBorderColorConverter" />
 
 
-        <BitmapImage x:Key="Image.MyHead" UriSource="Resource/Images/MyHead.jpg" />
-
         <!--  物品外部边界框  -->
         <Style x:Key="Style.ItemExternalBorder" TargetType="Border">
             <Setter Property="BorderBrush"

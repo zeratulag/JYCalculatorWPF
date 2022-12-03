@@ -66,6 +66,8 @@ namespace JYCalculator.Src
 
         public string FinalDPStxt;
 
+        public string FinalDPStxtF; // 更加精确的DPS值
+
         #endregion
 
         #region 构造
@@ -237,6 +239,7 @@ namespace JYCalculator.Src
             if (QiXue.IsSupport)
             {
                 FinalDPStxt = $"{CDPSKernel.FinalDPS:F0}";
+                FinalDPStxtF = $"{CDPSKernel.FinalDPS:F2}";
             }
             else
             {
@@ -250,6 +253,7 @@ namespace JYCalculator.Src
         public void SetUnSupport()
         {
             FinalDPStxt = "不支持的奇穴/秘籍！";
+            FinalDPStxtF = FinalDPStxt;
         }
 
         public void CalcFightTime()
