@@ -178,7 +178,6 @@
                                     x:Name="GroupBox_EquipOption"
                                     Grid.Row="2"
                                     Grid.Column="0"
-                                    Grid.ColumnSpan="2"
                                     Header="装备效果">
                                     <Grid x:Name="Grid_EquipOption" MinWidth="150">
                                         <Grid.RowDefinitions>

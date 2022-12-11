@@ -177,7 +177,6 @@ namespace JYCalculator.ViewModels
             // 输出结果VM
             ProfitChartVM = new ProfitChartViewModel();
 
-
             Proceed();
         }
 
@@ -231,10 +230,7 @@ namespace JYCalculator.ViewModels
 
         protected override void _Update()
         {
-            //var thread = new Thread(_RealUpdate);
-            //thread.Start();
-            Task.Run(_RealUpdate);
-            //_RealUpdate();
+            var t = Task.Run(_RealUpdate);
         }
 
         // 计算更新逻辑，由于耗时可能较长，放在新的线程内。
@@ -268,7 +264,7 @@ namespace JYCalculator.ViewModels
             AllSkillTable = CalcShell.SkillDF.Data.Values.ToArray();
             AllTargets = new[] {FightOptionVM.SelectedTarget, CalcShell.CTarget};
             HasteTable = CalcShell.SkillHaste.Dict.Values.ToArray();
-            CoverTable = CalcShell.KernelShell.BuffTriggerModel.BuffCover.Data.Values.ToArray();
+            CoverTable = CalcShell.KernelShell.TriggerModel.BuffCover.Data.Values.ToArray();
             SkillFreqCTsTable = CalcShell.KernelShell.SkillFreqCTsArr;
         }
 

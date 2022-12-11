@@ -16,8 +16,8 @@ namespace JYCalculator.Models
         public NormalSkillNumModel(QiXueConfigModel qixue, SkillHasteTable skillhaste,
             AbilitySkillNumItem abilityitem,
             EquipOptionConfigModel equip, BigFMConfigModel bigfm,
-            bool hasZhen) :
-            base(qixue, skillhaste, abilityitem, equip, bigfm, hasZhen)
+            SkillNumModelArg arg) :
+            base(qixue, skillhaste, abilityitem, equip, bigfm, arg)
         {
             Rest = new RestNum();
         }
@@ -25,8 +25,8 @@ namespace JYCalculator.Models
         public NormalSkillNumModel(QiXueConfigModel qixue, SkillHasteTable skillhaste, AbilitySkillNumItem abilityitem,
             EquipOptionConfigModel equip,
             BigFMConfigModel bigfm,
-            bool hasZhen,
-            RestNum rest) : this(qixue, skillhaste, abilityitem, equip, bigfm, hasZhen)
+            SkillNumModelArg arg,
+            RestNum rest) : this(qixue, skillhaste, abilityitem, equip, bigfm, arg)
         {
             Rest = rest;
         }

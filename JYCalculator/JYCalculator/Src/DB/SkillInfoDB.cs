@@ -84,7 +84,6 @@ namespace JYCalculator.Src.DB
             SummarySkillTriggerEvent();
             SummarySkillEffectRecipe();
             AttachEffectSkillsToRecipeDB();
-            FixPZ();
         }
 
         #endregion
@@ -187,11 +186,6 @@ namespace JYCalculator.Src.DB
         public void AttachEffectSkillsToRecipeDB()
         {
             RecipeDb.AttachEffectSkills(Recipe2Skill);
-        }
-
-        public void FixPZ()
-        {
-            Events["PZ"].TriggerSkillNames.Add("GF");  // [TODO]JY加入化血触发
         }
 
 

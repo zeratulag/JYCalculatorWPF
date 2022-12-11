@@ -15,7 +15,7 @@ namespace JYCalculator.Models
         public BigXWSkillNumModel(QiXueConfigModel qixue, SkillHasteTable skillhaste,
             AbilitySkillNumItem abilityitem,
             EquipOptionConfigModel equip, BigFMConfigModel bigfm,
-            bool hasZhen) : base(qixue, skillhaste, abilityitem, equip, bigfm, hasZhen)
+            SkillNumModelArg arg) : base(qixue, skillhaste, abilityitem, equip, bigfm, arg)
         {
             if (!IsXW)
             {

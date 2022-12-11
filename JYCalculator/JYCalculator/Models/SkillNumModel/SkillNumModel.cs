@@ -49,15 +49,18 @@ namespace JYCalculator.Models
 
             HitSkillEvents = new Dictionary<string, SkillEventItem>(10);
             CTSkillEvents = new Dictionary<string, SkillEventItem>(10);
-            HitSkillEvents.Add("PZ", StaticJYData.DB.SkillInfo.Events["PZ"]);
+            const string piaohuang = "PiaoHuang"; // 飘黄事件
+            HitSkillEvents.Add(piaohuang, StaticJYData.DB.SkillInfo.Events[piaohuang]);
 
             DispatchSkillEvents(Equip.SkillEvents);
             DispatchSkillEvents(BigFM.SkillEvents);
             DispatchSkillEvents(QiXue.SkillEvents);
 
-            XW = new BigXWSkillNumModel(qixue, skillhaste, jyAbility.BigXW, Equip, BigFM, HasZhen)
+            var skillNumModelArg = new SkillNumModelArg(HasZhen, CalcShellArg.BuffSpecial.PiaoHuangCover, CalcShellArg.HS);
+
+            XW = new BigXWSkillNumModel(qixue, skillhaste, jyAbility.BigXW, Equip, BigFM, skillNumModelArg)
                 {SkillEvents = HitSkillEvents};
-            Normal = new NormalSkillNumModel(qixue, skillhaste, jyAbility.Normal, Equip, BigFM, HasZhen)
+            Normal = new NormalSkillNumModel(qixue, skillhaste, jyAbility.Normal, Equip, BigFM, skillNumModelArg)
                 {SkillEvents = HitSkillEvents};
 
             NormalTime = QiXue.NormalDuration;
@@ -112,8 +115,9 @@ namespace JYCalculator.Models
 
         public void CalcZXXWCD()
         {
-            var normalfreq = Normal.FinalSkillFreq["ZX"];
-            var xwfreq = XW.FinalSkillFreq["ZX"];
+            const string zx = "ZX";
+            var normalfreq = Normal.FinalSkillFreq[zx];
+            var xwfreq = XW.FinalSkillFreq[zx];
             XWCD = QiXue.SetZXXWCD(normalfreq, xwfreq);
         }
 

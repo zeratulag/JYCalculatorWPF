@@ -12,6 +12,7 @@ using System.Windows.Controls.Primitives;
 using JX3CalculatorShared.Views.Dialogs;
 using System.Windows.Controls;
 using System.Windows.Media;
+using System.Windows.Data;
 
 namespace JYCalculator.Views
 {

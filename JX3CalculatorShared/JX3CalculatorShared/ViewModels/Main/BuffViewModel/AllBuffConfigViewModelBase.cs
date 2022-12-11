@@ -19,8 +19,18 @@ namespace JX3CalculatorShared.ViewModels
         public BaseBuffGroup EmitedAllBuffGroup; // 最终汇总的Buff求和
         public BaseBuffGroup EmitedDeBuffGroup; // Debuff求和
         public Dictionary<BuffTypeEnum, NamedAttrs> BuffAttrsDescDict;
+
         public NamedAttrs BuffAttrsDesc; // 所有Buff求和的最终效果
         public NamedAttrs DebuffAttrsDesc;
+
+        public BuffSpecialArg Arg; // 特殊Buff参数传递
+
+
+        public AllBuffConfigViewModelBase(): base()
+        {
+            Arg = new BuffSpecialArg(0.0);
+        }
+
 
         public AllBuffConfigSav Export()
         {
@@ -74,6 +84,14 @@ namespace JX3CalculatorShared.ViewModels
             Buff_Extra.Load(sav.Buff_Extra);
             Buff_ExtraStack.Load(sav.Buff_ExtraStack);
         }
+
+        // 更新特殊BUFF
+        protected void UpdateSpecial()
+        {
+            var res = Buff_Extra.GetPiaoHuangCover();
+            Arg.PiaoHuangCover = res;
+        }
+
     }
 
     public class AllBuffConfigSav
@@ -85,5 +103,17 @@ namespace JX3CalculatorShared.ViewModels
         public Dictionary<string, BuffVMSav> Buff_Extra;
         public Dictionary<string, BuffVMSav> Buff_ExtraStack;
     }
+
+    // 特殊BUFF参数传递
+    public struct BuffSpecialArg
+    {
+        public double PiaoHuangCover;
+
+        public BuffSpecialArg(double piaoHuangCover)
+        {
+            PiaoHuangCover = piaoHuangCover;
+        }
+    }
+
 }
 

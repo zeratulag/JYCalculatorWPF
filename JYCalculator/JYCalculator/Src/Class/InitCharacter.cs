@@ -1,16 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using JX3CalculatorShared.Class;
 using JYCalculator.Class;
 using JX3CalculatorShared.Common;
 using JX3CalculatorShared.Utils;
 using JX3CalculatorShared.ViewModels;
 using JYCalculator.Globals;
 using Newtonsoft.Json;
+using PropertyChanged;
+using static JYCalculator.Globals.JYStaticData;
 
 namespace JYCalculator.Src.Class
 {
-    [ToString][JsonObject(MemberSerialization.OptOut)]
+    [ToString]
+    [JsonObject(MemberSerialization.OptOut)]
     public class InitCharacter : AbsViewModel, ICatsable
     {
         #region 成员
@@ -31,14 +35,11 @@ namespace JYCalculator.Src.Class
         public bool Had_BigFM_hat { get; set; } = false; // 是否已经包括帽子大附魔
         public bool Had_BigFM_jacket { get; set; } = false; // 是否已经包括上衣大附魔
 
-        [JsonIgnore]
-        public double HSPct => Math.Min(HS / JYStaticData.fGP.HS, Haste.MAX_HS); // 面板加速值
+        [JsonIgnore] public double HSPct => Math.Min(HS / fGP.HS, HasteBase.MAX_HS); // 面板加速值
 
-        [JsonIgnore]
-        public double OCPct => OC / JYStaticData.fGP.OC; // 面板破防值
+        [JsonIgnore] public double OCPct => OC / fGP.OC; // 面板破防值
 
-        [JsonIgnore]
-        public string Name { get; set; }
+        [JsonIgnore] public string Name { get; set; }
 
         #endregion
 
@@ -51,7 +52,9 @@ namespace JYCalculator.Src.Class
             Name = name;
         }
 
-        public InitCharacter(){}
+        public InitCharacter()
+        {
+        }
 
 
         /// <summary>
@@ -96,6 +99,36 @@ namespace JYCalculator.Src.Class
             PostConstructor();
         }
 
+        /// <summary>
+        /// 复制构造
+        /// </summary>
+        /// <param name="old">旧的对象</param>
+        public InitCharacter(InitCharacter old) : base()
+        {
+            L = old.L;
+            Base_AP = old.Base_AP;
+            Final_AP = old.Final_AP;
+            WP = old.WP;
+
+            CT = old.CT;
+            CF = old.CF;
+            WS = old.WS;
+
+            PZ = old.PZ;
+            OC = old.OC;
+            HS = old.HS;
+
+            Had_BigFM_jacket = old.Had_BigFM_jacket;
+            Had_BigFM_hat = old.Had_BigFM_hat;
+            Name = old.Name;
+            PostConstructor();
+        }
+
+        public InitCharacter Copy()
+        {
+            return new InitCharacter(this);
+        }
+
         #endregion
 
 
@@ -120,8 +153,8 @@ namespace JYCalculator.Src.Class
             WS = panel.StrainPercent;
 
             PZ = panel.SurplusValue;
-            OC = Math.Round(panel.PhysicsOvercomePercent * JYStaticData.fGP.OC);
-            HS = Math.Round(panel.HastePercent * JYStaticData.fGP.HS);
+            OC = Math.Round(panel.PhysicsOvercomePercent * fGP.OC);
+            HS = Math.Round(panel.HastePercent * fGP.HS);
 
             Had_BigFM_jacket = panel.EquipList.Had_BigFM_jacket;
             Had_BigFM_hat = panel.EquipList.Had_BigFM_hat;
@@ -172,7 +205,7 @@ namespace JYCalculator.Src.Class
                 $"{L:F0} 力道，{Base_AP:F0} 基础攻击，{Final_AP:F0} 最终攻击，{WP:F1} 武器伤害，{PZ:F0} 破招",
 
                 $"{CT:P2} 会心，{CF:P2} 会效，{WS:P2} 无双，" +
-                $"{OC:F0}({OC / JYStaticData.fGP.OC:P2}) 破防，{HS:F0}({HS / JYStaticData.fGP.HS:P2}) 加速",
+                $"{OC:F0}({OC / fGP.OC:P2}) 破防，{HS:F0}({HS / fGP.HS:P2}) 加速",
             };
 
             res.Add("");
@@ -223,7 +256,7 @@ namespace JYCalculator.Src.Class
 
         public void Add_CT_Point(double value)
         {
-            Add_CT(value / JYStaticData.fGP.CT);
+            Add_CT(value / fGP.CT);
         }
 
         public void Add_CF(double value)
@@ -233,7 +266,7 @@ namespace JYCalculator.Src.Class
 
         public void Add_CF_Point(double value)
         {
-            Add_CF(value / JYStaticData.fGP.CF);
+            Add_CF(value / fGP.CF);
         }
 
         public void Add_WS(double value)
@@ -243,12 +276,12 @@ namespace JYCalculator.Src.Class
 
         public void Add_WS_Point(double value)
         {
-            Add_WS(value / JYStaticData.fGP.WS);
+            Add_WS(value / fGP.WS);
         }
 
         public void Add_HSP(double value)
         {
-            HS += value; 
+            HS += value;
         }
 
         public void Add_PZ(double value)
@@ -299,7 +332,6 @@ namespace JYCalculator.Src.Class
             // TODO: 配装器里还需要增加体质
         }
 
-
         #endregion
 
         #region 属性计算
@@ -309,7 +341,7 @@ namespace JYCalculator.Src.Class
         /// </summary>
         /// <param name="key">简化后的属性名称</param>
         /// <param name="value">属性值</param>
-        public void AddSAttr(string key, double value)
+        protected void _AddSAttr(string key, double value)
         {
             switch (key)
             {
@@ -363,12 +395,15 @@ namespace JYCalculator.Src.Class
                     Add_Final_AP(value);
                     break;
                 }
+
                 case "Base_AP":
                 {
                     Add_Base_AP(value);
                     break;
                 }
+
                 case "OC":
+                case "Base_OC":
                 {
                     Add_OC(value);
                     break;
@@ -379,6 +414,7 @@ namespace JYCalculator.Src.Class
                     break;
                 }
                 case "L":
+                case "Base_L":
                 {
                     Add_L(value);
                     break;
@@ -392,6 +428,42 @@ namespace JYCalculator.Src.Class
                 {
                     Trace.WriteLine($"未知的属性！ {key}:{value} ");
                     break;
+                }
+            }
+        }
+
+        /// <summary>
+        /// 区分内功和外功属性
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="value"></param>
+        public void AddSAttr(string key, double value)
+        {
+            string key1 = key;
+            if (key.StartsWith("P_") && !key.EndsWith("_DmgAdd")) // 攻击和破防统一去除前缀
+            {
+                key1 = key.Substring(2);
+            }
+
+            _AddSAttr(key1, value);
+        }
+
+        /// <summary>
+        /// 减少属性
+        /// </summary>
+        /// <param name="kvp"></param>
+        public void RemoveSAtKVP(KeyValuePair<string, double> kvp)
+        {
+            AddSAttr(kvp.Key, -kvp.Value);
+        }
+
+        public void RemoveSAttrDict(IDictionary<string, double> dict)
+        {
+            if (dict != null)
+            {
+                foreach (var kvp in dict)
+                {
+                    RemoveSAtKVP(kvp);
                 }
             }
         }
@@ -427,5 +499,56 @@ namespace JYCalculator.Src.Class
         protected override void _RefreshCommands()
         {
         }
+
+
+        #region 进阶计算
+
+        [DoNotNotify] public double CTOC_PointSum => CT * fGP.CT + OC; // 会破点数之和
+
+        [DoNotNotify] public double WSPZ_PointSum => fGP.WS * WS + PZ; // 无双破招点数之和
+
+
+        /// <summary>
+        /// 在会破属性之和保持不变的情况下，转移部分会心点数到破防
+        /// </summary>
+        /// <param name="value">点数</param>
+        public void TransCTToOC(double value)
+        {
+            Add_CT_Point(-value);
+            Add_OC(value);
+        }
+
+        /// <summary>
+        /// 在无招属性之和保持不变的情况下，转移部分无双点数到破招
+        /// </summary>
+        /// <param name="value">点数</param>
+        public void TransWSToPZ(double value)
+        {
+            Add_WS_Point(-value);
+            Add_PZ(value);
+        }
+
+        /// <summary>
+        /// 在会破属性之和保持不变的情况下，重新设置面板会心百分比
+        /// </summary>
+        /// <param name="ct">目标会心百分比</param>
+        public void Reset_CT(double ct)
+        {
+            var delta = CT * fGP.CT - ct * fGP.CT;
+            TransCTToOC(delta);
+        }
+
+        /// <summary>
+        /// 在无招属性之和保持不变的情况下，重新设置面板无双百分比
+        /// </summary>
+        /// <param name="ws">目标无双百分比</param>
+        public void Reset_WS(double ws)
+        {
+            var delta = WS * fGP.WS - ws * fGP.WS;
+            TransWSToPZ(delta);
+        }
+
+
+        #endregion
     }
 }

@@ -21,6 +21,7 @@ namespace JYCalculator.ViewModels
         public RelayCommand ImportJBPanelCmd { get; set; }
 
         public NamedAttrs BigFMAttrsDesc; // 大附魔提供的属性
+        public InitCharacter NoneBigFMInitCharacter;
 
         #endregion
 
@@ -34,6 +35,7 @@ namespace JYCalculator.ViewModels
             BigFM = bigFM;
 
             ImportJBPanelCmd = new RelayCommand(ImportJBPanel);
+            NoneBigFMInitCharacter = initchar;
             PostConstructor();
             _Update();
         }
@@ -99,6 +101,7 @@ namespace JYCalculator.ViewModels
             DisableAutoUpdate();
             ConnectedBigFM();
             GetBigFMNamedSAttrs();
+            GetNoneBigFMInitCharacter();
             _AutoUpdate = old;
         }
 
@@ -141,6 +144,31 @@ namespace JYCalculator.ViewModels
         {
             ActionUpdateOnce(_Load, sav);
         }
+
+
+        /// <summary>
+        /// 计算没有大附魔加成下的原始初始面板
+        /// </summary>
+        /// <returns></returns>
+        protected InitCharacter GetNoneBigFMInitCharacter()
+        {
+            var res = InitChar.Copy();
+            if (InitChar.Had_BigFM_jacket)
+            {
+                var jacket = BigFM.Model.Jacket;
+                res.RemoveSAttrDict(jacket.SAttrs);
+            }
+
+            if (InitChar.Had_BigFM_hat)
+            {
+                var hat = BigFM.Model.Hat;
+                res.RemoveSAttrDict(hat.SAttrs);
+            }
+
+            NoneBigFMInitCharacter = res;
+            return res;
+        }
+
         
     }
 

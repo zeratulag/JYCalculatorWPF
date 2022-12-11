@@ -83,6 +83,9 @@
     <Reference Include="DeepCloner, Version=0.10.0.0, Culture=neutral, PublicKeyToken=dc0b95cf99bf4e99, processorArchitecture=MSIL">
       <HintPath>..\..\..\NuGetPackages\DeepCloner.0.10.4\lib\net40\DeepCloner.dll</HintPath>
     </Reference>
+    <Reference Include="MathNet.Numerics, Version=5.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\NuGetPackages\MathNet.Numerics.5.0.0\lib\net48\MathNet.Numerics.dll</HintPath>
+    </Reference>
     <Reference Include="Memoization, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\NuGetPackages\Memoization.1.0.0\lib\portable-net45+win+wpa81\Memoization.dll</HintPath>
     </Reference>
@@ -369,6 +372,7 @@
     <Compile Include="Src\DB\JYDataBase.cs" />
     <Compile Include="Src\DB\ZhenFaDB.cs" />
     <Compile Include="Src\DPSKernelShell\DPSKernel.cs" />
+    <Compile Include="Src\DPSKernelShell\DPSKernelOptimizer.cs" />
     <Compile Include="Src\DPSKernelShell\DPSKernelShell.cs" />
     <Compile Include="Src\Class\FullCharacter.cs" />
     <Compile Include="Src\Class\InitCharacter.cs" />
@@ -459,7 +463,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Models\BigFMConfigModel.cs" />
-    <Compile Include="Models\BuffExtraTriggerModel\BuffExtraTriggerModel.cs" />
+    <Compile Include="Models\BuffExtraTriggerModel\EventTriggerModel.cs" />
     <Compile Include="Models\EquipOptionConfigModel.cs" />
     <Compile Include="Models\MainWindowModel.cs" />
     <Compile Include="Models\QiXueConfigModel.cs" />
@@ -541,6 +545,7 @@
     <Resource Include="Resource\Icons\2546.png" />
     <Resource Include="Resource\Icons\2747.png" />
     <Resource Include="Resource\Icons\2842.png" />
+    <Resource Include="Resource\Icons\2987.png" />
     <Resource Include="Resource\Icons\3144.png" />
     <Resource Include="Resource\Icons\3152.png" />
     <Resource Include="Resource\Icons\3154.png" />
@@ -592,6 +597,7 @@
     <Resource Include="Resource\Icons\549.png" />
     <Resource Include="Resource\Icons\550.png" />
     <Resource Include="Resource\Icons\552.png" />
+    <Resource Include="Resource\Icons\6347.png" />
     <Resource Include="Resource\Icons\635.png" />
     <Resource Include="Resource\Icons\6436.png" />
     <Resource Include="Resource\Icons\6446.png" />
@@ -622,6 +628,7 @@
     <Resource Include="Resource\Icons\9025.png" />
     <Resource Include="Resource\Icons\904.png" />
     <Resource Include="Resource\Icons\907.png" />
+    <Resource Include="Resource\Icons\923.png" />
     <Resource Include="Resource\Icons\9291.png" />
     <Resource Include="Resource\Icons\9551.png" />
     <Resource Include="Resource\Icons\9552.png" />
@@ -658,11 +665,6 @@
     <Resource Include="Resource\Images\JY_icon.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resource\Icons\2987.png" />
-    <Resource Include="Resource\Icons\6347.png" />
-    <Resource Include="Resource\Icons\923.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Resource\Images\MyHead.jpg" />
   </ItemGroup>
   <ItemGroup>
@@ -673,6 +675,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resource\Images\ImportJBTutorial.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resource\Icons\15692.png" />
   </ItemGroup>
   <Import Project="..\..\JX3CalculatorShared\JX3CalculatorShared\JX3CalculatorShared.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -4,6 +4,7 @@ using JX3CalculatorShared.Utils;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
+using JX3CalculatorShared.Globals;
 
 namespace JX3CalculatorShared.ViewModels
 {
@@ -17,6 +18,7 @@ namespace JX3CalculatorShared.ViewModels
         private readonly ImmutableDictionary<string, BuffViewModel> BuffIDVMDict; // 基于RawID检索的字典
 
         public readonly bool IsTarget; // 是否为目标DebuffVM
+        public readonly BuffTypeEnum BuffType; // Buff类型
 
         public readonly Dictionary<string, BuffViewModel> CheckedBuffVMs; // 已启用的Buff
         public BaseBuffGroup EmitedBaseBuffGroup { get; private set; } // 输出的汇总
@@ -34,6 +36,7 @@ namespace JX3CalculatorShared.ViewModels
                 _ => new BuffViewModel(_.Value));
             Data = BuffVMDict.Values.OrderBy(_ => _._Buff.Order).ToImmutableArray();
             IsTarget = Data[0].IsTarget;
+            BuffType = Data[0]._Buff.Type;
 
             BuffDescNameVMDict = BuffVMDict.ToImmutableDictionary(_ => _.Value.DescName, _ => _.Value);
             BuffIDVMDict = BuffVMDict.ToImmutableDictionary(_ => _.Value._Buff.BuffID, _ => _.Value);
@@ -108,6 +111,26 @@ namespace JX3CalculatorShared.ViewModels
             }
             Header = res;
         }
+
+
+        /// <summary>
+        /// 获得飘黄覆盖率
+        /// </summary>
+        /// <returns></returns>
+        public double GetPiaoHuangCover()
+        {
+            double res = 0.0;
+            if (BuffType == BuffTypeEnum.Buff_Extra)
+            {
+                var vm = BuffIDVMDict["20854_1"];
+                if (vm.IsChecked)
+                {
+                    res = vm.Cover;
+                }
+            }
+            return res;
+        }
+
         #endregion
 
 

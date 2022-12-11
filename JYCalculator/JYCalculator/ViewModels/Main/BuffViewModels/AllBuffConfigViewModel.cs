@@ -17,7 +17,7 @@ namespace JYCalculator.ViewModels
 
         #region 构造
 
-        public AllBuffConfigViewModel(BuffDB db)
+        public AllBuffConfigViewModel(BuffDB db): base()
         {
             Buff_Self = new BuffConfigViewModel(db.Buff_Self);
             Buff_Normal = new BuffConfigViewModel(db.Buff_Normal);
@@ -51,10 +51,13 @@ namespace JYCalculator.ViewModels
 
         #region 方法
 
+
+
         protected override void _Update()
         {
             UpdateEmitedBuffGroups();
             UpdateNamedAttrs();
+            UpdateSpecial();
         }
 
         protected override void _DEBUG()
@@ -67,6 +70,7 @@ namespace JYCalculator.ViewModels
 
         #endregion
     }
+
 
 
 }

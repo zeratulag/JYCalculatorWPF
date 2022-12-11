@@ -117,14 +117,14 @@ namespace JYCalculator.Globals
         public static readonly JYGlobalParams fGP;
         public const double XinFaPZCoef = (0.78 - 1); // 心法破招系数
 
+        public static readonly Haste CurrentHaste;
+
         public static class XWConsts
         {
             public const double CT = 1500.0 / 10000.0;
             public const double CF = 300.0 / 1024.0;
             public const int ExtraSP = 204;
         }
-
-        public static readonly Haste CurrentHaste;
 
         static JYStaticData()
         {

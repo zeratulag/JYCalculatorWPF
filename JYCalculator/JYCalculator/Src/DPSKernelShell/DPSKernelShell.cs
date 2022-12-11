@@ -7,6 +7,7 @@ using JYCalculator.Models.BuffExtraTriggerModel;
 using JYCalculator.Src.Class;
 using JYCalculator.Utils;
 using System.Linq;
+using JX3CalculatorShared.ViewModels;
 
 namespace JYCalculator.Src
 {
@@ -33,7 +34,7 @@ namespace JYCalculator.Src
 
         public BuffCoverDF BuffCover;
 
-        public BuffExtraTriggerModel BuffTriggerModel;
+        public EventTriggerModel TriggerModel;
 
         public SkillFreqCTs[] SkillFreqCTsArr;
 
@@ -43,7 +44,7 @@ namespace JYCalculator.Src
         public DPSKernel LongDPSKernel;
         public DPSKernel ShortDPSKernel;
 
-        public DPSKernel CurrentDPSKernel; // 根据界面选项，提供当前的Kernel
+        public DPSKernel CurrentDPSKernel => FightTime.IsShort ? ShortDPSKernel : LongDPSKernel;// 根据界面选项，提供当前的Kernel
 
         private bool _HasProceed = false;
 
@@ -69,13 +70,13 @@ namespace JYCalculator.Src
         {
             var sy = Arg.BigFM.Belt != null; // 是否有伤腰大附魔
             var bigfm_shoes_120 = Arg.BigFM.Shoes?.DLCLevel == 120; // 是否有120级伤鞋子大附魔
-            var buffExtraTriggerArg = new BuffExtraTriggerArg(Arg.SL, sy, bigfm_shoes_120, Arg.BigXW);
+            var buffExtraTriggerArg = new ExtraTriggerArg(Arg.SL, sy, bigfm_shoes_120, Arg.BigXW, Arg.BuffSpecial.PiaoHuangCover);
 
-            BuffTriggerModel = new BuffExtraTriggerModel(SkillNum, InputChar,
+            TriggerModel = new EventTriggerModel(SkillNum, InputChar,
                 SkillDataDfs, buffExtraTriggerArg);
-            BuffedFChars = BuffTriggerModel.BuffedFChars;
-            BuffCover = BuffTriggerModel.BuffCover;
-            SkillFreqCTDFs = BuffTriggerModel.SkillFreqCTDFs;
+            BuffedFChars = TriggerModel.BuffedFChars;
+            BuffCover = TriggerModel.BuffCover;
+            SkillFreqCTDFs = TriggerModel.SkillFreqCTDFs;
         }
 
         /// <summary>
@@ -113,6 +114,19 @@ namespace JYCalculator.Src
             return res;
         }
 
+        /// <summary>
+        /// 仅仅改变InputChar的输入，其他条件不变，得到另一个Shell
+        /// </summary>
+        /// <param name="inputCharacter">新的输入属性</param>
+        /// <returns></returns>
+        public DPSKernelShell ChangeInputChar(FullCharacter inputCharacter)
+        {
+            var res = Copy();
+            res.InputChar = inputCharacter;
+            res.PostProceed();
+            return res;
+        }
+
         #endregion
 
         public void Proceed()
@@ -122,19 +136,19 @@ namespace JYCalculator.Src
             CalcSkillFreqCTs();
             CalcTimeFChars();
             GetDPSKernel();
-            GetCurrentKernel();
             _HasProceed = true;
         }
 
 
-        public void CalcCurrent()
+        public double CalcCurrent()
         {
             // 仅仅计算当前的，防止重复计算
             if (!_HasProceed)
             {
                 Proceed();
             }
-            CurrentDPSKernel.Calc();
+            var res = CurrentDPSKernel.Calc();
+            return res;
         }
 
         public void CalcAll()
@@ -150,7 +164,7 @@ namespace JYCalculator.Src
 
         public void CalcBuffExtraTigger()
         {
-            BuffTriggerModel.Calc();
+            TriggerModel.Calc();
         }
 
         public void CalcSkillFreqCTs()
@@ -205,15 +219,6 @@ namespace JYCalculator.Src
             ShortDPSKernel = new DPSKernel(ShortFChars, CTarget, SkillDataDfs, SkillFreqCTDFs, FightTime.ShortItem, kernelarg);
         }
 
-        // 明确当前是长时间还是短时间
-        public void GetCurrentKernel()
-        {
-            CurrentDPSKernel = LongDPSKernel;
-            if (FightTime.IsShort)
-            {
-                CurrentDPSKernel = ShortDPSKernel;
-            }
-        }
 
         // 计算属性收益
         public void CalcProfit()
@@ -253,12 +258,20 @@ namespace JYCalculator.Src
 
         public readonly BigFMConfigModel BigFM;
 
-        public DPSCalcShellArg(bool sl, bool bigXw, YZOption yz, BigFMConfigModel bigFm)
+        public readonly InitCharacter NoneBigFMInitCharacter; // 不含大附魔的初始人物属性
+
+        public readonly BuffSpecialArg BuffSpecial;
+
+
+        public DPSCalcShellArg(bool sl, bool bigXw, YZOption yz, BigFMConfigModel bigFm, BuffSpecialArg buffSpecial,
+            InitCharacter ichar)
         {
             SL = sl;
             BigXW = bigXw;
             YZ = yz;
             BigFM = bigFm;
+            BuffSpecial = buffSpecial;
+            NoneBigFMInitCharacter = ichar;
         }
 
     }

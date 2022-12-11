@@ -90,8 +90,8 @@ namespace JYCalculator.Models
 
         protected int UpdateCalcShell()
         {
-            Shellbuffs = new BuffShellInput(BuffVM.BuffAttrsDesc, BuffVM.DebuffAttrsDesc, ItemDTVM.AttrsDesc);
-            CalcShellArg = new CalculatorShellArg(InitInputVM.BigFM.Arg, SkillMiJiVM.IsSupport);
+            Shellbuffs = new BuffShellInput(BuffVM.BuffAttrsDesc, BuffVM.DebuffAttrsDesc, ItemDTVM.AttrsDesc, BuffVM.Arg);
+            CalcShellArg = new CalculatorShellArg(SkillMiJiVM.IsSupport, (int)InitChar.HS, InitInputVM.BigFM.Arg, BuffVM.Arg);
             CalcShell.UpdateInput(this);
             return CalcShell.Calc();
         }

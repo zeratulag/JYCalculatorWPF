@@ -1,5 +1,6 @@
 ﻿using JX3CalculatorShared.Class;
 using System.Collections.Generic;
+using JX3CalculatorShared.ViewModels;
 
 namespace JX3CalculatorShared.Src
 {
@@ -12,12 +13,14 @@ namespace JX3CalculatorShared.Src
         public readonly NamedAttrs DeBuff; // 表示目标DEBUFF之和
         public readonly NamedAttrs ItemDT; // 表示单体之和
 
+        public readonly BuffSpecialArg BuffSpecial; // 表示特殊Buff参数
+
         public readonly Dictionary<string, NamedAttrs> AllAttrsDict;
         
 
         #endregion
 
-        public BuffShellInput(NamedAttrs buff, NamedAttrs debuff, NamedAttrs itemDT)
+        public BuffShellInput(NamedAttrs buff, NamedAttrs debuff, NamedAttrs itemDT, BuffSpecialArg buffSpecial)
         {
             Buff = buff;
             DeBuff = debuff;
@@ -28,6 +31,8 @@ namespace JX3CalculatorShared.Src
                 {"DeBuff", DeBuff},
                 {"ItemDT", ItemDT}
             };
+
+            BuffSpecial = buffSpecial;
 
         }
 

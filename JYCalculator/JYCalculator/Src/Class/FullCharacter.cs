@@ -12,6 +12,8 @@ using JYCalculator.Src.DB;
 using MiniExcelLibs.Attributes;
 using JX3CalculatorShared.Src.Class;
 using JX3CalculatorShared.Utils;
+using PropertyChanged;
+using static JYCalculator.Globals.JYStaticData;
 
 namespace JYCalculator.Src.Class
 {
@@ -57,9 +59,9 @@ namespace JYCalculator.Src.Class
 
         public double GCD => Is_XW ? BigXW_GCD : Normal_GCD;
 
-        public double Base_OC_Pct => Base_OC / JYStaticData.fGP.OC; // 面板基础破防
-        public double Final_OC_Pct => Final_OC / JYStaticData.fGP.OC; // 面板最终破防
-        public double HS_Pct => Math.Min(HS / JYStaticData.fGP.HS, Haste.MAX_HS); // 面板加速值
+        public double Base_OC_Pct => Base_OC / fGP.OC; // 面板基础破防
+        public double Final_OC_Pct => Final_OC / fGP.OC; // 面板最终破防
+        public double HS_Pct => Math.Min(HS / fGP.HS, HasteBase.MAX_HS); // 面板加速值
 
         public double NPC_Coef = JYConsts.NPC_Coef; // 非侠士增伤
 
@@ -269,19 +271,19 @@ namespace JYCalculator.Src.Class
 
             var res = new List<string>
             {
-                $"{this.Final_L:F2}({this.Base_L:F2}) 力道，" +
-                $"{this.Final_AP:F2}({this.Base_AP:F2}) 攻击，" +
-                $"{this.Final_OC:F2}({this.Base_OC:F2}) 破防，" +
-                $"{this.WP:F2} 武器伤害",
+                $"{Final_L:F2}({Base_L:F2}) 力道，" +
+                $"{Final_AP:F2}({Base_AP:F2}) 攻击，" +
+                $"{Final_OC:F2}({Base_OC:F2}) 破防，" +
+                $"{WP:F2} 武器伤害",
 
-                $"{this.CT:P2} 会心，{this.CF:P2} 会效，{this.WS:P2} 无双，" +
-                $"{this.HS}({this.HS / JYStaticData.fGP.HS + this.ExtraSP / 1024:P2}) 加速，{this.PZ} 破招",
-                $"{this.L_Percent:P2} 元气提升，{this.AP_Percent:P2} 攻击提升，{this.OC_Percent:P2} 破防提升，" +
-                $"{this.IgnoreA:P2} 无视防御A，{this.DmgAdd:P2} 伤害提高，",
+                $"{CT:P2} 会心，{CF:P2} 会效，{WS:P2} 无双，" +
+                $"{HS}({HS / fGP.HS + ExtraSP / 1024:P2}) 加速，{PZ} 破招",
+                $"{L_Percent:P2} 元气提升，{AP_Percent:P2} 攻击提升，{OC_Percent:P2} 破防提升，" +
+                $"{IgnoreA:P2} 无视防御A，{DmgAdd:P2} 伤害提高，",
 
-                $"{hadDict[this.Is_XW]}处于心无状态，{hadDict[this.Has_Special_Buff]}计算特殊增益",
+                $"{hadDict[Is_XW]}处于心无状态，{hadDict[Has_Special_Buff]}计算特殊增益",
 
-                $"常规GCD: {this.Normal_GCD:F4} s, 大心无GCD: {this.BigXW_GCD:F4} s"
+                $"常规GCD: {Normal_GCD:F4} s, 大心无GCD: {BigXW_GCD:F4} s"
             };
 
             return res;
@@ -310,7 +312,7 @@ namespace JYCalculator.Src.Class
 
         public void Add_CT_Point(double value)
         {
-            Add_CT(value / JYStaticData.fGP.CT);
+            Add_CT(value / fGP.CT);
         }
 
         public void Add_CF(double value)
@@ -320,7 +322,7 @@ namespace JYCalculator.Src.Class
 
         public void Add_CF_Point(double value)
         {
-            Add_CF(value / JYStaticData.fGP.CF);
+            Add_CF(value / fGP.CF);
         }
 
         public void Add_WS(double value)
@@ -330,7 +332,7 @@ namespace JYCalculator.Src.Class
 
         public void Add_WS_Point(double value)
         {
-            Add_WS(value / JYStaticData.fGP.WS);
+            Add_WS(value / fGP.WS);
         }
 
         public void Add_HSP(double value)
@@ -618,6 +620,27 @@ namespace JYCalculator.Src.Class
             }
         }
 
+        /// <summary>
+        /// 减少属性
+        /// </summary>
+        /// <param name="kvp"></param>
+        public void RemoveSAtKVP(KeyValuePair<string, double> kvp)
+        {
+            AddSAttr(kvp.Key, -kvp.Value);
+        }
+
+        public void RemoveSAttrDict(IDictionary<string, double> dict)
+        {
+            if (dict != null)
+            {
+                foreach (var kvp in dict)
+                {
+                    RemoveSAtKVP(kvp);
+                }
+            }
+        }
+
+
         public void AddCharAttrCollection(AttrCollection charAttrs)
         {
             if (charAttrs == null) return;
@@ -680,10 +703,10 @@ namespace JYCalculator.Src.Class
 
             FullCharacter other = this.DeepClone();
 
-            other.Add_CT(JYStaticData.XWConsts.CT);
-            other.Add_CF(JYStaticData.XWConsts.CF);
+            other.Add_CT(XWConsts.CT);
+            other.Add_CF(XWConsts.CF);
 
-            other.ExtraSP += JYStaticData.XWConsts.ExtraSP * bigXW.ToInt();
+            other.ExtraSP += XWConsts.ExtraSP * bigXW.ToInt();
             other.AddSAttrDict(attrDict);
 
             other.Is_XW = true;
@@ -718,11 +741,69 @@ namespace JYCalculator.Src.Class
         /// </summary>
         protected void UpdateGCD()
         {
-            Normal_GCD = JYStaticData.CurrentHaste.SKT(StaticData.GCD, (int) HS, 0);
-            BigXW_GCD = JYStaticData.CurrentHaste.SKT(StaticData.GCD, (int) HS, JYStaticData.XWConsts.ExtraSP);
+            Normal_GCD = CurrentHaste.SKT(StaticData.GCD, (int) HS, 0);
+            BigXW_GCD = CurrentHaste.SKT(StaticData.GCD, (int) HS, XWConsts.ExtraSP);
         }
 
         #endregion
+
+        #region 进阶计算
+
+        [DoNotNotify]
+        public double CT_Point => CT * fGP.CT; // 会心点数
+
+        [DoNotNotify]
+        public double WS_Point => WS * fGP.WS; // 无双点数
+
+        [DoNotNotify]
+        public double CTOC_Point => CT_Point + Base_OC; // 会破点数之和
+
+        [DoNotNotify]
+        public double WSPZ_Point => WS_Point + PZ; // 无双破招点数之和
+
+
+        /// <summary>
+        /// 在会破属性之和保持不变的情况下，转移部分会心点数到破防
+        /// </summary>
+        /// <param name="value">点数</param>
+        public void TransCTToOC(double value)
+        {
+            Add_CT_Point(-value);
+            Add_Base_OC(value);
+        }
+
+        /// <summary>
+        /// 在无招属性之和保持不变的情况下，转移部分无双点数到破招
+        /// </summary>
+        /// <param name="value">点数</param>
+        public void TransWSToPZ(double value)
+        {
+            Add_WS_Point(-value);
+            Add_PZ(value);
+        }
+
+        /// <summary>
+        /// 在会破属性之和保持不变的情况下，重新设置面板会心百分比
+        /// </summary>
+        /// <param name="ct">目标会心百分比</param>
+        public void Reset_CT(double ct)
+        {
+            var delta = CT_Point - ct * fGP.CT;
+            TransCTToOC(delta);
+        }
+
+        /// <summary>
+        /// 在无招属性之和保持不变的情况下，重新设置面板无双百分比
+        /// </summary>
+        /// <param name="ws">目标无双百分比</param>
+        public void Reset_WS(double ws)
+        {
+            var delta = WS_Point - ws * fGP.WS;
+            TransWSToPZ(delta);
+        }
+
+        #endregion
+
     }
 }
 

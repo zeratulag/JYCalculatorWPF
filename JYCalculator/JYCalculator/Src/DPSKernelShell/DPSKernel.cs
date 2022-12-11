@@ -69,13 +69,14 @@ namespace JYCalculator.Src
 
         #region 方法
 
-        public void Calc()
+        public double Calc()
         {
             CalcDamage();
             CalcDamageFreq();
-            CalcDPS();
+            var res = CalcDPS();
             CalcCombatStat();
             HasCalculated = true;
+            return res;
         }
 
         public void CalcDamage()
@@ -96,13 +97,14 @@ namespace JYCalculator.Src
             DamageFreqDFs = new Period<SkillDamageFreqDF>(normal, xw);
         }
 
-        public void CalcDPS()
+        public double CalcDPS()
         {
             var normal = DamageFreqDFs.Normal.GetDPSTableItem("Normal", "常规状态", FightTime.NormalCover);
             var xw = DamageFreqDFs.XW.GetDPSTableItem("XW", "爆发状态", FightTime.XWCover);
             FinalDPSTable = new DPSTable(normal, xw);
             FinalDPSTable.Proceed();
             FinalDPS = FinalDPSTable.DPS;
+            return FinalDPS;
         }
 
 

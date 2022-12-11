@@ -18,7 +18,6 @@ namespace JX3CalculatorShared.Src.Class
         public double DefaultCover;
 
         public readonly BuffTypeEnum Type;
-        public readonly int Order;
 
         public static readonly ImmutableDictionary<BuffTypeEnum, string> Type2Header =
             new Dictionary<BuffTypeEnum, string>()

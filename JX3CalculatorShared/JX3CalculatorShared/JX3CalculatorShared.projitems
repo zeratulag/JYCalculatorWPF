@@ -74,6 +74,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Utils\IEnumerableTool.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\ImportTool.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\MiscTools.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utils\OptimizationTool.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\ReflectionTool.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\StringTool.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\ValueDictTool.cs" />

@@ -68,6 +68,10 @@ namespace JYCalculator.Src
 
         public string FinalDPStxtF; // 更加精确的DPS值
 
+        // 优化
+        public DPSKernelOptimizer DpsKernelOp; // 
+
+
         #endregion
 
         #region 构造
@@ -157,7 +161,9 @@ namespace JYCalculator.Src
             CollectFChars();
 
             GetFinalDPS();
-
+#if DEBUG
+            GetOptimizer();
+#endif            
             watch.Stop();
             var elapsedMs = watch.ElapsedMilliseconds;
 #if DEBUG
@@ -207,7 +213,7 @@ namespace JYCalculator.Src
 
         public void GetDPSKernelShell()
         {
-            var arg = new DPSCalcShellArg(Equip.SL, QiXue.聚精凝神, Equip.YZ, BigFM);
+            var arg = new DPSCalcShellArg(Equip.SL, QiXue.聚精凝神, Equip.YZ, BigFM, Buffs.BuffSpecial, InitInput.NoneBigFMInitCharacter);
             KernelShell = new DPSKernelShell(FullCharGroup.ZhenBuffed, CTarget, SkillDF, SkillNum, FightTime, arg);
         }
 
@@ -262,6 +268,15 @@ namespace JYCalculator.Src
             FightTime.UpdateXWCD(ZXXWCD);
         }
 
+
+#if DEBUG
+        public void GetOptimizer()
+        {
+            DpsKernelOp = new DPSKernelOptimizer(KernelShell);
+            DpsKernelOp.Calc();
+        }
+#endif
+
     }
 
 
@@ -271,11 +286,16 @@ namespace JYCalculator.Src
     public class CalculatorShellArg
     {
         public readonly BigFMConfigArg BigFM;
+        public readonly int HS; // 当前加速值
+        public readonly BuffSpecialArg BuffSpecial;
         public readonly bool AllSkillMiJiIsSupport; // 秘籍是否支持
 
-        public CalculatorShellArg(BigFMConfigArg bigFM, bool allSkillMiJiIsSupport)
+        public CalculatorShellArg(bool allSkillMiJiIsSupport, int hs, BigFMConfigArg bigFM,
+            BuffSpecialArg buffSpecial)
         {
             BigFM = bigFM;
+            HS = hs;
+            BuffSpecial = buffSpecial;
             AllSkillMiJiIsSupport = allSkillMiJiIsSupport;
         }
 
