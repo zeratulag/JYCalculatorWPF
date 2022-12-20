@@ -656,10 +656,40 @@ namespace JYCalculator.Src.Class
             AddCharAttrCollection(attrs.Attr);
         }
 
+        // 移除属性
+        public void RemoveCharAttrCollection(AttrCollection charAttrs)
+        {
+            if (charAttrs == null) return;
+
+            if (!charAttrs.IsEmptyOrNull && charAttrs.Simplified) // 仅仅允许添加已简化后的属性
+            {
+                RemoveSAttrDict(charAttrs.Values);
+            }
+        }
+
+        public void RemoveNamedAttrs(NamedAttrs attrs)
+        {
+            RemoveCharAttrCollection(attrs.Attr);
+        }
+
+
         // 增加基础BUFF
         public void AddBaseBuff(BaseBuff baseBuff)
         {
             AddCharAttrCollection(baseBuff.SCharAttrs);
+        }
+
+
+        public void AddZhenFa(ZhenFa zhen)
+        {
+            AddNamedAttrs(zhen.AttrsDesc);
+        }
+
+
+        // 移除阵法属性（前提是必须开了这个阵）
+        public void RemoveZhenFa(ZhenFa zhen)
+        {
+            RemoveNamedAttrs(zhen.AttrsDesc);
         }
 
 

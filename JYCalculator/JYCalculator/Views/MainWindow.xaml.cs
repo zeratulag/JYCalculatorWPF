@@ -13,6 +13,7 @@ using JX3CalculatorShared.Views.Dialogs;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Data;
+using JX3CalculatorShared.Utils;
 
 namespace JYCalculator.Views
 {
@@ -48,10 +49,13 @@ namespace JYCalculator.Views
             MakeCommands();
             LoadDefault();
 
-#if DEBUG
+
             _DebugMainWindow = new DebugMainWindow(_VMs);
+
             Show();
             _DebugMainWindow.Owner = this;
+
+#if DEBUG
             _DEBUG();
 #endif
 
@@ -105,6 +109,7 @@ namespace JYCalculator.Views
 
             BindInitChar();
             BindDPS();
+            BindOptimization();
         }
 
         public void BindEquipOption()
@@ -182,6 +187,10 @@ namespace JYCalculator.Views
             ProfitWeight_cbb.DataContext = _VMs.ProfitChartVM;
         }
 
+        public void BindOptimization()
+        {
+            GroupBox_Optimization.DataContext = _VMs.OptimizationVM;
+        }
 
         #endregion
 
@@ -254,17 +263,16 @@ namespace JYCalculator.Views
             }
         }
 
-        private void FinalDPS_txb_MouseDown(object sender, RoutedEventArgs e)
+        private void CopyFinalDPS(object sender, RoutedEventArgs e)
         {
             Clipboard.SetText(_VMs.CalcShell.FinalDPStxtF);
             CopyTextblock_pop.IsOpen = true;
         }
 
         // 复制TextBlock
-        private void TextBlock_MouseDown(object sender, RoutedEventArgs e)
+        private void CopyTextBlock(object sender, RoutedEventArgs e)
         {
-            var obj = (TextBlock)sender;
-            Clipboard.SetText(obj.Text);
+            CommandTool.CopyTextBlock(sender, e);
             CopyTextblock_pop.IsOpen = true;
         }
 
@@ -272,6 +280,14 @@ namespace JYCalculator.Views
         {
             Clipboard.SetText(_VMs.ProfitOrderDesc);
             CopyTextblock_pop.IsOpen = true;
+        }
+
+        private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (TabItem_MultiZhen.IsSelected)
+            {
+                Expander_CombatStat.IsExpanded = false;
+            }
         }
     }
 }

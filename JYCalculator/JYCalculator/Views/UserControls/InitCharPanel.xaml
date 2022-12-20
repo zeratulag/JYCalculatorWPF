@@ -87,7 +87,7 @@
                           Value="{Binding Path = HS}" />
 
         <xc:DoubleUpDown x:Name="CT_spb" Grid.Row="2" Grid.Column="1"
-                         Value="{Binding Path = CT}" Minimum="0" Maximum="1" Increment="0.01"/>
+                         Value="{Binding Path = CT}" Minimum="0.01" Maximum="1" Increment="0.01"/>
 
         <xc:DoubleUpDown x:Name="CF_spb" Grid.Row="3" Grid.Column="1"
                          Value="{Binding Path = CF}" Minimum="1.75" Maximum="3" Increment="0.01"/>

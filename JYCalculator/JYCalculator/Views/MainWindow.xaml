@@ -598,7 +598,7 @@
                         x:Name="Expander_ItemDT"
                         IsExpanded="True"
                         Style="{StaticResource Style.MultiLineHeaderedExpander}">
-                        <ScrollViewer MaxHeight="200">
+                        <ScrollViewer MaxHeight="210">
                             <ItemsControl x:Name="ItemsControl_ItemDT" Style="{StaticResource Style.ItemDT}" />
                         </ScrollViewer>
                     </Expander>
@@ -613,6 +613,7 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
 
 
@@ -640,15 +641,14 @@
                         <TextBlock
                             Name="FinalDPS_txb"
                             Grid.Column="0"
-                            MinHeight="50"
-                            Margin="10,20,10,0"
+                            Margin="10,10,10,5"
                             HorizontalAlignment="Center"
                             VerticalAlignment="Center"
                             FontSize="24"
                             FontWeight="Bold"
                             Foreground="Red"
                             Text="{Binding Path=FinalDPStxt}"
-                            MouseLeftButtonDown="FinalDPS_txb_MouseDown"
+                            MouseLeftButtonDown="CopyFinalDPS"
                             ToolTip="点击复制"/>
                         <Popup x:Name="CopyTextblock_pop" StaysOpen="False" Placement="Mouse" PopupAnimation="Slide" AllowsTransparency="True">
                             <Border BorderBrush="Beige" BorderThickness="2" Background="White">
@@ -671,7 +671,7 @@
                                 </DataGrid.Columns>
                             </DataGrid>
                         </Expander>
-                        <Expander
+                        <Expander x:Name="Expander_CombatStat"
                             Grid.Row="1"
                             Grid.Column="0"
                             Grid.ColumnSpan="2"
@@ -776,6 +776,7 @@
                             <chart:SfChart
                                 x:Name="ProfitChart"
                                 MaxWidth="400"
+                                MaxHeight="290"
                                 Margin="0,5,0,0"
                                 HorizontalAlignment="Stretch"
                                 HorizontalContentAlignment="Stretch"
@@ -829,6 +830,84 @@
 
                     </Expander>
 
+                </GroupBox>
+
+                <GroupBox x:Name="GroupBox_Optimization"  Grid.Row="2">
+                    <GroupBox.Header>
+                        <CheckBox x:Name="GroupBox_Optimization_chb" Style="{StaticResource Style.CenterCheckBox}" IsChecked="True">优化分析</CheckBox>
+                    </GroupBox.Header>
+
+                    <TabControl Visibility="{Binding IsChecked,ElementName=GroupBox_Optimization_chb,Converter={StaticResource BooleanToVisibility}}" SelectionChanged="TabControl_SelectionChanged">
+                        <TabItem Header="最优初始属性">
+
+                            <TextBlock Text="{Binding Path=OptimizationDesc}" MouseLeftButtonDown="CopyTextBlock"></TextBlock>
+
+                        </TabItem>
+                        <TabItem Header="多重阵眼比较" x:Name="TabItem_MultiZhen">
+
+                            <sf:SfDataGrid
+                                x:Name="SfDataGrid_MultiZhen"
+                                Width="Auto"
+                                Height="Auto"
+                                Margin="5"
+                                HorizontalAlignment="Stretch"
+                                AllowResizingColumns="True"
+                                AutoGenerateColumns="False"
+                                ColumnSizer="AutoLastColumnFill"
+                                ItemsSource="{Binding Path=MultiZhenTable}"
+                                RowHeight="20">
+                                <sf:SfDataGrid.Columns>
+                                    <sf:GridTextColumn
+                                        Width="40"
+                                        HeaderText="#"
+                                        MappingName="Rank"
+                                        TextAlignment="Center" />
+
+                                    <sf:GridTextColumn
+                                        Width="80"
+                                        HeaderText="阵法"
+                                        HorizontalHeaderContentAlignment="Center"
+                                        MappingName="Name" />
+
+                                    <sf:GridNumericColumn
+                                        Width="80"
+                                        HeaderText="DPS"
+                                        MappingName="DPS"
+                                        NumberDecimalDigits="0" />
+                                    <sf:GridNumericColumn
+                                        Width="100"
+                                        HeaderText="相对"
+                                        MappingName="RelativePct"
+                                        SetCellBoundValue="True">
+                                        <sf:GridNumericColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <Grid>
+                                                    <ProgressBar
+                                                        x:Name="progressBar"
+                                                        Height="15"
+                                                        Background="Transparent"
+                                                        BorderThickness="0"
+                                                        Foreground="IndianRed"
+                                                        Maximum="130"
+                                                        Minimum="100"
+                                                        Visibility="Visible"
+                                                        Value="{Binding Path=Value}" />
+                                                    <TextBlock
+                                                        HorizontalAlignment="Right"
+                                                        VerticalAlignment="Center"
+                                                        Text="{Binding Path=Value, StringFormat='\{0\}%'}"
+                                                        TextAlignment="Center" />
+                                                </Grid>
+                                            </DataTemplate>
+                                        </sf:GridNumericColumn.CellTemplate>
+                                    </sf:GridNumericColumn>
+                                </sf:SfDataGrid.Columns>
+                            </sf:SfDataGrid>
+
+
+
+                        </TabItem>
+                    </TabControl>
                 </GroupBox>
 
             </Grid>

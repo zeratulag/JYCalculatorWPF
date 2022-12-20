@@ -53,6 +53,12 @@ namespace JYCalculator.ViewModels
         public readonly MainWindowModel Model;
         public readonly CalculatorShell CalcShell;
 
+
+        // 输出界面的VM
+        public ProfitChartViewModel ProfitChartVM { get; set; }
+        public OptimizationViewModel OptimizationVM { get; set; }
+
+
         protected bool HandlingInputChange = false;
 
         public const string NewFileName = "Untitled Project";
@@ -121,8 +127,8 @@ namespace JYCalculator.ViewModels
         public double FinalDPS { get; set; }
         public string FinalDPStxt { get; set; }
 
+
         public string ProfitOrderDesc { get; set; }
-        public ProfitChartViewModel ProfitChartVM { get; set; }
 
 
         public MainWindowViewModels(MainWindow mw) : base(InputPropertyNameType.None)
@@ -176,6 +182,7 @@ namespace JYCalculator.ViewModels
 
             // 输出结果VM
             ProfitChartVM = new ProfitChartViewModel();
+            OptimizationVM = new OptimizationViewModel();
 
             Proceed();
         }
@@ -244,6 +251,7 @@ namespace JYCalculator.ViewModels
             {
                 UpdateItemsSources();
                 UpdateCalcTables();
+                UpdateOptimization();
             }
 
             watch.Stop();
@@ -268,7 +276,6 @@ namespace JYCalculator.ViewModels
             SkillFreqCTsTable = CalcShell.KernelShell.SkillFreqCTsArr;
         }
 
-
         protected void UpdateCalcTables()
         {
             FinalDPStxt = CalcShell.FinalDPStxt;
@@ -291,6 +298,13 @@ namespace JYCalculator.ViewModels
 
             ProfitChartVM.UpdateSourceDF(kernel.FinalProfitDF);
         }
+
+
+        protected void UpdateOptimization()
+        {
+            OptimizationVM.UpdateSource(CalcShell);
+        }
+
 
         /// <summary>
         /// 计算出一共有哪些秘籍
@@ -558,6 +572,7 @@ namespace JYCalculator.ViewModels
 
         // 退出
 
+        [RelayCommand]
         public void Exit()
         {
             App.Current.MainWindow.Close();
@@ -570,7 +585,7 @@ namespace JYCalculator.ViewModels
 
         public void OpenHelp(string para)
         {
-            CommandTool.OpenDictUrl( JYAppStatic.URLDict, para);
+            CommandTool.OpenDictUrl(JYAppStatic.URLDict, para);
         }
 
 
@@ -588,7 +603,8 @@ namespace JYCalculator.ViewModels
         protected bool _DirtyExit()
         {
             bool canExit = true;
-            var msgResult = MessageBox.Show("当前计算方案尚未保存，是否立刻保存？", "Calculator", MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
+            var msgResult = MessageBox.Show("当前计算方案尚未保存，是否立刻保存？", "Calculator", MessageBoxButton.YesNoCancel,
+                MessageBoxImage.Question);
 
             switch (msgResult)
             {
@@ -609,6 +625,7 @@ namespace JYCalculator.ViewModels
                     break;
                 }
             }
+
             return canExit;
         }
 
@@ -620,9 +637,8 @@ namespace JYCalculator.ViewModels
             {
                 res = _DirtyExit();
             }
+
             return res;
-
         }
-
     }
 }

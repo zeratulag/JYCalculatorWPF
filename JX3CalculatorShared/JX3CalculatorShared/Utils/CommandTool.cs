@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Windows;
+using System.Windows.Controls;
 
 namespace JX3CalculatorShared.Utils
 {
@@ -18,5 +20,15 @@ namespace JX3CalculatorShared.Utils
             }
         }
 
+        /// <summary>
+        /// 复制TextBlock的内容
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public static void CopyTextBlock(object sender, RoutedEventArgs e)
+        {
+            var obj = (TextBlock)sender;
+            Clipboard.SetText(obj.Text);
+        }
     }
 }

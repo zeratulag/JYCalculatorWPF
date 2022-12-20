@@ -70,7 +70,7 @@ namespace JYCalculator.Src
 
         // 优化
         public DPSKernelOptimizer DpsKernelOp; // 
-
+        public MultiZhenFaOptimizer MultiZhenDPSOp; // 多重阵法优化器
 
         #endregion
 
@@ -161,9 +161,12 @@ namespace JYCalculator.Src
             CollectFChars();
 
             GetFinalDPS();
-#if DEBUG
-            GetOptimizer();
-#endif            
+
+            if (Arg.EnableOptimization)
+            {
+                GetOptimizer();
+            }
+
             watch.Stop();
             var elapsedMs = watch.ElapsedMilliseconds;
 #if DEBUG
@@ -268,14 +271,14 @@ namespace JYCalculator.Src
             FightTime.UpdateXWCD(ZXXWCD);
         }
 
-
-#if DEBUG
         public void GetOptimizer()
         {
             DpsKernelOp = new DPSKernelOptimizer(KernelShell);
             DpsKernelOp.Calc();
+
+            MultiZhenDPSOp = new MultiZhenFaOptimizer(KernelShell, Zhen);
+            MultiZhenDPSOp.Calc();
         }
-#endif
 
     }
 
@@ -290,11 +293,13 @@ namespace JYCalculator.Src
         public readonly BuffSpecialArg BuffSpecial;
         public readonly bool AllSkillMiJiIsSupport; // 秘籍是否支持
 
-        public CalculatorShellArg(bool allSkillMiJiIsSupport, int hs, BigFMConfigArg bigFM,
+        public readonly bool EnableOptimization; // 是否启用优化建议
+        public CalculatorShellArg(bool allSkillMiJiIsSupport, int hs, bool opt, BigFMConfigArg bigFM,
             BuffSpecialArg buffSpecial)
         {
             BigFM = bigFM;
             HS = hs;
+            EnableOptimization = opt;
             BuffSpecial = buffSpecial;
             AllSkillMiJiIsSupport = allSkillMiJiIsSupport;
         }

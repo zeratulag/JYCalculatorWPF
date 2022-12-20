@@ -48,6 +48,8 @@ namespace JYCalculator.Src
 
         private bool _HasProceed = false;
 
+        public string Name { get; set; } // 名称
+
         #endregion
 
         #region 构造

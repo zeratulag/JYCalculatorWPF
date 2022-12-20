@@ -97,6 +97,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Main\ItemDTViewModels\ItemDTSlotViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Main\MiJiViewModels\MiJiViewModelBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Main\QiXueViewModels\QiXueSlotViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Main\OptimizationViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\Converter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\Dialogs\AboutDialog.xaml.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\InputDialog.xaml.cs" />

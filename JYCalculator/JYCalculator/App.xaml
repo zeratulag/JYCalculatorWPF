@@ -14,6 +14,9 @@
         <views:QualityToExternalBorderColorConverter x:Key="QualityToExternalBorderColorConverter" />
         <views:QualityToInternalBorderColorConverter x:Key="QualityToInternalBorderColorConverter" />
 
+        <!--  Bool到是否显示转换器  -->
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibility" />
+
 
         <!--  物品外部边界框  -->
         <Style x:Key="Style.ItemExternalBorder" TargetType="Border">

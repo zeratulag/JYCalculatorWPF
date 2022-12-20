@@ -371,8 +371,11 @@
     <Compile Include="Src\DB\TargetDB.cs" />
     <Compile Include="Src\DB\JYDataBase.cs" />
     <Compile Include="Src\DB\ZhenFaDB.cs" />
+    <Compile Include="Src\DPSKernelOptimizer\DPSKernelOptimizerClass.cs" />
+    <Compile Include="Src\DPSKernelOptimizer\MultiZhenFaOptimizer.cs" />
+    <Compile Include="Src\DPSKernelOptimizer\OptimizedICharResult.cs" />
     <Compile Include="Src\DPSKernelShell\DPSKernel.cs" />
-    <Compile Include="Src\DPSKernelShell\DPSKernelOptimizer.cs" />
+    <Compile Include="Src\DPSKernelOptimizer\DPSKernelOptimizer.cs" />
     <Compile Include="Src\DPSKernelShell\DPSKernelShell.cs" />
     <Compile Include="Src\Class\FullCharacter.cs" />
     <Compile Include="Src\Class\InitCharacter.cs" />
