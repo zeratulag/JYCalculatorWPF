@@ -1,4 +1,4 @@
-﻿using JX3CalculatorShared.Src.Class;
+﻿using JX3CalculatorShared.Class;
 using JX3CalculatorShared.Utils;
 using PropertyChanged;
 

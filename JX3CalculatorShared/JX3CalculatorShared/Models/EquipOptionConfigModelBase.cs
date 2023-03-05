@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using JX3CalculatorShared.Class;
 using JX3CalculatorShared.Common;
-using JX3CalculatorShared.Src.Class;
-using JX3CalculatorShared.Src.Data;
+using JX3CalculatorShared.Data;
+using System.Collections.Generic;
 
 namespace JX3CalculatorShared.Models
 {

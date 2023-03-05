@@ -1,5 +1,5 @@
-﻿using JX3CalculatorShared.Globals;
-using JX3CalculatorShared.Src.Class;
+﻿using JX3CalculatorShared.Class;
+using JX3CalculatorShared.Globals;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
@@ -21,7 +21,7 @@ namespace JX3CalculatorShared.ViewModels
 
         #endregion
 
-        public ItemDTSlotViewModel(IEnumerable<ItemDT> data) : base(data)
+        public ItemDTSlotViewModel(IEnumerable<ItemDT> data) : base(data, _ => _.DLCLevel == StaticConst.CurrentLevel)
         {
             var dict = ImmutableDictionary.CreateBuilder<int, int>();
             var rdictb = ImmutableDictionary.CreateBuilder<string, int>();
@@ -63,7 +63,7 @@ namespace JX3CalculatorShared.ViewModels
                 Load(itemid);
             }
 
-            
+
         }
 
         public void Reset()

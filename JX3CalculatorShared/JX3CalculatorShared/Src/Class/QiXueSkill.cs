@@ -1,10 +1,10 @@
-﻿using JX3CalculatorShared.Globals;
-using JX3CalculatorShared.Src.Data;
+﻿using JX3CalculatorShared.Data;
+using JX3CalculatorShared.Globals;
 using JX3CalculatorShared.Utils;
 
 namespace JX3CalculatorShared.Class
 {
-    public class QiXueSkill: AbsIconToolTipItem
+    public class QiXueSkill : AbsIconToolTipItem
     {
         #region 成员
 

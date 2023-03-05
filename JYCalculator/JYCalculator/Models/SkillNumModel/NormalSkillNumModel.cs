@@ -1,5 +1,6 @@
-﻿using JYCalculator.Class;
-using JYCalculator.Src.Data;
+﻿using JX3CalculatorShared.Models;
+using JYCalculator.Class;
+using JYCalculator.Data;
 
 namespace JYCalculator.Models
 {
@@ -35,9 +36,9 @@ namespace JYCalculator.Models
 
         public new void Calc()
         {
-            base.CommonCalc();
+            CommonCalcBefore();
             CalcNormalSkillNum();
-            CalcGF();
+            CommonCalcAfter();
         }
 
         /// <summary>
@@ -47,7 +48,6 @@ namespace JYCalculator.Models
         {
             CalcBL();
         }
-
 
 
     }

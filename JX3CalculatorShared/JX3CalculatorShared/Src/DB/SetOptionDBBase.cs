@@ -1,11 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using JX3CalculatorShared.Class;
+using JX3CalculatorShared.Common;
+using JX3CalculatorShared.Data;
+using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
-using JX3CalculatorShared.Common;
-using JX3CalculatorShared.Src.Class;
-using JX3CalculatorShared.Src.Data;
 
-namespace JX3CalculatorShared.Src.DB
+namespace JX3CalculatorShared.DB
 {
     public class SetOptionDBBase : IDB<int, SetOption>
     {

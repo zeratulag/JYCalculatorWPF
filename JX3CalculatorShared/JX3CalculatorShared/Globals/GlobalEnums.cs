@@ -69,13 +69,13 @@
     {
         public static string ToDescString(this EquipSubTypeEnum typeEnum)
         {
-            var res = (EquipSubTypeEnumDesc) typeEnum;
+            var res = (EquipSubTypeEnumDesc)typeEnum;
             return res.ToString();
         }
 
         public static string ToShortDescString(this EquipSubTypeEnum typeEnum)
         {
-            var res = (EquipSubTypeEnumShortDesc) typeEnum;
+            var res = (EquipSubTypeEnumShortDesc)typeEnum;
             return res.ToString();
         }
     }
@@ -118,6 +118,7 @@
         奇穴,
         武器,
         套装,
+        奇穴触发,
     }
 
     public enum BottomsFMTag

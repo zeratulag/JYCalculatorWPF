@@ -1,21 +1,14 @@
-﻿using JX3CalculatorShared.Utils;
-using JYCalculator.Globals;
-using JYCalculator.Src.Data;
-using JYCalculator.ViewModels;
-using System.Linq;
-using JX3CalculatorShared.Models;
+﻿using JYCalculator.Globals;
 
 namespace JYCalculator.Models
 {
-    public class QiXueConfigModel : QiXueConfigModelBase
+    public partial class QiXueConfigModel
     {
         #region 成员
 
         // Tags
 
         // 是否拥有如下奇穴
-        public bool 秋风散影 { get; private set; }
-        public bool 聚精凝神 { get; private set; }
         public bool 梨花带雨 { get; private set; }
         public bool 百里追魂 { get; private set; }
         public bool 秋声泠羽 { get; private set; }
@@ -38,17 +31,6 @@ namespace JYCalculator.Models
 
         #endregion
 
-        #region 构建
-
-        public void UpdateInput(QiXueConfigViewModel vm)
-        {
-            QiXueNames = vm.ItemNames;
-            QiXueNamesSet = QiXueNames.ToHashSet();
-            Calc();
-        }
-
-        #endregion
-
         public override void Calc()
         {
             GetRecipes();
@@ -60,24 +42,6 @@ namespace JYCalculator.Models
             GetSelfBuffNames();
             GetIsSupport();
             GetGenre();
-        }
-
-        public void GetRecipes()
-        {
-            var dict = StaticJYData.DB.Recipe.OtherAssociate;
-
-            AssociateKeys.Clear();
-            OtherRecipes.Clear();
-
-            foreach (var name in QiXueNames)
-            {
-                var key = $"奇穴-{name}";
-                if (dict.ContainsKey(key))
-                {
-                    AssociateKeys.Add(key);
-                    OtherRecipes.AddRange(dict[key]);
-                }
-            }
         }
 
         public void GetTags()
@@ -95,26 +59,6 @@ namespace JYCalculator.Models
             寒江夜雨 = Has(nameof(寒江夜雨));
         }
 
-        /// <summary>
-        /// 是否激活了奇穴
-        /// </summary>
-        /// <param name="name">奇穴名，例如"秋风散影"</param>
-        public bool Has(string name)
-        {
-            return QiXueNamesSet.Contains(name);
-        }
-
-
-        /// <summary>
-        /// 计算心无相关属性
-        /// </summary>
-        public void GetXW()
-        {
-            XWCD = 90;
-            XWDuration = 10 + 5.0 * 聚精凝神.ToInt();
-            XWExtraSP = JYStaticData.XWConsts.ExtraSP * 聚精凝神.ToInt();
-            NormalDuration = XWCD - XWDuration;
-        }
 
         public void GetNums()
         {
@@ -122,45 +66,22 @@ namespace JYCalculator.Models
             CX_DOT_Stack = 摧心 ? 3 : 2;
         }
 
-        public void GetSkillEffects()
-        {
-            SkillModifiers = StaticJYData.DB.SkillModifier.GetQiXueMods(QiXueNamesSet);
-        }
-
-        public void GetSkillEvents()
-        {
-            SkillEvents = StaticJYData.DB.SkillInfo.GetQiXueEvents(QiXueNamesSet);
-        }
-
-        /// <summary>
-        /// 计算有哪些激活的个人Buff
-        /// </summary>
-        public void GetSelfBuffNames()
-        {
-            SelfBuffNames = StaticJYData.DB.Buff.GetQiXueBuffs(QiXueNamesSet);
-        }
-
-        public void GetIsSupport()
-        {
-            IsSupport = IsSupported(StaticJYData.Data.Setting);
-        }
-
         /// <summary>
         /// 获取当前流派
         /// </summary>
         protected void GetGenre()
         {
-            string res = "ZhuXingBaiLi_HuiChang";
+            string res = XFStaticConst.Genre.逐星百里_回肠;
 
             if (百里追魂)
             {
                 if (回肠荡气)
                 {
-                    res = "ZhuXingBaiLi_HuiChang";
+                    res = XFStaticConst.Genre.逐星百里_回肠;
                 }
                 else if (白雨跳珠)
                 {
-                    res = "ZhuXingBaiLi_BaiYu";
+                    res = XFStaticConst.Genre.逐星百里_白雨;
                 }
             }
 

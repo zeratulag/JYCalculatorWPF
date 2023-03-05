@@ -15,13 +15,13 @@ namespace JX3CalculatorShared.Views
         // 品级到字体颜色转换
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            string res = IconID2Path((int) value);
+            string res = IconID2Path((int)value);
             return res;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            string path = (string) value;
+            string path = (string)value;
             string s = path.RemovePrefix(".png");
             string id = s.Split(";").Last();
             int i = Int32.Parse(id);
@@ -34,9 +34,9 @@ namespace JX3CalculatorShared.Views
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            QualityEnum quality = (QualityEnum) value;
+            QualityEnum quality = (QualityEnum)value;
             string color = quality.GetColor();
-            var res = new SolidColorBrush((Color) ColorConverter.ConvertFromString(color));
+            var res = new SolidColorBrush((Color)ColorConverter.ConvertFromString(color));
             return res;
         }
 
@@ -52,9 +52,9 @@ namespace JX3CalculatorShared.Views
         // 品质到外边框颜色转换
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            QualityEnum quality = (QualityEnum) value;
+            QualityEnum quality = (QualityEnum)value;
             string color = quality.GetExternalBorderColor();
-            var res = new SolidColorBrush((Color) ColorConverter.ConvertFromString(color));
+            var res = new SolidColorBrush((Color)ColorConverter.ConvertFromString(color));
             return res;
         }
 
@@ -70,9 +70,9 @@ namespace JX3CalculatorShared.Views
         // 品质到内边框颜色转换
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            QualityEnum quality = (QualityEnum) value;
+            QualityEnum quality = (QualityEnum)value;
             string color = quality.GetInternalBorderColor();
-            var res = new SolidColorBrush((Color) ColorConverter.ConvertFromString(color));
+            var res = new SolidColorBrush((Color)ColorConverter.ConvertFromString(color));
             return res;
         }
 
@@ -90,14 +90,14 @@ namespace JX3CalculatorShared.Views
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            double dvalue = (double) value;
+            double dvalue = (double)value;
             string res = $"{dvalue:P2}";
             return res;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            string text = (string) value;
+            string text = (string)value;
             double res = double.Parse(text.Replace("%", "")) / 100;
             return res;
         }
@@ -111,15 +111,15 @@ namespace JX3CalculatorShared.Views
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            double dvalue = (double) value;
-            int res = (int) dvalue;
+            double dvalue = (double)value;
+            int res = (int)dvalue;
             return res;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            int ivalue = (int) value;
-            double res = (double) ivalue;
+            int ivalue = (int)value;
+            double res = ivalue;
             return res;
         }
     }
@@ -129,7 +129,7 @@ namespace JX3CalculatorShared.Views
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            bool bvalue = (bool) value;
+            bool bvalue = (bool)value;
             SolidColorBrush color;
             if (bvalue)
             {

@@ -15,7 +15,7 @@
     Height="800"
     Icon="/Views/JY_icon.png"
     SizeToContent="Height"
-    mc:Ignorable="d">
+    mc:Ignorable="d" AllowDrop="True" Drop="JYMainWindow_Drop">
     <!--  ReSharper disable InconsistentNaming  -->
     <Window.InputBindings>
         <KeyBinding Command="{Binding Path=OpenDebugWindowCmd}" Gesture="Ctrl+Alt+D" />
@@ -26,7 +26,6 @@
     </Window.InputBindings>
 
     <DockPanel>
-
         <Menu DockPanel.Dock="Top" IsMainMenu="True">
             <MenuItem Header="文件(_F)">
                 <MenuItem
@@ -64,7 +63,7 @@
                     Header="使用帮助(_H)" />
                 <MenuItem
                     Command="{Binding Path=OpenHelpCmd}"
-                    CommandParameter="JY"
+                    CommandParameter="XF"
                     Header="入门攻略(_T)" />
                 <Separator />
                 <MenuItem
@@ -90,7 +89,6 @@
         </Menu>
 
         <Grid x:Name="Grid_Main">
-
             <!--  主界面  -->
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="10" />
@@ -229,7 +227,7 @@
                                             Grid.Column="0"
                                             Margin="5"
                                             IsChecked="{Binding Path=JN}"
-                                            ToolTip="“夺魄箭”伤害提高10%,“暴雨梨花针”伤害提高10%">
+                                            ToolTip="{Binding Path=JNToolTip}">
                                             套装：技能伤害
                                         </CheckBox>
                                         <CheckBox
@@ -238,7 +236,7 @@
                                             Grid.Column="2"
                                             Margin="5"
                                             IsChecked="{Binding Path=SL}"
-                                            ToolTip="施展外功伤害招式，一定几率提高自身外功会心几率4%，会心效果4%，持续6秒。">
+                                            ToolTip="{Binding Path=SLToolTip}">
                                             套装：神力效果
                                         </CheckBox>
                                     </Grid>
@@ -462,7 +460,7 @@
                                 x:Name="LongFight_rbt"
                                 Grid.Column="1"
                                 GroupName="FightTime"
-                                IsChecked="True"
+                                IsChecked="{Binding Path=LongFight}"
                                 ToolTip="模拟副本长时间战斗">
                                 长时间
                             </RadioButton>
@@ -491,7 +489,7 @@
                             <ComboBox
                                 x:Name="FightOption_Target_cbb"
                                 Grid.Column="0"
-                                Margin="0,5"
+                                Margin="5,5"
                                 DisplayMemberPath="ItemName"
                                 Style="{StaticResource Style.FightOptionCbb}" />
 
@@ -508,7 +506,8 @@
                                 MinWidth="30"
                                 Margin="0,5"
                                 DisplayMemberPath="ItemName"
-                                Style="{StaticResource Style.FightOptionCbb}" />
+                                Style="{StaticResource Style.FightOptionCbb}"
+                                />
 
                         </Grid>
 
@@ -521,7 +520,7 @@
 
                             <ComboBox
                                 x:Name="FightOption_ZhenFa_cbb"
-                                Margin="0,5"
+                                Margin="5,5"
                                 DataContext="{Binding Path=ZhenFa}"
                                 Style="{StaticResource Style.ZhenFaCbb}" />
 
@@ -690,10 +689,10 @@
                                 RowHeight="20">
                                 <sf:SfDataGrid.Columns>
                                     <sf:GridTextColumn
-                                        Width="40"
+                                        Width="20"
                                         HeaderText="#"
                                         MappingName="Rank"
-                                        TextAlignment="Center" />
+                                        TextAlignment="Center"/>
 
                                     <sf:GridTextColumn
                                         Width="100"
@@ -702,17 +701,21 @@
                                         MappingName="Name" />
 
                                     <sf:GridNumericColumn
-                                        Width="70"
-                                        HeaderText="数量"
+                                        Width="50"
+                                        HeaderText="次数"
                                         MappingName="ShowNum"
                                         NumberDecimalDigits="1" />
                                     <sf:GridPercentColumn
-                                        Width="70"
-                                        HeaderText="会心率"
+                                        Width="60"
+                                        HeaderText="会心"
                                         MappingName="CTRatePct" />
-                                    <!--<sf:GridPercentColumn HeaderText="比重" MappingName="ProportionPct" />-->
                                     <sf:GridNumericColumn
-                                        Width="120"
+                                        Width="70"
+                                        HeaderText="伤害"
+                                        MappingName="TotalDamage"
+                                        NumberDecimalDigits="0" />
+                                    <sf:GridNumericColumn
+                                        Width="90"
                                         HeaderText="比重"
                                         MappingName="ProportionPct"
                                         SetCellBoundValue="True">
@@ -725,7 +728,7 @@
                                                         Background="Transparent"
                                                         BorderThickness="0"
                                                         Foreground="Green"
-                                                        Maximum="80"
+                                                        Maximum="100"
                                                         Minimum="0"
                                                         Visibility="Visible"
                                                         Value="{Binding Path=Value}" />
@@ -776,14 +779,15 @@
                             <chart:SfChart
                                 x:Name="ProfitChart"
                                 MaxWidth="400"
-                                MaxHeight="290"
+                                MaxHeight="250"
                                 Margin="0,5,0,0"
                                 HorizontalAlignment="Stretch"
                                 HorizontalContentAlignment="Stretch"
-                                Header="{Binding Path=Header}">
+                                Header="{Binding Path=Header}"
+                                FontSize="15">
                                 <!--  Initialize the horizontal axis for the WPF Chart  -->
                                 <chart:SfChart.PrimaryAxis>
-                                    <chart:CategoryAxis FontSize="14" ShowGridLines="False" />
+                                    <chart:CategoryAxis FontSize="12" ShowGridLines="False" />
                                 </chart:SfChart.PrimaryAxis>
 
                                 <!--  Initialize the vertical axis for the WPF Chart  -->
@@ -812,7 +816,8 @@
                                             <TextBlock
                                                 HorizontalAlignment="Right"
                                                 Foreground="White"
-                                                Text="{Binding Path=Item.Value, StringFormat='{}{0:F3}'}" />
+                                                Text="{Binding Path=Item.Value, StringFormat='{}{0:F3}'}" 
+                                                FontSize="12"/>
                                         </DataTemplate>
                                     </chart:BarSeries.TooltipTemplate>
 
@@ -858,13 +863,13 @@
                                 RowHeight="20">
                                 <sf:SfDataGrid.Columns>
                                     <sf:GridTextColumn
-                                        Width="40"
+                                        Width="30"
                                         HeaderText="#"
                                         MappingName="Rank"
                                         TextAlignment="Center" />
 
                                     <sf:GridTextColumn
-                                        Width="80"
+                                        Width="100"
                                         HeaderText="阵法"
                                         HorizontalHeaderContentAlignment="Center"
                                         MappingName="Name" />
@@ -875,7 +880,7 @@
                                         MappingName="DPS"
                                         NumberDecimalDigits="0" />
                                     <sf:GridNumericColumn
-                                        Width="100"
+                                        Width="120"
                                         HeaderText="相对"
                                         MappingName="RelativePct"
                                         SetCellBoundValue="True">

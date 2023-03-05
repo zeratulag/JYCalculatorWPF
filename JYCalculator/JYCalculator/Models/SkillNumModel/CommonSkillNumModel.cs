@@ -1,51 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Runtime.InteropServices;
-using JX3CalculatorShared.Src;
-using JX3CalculatorShared.Src.Class;
-using JX3CalculatorShared.Src.Data;
+﻿using JX3CalculatorShared.Class;
+using JX3CalculatorShared.Models;
 using JYCalculator.Class;
-using JYCalculator.Globals;
-using JYCalculator.Src;
-using JYCalculator.Src.Class;
-using JYCalculator.Src.Data;
-using static JYCalculator.Globals.JYStaticData;
+using JYCalculator.Data;
+using System;
+using Force.DeepCloner;
+
 
 namespace JYCalculator.Models
 {
     // 分时段模型
-    public class CommonSkillNumModel
+    public partial class CommonSkillNumModel
     {
         #region 成员
 
-        public readonly QiXueConfigModel QiXue;
-        public readonly SkillHasteTable SkillHaste;
-
-        public readonly EquipOptionConfigModel Equip;
-        public readonly BigFMConfigModel BigFM;
-
-        public readonly SkillNumModelArg Arg;
-
-        public double Time;
         public readonly JYSkillCountItem Num; // 技能对象
+        public JYSkillCountItem FinalNum; // 最终技能数对象
 
-        public bool IsXW => Num._XW;
-        public bool IsBigXW; // 当前是否处于大心无状态
-        public WPOption WP => Equip.WP;
-
-        public int AbilityRank; // 手法等级，0~3
-
-
-        public Dictionary<string, SkillEventItem> SkillEvents;
-
-        public SkillFreqDict BasicSkillFreq; // 未考虑橙武改变循环前的技能频率
-        public SkillFreqDict FinalSkillFreq; // 考虑橙武改变循环后的技能频率
-
-        public Dictionary<string, double> EventsHitFreq; // 在基础频率上，各个时间触发Hit数
-
-        public double SLTypeHitFreq = 0; // 神力类触发的Hit频率（无论当前有没有套装效果均计算）
-        public double SLCover = 0; // 神力覆盖率
-        public static SkillEventItem SLEventItem = StaticJYData.DB.SkillInfo.Events["SL"];
 
         public double CW_DOTPerCW = 30; // 单次橙武特效造成的伤害次数（常规10跳x3层，顶级可以多1跳2层）
         public double CW_DOTHitPerCW = 10; // 单次橙武特效在伤害统计记录的次数（顶级11）
@@ -55,7 +25,8 @@ namespace JYCalculator.Models
         #region 构造
 
         public CommonSkillNumModel(QiXueConfigModel qixue, SkillHasteTable skillhaste, AbilitySkillNumItem abilityitem,
-            EquipOptionConfigModel equip, BigFMConfigModel bigfm, SkillNumModelArg arg)
+            EquipOptionConfigModel equip, BigFMConfigModel bigfm,
+            SkillNumModelArg arg)
         {
             QiXue = qixue;
             SkillHaste = skillhaste;
@@ -71,18 +42,31 @@ namespace JYCalculator.Models
 
             IsBigXW = IsXW && QiXue.聚精凝神;
 
+            XFPostConstructor();
+        }
+
+
+        public void XFPostConstructor()
+        {
             CW_DOTPerCW = 10 * 3.0 - 1 + AbilityRank;
             CW_DOTHitPerCW = 10 + AbilityRank / 3.0;
         }
+
 
         #endregion
 
         #region 计算
 
-        public void CommonCalc()
+        public void CommonCalcBefore()
         {
             CalcCX_DOT();
             CalcZX_DOT();
+        }
+
+        public void CommonCalcAfter()
+        {
+            // 在其他技能数已经确定时的通用计算
+            CalcGF();
         }
 
 
@@ -175,73 +159,27 @@ namespace JYCalculator.Models
             Num.CalcGF();
         }
 
-        public Dictionary<string, double> GetEventHitFreq(IEnumerable<SkillEventItem> items)
-        {
-            var skillfreq = Num.ToSkillFreqDict();
-            var res = skillfreq.GetEventsHitFreq(items);
-            return res;
-        }
-
         /// <summary>
         /// 计算触发事件
         /// </summary>
         public void CalcEvents()
         {
             GetBasicSkillFreq();
-            GetEventHitFreq();
-            FinalSkillFreq = new SkillFreqDict(BasicSkillFreq);
+            GetBasicEventHitFreq();
+            FinalNum = Num; // 惊羽可以直接赋值
+            FinalSkillFreq = FinalNum.ToSkillFreqDict();
             GetBigCWFreq(); // 惊羽需要先计算橙武频率，再计算其他频率
-            GetSLCover();
+            GetBasicSLCover();
             GetPZFreq();
             GetBigFMFreq();
             GetPiaoHuangFreq();
-        }
-
-        // 计算基础技能频率
-        public void GetBasicSkillFreq()
-        {
-            BasicSkillFreq = Num.ToSkillFreqDict();
-        }
-
-        // 计算触发事件Hit频率
-        public void GetEventHitFreq()
-        {
-            EventsHitFreq = BasicSkillFreq.GetEventsHitFreq(SkillEvents.Values);
-        }
-
-        // 计算神力覆盖率
-        public void GetSLCover()
-        {
-            SLTypeHitFreq = BasicSkillFreq.GetEventHitFreq(SLEventItem); // 无论有没有神力效果，均计算
-            const string sl = "SL";
-            if (SkillEvents.ContainsKey(sl))
-            {
-                SLCover = SkillEvents[sl].BuffCoverRate(EventsHitFreq[sl]);
-            }
-        }
-
-        // 计算大附魔次数
-        public void GetBigFMFreq()
-        {
-            if (BigFM.Wrist != null) // 伤腕大附魔
-            {
-                var wirstKey = "BigFM_WRIST";
-                var wristInterval = SkillEvents[wirstKey].MeanTriggerInterval(EventsHitFreq[wirstKey]);
-                FinalSkillFreq.AddByInterval("KW_XR", wristInterval);
-            }
-
-            if (BigFM.Shoes != null && BigFM.Shoes.DLCLevel == 110) // 110级伤鞋大附魔
-            {
-                var shoesKey = "BigFM_SHOES_110";
-                var shoesInterval = SkillEvents[shoesKey].MeanTriggerInterval(EventsHitFreq[shoesKey]);
-                FinalSkillFreq.AddByInterval("KW_ZF", shoesInterval);
-            }
+            GetLMJF();
         }
 
 
-        // 计算破招频率
         public void GetPZFreq()
         {
+            // 计算破招频率
             FinalSkillFreq.AddByFreq("PZ_ZM", FinalSkillFreq["ZM_SF"]); // 瞬发追命带破招
 
             if (IsXW)
@@ -250,29 +188,31 @@ namespace JYCalculator.Models
             }
         }
 
-        // 计算橙武技能频率
         public void GetBigCWFreq()
         {
+            // 计算橙武技能频率
             if (!WP.IsBigCW) return;
-            var key = "CW_ZX";
-            var CWInterval = SkillEvents[key].MeanTriggerInterval(EventsHitFreq[key]);
+            
+            const string key = "CW_ZX";
+            var CWInterval = SkillEvents[key].MeanTriggerInterval(BasicEventsHitFreq[key]);
             double CWTime = SkillEvents[key].Time; // 橙武特效持续时间，7秒
 
             var ZX_Origin_Num = FinalSkillFreq["ZX"] * CWTime;
             var ZX_Target_Num = 3.0; // 橙武特效期间需要打3逐星。
             var ZX_Time = IsBigXW ? SkillHaste.GCD.XWTime : SkillHaste.GCD.Time; // 施展逐星所需时间;
 
-            var Total_Interval_Time = CWInterval;
+            double Total_Interval_Time = CWInterval;
 
             if (ZX_Origin_Num < ZX_Target_Num)
             {
                 var ZX_Extra_Num = ZX_Target_Num - ZX_Origin_Num; // 需要额外打的逐星数量;
                 var ZX_Extra_Time = ZX_Time * ZX_Extra_Num;
 
-                Total_Interval_Time += ZX_Extra_Time; // 由于多打逐星，循环被拉长后的总时间
+                Total_Interval_Time = CWInterval + ZX_Extra_Time; // 由于多打逐星，循环被拉长后的总时间
                 var coef = CWInterval / Total_Interval_Time; // 损失系数, ~ 0.94
+                //var coef = (CWInterval - ZX_Extra_Time) / Total_Interval_Time; // 损失系数, ~ 0.94
                 FinalSkillFreq.AppplyFreqChange(coef);
-                var new_GF = FinalSkillFreq.RefreshJYGFFreq();
+                FinalSkillFreq.RefreshJYGFFreq();
                 FinalSkillFreq.AddSkillFreq("ZX", ZX_Extra_Num / Total_Interval_Time); // 增加逐星频率
 
                 if (QiXue.星落如雨)
@@ -286,43 +226,12 @@ namespace JYCalculator.Models
 
             double CW_DP;
             var CW_DPkey = nameof(CW_DP);
-            CW_DP = SkillEvents[CW_DPkey].TriggerFreq(EventsHitFreq[CW_DPkey]);
+            CW_DP = SkillEvents[CW_DPkey].TriggerFreq(FinalSkillFreq["DP"]);
             FinalSkillFreq.AddByFreq(CW_DPkey, CW_DP);
+
+            GetFinalEventHitFreq();
         }
-
-        /// <summary>
-        /// 计算 逐云寒蕊（飘黄） 频率，注意此频率依赖于罡风频率，请在CalcGF()后使用！
-        /// </summary>
-        public void GetPiaoHuangFreq()
-        {
-            if (Arg.PiaoHuangCover > 0)
-            {
-                const string piaohuang = "PiaoHuang";
-                var ph = SkillEvents[piaohuang];
-
-                var eHSP = IsBigXW ? XWConsts.ExtraSP : 0;
-                var realCD = CurrentHaste.SKT(ph.CD, Arg.HS, eHSP);
-                var interval = ph.MeanTriggerInterval(hitfreq: EventsHitFreq[piaohuang], cd: realCD);
-                var freq = 1 / interval;
-                FinalSkillFreq.AddByFreq("ZhuYunHanRui", freq * Arg.PiaoHuangCover);
-            }
-        }
-
 
         #endregion
     }
-
-    public readonly struct SkillNumModelArg
-    {
-        public readonly bool HasZhen; // 是否有阵法
-        public readonly double PiaoHuangCover; // 飘黄BUFF覆盖率
-        public readonly int HS; // 加速值
-        public SkillNumModelArg(bool hasZhen, double piaoHuangCover, int hs)
-        {
-            HasZhen = hasZhen;
-            PiaoHuangCover = piaoHuangCover;
-            HS = hs;
-        }
-    }
-
 }

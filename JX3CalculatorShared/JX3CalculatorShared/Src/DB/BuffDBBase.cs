@@ -1,7 +1,7 @@
-﻿using JX3CalculatorShared.Common;
+﻿using JX3CalculatorShared.Class;
+using JX3CalculatorShared.Common;
+using JX3CalculatorShared.Data;
 using JX3CalculatorShared.Globals;
-using JX3CalculatorShared.Src.Class;
-using JX3CalculatorShared.Src.Data;
 using JX3CalculatorShared.Utils;
 using Syncfusion.Windows.Shared;
 using System;
@@ -9,9 +9,9 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 
-namespace JX3CalculatorShared.Src.DB
+namespace JX3CalculatorShared.DB
 {
-    public class BuffDBBase: IDB<string, Buff>
+    public class BuffDBBase : IDB<string, Buff>
     {
         public static readonly ImmutableArray<string> BuffTypes =
             EnumTool.GetStrValues<BuffTypeEnum>().ToImmutableArray(); // Buff分类
@@ -64,46 +64,46 @@ namespace JX3CalculatorShared.Src.DB
                 switch (bufftype)
                 {
                     case BuffTypeEnum.Buff_Self:
-                    {
-                        if (value.DescName != "弩箭机关") buff_self.Add(key, value);
-                        break;
-                    }
+                        {
+                            if (value.DescName != "弩箭机关") buff_self.Add(key, value);
+                            break;
+                        }
 
                     case BuffTypeEnum.Buff_Normal:
-                    {
-                        buff_normal.Add(key, value);
-                        break;
-                    }
+                        {
+                            buff_normal.Add(key, value);
+                            break;
+                        }
 
                     case BuffTypeEnum.Buff_Banquet:
-                    {
-                        buff_banquet.Add(key, value);
-                        break;
-                    }
+                        {
+                            buff_banquet.Add(key, value);
+                            break;
+                        }
 
                     case BuffTypeEnum.DeBuff_Normal:
-                    {
-                        debuff_normal.Add(key, value);
-                        break;
-                    }
+                        {
+                            debuff_normal.Add(key, value);
+                            break;
+                        }
 
                     case BuffTypeEnum.Buff_Extra:
-                    {
-                        buff_extra.Add(key, value);
-                        break;
-                    }
+                        {
+                            buff_extra.Add(key, value);
+                            break;
+                        }
 
                     case BuffTypeEnum.Buff_ExtraStack:
-                    {
-                        buff_extrastack.Add(key, value);
-                        break;
-                    }
+                        {
+                            buff_extrastack.Add(key, value);
+                            break;
+                        }
 
                     case BuffTypeEnum.Buff_ExtraTrigger:
-                    {
-                        buff_extratrigger.Add(key, value);
-                        break;
-                    }
+                        {
+                            buff_extratrigger.Add(key, value);
+                            break;
+                        }
                 }
             }
 
@@ -124,29 +124,29 @@ namespace JX3CalculatorShared.Src.DB
             switch (bufftype)
             {
                 case BuffTypeEnum.Buff_Self:
-                {
-                    return Buff_Self;
-                }
+                    {
+                        return Buff_Self;
+                    }
 
                 case BuffTypeEnum.Buff_Normal:
-                {
-                    return Buff_Normal;
-                }
+                    {
+                        return Buff_Normal;
+                    }
 
                 case BuffTypeEnum.Buff_Banquet:
-                {
-                    return Buff_Banquet;
-                }
+                    {
+                        return Buff_Banquet;
+                    }
 
                 case BuffTypeEnum.DeBuff_Normal:
-                {
-                    return DeBuff_Normal;
-                }
+                    {
+                        return DeBuff_Normal;
+                    }
 
                 default:
-                {
-                    return null;
-                }
+                    {
+                        return null;
+                    }
             }
         }
 

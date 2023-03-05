@@ -1,9 +1,9 @@
-﻿using System;
+﻿using JX3CalculatorShared.Globals;
+using JX3CalculatorShared.Utils;
+using System;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
-using JX3CalculatorShared.Globals;
-using JX3CalculatorShared.Utils;
 
 namespace JX3CalculatorShared.Views
 {

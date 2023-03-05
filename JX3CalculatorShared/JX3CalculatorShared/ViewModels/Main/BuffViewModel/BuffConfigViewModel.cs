@@ -1,10 +1,9 @@
 ﻿using JX3CalculatorShared.Class;
-using JX3CalculatorShared.Src.Class;
+using JX3CalculatorShared.Globals;
 using JX3CalculatorShared.Utils;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
-using JX3CalculatorShared.Globals;
 
 namespace JX3CalculatorShared.ViewModels
 {
@@ -84,7 +83,7 @@ namespace JX3CalculatorShared.ViewModels
             {
                 EmitedBaseBuffGroup = IsTarget ? BaseBuffGroup.TargetEmpty : BaseBuffGroup.Empty;
             }
-            
+
         }
 
         protected override void _DEBUG()

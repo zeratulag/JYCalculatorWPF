@@ -1,5 +1,8 @@
-﻿using System.Linq;
-using JYCalculator.Src.Data;
+﻿using JX3CalculatorShared.Globals;
+using JYCalculator.Data;
+using JYCalculator.Globals;
+using System;
+using System.Linq;
 
 namespace JYCalculator.Src
 {
@@ -7,20 +10,24 @@ namespace JYCalculator.Src
     {
         public static void ConsoleMain()
         {
-            var args = new string[] {"0"};
+            var args = new string[] { "0" };
             ConsoleMain(args);
 
         }
-        
+
         public static void ConsoleMain(string[] args)
         {
 
 #if DEBUG
-            var jyData = StaticJYData.Data;
-            var jyDB = StaticJYData.DB;
-            
+            var jyData = StaticXFData.Data;
+            var jyDB = StaticXFData.DB;
 
-            var data = StaticJYData.DB.ZhenFa.Data.Skip(1).First().Value.Buff;
+
+            var data = StaticXFData.DB.ZhenFa.Data.Skip(1).First().Value.Buff;
+            var fGp = StaticConst.fGP;
+            var xGp = XFStaticConst.fGP;
+
+
             var guard = 0;
 
 #endif

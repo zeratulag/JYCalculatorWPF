@@ -1,6 +1,5 @@
 ﻿using JX3CalculatorShared.Class;
 using JX3CalculatorShared.Globals;
-using JX3CalculatorShared.Src.Class;
 using JX3CalculatorShared.Utils;
 using System.Collections.Generic;
 using System.Collections.Immutable;
@@ -82,7 +81,7 @@ namespace JX3CalculatorShared.ViewModels
             {
                 SCharAttr.Values.TraceCat();
             }
-            
+
         }
 
         protected void GetNamedAttrs()

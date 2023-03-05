@@ -1,12 +1,10 @@
-﻿using JX3CalculatorShared.Class;
-using JX3CalculatorShared.Globals;
-using JX3CalculatorShared.Src.Class;
+﻿using JX3CalculatorShared.Globals;
 using JX3CalculatorShared.Utils;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 
-namespace JX3CalculatorShared.Src.Data
+namespace JX3CalculatorShared.Data
 {
     public class DataLoader
     {
@@ -15,7 +13,6 @@ namespace JX3CalculatorShared.Src.Data
         protected string ZhenFaFile; // TL_zhenfa.json
         protected string SettingFile; // TL_zhenfa.json
 
-        public CalcSetting Setting; // _Settings.json
         public ImmutableArray<TargetItem> Target;
         public ImmutableArray<RecipeItem> RecipeMJ;
         public ImmutableArray<RecipeItem> RecipeOther;
@@ -35,7 +32,6 @@ namespace JX3CalculatorShared.Src.Data
         public ImmutableArray<AbilityItem> Ability;
         public ImmutableDictionary<string, SkillEventItem> SkillEvent;
 
-        
 
         protected void LoadTarget()
         {
@@ -137,12 +133,6 @@ namespace JX3CalculatorShared.Src.Data
             {
                 _.Parse();
             }
-        }
-
-        protected void LoadSetting()
-        {
-            Setting = ImportTool.ReadJSON<CalcSetting>(SettingFile);
-            Setting.Parse();
         }
     }
 }

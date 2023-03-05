@@ -1,18 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Collections.Immutable;
-using JYCalculator.Class;
-using JX3CalculatorShared.Common;
-using JYCalculator.Globals;
-using JYCalculator.Src.Data;
 
-namespace JYCalculator.Src.DB
+namespace JYCalculator.DB
 {
-    public class AttrWeightDB : IDB<string, AttrWeight>
+    public partial class AttrWeightDB
     {
         #region 成员
-
-        public readonly ImmutableDictionary<string, AttrWeight> Data;
-        public readonly ImmutableArray<AttrWeight> Arr;
 
         public static readonly ImmutableDictionary<string, string> AttrNameDict = new Dictionary<string, string>()
         {
@@ -24,38 +17,5 @@ namespace JYCalculator.Src.DB
         }.ToImmutableDictionary();
 
         #endregion
-
-        #region 构造
-
-        public AttrWeightDB(JYDataLoader dl)
-        {
-            var arr = new List<AttrWeight>(12);
-            arr.Add(JYConsts.PointWeight);
-            arr.Add(JYConsts.ScoreWeight);
-
-            int i = 1;
-            var DiamondDict = dl.DiamondValue;
-            while (DiamondDict.ContainsKey(i))
-            {
-                var v = DiamondDict[i];
-                arr.Add(new AttrWeight(v));
-                i++;
-            }
-
-            Arr = arr.ToImmutableArray();
-            Data = Arr.ToImmutableDictionary(_ => _.Name, _ => _);
-        }
-
-        public AttrWeightDB(): this(StaticJYData.Data)
-        {
-        }
-
-
-        #endregion
-
-        public AttrWeight Get(string name)
-        {
-            return Data[name];
-        }
     }
 }

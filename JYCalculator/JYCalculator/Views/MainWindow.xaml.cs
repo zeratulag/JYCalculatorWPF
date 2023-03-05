@@ -1,19 +1,18 @@
-﻿using Minimod.PrettyPrint;
-using System.Diagnostics;
-using System.Windows;
-using System.Windows.Input;
+﻿using JX3CalculatorShared.Utils;
 using JX3CalculatorShared.Views;
+using JX3CalculatorShared.Views.Dialogs;
 using JYCalculator.Models;
 using JYCalculator.Src;
 using JYCalculator.ViewModels;
+using Minimod.PrettyPrint;
 using Newtonsoft.Json;
+using System;
 using System.ComponentModel;
-using System.Windows.Controls.Primitives;
-using JX3CalculatorShared.Views.Dialogs;
+using System.Diagnostics;
+using System.IO;
+using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media;
-using System.Windows.Data;
-using JX3CalculatorShared.Utils;
+using System.Windows.Input;
 
 namespace JYCalculator.Views
 {
@@ -29,7 +28,6 @@ namespace JYCalculator.Views
         private readonly DebugMainWindow _DebugMainWindow = null;
         private readonly AboutDialog _AboutDialog = null;
         private readonly AboutDialogViewModel _AboutVM = null;
-
 
         #endregion
 
@@ -49,8 +47,7 @@ namespace JYCalculator.Views
             MakeCommands();
             LoadDefault();
 
-
-            _DebugMainWindow = new DebugMainWindow(_VMs);
+            _DebugMainWindow = new DebugMainWindow(_VMs.DebugVM);
 
             Show();
             _DebugMainWindow.Owner = this;
@@ -61,7 +58,25 @@ namespace JYCalculator.Views
 
             _VMs.EnableAutoUpdate();
 
+            StartUp(); // 处理文件打开方式
         }
+
+        // 当打开文件方式启动时，需要额外处理
+        public void StartUp()
+        {
+            string[] args = Environment.GetCommandLineArgs();
+            if (args.Length <= 1)
+            {
+                return;
+            }
+
+            var file = new FileInfo(args[1]);
+            if (file.Exists)
+            {
+                ReadFile(file.FullName);
+            }
+        }
+
 
         public void _DEBUG()
         {
@@ -76,7 +91,6 @@ namespace JYCalculator.Views
 
         public void PreProceed()
         {
-
             ConsoleMainProgram.ConsoleMain();
             GroupBox_Debug.Visibility = Visibility.Collapsed;
         }
@@ -256,7 +270,7 @@ namespace JYCalculator.Views
         protected override void OnClosing(CancelEventArgs e)
         {
             var confirmed = _VMs.CanExit();
-            e.Cancel = !confirmed;  // cancels the window close
+            e.Cancel = !confirmed; // cancels the window close
             if (confirmed)
             {
                 Application.Current.Shutdown();
@@ -288,6 +302,21 @@ namespace JYCalculator.Views
             {
                 Expander_CombatStat.IsExpanded = false;
             }
+        }
+
+        private void JYMainWindow_Drop(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                string[] files = (string[]) e.Data.GetData(DataFormats.FileDrop);
+                ReadFile(files[0]);
+                e.Handled = true;
+            }
+        }
+
+        public void ReadFile(string filepath)
+        {
+            _VMs.ReadFile(filepath);
         }
     }
 }

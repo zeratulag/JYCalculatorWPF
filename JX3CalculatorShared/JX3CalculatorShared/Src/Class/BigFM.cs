@@ -1,6 +1,6 @@
 ﻿using JX3CalculatorShared.Common;
+using JX3CalculatorShared.Data;
 using JX3CalculatorShared.Globals;
-using JX3CalculatorShared.Src.Data;
 using JX3CalculatorShared.Utils;
 using System;
 using System.Collections.Generic;
@@ -8,9 +8,9 @@ using System.Collections.Immutable;
 using System.Linq;
 
 
-namespace JX3CalculatorShared.Src.Class
+namespace JX3CalculatorShared.Class
 {
-    public class BigFM: ICatsable
+    public class BigFM : ICatsable
     {
         #region 成员
 
@@ -142,9 +142,9 @@ namespace JX3CalculatorShared.Src.Class
             }
             else
             {
-               var realname = name.Split('_').Last();
-               var success = Enum.TryParse(realname, out BottomsFMTag res);
-               result = success ? res : BottomsFMTag.NotBottoms;
+                var realname = name.Split('_').Last();
+                var success = Enum.TryParse(realname, out BottomsFMTag res);
+                result = success ? res : BottomsFMTag.NotBottoms;
             }
             return result;
         }

@@ -1,57 +1,49 @@
-﻿using JX3CalculatorShared.Common;
-using JYCalculator.Class;
+﻿using JX3CalculatorShared.Class;
+using JX3CalculatorShared.Common;
+using JYCalculator.Data;
 using JYCalculator.Globals;
+using System;
 using System.Collections.Generic;
-using JX3CalculatorShared.Src;
-using JYCalculator.Src.Data;
 
-namespace JYCalculator.Src.Class
+namespace JYCalculator.Class
 {
     /// <summary>
     /// 描述惊羽技能数/频率模型
     /// </summary>
-    public class JYSkillCountItem
+    public class JYSkillCountItem: SkillCountItemBase
     {
         #region 成员
 
         // Ability 对象中的标准释放时间
         public static readonly Period<JYSkillStandardTime> AbilitySkillTime =
-            JYStaticData.CurrentHaste.GetJY_SkillStandardTime();
-
-        public bool _XW { get; } // 表明是否为心无状态
-
-        public int _Rank { get; } // 手法等级
-
-        public double _Time { get; private set; } // 时间
-        public double _UTime { get; private set; } // 技能利用时间
-        public double _URate { get; private set; } // 时间利用率
+            XFStaticConst.CurrentHaste.GetJY_SkillStandardTime();
 
         public int _BYPerCast = 7; // 单次大暴雨跳数
 
         public double _BYTotalHitNum => _BYCast * _BYPerCast; // 暴雨总Hit数
         public double _BYTail => _BYPerCast == 7 ? LH7 : LH5; // 暴雨尾跳数
 
-        public double DP { get; set; } // 夺魄数
-        public double BY { get; set; } // 暴雨第1跳次数
-        public double LH2 { get; set; } // 暴雨第2跳次数
-        public double LH3 { get; set; } // 暴雨第3跳次数
-        public double LH4 { get; set; } // 暴雨第4跳次数
-        public double LH5 { get; set; } // 暴雨第5跳次数
-        public double LH6 { get; set; } // 暴雨第6跳次数
-        public double LH7 { get; set; } // 暴雨第6跳次数
+        public double DP; // 夺魄数
+        public double BY; // 暴雨第1跳次数
+        public double LH2; // 暴雨第2跳次数
+        public double LH3; // 暴雨第3跳次数
+        public double LH4; // 暴雨第4跳次数
+        public double LH5; // 暴雨第5跳次数
+        public double LH6; // 暴雨第6跳次数
+        public double LH7; // 暴雨第6跳次数
 
-        public double ZM { get; set; } // 追命数
-        public double ZM_SF { get; set; } //  瞬发追命数
-        public double ZX { get; set; } // 逐星数
-        public double _BYCast { get; set; } // 暴雨释放次数
+        public double ZM; // 追命数
+        public double ZM_SF; //  瞬发追命数
+        public double ZX; // 逐星数
+        public double _BYCast; // 暴雨释放次数
 
         // 以下属性需要结合SkillNumModel计算得到
-        public double BL { get; set; } // 百里
-        public double GF { get; set; }
-        public double CX_DOT { get; set; } // 穿心次数
-        public double CXY_DOT { get; set; } // 鹰扬穿心次数
-        public double ZX_DOT { get; set; } // 逐星DOT数
-        public double _CX_DOT_Hit { get; set; } // 穿心DOT跳的次数
+        public double BL; // 百里
+        public double GF;
+        public double CX_DOT; // 穿心次数
+        public double CXY_DOT; // 鹰扬穿心次数
+        public double ZX_DOT; // 逐星DOT数
+        public double _CX_DOT_Hit; // 穿心DOT跳的次数
 
         #endregion
 
@@ -139,10 +131,10 @@ namespace JYCalculator.Src.Class
             _URate = _UTime / _Time;
         }
 
-        // 重设定时间
         public void ResetTime(double newTime)
         {
-            if (newTime == _Time) return;
+            // 重设定时间（当新增字段时候别忘了增加）
+            if (Math.Abs(newTime - _Time) < 1e-5) return;
             var k = newTime / _Time;
 
             _UTime *= k;

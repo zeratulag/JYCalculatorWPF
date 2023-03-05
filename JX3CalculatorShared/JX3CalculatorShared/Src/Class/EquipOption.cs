@@ -1,6 +1,5 @@
-﻿using JX3CalculatorShared.Class;
+﻿using JX3CalculatorShared.Data;
 using JX3CalculatorShared.Globals;
-using JX3CalculatorShared.Src.Data;
 using JX3CalculatorShared.Utils;
 using Newtonsoft.Json;
 using Syncfusion.Windows.Shared;
@@ -9,7 +8,7 @@ using System.Collections.Immutable;
 using System.Linq;
 
 
-namespace JX3CalculatorShared.Src.Class
+namespace JX3CalculatorShared.Class
 {
     public class EquipOption
     {
@@ -134,7 +133,7 @@ namespace JX3CalculatorShared.Src.Class
             {
                 var Id = int.Parse(RawIDs);
                 var equipId = GetEquipID(TabID, Id);
-                EquipIDs = new[] {equipId};
+                EquipIDs = new[] { equipId };
             }
         }
 
@@ -156,6 +155,7 @@ namespace JX3CalculatorShared.Src.Class
         public readonly NamedAttrs AttrsDesc;
 
         public readonly bool IsBigCW; // 是否为大橙武
+        public readonly bool IsLongMen; // 是否为龙门飞剑
 
         public ImmutableArray<SkillEventItem> SkillEvents { get; private set; } // 关联的触发事件
 
@@ -172,6 +172,7 @@ namespace JX3CalculatorShared.Src.Class
             SCharAttr = new CharAttrCollection(GetSAtDict(), null, true);
             AttrsDesc = SCharAttr.ToNamed(ItemName);
             IsBigCW = Name == "Big_CW";
+            IsLongMen = Name.StartsWith("LongMen#");
             GetToolTip();
             ParseEquipIDs();
         }
@@ -204,7 +205,7 @@ namespace JX3CalculatorShared.Src.Class
         // 获取新的提示
         public void GetToolTip()
         {
-            if (Value > 0)
+            if (Value > 0 && Tag == "Water")
             {
                 var newstr = $"特效提升{Value}{DamageTypeDesc}攻击力";
                 var res = $"{ToolTip}\n{newstr}";

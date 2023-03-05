@@ -1,71 +1,31 @@
-﻿using System.Collections.Generic;
-using JX3CalculatorShared.Src.Class;
+﻿using JX3CalculatorShared.Class;
 using JYCalculator.Globals;
-using MiniExcelLibs.Attributes;
+using System.Collections.Generic;
 
 namespace JYCalculator.Class
 {
-    public class DamageDeriv
+    public partial class DamageDeriv
     {
-        public string Name { get; set; }
-        public double Base_AP { get; set; } // 基础攻击
-        public double Base_OC { get; set; } // 基础破防
         public double Base_L { get; set; } // 基础力道
-        public double PZ { get; set; } // 破招
-        public double WS { get; set; } // 无双
-        public double CT { get; set; } // 会心
-        public double CF { get; set; } // 会效
-        public double WP { get; set; } // 武器伤害
-        public double Final_AP { get; set; } // 最终攻击
-        public double Final_OC { set; get; } // 最终破防
         public double Final_L { get; set; } // 最终力道
-
-        [ExcelIgnore]
-        public AttrProfitList ProfitList { get; protected set; }
-
-        public string OrderDesc => ProfitList.OrderDesc;
-
-        public AttrWeight Weight = JYConsts.PointWeight;
-
-        public string ToolTip => Weight.ToolTip;
 
         #region 构造
 
-        public DamageDeriv(string name)
-        {
-            Name = name;
-        }
-
         // 复制构造
-        public DamageDeriv(DamageDeriv old)
+        public DamageDeriv(DamageDeriv old) : base(old)
         {
-            Name = old.Name;
-            Final_AP = old.Final_AP;
-            WP = old.WP;
-            PZ = old.PZ;
-            WS = old.WS;
-            CT = old.CT;
-            CF = old.CF;
-            Final_OC = old.Final_OC;
-            Base_AP = old.Base_AP;
-            Base_OC = old.Base_OC;
             Final_L = old.Final_L;
             Base_L = old.Base_L;
-        }
-
-        public DamageDeriv Copy()
-        {
-            return new DamageDeriv(this);
         }
 
         // 计算最终力道收益
         public static double GetFinal_L(double base_ap, double final_ap, double ct, double base_oc)
         {
             double res = 0;
-            res += base_ap * JYConsts.AP_PER_L;
-            res += base_oc * JYConsts.OC_PER_L;
-            res += final_ap * JYConsts.F_AP_PER_L;
-            res += ct * JYConsts.CT_PER_L;
+            res += base_ap * XFConsts.AP_PER_L;
+            res += base_oc * XFConsts.OC_PER_L;
+            res += final_ap * XFConsts.F_AP_PER_L;
+            res += ct * XFConsts.CT_PER_L;
             return res;
         }
 
@@ -80,11 +40,6 @@ namespace JYCalculator.Class
         }
 
         // 从伤害数据中计算出导数
-        public static DamageDeriv CalcSkillDamageDeriv(SkillDamage damage)
-        {
-            var res = damage.CalcDeriv();
-            return res;
-        }
 
         // 修复会心收益
         public void FixCT(double ct)
@@ -93,10 +48,10 @@ namespace JYCalculator.Class
             GetFinal_L();
         }
 
-        public void FixCT(double ct, double y_Percent)
+        public void FixCT(double ct, double l_Percent)
         {
             FixCT(ct);
-            GetBase_L(y_Percent);
+            GetBase_L(l_Percent);
         }
 
         #endregion
@@ -108,93 +63,41 @@ namespace JYCalculator.Class
         /// </summary>
         /// <param name="other">另一个对象</param>
         /// <param name="w">权重系数（技能频率）</param>
-        public void WeightedAdd(DamageDeriv other, double w = 1.0)
+        public new void WeightedAdd(DamageDeriv other, double w = 1.0)
         {
-            Final_AP += other.Final_AP * w;
-            WP += other.WP * w;
-            PZ += other.PZ * w;
-            WS += other.WS * w;
-            CT += other.CT * w;
-            CF += other.CF * w;
-            Final_OC += other.Final_OC * w;
-            Base_AP += other.Base_AP * w;
-            Base_OC += other.Base_OC * w;
+            base.WeightedAdd(other, w);
             Final_L += other.Final_L * w;
             Base_L += other.Base_L * w;
         }
 
-        // 多个收益加权求和
-        public static DamageDeriv WeightedSum(DamageDeriv[] derivs, double[] weights)
+        public new void ApplyAttrWeight(AttrWeight aw)
         {
-            var res = new DamageDeriv("Result");
-            for (int i = 0; i < derivs.Length; i++)
-            {
-                res.WeightedAdd(derivs[i], weights[i]);
-            }
-
-            return res;
+            // 根据属性加权求收益
+            base.ApplyAttrWeight(aw);
+            Weight = aw;
+            Base_L *= aw.L;
+            Final_L *= aw.Final_L;
         }
 
-        // 根据属性加权求收益
-        public DamageDeriv GetAttrWeightedDeriv(AttrWeight aw)
-        {
-            var res = Copy();
-            res.Weight = aw;
-            res.Name = aw.Name;
-            res.Base_AP *= aw.AP;
-            res.Base_L *= aw.L;
-            res.Base_OC *= aw.OC;
-            res.CT *= aw.CT;
-            res.CF *= aw.CF;
-            res.WS *= aw.WS;
-            res.PZ *= aw.PZ;
-            res.WP *= aw.WP;
-
-            res.Final_AP *= aw.Final_AP;
-            res.Final_L *= aw.Final_L;
-            res.Final_OC *= aw.Final_OC;
-
-            return res;
-        }
-
-        // 单点收益
         public AttrProfitList GetPointAttrDerivList()
         {
-            var l = new List<AttrProfitItem>
-            {
-                new AttrProfitItem(nameof(Final_AP), "最终攻击", Final_AP),
-                new AttrProfitItem(nameof(Final_OC), "最终破防", Final_AP),
-                new AttrProfitItem(nameof(Final_L), "最终力道", Final_L),
-                new AttrProfitItem(nameof(Base_AP), "基础攻击", Base_AP),
-                new AttrProfitItem(nameof(Base_OC), "基础破防", Base_OC),
-                new AttrProfitItem(nameof(Base_L), "基础力道", Base_L),
-                new AttrProfitItem(nameof(PZ), "破招", PZ),
-                new AttrProfitItem(nameof(WS), "无双", WS),
-                new AttrProfitItem(nameof(CT), "会心", CT),
-                new AttrProfitItem(nameof(CF), "会效", CF),
-                new AttrProfitItem(nameof(WP), "武伤", WP)
-            };
+            // 单点收益
+            var l = GetPointAttrDerivListBase();
+            l.Add(new AttrProfitItem(nameof(Base_L), "基础力道", Base_L));
+            l.Add(new AttrProfitItem(nameof(Final_L), "最终力道", Final_L));
 
             var res = new AttrProfitList(l);
             res.Proceed();
             ProfitList = res;
             return res;
         }
+
 
         // 单分收益
         public AttrProfitList GetScoreAttrDerivList()
         {
-            var l = new List<AttrProfitItem>
-            {
-                new AttrProfitItem(nameof(Base_AP), "攻击", Base_AP),
-                new AttrProfitItem(nameof(Base_OC), "破防", Base_OC),
-                new AttrProfitItem(nameof(Base_L), "力道", Base_L),
-                new AttrProfitItem(nameof(PZ), "破招", PZ),
-                new AttrProfitItem(nameof(WS), "无双", WS),
-                new AttrProfitItem(nameof(CT), "会心", CT),
-                new AttrProfitItem(nameof(CF), "会效", CF),
-                new AttrProfitItem(nameof(WP), "武伤", WP)
-            };
+            var l = GetScoreAttrDerivListBase();
+            l.Add(new AttrProfitItem(nameof(Base_L), "力道", Base_L));
 
             var res = new AttrProfitList(l);
             res.Proceed();
@@ -202,32 +105,20 @@ namespace JYCalculator.Class
             return res;
         }
 
-        public double[] GetValueArr()
+        public override List<double> GetValueArr()
         {
-            var res = new[]
-            {
-                Base_AP, Base_OC, Base_L,
-                PZ, WS,
-                CT, CF,
-                //WP
-            };
+            var res = base.GetValueArr();
+            res.Insert(2, Base_L);
             return res;
         }
 
-        public static string[] GetDescArr()
+        public override List<string> GetDescArr()
         {
-            var res = new[] {"攻击", "破防", "力道",
-                "破招", "无双",
-                "会心", "会效",
-                //"武伤"
-            };
+            var res = base.GetDescArr();
+            res.Insert(2, "力道");
             return res;
         }
-
 
         #endregion
     }
-
-
-   
 }

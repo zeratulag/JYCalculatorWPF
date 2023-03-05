@@ -2,11 +2,15 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Windows;
+using Force.DeepCloner;
 
 namespace JX3CalculatorShared.Utils
 {
     public static class DictTool
     {
+        #region 显示
+
         /// <summary>
         /// 将字典转换为可读的字符串形式
         /// </summary>
@@ -63,6 +67,8 @@ namespace JX3CalculatorShared.Utils
             Trace.WriteLine(catstr);
         }
 
+        #endregion
+
         /// <summary>
         /// 取出键对应的值，若键不存在则使用默认值
         /// </summary>
@@ -118,6 +124,82 @@ namespace JX3CalculatorShared.Utils
                 dict.Add(key, value);
             }
         }
+
+        /// <summary>
+        /// 就地按照倍数修改强度，用于模拟多层效果叠加
+        /// </summary>
+        /// <param name="k">效果倍数</param>
+        public static void MultiplyEffect<TKey>(this IDictionary<TKey, double> dict, double k)
+        {
+            foreach (var key in dict.Keys.ToArray())
+            {
+                dict[key] *= k;
+            }
+        }
+
+        public static void MultiplyEffect<TKey>(this IDictionary<TKey, List<object>> dict, double k)
+        {
+            foreach (var key in dict.Keys.ToArray())
+            {
+                bool isNum = false;
+                var l = dict[key];
+                List<double> orgValue = null;
+                List<double> modValue = null;
+                List<object> ResValue = null;
+
+                if (l[0] is int)
+                {
+                    orgValue = (from _ in l select (double) (int) _).ToList();
+                    isNum = true;
+                }
+                else if (l[0] is double)
+                {
+                    orgValue = (from _ in l select (double) _).ToList();
+                    isNum = true;
+                }
+
+
+                if (key is string ks)
+                {
+                    double baseline = isNum ? 0 : -1;
+                    if (ks == "nChannelInterval_ProdCoef") // 当为修饰系数属性时，需要特殊处理
+                    {
+                        baseline = 100;
+                    }
+                    else if (ks == "Coef")
+                    {
+                        baseline = 1;
+                    }
+
+                    if (baseline >= 0) // 此时必为数值属性
+                    {
+                        modValue = (from _ in orgValue select (_ - baseline) * k + baseline).ToList();
+                    }
+                }
+
+                if (modValue == null) continue;
+                ResValue = (from _ in modValue select (object) _).ToList();
+                dict[key] = ResValue;
+            }
+        }
+
+        public static Dictionary<TKey, TValue> Copy<TKey, TValue>(this IDictionary<TKey, TValue> dict)
+        {
+            return dict.ToDictionary(_ => _.Key, _ => _.Value);
+        }
+
+        public static Dictionary<TKey, List<object>> Copy<TKey>(this IDictionary<TKey, List<object>> dict)
+        {
+            var res = new Dictionary<TKey, List<object>>();
+            foreach (var kvp in dict)
+            {
+                var v = (from _ in kvp.Value select _.Clone()).ToList();
+                res.Add(kvp.Key, v);
+            }
+
+            return res;
+        }
+
 
         /// <summary>
         /// 非数值类的字典追加键值

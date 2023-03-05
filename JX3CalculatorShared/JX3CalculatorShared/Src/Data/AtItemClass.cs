@@ -1,4 +1,4 @@
-﻿namespace JX3CalculatorShared.Src.Data
+﻿namespace JX3CalculatorShared.Data
 {
     public abstract class AbsAttrItem
     {

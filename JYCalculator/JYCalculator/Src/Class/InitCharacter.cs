@@ -1,61 +1,22 @@
-﻿using System;
+﻿using JYCalculator.Globals;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using JX3CalculatorShared.Class;
-using JYCalculator.Class;
-using JX3CalculatorShared.Common;
-using JX3CalculatorShared.Utils;
-using JX3CalculatorShared.ViewModels;
-using JYCalculator.Globals;
-using Newtonsoft.Json;
-using PropertyChanged;
-using static JYCalculator.Globals.JYStaticData;
+using static JYCalculator.Globals.XFStaticConst;
 
-namespace JYCalculator.Src.Class
+namespace JYCalculator.Class
 {
-    [ToString]
-    [JsonObject(MemberSerialization.OptOut)]
-    public class InitCharacter : AbsViewModel, ICatsable
+
+    public partial class InitCharacter
     {
         #region 成员
 
-        // 力道, 基础攻击，最终攻击, 武伤,
-        // 会心, 会效, 无双, 破招, 破防, 加速,
+        // 力道
         public double L { get; set; }
-        public double Base_AP { get; set; }
-        public double Final_AP { get; set; }
-        public double WP { get; set; }
-        public double CT { get; set; }
-        public double CF { get; set; }
-        public double WS { get; set; }
-        public double PZ { get; set; }
-        public double OC { get; set; }
-        public double HS { get; set; }
-
-        public bool Had_BigFM_hat { get; set; } = false; // 是否已经包括帽子大附魔
-        public bool Had_BigFM_jacket { get; set; } = false; // 是否已经包括上衣大附魔
-
-        [JsonIgnore] public double HSPct => Math.Min(HS / fGP.HS, HasteBase.MAX_HS); // 面板加速值
-
-        [JsonIgnore] public double OCPct => OC / fGP.OC; // 面板破防值
-
-        [JsonIgnore] public string Name { get; set; }
 
         #endregion
 
         #region 构造
-
-        // 除了HSPct和OCPct之外的所有变量都是输入变量
-        public InitCharacter(string name = "") : base(InputPropertyNameType.All)
-        {
-            ExcludePropertyNames = new HashSet<string>() {nameof(HSPct), nameof(OCPct)};
-            Name = name;
-        }
-
-        public InitCharacter()
-        {
-        }
-
 
         /// <summary>
         /// 表示人物初始属性（没有任何增益）的类
@@ -124,18 +85,7 @@ namespace JYCalculator.Src.Class
             PostConstructor();
         }
 
-        public InitCharacter Copy()
-        {
-            return new InitCharacter(this);
-        }
-
         #endregion
-
-
-        public InitCharacter(JBPZPanel panel) : base()
-        {
-            _UpdateFromJBPanel(panel);
-        }
 
         /// <summary>
         /// 从导入的JB面板更新
@@ -159,11 +109,6 @@ namespace JYCalculator.Src.Class
             Had_BigFM_jacket = panel.EquipList.Had_BigFM_jacket;
             Had_BigFM_hat = panel.EquipList.Had_BigFM_hat;
             Name = panel.Title;
-        }
-
-        public void LoadFromJBPanel(JBPZPanel panel)
-        {
-            ActionUpdateOnce(_UpdateFromJBPanel, panel);
         }
 
         /// <summary>
@@ -190,11 +135,6 @@ namespace JYCalculator.Src.Class
             Name = ichar.Name;
         }
 
-        public void LoadFromIChar(InitCharacter ichar)
-        {
-            ActionUpdateOnce(_UpdateFromIChar, ichar);
-        }
-
         #region 显示
 
         public IList<string> GetCatStrList()
@@ -209,33 +149,6 @@ namespace JYCalculator.Src.Class
             };
 
             res.Add("");
-            return res;
-        }
-
-        public string ToStr()
-        {
-            var strL = GetCatStrList();
-            return strL.StrJoin("\n");
-        }
-
-        public void Cat()
-        {
-            var str = ToStr();
-            str.Cat();
-        }
-
-        #endregion
-
-        #region 方法
-
-        public FullCharacter ToFullCharacter(string name = "")
-        {
-            var res = new FullCharacter(this);
-            if (name != "")
-            {
-                res.Name = name;
-            }
-
             return res;
         }
 
@@ -307,17 +220,17 @@ namespace JYCalculator.Src.Class
 
         public void Add_S(double value) //身法
         {
-            Add_CT_Point(value * JYConsts.CT_PER_S);
+            Add_CT_Point(value * XFConsts.CT_PER_S);
         }
 
         public void Add_L(double value) // 最终力道
         {
             L += value;
-            Add_Base_AP(value * JYConsts.AP_PER_L);
-            Add_OC(value * JYConsts.OC_PER_L);
+            Add_Base_AP(value * XFConsts.AP_PER_L);
+            Add_OC(value * XFConsts.OC_PER_L);
 
-            Add_Final_AP(value * JYConsts.F_AP_PER_L);
-            Add_CT_Point(value * JYConsts.CT_PER_L);
+            Add_Final_AP(value * XFConsts.F_AP_PER_L);
+            Add_CT_Point(value * XFConsts.CT_PER_L);
         }
 
 
@@ -346,125 +259,89 @@ namespace JYCalculator.Src.Class
             switch (key)
             {
                 case "WP":
-                {
-                    Add_WP(value);
-                    break;
-                }
+                    {
+                        Add_WP(value);
+                        break;
+                    }
                 case "CT":
-                {
-                    Add_CT(value);
-                    break;
-                }
+                    {
+                        Add_CT(value);
+                        break;
+                    }
                 case "CT_Point":
-                {
-                    Add_CT_Point(value);
-                    break;
-                }
+                    {
+                        Add_CT_Point(value);
+                        break;
+                    }
                 case "CF":
-                {
-                    Add_CF(value);
-                    break;
-                }
+                    {
+                        Add_CF(value);
+                        break;
+                    }
                 case "CF_Point":
-                {
-                    Add_CF_Point(value);
-                    break;
-                }
+                    {
+                        Add_CF_Point(value);
+                        break;
+                    }
                 case "WS":
-                {
-                    Add_WS(value);
-                    break;
-                }
+                    {
+                        Add_WS(value);
+                        break;
+                    }
                 case "WS_Point":
-                {
-                    Add_WS_Point(value);
-                    break;
-                }
+                    {
+                        Add_WS_Point(value);
+                        break;
+                    }
                 case "HSP":
-                {
-                    Add_HSP(value);
-                    break;
-                }
+                    {
+                        Add_HSP(value);
+                        break;
+                    }
                 case "PZ":
-                {
-                    Add_PZ(value);
-                    break;
-                }
+                    {
+                        Add_PZ(value);
+                        break;
+                    }
                 case "Final_AP":
-                {
-                    Add_Final_AP(value);
-                    break;
-                }
+                    {
+                        Add_Final_AP(value);
+                        break;
+                    }
 
                 case "Base_AP":
-                {
-                    Add_Base_AP(value);
-                    break;
-                }
+                    {
+                        Add_Base_AP(value);
+                        break;
+                    }
 
                 case "OC":
                 case "Base_OC":
-                {
-                    Add_OC(value);
-                    break;
-                }
+                    {
+                        Add_OC(value);
+                        break;
+                    }
                 case "S":
-                {
-                    Add_S(value);
-                    break;
-                }
+                    {
+                        Add_S(value);
+                        break;
+                    }
                 case "L":
                 case "Base_L":
-                {
-                    Add_L(value);
-                    break;
-                }
+                    {
+                        Add_L(value);
+                        break;
+                    }
                 case "All_BasePotent":
-                {
-                    Add_All_BasePotent(value);
-                    break;
-                }
+                    {
+                        Add_All_BasePotent(value);
+                        break;
+                    }
                 default:
-                {
-                    Trace.WriteLine($"未知的属性！ {key}:{value} ");
-                    break;
-                }
-            }
-        }
-
-        /// <summary>
-        /// 区分内功和外功属性
-        /// </summary>
-        /// <param name="key"></param>
-        /// <param name="value"></param>
-        public void AddSAttr(string key, double value)
-        {
-            string key1 = key;
-            if (key.StartsWith("P_") && !key.EndsWith("_DmgAdd")) // 攻击和破防统一去除前缀
-            {
-                key1 = key.Substring(2);
-            }
-
-            _AddSAttr(key1, value);
-        }
-
-        /// <summary>
-        /// 减少属性
-        /// </summary>
-        /// <param name="kvp"></param>
-        public void RemoveSAtKVP(KeyValuePair<string, double> kvp)
-        {
-            AddSAttr(kvp.Key, -kvp.Value);
-        }
-
-        public void RemoveSAttrDict(IDictionary<string, double> dict)
-        {
-            if (dict != null)
-            {
-                foreach (var kvp in dict)
-                {
-                    RemoveSAtKVP(kvp);
-                }
+                    {
+                        Trace.WriteLine($"未知的I属性！ {key}:{value} ");
+                        break;
+                    }
             }
         }
 
@@ -484,70 +361,6 @@ namespace JYCalculator.Src.Class
 
             return I_C;
         }
-
-        #endregion
-
-
-        protected override void _Update()
-        {
-        }
-
-        protected override void _Load<TSave>(TSave sav)
-        {
-        }
-
-        protected override void _RefreshCommands()
-        {
-        }
-
-
-        #region 进阶计算
-
-        [DoNotNotify] public double CTOC_PointSum => CT * fGP.CT + OC; // 会破点数之和
-
-        [DoNotNotify] public double WSPZ_PointSum => fGP.WS * WS + PZ; // 无双破招点数之和
-
-
-        /// <summary>
-        /// 在会破属性之和保持不变的情况下，转移部分会心点数到破防
-        /// </summary>
-        /// <param name="value">点数</param>
-        public void TransCTToOC(double value)
-        {
-            Add_CT_Point(-value);
-            Add_OC(value);
-        }
-
-        /// <summary>
-        /// 在无招属性之和保持不变的情况下，转移部分无双点数到破招
-        /// </summary>
-        /// <param name="value">点数</param>
-        public void TransWSToPZ(double value)
-        {
-            Add_WS_Point(-value);
-            Add_PZ(value);
-        }
-
-        /// <summary>
-        /// 在会破属性之和保持不变的情况下，重新设置面板会心百分比
-        /// </summary>
-        /// <param name="ct">目标会心百分比</param>
-        public void Reset_CT(double ct)
-        {
-            var delta = CT * fGP.CT - ct * fGP.CT;
-            TransCTToOC(delta);
-        }
-
-        /// <summary>
-        /// 在无招属性之和保持不变的情况下，重新设置面板无双百分比
-        /// </summary>
-        /// <param name="ws">目标无双百分比</param>
-        public void Reset_WS(double ws)
-        {
-            var delta = WS * fGP.WS - ws * fGP.WS;
-            TransWSToPZ(delta);
-        }
-
 
         #endregion
     }

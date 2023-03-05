@@ -1,11 +1,11 @@
 ﻿using JX3CalculatorShared.Common;
+using JX3CalculatorShared.Data;
+using JX3CalculatorShared.Globals;
 using JX3CalculatorShared.Utils;
 using System.Collections.Generic;
 using System.Linq;
-using JX3CalculatorShared.Globals;
-using JX3CalculatorShared.Src.Data;
 
-namespace JX3CalculatorShared.Src.Class
+namespace JX3CalculatorShared.Class
 {
 
     public class ItemDT : ICatsable
@@ -30,12 +30,12 @@ namespace JX3CalculatorShared.Src.Class
 
         public int Quality { get; } = -1;
         public string IconPath { get; }
-        public string ItemNamePart1 { get;}
+        public string ItemNamePart1 { get; }
         public string ItemNamePart2 { get; }
         public string ToolTip { get; }
         public string ItemDTType { get; } // 中文类型（食品增强，食品辅助……）
 
-        
+
         #endregion
 
         #region 构造
@@ -79,7 +79,7 @@ namespace JX3CalculatorShared.Src.Class
 
         public ItemDT(ItemDTItem item)
         {
-            var parsedAts =  item.ParseItem();
+            var parsedAts = item.ParseItem();
             Name = item.Name;
             DescName = item.DescName;
             IconID = item.IconID;

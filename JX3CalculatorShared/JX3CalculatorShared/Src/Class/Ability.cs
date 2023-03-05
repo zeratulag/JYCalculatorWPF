@@ -1,7 +1,7 @@
-﻿using JX3CalculatorShared.Src.Data;
+﻿using JX3CalculatorShared.Data;
 using System;
 
-namespace JX3CalculatorShared.Src.Class
+namespace JX3CalculatorShared.Class
 {
     public class Ability
     {

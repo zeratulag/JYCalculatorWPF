@@ -6,13 +6,10 @@ namespace JX3CalculatorShared.ViewModels
 {
     public abstract class AbsDependViewModel<TViewModel> : AbsViewModel where TViewModel : AbsViewModel
     {
-        #region 成语
+        #region 成员
 
         [DoNotNotify]
         public ImmutableArray<TViewModel> _DependVMs { get; protected set; } // 存储了依赖项的VM
-
-        protected bool _AllDependInitialized = false;
-        protected bool _FullInitialized = false;
 
         #endregion
 
@@ -73,9 +70,6 @@ namespace JX3CalculatorShared.ViewModels
 
         #endregion
 
-        #region 方法
-
-        #endregion
     }
 
 }

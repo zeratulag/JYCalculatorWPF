@@ -1,15 +1,13 @@
 ﻿using JX3CalculatorShared.Class;
+using JX3CalculatorShared.Common;
 using JX3CalculatorShared.Globals;
 using JX3CalculatorShared.Utils;
 using System.Collections.Generic;
 using System.Collections.Immutable;
-using System.Dynamic;
 using System.Linq;
-using JX3CalculatorShared.Common;
-using Newtonsoft.Json;
 
 
-namespace JX3CalculatorShared.Src.Data
+namespace JX3CalculatorShared.Data
 {
     public abstract class AbsGeneralItem
     {
@@ -52,7 +50,7 @@ namespace JX3CalculatorShared.Src.Data
         public string Skill_Name { get; set; }
     }
 
-    public partial class SkillInfoItem : AbsSkillDataItem
+    public class SkillInfoItemBase : AbsSkillDataItem
     {
         public string Fight_Name { get; set; }
         public double Interval { get; set; }
@@ -64,12 +62,10 @@ namespace JX3CalculatorShared.Src.Data
         public double Fixed_Max { get; set; } = 0;
         public double Fixed_Dmg { get; set; } = 0;
         public double nChannelInterval { get; set; }
-        public double AP_Coef { get; set; } = 0;
         public double WP_Coef { get; set; } = 0;
         public double Add_Dmg { get; set; } = 0;
         public double Add_CT { get; set; } = 0;
         public double Add_CF { get; set; } = 0;
-        public double IgnoreB { get; set; } = 0;
         public int IconID { get; set; }
         public int SkillID { get; set; }
         public int Level { get; set; }
@@ -79,9 +75,83 @@ namespace JX3CalculatorShared.Src.Data
         public int Cast_SkillID { get; set; }
         public ulong Cast_SkillEventMask1 { get; set; }
         public ulong Cast_SkillEventMask2 { get; set; }
-
         public SkillDataTypeEnum Type { get; set; }
+        public bool IsP => Type == SkillDataTypeEnum.PZ; // 是否为类破招技能
+
+        /// <summary>
+        /// 判断技能能否触发事件
+        /// </summary>
+        /// <param name="skillInfoItem">技能</param>
+        /// <param name="eventItem">技能事件</param>
+        /// <returns>能否触发</returns>
+        public static bool CanTrigger(SkillInfoItemBase skillInfoItem, SkillEventItem eventItem)
+        {
+            if (skillInfoItem.Type == SkillDataTypeEnum.DOT || skillInfoItem.Type == SkillDataTypeEnum.PZ)
+            {
+                // DOT和破招无法触发任何事件
+                return false;
+            }
+
+            bool skill1 = (skillInfoItem.SkillEventMask1 & eventItem.EventMask1) > 0;
+            bool skill2 = (skillInfoItem.SkillEventMask2 & eventItem.EventMask2) > 0;
+            bool cast1 = (skillInfoItem.Cast_SkillEventMask1 & eventItem.EventMask1) > 0;
+            bool cast2 = (skillInfoItem.Cast_SkillEventMask2 & eventItem.EventMask2) > 0;
+            bool eventskill = (skillInfoItem.SkillID > 0) && (skillInfoItem.SkillID == eventItem.EventSkillID);
+            bool res = skill1 || skill2 || cast1 || cast2 || eventskill;
+            return res;
+        }
+
+        public bool CanTrigger(SkillEventItem eventItem)
+        {
+            return CanTrigger(this, eventItem);
+        }
+
+        public IEnumerable<string> TriggerEvent(IEnumerable<SkillEventItem> eventItems)
+        {
+            var res = from item in eventItems
+                      where CanTrigger(item)
+                      select item.Name;
+            return res.ToImmutableArray();
+        }
+
+        /// <summary>
+        /// 判断技能是否吃秘籍
+        /// </summary>
+        /// <param name="info">技能</param>
+        /// <param name="recipe">秘籍</param>
+        /// <returns></returns>
+        public static bool CanEffectRecipe(SkillInfoItemBase info, Recipe recipe)
+        {
+            bool res = false;
+
+            if (recipe.EffectSkillName.Count > 0)
+            {
+                res = recipe.EffectSkillName.Contains(info.Name);
+            }
+            else
+            {
+                bool skillrecipe = (info.SkillID > 0) && (info.SkillID == recipe.SkillID);
+                bool skillrecipeType =
+                    (info.RecipeType > 0) && (info.RecipeType == recipe.SkillRecipeType);
+                res = skillrecipe || skillrecipeType;
+            }
+            return res;
+        }
+
+        public bool CanEffectRecipe(Recipe recipe)
+        {
+            return CanEffectRecipe(this, recipe);
+        }
+
+        public IEnumerable<string> EffectRecipe(IEnumerable<Recipe> recipes)
+        {
+            var res = from item in recipes
+                      where CanEffectRecipe(item)
+                      select item.Name;
+            return res.ToImmutableArray();
+        }
     }
+
 
     public partial class SkillEventItem : AbsGeneralItem
     {
@@ -150,9 +220,7 @@ namespace JX3CalculatorShared.Src.Data
         public int XW { get; set; }
         public int Rank { get; set; }
         public double Time { get; set; }
-
         public string Genre { get; set; } // 流派
-
 
         public static string GetKey(string genre, int xw, int rank)
         {
@@ -199,6 +267,7 @@ namespace JX3CalculatorShared.Src.Data
         public int Intensity { get; set; }
         public BuffTypeEnum Type { get; set; }
         public bool IsTarget => (this.Type == BuffTypeEnum.DeBuff_Normal);
+        public int Interval { get; set; }
         public string At_key3 { get; set; }
         public int? At_value3 { get; set; }
         public string At_key4 { get; set; }
@@ -245,7 +314,7 @@ namespace JX3CalculatorShared.Src.Data
         public int ItemID { get; set; }
         public int Enchant_ID { get; set; }
         public string ItemName { get; set; }
-        public int DLCLevel { get; set; } = StaticData.CurrentLevel;
+        public int DLCLevel { get; set; } = StaticConst.CurrentLevel;
     }
 
     public class BigFMItem : AbsBigFMItem
@@ -336,7 +405,6 @@ namespace JX3CalculatorShared.Src.Data
         }
     }
 
-
     public class DiamondValueItemBase
     {
         public int Level { get; set; }
@@ -349,30 +417,4 @@ namespace JX3CalculatorShared.Src.Data
     }
 
 
-    public class CalcSetting
-    {
-        /// <summary>
-        /// 计算器设置
-        /// </summary>
-        public string RawEssentialQiXues { get; set; }
-
-        public string RawBannedQiXues { get; set; }
-
-        public string RawEssentialMiJis { get; set; }
-
-        // 以下为生成属性
-
-        [JsonIgnore] public ImmutableHashSet<string> EssentialQiXues { get; protected set; }
-
-        [JsonIgnore] public ImmutableHashSet<string> BannedQiXues { get; protected set; }
-
-        [JsonIgnore] public ImmutableHashSet<string> EssentialMiJis { get; protected set; }
-
-        public void Parse()
-        {
-            EssentialQiXues = StringTool.ParseStringList(RawEssentialQiXues).ToImmutableHashSet();
-            BannedQiXues = StringTool.ParseStringList(RawBannedQiXues).ToImmutableHashSet();
-            EssentialMiJis = StringTool.ParseStringList(RawEssentialMiJis).ToImmutableHashSet();
-        }
-    }
 }

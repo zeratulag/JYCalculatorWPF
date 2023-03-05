@@ -11,6 +11,7 @@ namespace JX3CalculatorShared.Class
         public DPSTableItem[] Items;
 
         public double DPS;
+
         #endregion
 
         #region 构造
@@ -36,7 +37,5 @@ namespace JX3CalculatorShared.Class
         }
 
         #endregion
-
-
     }
 }

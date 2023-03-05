@@ -1,4 +1,4 @@
-﻿using JX3CalculatorShared.Src.Class;
+﻿using JX3CalculatorShared.Class;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 

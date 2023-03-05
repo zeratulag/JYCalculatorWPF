@@ -1,9 +1,9 @@
-﻿using JX3CalculatorShared.Src.Data;
+﻿using JX3CalculatorShared.Data;
 
 
-namespace JYCalculator.Src.Data
+namespace JYCalculator.Data
 {
-    public class AbilitySkillNumItem: AbilitySkillNumItemBase
+    public class AbilitySkillNumItem : AbilitySkillNumItemBase
     {
         public double DP { get; set; }
         public double BY_Cast { get; set; }
@@ -11,6 +11,11 @@ namespace JYCalculator.Src.Data
         public double ZX { get; set; }
     }
 
+    public class SkillInfoItem : SkillInfoItemBase
+    {
+        public double AP_Coef { get; set; } = 0;
+        public double IgnoreB { get; set; } = 0;
+    }
 
     public class DiamondValueItem : DiamondValueItemBase
     {

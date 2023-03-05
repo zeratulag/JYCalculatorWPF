@@ -1,10 +1,10 @@
-﻿using JX3CalculatorShared.Src.Data;
+﻿using JX3CalculatorShared.Data;
 using JX3CalculatorShared.Utils;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace JX3CalculatorShared.Src
+namespace JX3CalculatorShared.Class
 {
     public class SkillFreqDict : IEnumerable
     {

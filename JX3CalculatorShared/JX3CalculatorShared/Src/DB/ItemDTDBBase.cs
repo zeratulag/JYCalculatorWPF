@@ -1,16 +1,17 @@
-﻿using JX3CalculatorShared.Common;
+﻿using JX3CalculatorShared.Class;
+using JX3CalculatorShared.Common;
+using JX3CalculatorShared.Data;
 using JX3CalculatorShared.Globals;
-using JX3CalculatorShared.Src.Class;
-using JX3CalculatorShared.Src.Data;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 
-namespace JX3CalculatorShared.Src.DB
+namespace JX3CalculatorShared.DB
 {
-    public class ItemDTDBBase: IDB<string, ItemDT>
+    public class ItemDTDBBase : IDB<string, ItemDT>
     {
+
         public ImmutableDictionary<string, ItemDT> Data;
 
         public ItemDTDBBase(IEnumerable<ItemDTItem> itemdata)
@@ -21,6 +22,7 @@ namespace JX3CalculatorShared.Src.DB
             DispatchItemDT();
         }
 
+        // 用于分类排序存储各种单体的数组
         public ImmutableArray<ItemDT> FoodSupport { get; private set; }
         public ImmutableArray<ItemDT> FoodEnhance { get; private set; }
         public ImmutableArray<ItemDT> MedSupport { get; private set; }
@@ -61,26 +63,26 @@ namespace JX3CalculatorShared.Src.DB
                 var valueArray = KVP.Value.ToImmutableArray();
                 switch (KVP.Key)
                 {
-                    case ItemDTTypeEnum.FoodSupport: 
-                    { FoodSupport = valueArray; break; }
+                    case ItemDTTypeEnum.FoodSupport:
+                        { FoodSupport = valueArray; break; }
 
                     case ItemDTTypeEnum.FoodEnhance:
-                    { FoodEnhance = valueArray; break; }
+                        { FoodEnhance = valueArray; break; }
 
                     case ItemDTTypeEnum.MedSupport:
-                    { MedSupport = valueArray; break; }
+                        { MedSupport = valueArray; break; }
 
                     case ItemDTTypeEnum.MedEnhance:
-                    { MedEnhance = valueArray; break; }
+                        { MedEnhance = valueArray; break; }
 
                     case ItemDTTypeEnum.HomeWine:
-                    { HomeWine = valueArray; break; }
+                        { HomeWine = valueArray; break; }
 
                     case ItemDTTypeEnum.HomeCook:
-                    { HomeCook = valueArray; break; }
+                        { HomeCook = valueArray; break; }
 
                     case ItemDTTypeEnum.WeaponWhetstone:
-                    { WeaponWhetstone = valueArray; break; }
+                        { WeaponWhetstone = valueArray; break; }
 
                     default:
                         throw new ArgumentOutOfRangeException();

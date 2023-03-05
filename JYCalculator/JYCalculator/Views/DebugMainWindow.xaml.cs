@@ -9,23 +9,19 @@ namespace JYCalculator.Views
     /// </summary>
     public partial class DebugMainWindow : Window
     {
-        private MainWindowViewModels _VMs;
+        private readonly DebugWindowViewModel _VM;
 
-        public DebugMainWindow(MainWindowViewModels vms)
+        public DebugMainWindow(DebugWindowViewModel vm)
         {
-            _VMs = vms;
+            _VM = vm;
             InitializeComponent();
-
             BindViewModels();
-
         }
 
         public void BindViewModels()
         {
-            JYDebugWindow.DataContext = _VMs;
-
-            Expander_FightTimeSummary.DataContext = _VMs.FightTimeSummaryVM;
-
+            JYDebugWindow.DataContext = _VM;
+            Expander_FightTimeSummary.DataContext = _VM._MVMs.FightTimeSummaryVM;
         }
 
         protected override void OnClosing(CancelEventArgs e)

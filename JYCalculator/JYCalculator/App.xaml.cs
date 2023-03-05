@@ -1,7 +1,7 @@
-﻿using JYCalculator.Globals;
+﻿using JX3CalculatorShared.Class;
+using JX3CalculatorShared.Data;
+using JYCalculator.Globals;
 using System.Windows;
-using JX3CalculatorShared.Src.Class;
-using JX3CalculatorShared.Src.Data;
 
 namespace JYCalculator
 {
@@ -15,13 +15,11 @@ namespace JYCalculator
             PreLoad();
         }
 
-
         // 在界面呈现之前的预加载
         public void PreLoad()
         {
-            AtLoader.Load(JYAppStatic.AT_PATH);
-            EquipOption.DamageType = JYConsts.CurrentDamnagType; // 设定全局伤害类型
+            AtLoader.Load(XFAppStatic.AT_PATH);
+            EquipOption.DamageType = XFConsts.CurrentDamnagType; // 设定全局伤害类型
         }
-
     }
 }

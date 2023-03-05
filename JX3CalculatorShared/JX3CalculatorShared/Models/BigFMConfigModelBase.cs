@@ -1,9 +1,8 @@
 ﻿using JX3CalculatorShared.Class;
 using JX3CalculatorShared.Common;
+using JX3CalculatorShared.Data;
+using JX3CalculatorShared.DB;
 using JX3CalculatorShared.Globals;
-using JX3CalculatorShared.Src.Class;
-using JX3CalculatorShared.Src.Data;
-using JX3CalculatorShared.Src.DB;
 using JX3CalculatorShared.Utils;
 using JX3CalculatorShared.ViewModels;
 using System.Collections.Generic;
@@ -11,7 +10,7 @@ using System.Linq;
 
 namespace JX3CalculatorShared.Models
 {
-    public class BigFMConfigModelBase: IModel
+    public class BigFMConfigModelBase : IModel
     {
         public BigFM Hat;
         public BigFM Jacket;

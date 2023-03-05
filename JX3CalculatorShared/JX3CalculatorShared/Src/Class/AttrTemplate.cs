@@ -1,4 +1,4 @@
-﻿using JX3CalculatorShared.Src.Data;
+﻿using JX3CalculatorShared.Data;
 using System;
 using System.Text.RegularExpressions;
 
@@ -162,7 +162,7 @@ namespace JX3CalculatorShared.Class
                 }
                 else
                 {
-                    double real_value = (double) nvalue / Denominator;
+                    double real_value = nvalue / Denominator;
                     res = string.Format(FullBaseDescFmt, real_value);
                 }
             }

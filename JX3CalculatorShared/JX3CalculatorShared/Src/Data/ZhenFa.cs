@@ -7,7 +7,7 @@ using System.Collections.Immutable;
 using System.Text;
 using static JX3CalculatorShared.Globals.Strings;
 
-namespace JX3CalculatorShared.Src.Class
+namespace JX3CalculatorShared.Data
 {
     public class ZhenFa
     {
@@ -159,7 +159,7 @@ namespace JX3CalculatorShared.Src.Class
                 return result;
             }
 
-            var buffList = new List<BaseBuff>() {Buff};
+            var buffList = new List<BaseBuff>() { Buff };
 
             if (HasZ5)
             {

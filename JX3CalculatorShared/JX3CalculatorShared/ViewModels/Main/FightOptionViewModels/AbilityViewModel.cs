@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using JX3CalculatorShared.Data;
+using System.Collections.Generic;
 using System.Collections.Immutable;
-using JX3CalculatorShared.Src.Data;
 
-namespace JX3CalculatorShared.ViewModels 
+namespace JX3CalculatorShared.ViewModels
 {
     public class AbilityViewModel : ComboBoxViewModel<AbilityItem>
     {

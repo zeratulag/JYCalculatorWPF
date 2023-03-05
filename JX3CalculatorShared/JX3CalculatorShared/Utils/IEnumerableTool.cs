@@ -1,5 +1,4 @@
 ﻿using JX3CalculatorShared.Class;
-using JX3CalculatorShared.Src.Class;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -1,11 +1,12 @@
-﻿using System.Collections.Generic;
-using System.Collections.Immutable;
-using JX3CalculatorShared.Class;
+﻿using JX3CalculatorShared.Class;
 using JX3CalculatorShared.Common;
+using JX3CalculatorShared.Data;
+using System.Collections.Generic;
+using System.Collections.Immutable;
 
-namespace JX3CalculatorShared.Src.DB
+namespace JX3CalculatorShared.DB
 {
-    public class SkillModifierDBBase: IDB<string, SkillModifier>
+    public class SkillModifierDBBase : IDB<string, SkillModifier>
     {
         public ImmutableDictionary<string, SkillModifier> Data;
         public ImmutableDictionary<string, string> QiXueToMods; // 表示奇穴与Mods名称的关联
@@ -32,5 +33,7 @@ namespace JX3CalculatorShared.Src.DB
             }
             return res;
         }
+
+        public SkillModifier this[string name] => Get(name);
     }
 }

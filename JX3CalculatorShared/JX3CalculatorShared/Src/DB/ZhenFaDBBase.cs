@@ -1,13 +1,12 @@
 ﻿using JX3CalculatorShared.Common;
-using JX3CalculatorShared.Src.Class;
-using JX3CalculatorShared.Src.Data;
+using JX3CalculatorShared.Data;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 
-namespace JX3CalculatorShared.Src.DB
+namespace JX3CalculatorShared.DB
 {
-    public class ZhenFaDBBase: IDB<string, ZhenFa>
+    public class ZhenFaDBBase : IDB<string, ZhenFa>
     {
         public ImmutableDictionary<string, ZhenFa> Data;
         public ImmutableArray<ZhenFa> ZhenFa;

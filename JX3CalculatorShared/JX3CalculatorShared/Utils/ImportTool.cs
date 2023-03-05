@@ -1,9 +1,7 @@
 ﻿using JX3CalculatorShared.Globals;
-using JX3CalculatorShared.Src.Class;
 using MiniExcelLibs;
 using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Diagnostics;
 using System.IO;
@@ -77,7 +75,7 @@ namespace JX3CalculatorShared.Utils
             return res;
         }
 
-        public static (bool success, T res) TryDeJSON<T>(string json) where T: class, new()
+        public static (bool success, T res) TryDeJSON<T>(string json) where T : class, new()
         {
             // [TODO] ：完善算法
             T res = null;

@@ -1,5 +1,6 @@
-﻿using JYCalculator.Class;
-using JYCalculator.Src.Data;
+﻿using JX3CalculatorShared.Models;
+using JYCalculator.Class;
+using JYCalculator.Data;
 using System;
 
 namespace JYCalculator.Models
@@ -27,11 +28,10 @@ namespace JYCalculator.Models
 
         public new void Calc()
         {
-            base.CommonCalc(); 
+            CommonCalcBefore();
             CalcBigXWSkillNum();
-            CalcGF();
+            CommonCalcAfter();
         }
-
 
 
         // 计算大心无期间的技能数 [TODO] 天风天绝

@@ -1,8 +1,8 @@
-﻿using JX3CalculatorShared.Utils;
+﻿using JX3CalculatorShared.Globals;
+using JX3CalculatorShared.Utils;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Documents;
-using JX3CalculatorShared.Globals;
 
 namespace JX3CalculatorShared.Views.Dialogs
 {

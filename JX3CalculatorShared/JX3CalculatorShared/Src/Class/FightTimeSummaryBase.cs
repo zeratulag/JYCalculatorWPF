@@ -1,5 +1,4 @@
 ﻿using System;
-using JX3CalculatorShared.Src.Class;
 
 namespace JX3CalculatorShared.Class
 {
@@ -15,6 +14,7 @@ namespace JX3CalculatorShared.Class
         public FightTimeSummaryItem ShortItem; // 短时间总结
         public bool IsShort; // 是否为短时间战斗
         public FightTimeSummaryItem[] Data;
+
 
         public FightTimeSummaryBase()
         {

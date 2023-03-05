@@ -1,11 +1,10 @@
-﻿using JX3CalculatorShared.Class;
-using JX3CalculatorShared.Utils;
+﻿using JX3CalculatorShared.Utils;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 
-namespace JX3CalculatorShared.Src.Class
+namespace JX3CalculatorShared.Class
 {
     /// <summary>
     /// 用于描述一组相同技能修饰对象的组合，要求修饰的技能必须是相同的
@@ -57,7 +56,7 @@ namespace JX3CalculatorShared.Src.Class
                 SkillID = allIDs.First();
                 SkillRecipeType = allRecipeTypes.First();
                 SkillKey = items.First().SkillKey;
-                
+
                 Names = (from _ in Recipes select _.Name).ToArray();
                 EffectSkillName = Recipes[0].EffectSkillName;
 

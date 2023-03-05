@@ -1,14 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using JX3CalculatorShared.Class;
+using JX3CalculatorShared.Common;
+using JX3CalculatorShared.Data;
+using JX3CalculatorShared.Globals;
+using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
-using JX3CalculatorShared.Class;
-using JX3CalculatorShared.Common;
-using JX3CalculatorShared.Globals;
-using JX3CalculatorShared.Src.Data;
 
-namespace JX3CalculatorShared.Src.DB
+namespace JX3CalculatorShared.DB
 {
-    public class QiXueDBBase: IDB<string, QiXueSkill>
+    public class QiXueDBBase : IDB<string, QiXueSkill>
     {
         public ImmutableDictionary<string, QiXueSkill> Data; // 所有奇穴的库
         public ImmutableArray<ImmutableArray<QiXueSkill>> QiXue;
@@ -17,10 +17,10 @@ namespace JX3CalculatorShared.Src.DB
         {
             Data = qixuedict.ToImmutableDictionary(_ => _.Key, _ => new QiXueSkill(_.Value));
 
-            var qixue = new ImmutableArray<QiXueSkill>[StaticData.NumberOfQiXue];
+            var qixue = new ImmutableArray<QiXueSkill>[StaticConst.NumberOfQiXue];
 
             var qixuegroup = from qixueitem in qixuedict.Values
-                group qixueitem by qixueitem.position;
+                             group qixueitem by qixueitem.position;
             foreach (var g in qixuegroup)
             {
                 qixue[g.Key - 1] = g.OrderBy(_ => _.order).Select(_ => new QiXueSkill(_)).ToImmutableArray();

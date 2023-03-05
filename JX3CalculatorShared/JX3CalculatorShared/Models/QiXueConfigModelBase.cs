@@ -1,8 +1,7 @@
 ﻿using JX3CalculatorShared.Class;
 using JX3CalculatorShared.Common;
+using JX3CalculatorShared.Data;
 using JX3CalculatorShared.Globals;
-using JX3CalculatorShared.Src.Class;
-using JX3CalculatorShared.Src.Data;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -11,7 +10,7 @@ namespace JX3CalculatorShared.Models
 {
     public class QiXueConfigModelBase : IModel
     {
-        public static readonly int NSLOTS = StaticData.NumberOfQiXue;
+        public static readonly int NSLOTS = StaticConst.NumberOfQiXue;
         public string[] QiXueNames;
         public HashSet<string> QiXueNamesSet; // 方便检索用
         public List<Recipe> OtherRecipes;
@@ -44,19 +43,12 @@ namespace JX3CalculatorShared.Models
         }
 
         /// <summary>
-        /// 检测当前奇穴方案是否支持计算
+        /// 是否激活了奇穴
         /// </summary>
-        /// <returns></returns>
-        public bool IsSupported(CalcSetting setting)
+        /// <param name="name">奇穴名，例如"秋风散影"</param>
+        public bool Has(string name)
         {
-            bool res = false;
-            bool hasEssential = QiXueNamesSet.IsSupersetOf(setting.EssentialQiXues);
-            if (hasEssential)
-            {
-                bool hasBanned = QiXueNamesSet.Intersect(setting.BannedQiXues).Any();
-                res = hasEssential & !hasBanned;
-            }
-            return res;
+            return QiXueNamesSet.Contains(name);
         }
     }
 }

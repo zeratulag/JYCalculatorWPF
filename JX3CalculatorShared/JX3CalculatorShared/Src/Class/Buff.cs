@@ -1,13 +1,11 @@
-﻿using JX3CalculatorShared.Class;
+﻿using JX3CalculatorShared.Data;
 using JX3CalculatorShared.Globals;
-using JX3CalculatorShared.Src.Data;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 
 
-namespace JX3CalculatorShared.Src.Class
+namespace JX3CalculatorShared.Class
 {
     public class Buff : BaseBuff
     {
@@ -15,6 +13,7 @@ namespace JX3CalculatorShared.Src.Class
 
         public int DefaultStack;
         public int MaxStack;
+        public double Time; // 持续时间
         public double DefaultCover;
 
         public readonly BuffTypeEnum Type;
@@ -64,6 +63,7 @@ namespace JX3CalculatorShared.Src.Class
             BuffID = item.BuffID;
             DefaultStack = item.DefaultStackNum;
             DefaultCover = item.DefaultCover;
+            Time = item.Interval / StaticConst.FPS_PER_SECOND;
 
             ToolTipDesc = item.ToolTipDesc;
             Source = item.Source;
@@ -108,7 +108,7 @@ namespace JX3CalculatorShared.Src.Class
             double fcover = Math.Min(cover, 1.0);
 
             string stackstr;
-            if (nstack == (int) nstack)
+            if (nstack == (int)nstack)
             {
                 stackstr = nstack > 1 ? $"[x{nstack:F0}]" : "";
             }
@@ -126,7 +126,7 @@ namespace JX3CalculatorShared.Src.Class
                 newName = newName + $"({100 * fcover:F1}%)";
             }
 
-            var newCollect = CharAttrs.Multiply(fcover * stack);
+            var newCollect = CharAttrs.MultiplyValues(fcover * stack);
 
             var res = new BaseBuff(newName, newDescName, iconID: IconID, isTarget: IsTarget,
                 appendType: AppendType, intensity: Intensity,
@@ -145,11 +145,11 @@ namespace JX3CalculatorShared.Src.Class
         protected BaseBuff _EmitHaoLingSanJun(double fullcover, double firststack)
         {
             double nstack = Math.Min(firststack, MaxStack);
-            
+
             double fcover = Math.Min(fullcover, 1.0);
             int second_stack = (int)(nstack / 2);
 
-            double equivalent_stack = (nstack  + second_stack ) / 2.0; // 等效一鼓叠加层数
+            double equivalent_stack = (nstack + second_stack) / 2.0; // 等效一鼓叠加层数
 
             double partcover = fcover / 2.0;
 
@@ -164,7 +164,7 @@ namespace JX3CalculatorShared.Src.Class
             newDescName = newDescName + coverDescName;
             newName = newName + coverName;
 
-            var newCollect = CharAttrs.Multiply(fcover * equivalent_stack);
+            var newCollect = CharAttrs.MultiplyValues(fcover * equivalent_stack);
             var res = new BaseBuff(newName, newDescName, iconID: IconID, isTarget: IsTarget,
                 appendType: AppendType, intensity: Intensity,
                 attrCollect: newCollect);

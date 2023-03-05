@@ -1,9 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using JX3CalculatorShared.Class;
+using JX3CalculatorShared.Data;
+using System.Collections.Generic;
 using System.Collections.Immutable;
-using JX3CalculatorShared.Class;
-using JX3CalculatorShared.Src.Class;
 
-namespace JX3CalculatorShared.ViewModels 
+namespace JX3CalculatorShared.ViewModels
 {
     public class ZhenFaViewModel : ComboBoxViewModel<ZhenFa>
     {

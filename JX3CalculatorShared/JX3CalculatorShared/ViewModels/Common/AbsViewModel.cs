@@ -30,7 +30,7 @@ namespace JX3CalculatorShared.ViewModels
             public const string INPUT = "__INPUT__";
             public const string ALL = "__ALL__";
             public static readonly HashSet<string> EmptyHashSet = new HashSet<string>();
-            public static readonly HashSet<string> AllHashSet = new HashSet<string>() {ALL};
+            public static readonly HashSet<string> AllHashSet = new HashSet<string>() { ALL };
 
             public static readonly PropertyChangedEventArgs OutChangedArg =
                 new PropertyChangedEventArgs(OUTPUT);
@@ -76,7 +76,7 @@ namespace JX3CalculatorShared.ViewModels
         /// 特殊情况，只有一个输入属性名
         /// </summary>
         /// <param name="inputPropertyName"></param>
-        protected AbsViewModel(string inputPropertyName) : this(new string[1] {inputPropertyName})
+        protected AbsViewModel(string inputPropertyName) : this(new string[1] { inputPropertyName })
         {
         }
 
@@ -89,16 +89,16 @@ namespace JX3CalculatorShared.ViewModels
             switch (nameType)
             {
                 case InputPropertyNameType.None:
-                {
-                    break;
-                }
+                    {
+                        break;
+                    }
 
                 case InputPropertyNameType.All:
-                {
-                    InputPropertyNames = InternalConstCache.AllHashSet.Clone();
-                    _AllPropertiesAreInput = true;
-                    break;
-                }
+                    {
+                        InputPropertyNames = InternalConstCache.AllHashSet.Clone();
+                        _AllPropertiesAreInput = true;
+                        break;
+                    }
             }
 
             InputChanged += UpdateAndRefresh;
@@ -177,7 +177,7 @@ namespace JX3CalculatorShared.ViewModels
             var name = e.PropertyName;
             if (ExcludePropertyNames.Contains(name)) return false;
             if (_AllPropertiesAreInput) return true;
-            
+
             bool res = (name.StartsWith(InternalConstCache.OUTPUT)) ||
                        InputPropertyNames.Contains(e.PropertyName); // 当上一级的VM传出Output改变时也更新
             return res;
@@ -193,7 +193,7 @@ namespace JX3CalculatorShared.ViewModels
             InputChanged?.Invoke(sender, e);
         }
 
-        protected void RaisePropertyChanged([CallerMemberName] [CanBeNull] string PropertyName = null)
+        protected void RaisePropertyChanged([CallerMemberName][CanBeNull] string PropertyName = null)
         {
             OnPropertyChanged(new PropertyChangedEventArgs(PropertyName));
         }
@@ -225,7 +225,7 @@ namespace JX3CalculatorShared.ViewModels
             //InputChanged -= UpdateAndRefresh;
             _AutoUpdate = false;
         }
-        
+
         public virtual void EnableAutoUpdate()
         {
             //InputChanged += UpdateAndRefresh;
@@ -240,6 +240,33 @@ namespace JX3CalculatorShared.ViewModels
             EnableAutoUpdate();
             UpdateAndRefresh();
         }
+
+        /// <summary>
+        /// 在不触发更新事件的情况下进行一次Action
+        /// </summary>
+        /// <param name="act"></param>
+        public void ActionWithOutUpdate(Action act)
+        {
+            var autoUpdate = _AutoUpdate; // 如果处于自动更新状态则关闭
+            DisableAutoUpdate();
+            act();
+            if (autoUpdate)
+            {
+                EnableAutoUpdate();
+            }
+        }
+
+        public void ActionWithOutUpdate<T>(Action<T> act, T param)
+        {
+            var autoUpdate = _AutoUpdate; // 如果处于自动更新状态则关闭
+            DisableAutoUpdate();
+            act(param);
+            if (autoUpdate)
+            {
+                EnableAutoUpdate();
+            }
+        }
+
 
         /// <summary>
         /// 确保在执行Action之后只更新一次，Action往往会修改多个输入变量

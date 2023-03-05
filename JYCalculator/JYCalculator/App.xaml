@@ -307,7 +307,7 @@
             TargetType="ComboBox">
             <!-- <Setter Property="Margin" Value="5 5" /> -->
             <Setter Property="ItemTemplate" Value="{StaticResource DataTemplate.ZhenFaCbb}" />
-            <Setter Property="MinWidth" Value="150" />
+            <Setter Property="MinWidth" Value="160" />
         </Style>
 
         <!--  单体_下拉列表数据模板  -->

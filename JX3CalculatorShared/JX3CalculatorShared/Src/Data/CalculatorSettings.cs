@@ -1,7 +1,7 @@
-﻿using System.Collections.Immutable;
-using JX3CalculatorShared.Utils;
+﻿using JX3CalculatorShared.Utils;
+using System.Collections.Immutable;
 
-namespace JX3CalculatorShared.Src.Data
+namespace JX3CalculatorShared.Data
 {
     public class CalculatorSettings
     {

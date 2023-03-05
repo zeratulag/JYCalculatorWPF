@@ -2,6 +2,8 @@
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Collections.Immutable;
+using CommunityToolkit.Mvvm.Messaging;
+using JX3CalculatorShared.ViewModels;
 
 namespace JX3CalculatorShared.Globals
 {
@@ -14,10 +16,12 @@ namespace JX3CalculatorShared.Globals
         public const string RESOURCE_ICON_FOLDER = "Resource/Icons/";
         public const string RESOURCE_ICON_URI = URI_PREFIX + RESOURCE_ICON_FOLDER;
         public const string SinaWBURL = @"https://weibo.com/zeratulag/home"; // 个人主页
+
+        public const string BUILD_PATH = DATA_FOLDER + "BuildDate.txt";
     }
 
-    public static class StaticData
-        // 存储一些游戏常量，此类的成员将会被using static 直接访问
+    public static class StaticConst
+    // 存储一些游戏常量，此类的成员将会被using static 直接访问
     {
         public const int CurrentLevel = 120; // 当前人物等级
         public const double FPS_PER_SECOND = 16.0;
@@ -25,7 +29,35 @@ namespace JX3CalculatorShared.Globals
         public const int GCD_FPS = 24;
         public const int NumberOfQiXue = 12;
         public const double G_KILO = 1024.0; // 郭氏千
+        public static readonly GlobalParams fGP;
+
+        static StaticConst()
+        {
+            fGP = new GlobalParams(CurrentLevel);
+        }
     }
+
+    public static class StaticMessager
+    {
+        public static class Senders
+        {
+            public const string QiXue = "QiXueChanged";
+            public const string MiJi = "MiJiChanged";
+            public const string BaoYuMiJi = "BaoYuMiJiChanged"; 
+            public const string FightTime = "FightTimeChanged";
+        }
+        
+        public static StringMessage QiXueChangedMsg = new StringMessage(Senders.QiXue); // 奇穴改变
+        public static StringMessage MiJiChangedMsg = new StringMessage(Senders.MiJi); // 秘籍改变
+        public static StringMessage BaoYuMiJiChangedMsg = new StringMessage(Senders.BaoYuMiJi); // 暴雨秘籍改变（影响气魄）
+        public static StringMessage FightTimeChangedMsg = new StringMessage(Senders.FightTime); // 战斗时间改变
+
+        public static void Send(StringMessage msg)
+        {
+            WeakReferenceMessenger.Default.Send(msg);
+        }
+    }
+
 
     public static class Funcs
     {

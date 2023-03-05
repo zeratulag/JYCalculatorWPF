@@ -1,6 +1,4 @@
-﻿using JX3CalculatorShared.Src.Class;
-using JX3CalculatorShared.Src.Data;
-using JX3CalculatorShared.Utils;
+﻿using JX3CalculatorShared.Utils;
 using Minimod.PrettyPrint;
 using System;
 using System.Collections.Generic;
@@ -67,7 +65,7 @@ namespace JX3CalculatorShared.Class
                     }
                     else
                     {
-                        var v = new List<object>() {itemKvp.Value};
+                        var v = new List<object>() { itemKvp.Value };
                         otherAts.Add(itemKvp.Key, v);
                     }
                 }
@@ -78,15 +76,24 @@ namespace JX3CalculatorShared.Class
 
         public AttrCollection(IDictionary<string, double> data, Func<string, bool> isValue)
         {
+            // 复制构造
             var (valueAts, otherAts) = ParseData(data, isValue);
             Values = valueAts.ToDict();
             Others = otherAts.ToDict();
             Simplified = false;
         }
 
+        public AttrCollection(AttrCollection old)
+        {
+            // 复制构造
+            Values = old.Values.Copy();
+            Others = old.Others.Copy();
+            Simplified = old.Simplified;
+        }
+
         public AttrCollection Copy()
         {
-            var res = new AttrCollection(Values, Others, Simplified);
+            var res = new AttrCollection(this);
             return res;
         }
 
@@ -125,6 +132,16 @@ namespace JX3CalculatorShared.Class
                 throw new ArgumentException();
             }
         }
+
+        /// <summary>
+        /// 就地按照倍数修改强度，用于模拟多层效果叠加，包括数值类属性和部分非数值类属性（考虑到技能秘籍的系数修饰属于非数值类属性）
+        /// </summary>
+        /// <param name="k">效果倍数</param>
+        public void MultiplyEffect(double k)
+        {
+            Values.MultiplyEffect(k);
+            Others.MultiplyEffect(k);
+        } 
 
         #endregion
 
@@ -188,7 +205,7 @@ namespace JX3CalculatorShared.Class
                     throw new ArgumentException("未知的分母！");
                 }
 
-                var newvalue = KVP.Value / (double) template.Denominator;
+                var newvalue = KVP.Value / template.Denominator;
                 res.AppendKeyValue(newkey, newvalue);
             }
 
@@ -207,7 +224,7 @@ namespace JX3CalculatorShared.Class
 
                 if (template.Denominator > 1)
                 {
-                    newvalue = (from _ in newvalue select (object) ((int) _ / template.Denominator)).ToList();
+                    newvalue = (from _ in newvalue select (object)((int)_ / template.Denominator)).ToList();
                 }
 
                 res.AppendObjectKeyValue(newkey, newvalue);
@@ -277,175 +294,5 @@ namespace JX3CalculatorShared.Class
         }
 
         #endregion
-    }
-
-    public class NamedAttrs
-    {
-        /// <summary>
-        /// 带命名的属性集合，用于在Debug界面上显示属性内容
-        /// </summary>
-
-        #region 成员
-
-        public string Name { get; set; }
-
-        public AttrCollection Attr { get; }
-        public string Desc { get; }
-
-        public static NamedAttrs Empty = new NamedAttrs("空");
-
-        #endregion
-
-        #region 构造
-
-        /// <summary>
-        /// 空的
-        /// </summary>
-        /// <param name="name"></param>
-        public NamedAttrs(string name)
-        {
-            Attr = null;
-            Name = name;
-            Desc = "无属性";
-        }
-
-        public NamedAttrs(string name, AttrCollection attr)
-        {
-            Attr = attr;
-            Name = name;
-            if (Attr != null)
-            {
-                Desc = Attr.ToStr();
-            }
-            else
-            {
-                Desc = "";
-            }
-        }
-
-        public NamedAttrs(IEnumerable<string> names, AttrCollection attr, string sep = ", ") :
-            this(names.StrJoin(sep), attr)
-        {
-        }
-
-        public NamedAttrs(BaseBuff buff) : this(buff.DescName, buff.SCharAttrs)
-        {
-        }
-
-        public NamedAttrs(BaseBuffGroup buffGroup) : this(buffGroup.DescNames, buffGroup.SCharAttr)
-        {
-        }
-
-        #endregion
-
-        public void FormatName(string fmt = "{0}")
-        {
-            Name = String.Format(fmt, Name);
-        }
-
-        /// <summary>
-        /// 使用 prefix:[Name] 修改名称
-        /// </summary>
-        /// <param name="prefix"></param>
-        public void ParcelName(string prefix)
-        {
-            string res = prefix + "[{0}]";
-            FormatName(res);
-        }
-    }
-
-    /// </summary>
-    public class CharAttrCollection : AttrCollection
-    {
-        public static readonly Func<string, AttrTemplate> GetTemplate = AtLoader.GetAtTemplate;
-
-        public static CharAttrCollection Empty = new CharAttrCollection(false);
-        public static CharAttrCollection SimplifiedEmpty = new CharAttrCollection(true);
-
-        #region 构造
-
-        public CharAttrCollection(bool simplified = false) : base(simplified: simplified)
-        {
-        }
-
-        public CharAttrCollection(AttrCollection attr) : base(attr.Values, attr.Others)
-        {
-            Simplified = attr.Simplified;
-        }
-
-        public CharAttrCollection(IDictionary<string, double> data) : base(data, AtLoader.At_is_Value)
-        {
-        }
-
-        public CharAttrCollection(Dictionary<string, double> value,
-            Dictionary<string, List<object>> other,
-            bool simplified = false) : base(value, other, simplified)
-        {
-        }
-
-        #endregion
-
-        #region 修改
-
-        public new CharAttrCollection Multiply(double k)
-        {
-            var attr = base.Multiply(k);
-            return new CharAttrCollection(attr);
-        }
-
-        #endregion
-
-
-        public CharAttrCollection Simplify()
-        {
-            var res = base.Simplify(GetTemplate);
-            return new CharAttrCollection(res);
-        }
-
-        public static CharAttrCollection Sum(IEnumerable<CharAttrCollection> ats)
-        {
-            var res = AttrCollection.Sum(ats);
-            return new CharAttrCollection(res);
-        }
-    }
-
-    /// <summary>
-    /// 描述技能属性的类
-    /// </summary>
-    public class SkillAttrCollection : AttrCollection
-    {
-        public static readonly Func<string, SkillAttrTemplate> GetTemplate = AtLoader.GetSkillAttrTemplate;
-
-        public static SkillAttrCollection Empty = new SkillAttrCollection();
-        public static SkillAttrCollection SimplifiedEmpty = new SkillAttrCollection();
-
-        #region 构造
-
-        public SkillAttrCollection(bool simplified = false) : base(simplified)
-        {
-        }
-
-        public SkillAttrCollection(AttrCollection attr) : base(attr.Values, attr.Others)
-        {
-            Simplified = attr.Simplified;
-        }
-
-        public SkillAttrCollection(IDictionary<string, double> data) : base(data, AtLoader.SkillAt_is_Value)
-        {
-        }
-
-        #endregion
-
-        public SkillAttrCollection Simplify()
-        {
-            var res = base.Simplify(GetTemplate);
-            return new SkillAttrCollection(res);
-        }
-
-        public static SkillAttrCollection Sum(IEnumerable<SkillAttrCollection> ats)
-        {
-            var res = AttrCollection.Sum(ats);
-            return new SkillAttrCollection(res);
-        }
     }
 }

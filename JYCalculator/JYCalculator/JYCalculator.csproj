@@ -31,7 +31,7 @@
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>3</ApplicationRevision>
-    <ApplicationVersion>0.9.0.%2a</ApplicationVersion>
+    <ApplicationVersion>1.9.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
@@ -71,8 +71,8 @@
     <SignManifests>false</SignManifests>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CommunityToolkit.Mvvm, Version=8.0.0.0, Culture=neutral, PublicKeyToken=4aff67a105548ee2, processorArchitecture=MSIL">
-      <HintPath>..\..\..\NuGetPackages\CommunityToolkit.Mvvm.8.0.0\lib\netstandard2.0\CommunityToolkit.Mvvm.dll</HintPath>
+    <Reference Include="CommunityToolkit.Mvvm, Version=8.1.0.0, Culture=neutral, PublicKeyToken=4aff67a105548ee2, processorArchitecture=MSIL">
+      <HintPath>..\..\..\NuGetPackages\CommunityToolkit.Mvvm.8.1.0\lib\netstandard2.0\CommunityToolkit.Mvvm.dll</HintPath>
     </Reference>
     <Reference Include="Costura, Version=5.7.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\NuGetPackages\Costura.Fody.5.7.0\lib\netstandard1.0\Costura.dll</HintPath>
@@ -100,8 +100,8 @@
     <Reference Include="Microsoft.Xaml.Behaviors, Version=1.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\..\..\NuGetPackages\Microsoft.Xaml.Behaviors.Wpf.1.1.39\lib\net45\Microsoft.Xaml.Behaviors.dll</HintPath>
     </Reference>
-    <Reference Include="MiniExcel, Version=1.29.0.0, Culture=neutral, PublicKeyToken=e7310002a53eac39, processorArchitecture=MSIL">
-      <HintPath>..\..\..\NuGetPackages\MiniExcel.1.29.0\lib\net45\MiniExcel.dll</HintPath>
+    <Reference Include="MiniExcel, Version=1.30.0.0, Culture=neutral, PublicKeyToken=e7310002a53eac39, processorArchitecture=MSIL">
+      <HintPath>..\..\..\NuGetPackages\MiniExcel.1.30.0\lib\net45\MiniExcel.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\..\..\NuGetPackages\Newtonsoft.Json.13.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -115,20 +115,20 @@
     <Reference Include="PropertyChanged, Version=4.1.0.0, Culture=neutral, PublicKeyToken=ee3ee20bcf148ddd, processorArchitecture=MSIL">
       <HintPath>..\..\..\NuGetPackages\PropertyChanged.Fody.4.1.0\lib\net40\PropertyChanged.dll</HintPath>
     </Reference>
-    <Reference Include="Syncfusion.Data.WPF, Version=20.3460.0.47, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
-      <HintPath>D:\Program Files (x86)\Syncfusion\Essential Studio\WPF\20.3.0.47\precompiledassemblies\4.6\Syncfusion.Data.WPF.dll</HintPath>
+    <Reference Include="Syncfusion.Data.WPF, Version=20.4460.0.38, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>D:\Program Files (x86)\Syncfusion\Essential Studio\WPF\20.4.0.38\precompiledassemblies\4.6\Syncfusion.Data.WPF.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Syncfusion.SfChart.Wpf, Version=20.3460.0.47, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
-      <HintPath>D:\Program Files (x86)\Syncfusion\Essential Studio\WPF\20.3.0.47\precompiledassemblies\4.6\Syncfusion.SfChart.Wpf.dll</HintPath>
+    <Reference Include="Syncfusion.SfChart.Wpf, Version=20.4460.0.38, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>D:\Program Files (x86)\Syncfusion\Essential Studio\WPF\20.4.0.38\precompiledassemblies\4.6\Syncfusion.SfChart.Wpf.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Syncfusion.SfGrid.WPF, Version=20.3460.0.47, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
-      <HintPath>D:\Program Files (x86)\Syncfusion\Essential Studio\WPF\20.3.0.47\precompiledassemblies\4.6\Syncfusion.SfGrid.WPF.dll</HintPath>
+    <Reference Include="Syncfusion.SfGrid.WPF, Version=20.4460.0.38, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>D:\Program Files (x86)\Syncfusion\Essential Studio\WPF\20.4.0.38\precompiledassemblies\4.6\Syncfusion.SfGrid.WPF.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Syncfusion.Shared.Wpf, Version=20.3460.0.47, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
-      <HintPath>D:\Program Files (x86)\Syncfusion\Essential Studio\WPF\20.3.0.47\precompiledassemblies\4.6\Syncfusion.Shared.Wpf.dll</HintPath>
+    <Reference Include="Syncfusion.Shared.Wpf, Version=20.4460.0.38, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>D:\Program Files (x86)\Syncfusion\Essential Studio\WPF\20.4.0.38\precompiledassemblies\4.6\Syncfusion.Shared.Wpf.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -327,87 +327,109 @@
     <Compile Include="Minimods\Minimod.PrettyPrint.Generated.cs" />
     <Compile Include="Minimods\Minimod.PrettyText.Generated.cs" />
     <Compile Include="Minimods\Minimod.PrettyTypeSignatures.Generated.cs" />
+    <Compile Include="Models\EventTriggerModel\EventTriggerModelShared.cs" />
+    <Compile Include="Models\EventTriggerModel\EventTriggerArg.cs" />
+    <Compile Include="Models\Shared\MainWindowSav.cs" />
+    <Compile Include="Models\Shared\QiXueConfigModelShared.cs" />
+    <Compile Include="Models\SkillNumModel\Shared\CommonSkillNumModelShared.cs" />
+    <Compile Include="Models\SkillNumModel\Shared\SkillNumModelShared.cs" />
     <Compile Include="Properties\Annotations.cs" />
-    <Compile Include="Src\Class\CalcData.cs" />
     <Compile Include="Src\CalculatorShells\CalculatorShell.cs" />
-    <Compile Include="Src\CalculatorShells\FullCharacterGroup.cs" />
+    <Compile Include="Src\Data\CalcDataShared.cs" />
+    <Compile Include="Src\CalculatorShells\CalculatorShellShared.cs" />
+    <Compile Include="Src\Class\Shared\DamageDerivShared.cs" />
+    <Compile Include="Src\Class\Shared\FullCharacterShared.cs" />
+    <Compile Include="Src\Class\Shared\InitCharacterShared.cs" />
+    <Compile Include="Src\Class\Shared\FullCharacterGroup.cs" />
     <Compile Include="Src\Class\AttrWeight.cs" />
-    <Compile Include="Src\Class\BuffCoverDF.cs" />
-    <Compile Include="Src\Class\CombatStat.cs" />
-    <Compile Include="Src\Class\JYCombatStatItem.cs" />
+    <Compile Include="Src\Class\Shared\BuffCoverDF.cs" />
+    <Compile Include="Src\Class\Shared\HasteTableItem.cs" />
+    <Compile Include="Src\Class\JYQiXueConfig.cs" />
+    <Compile Include="Src\Class\Shared\SkillDataDF.cs" />
+    <Compile Include="Src\Class\Shared\SkillDataDFShared.cs" />
+    <Compile Include="Src\Class\Shared\SkillDamageDF.cs" />
+    <Compile Include="Src\Class\Shared\CombatStat.cs" />
+    <Compile Include="Src\Class\Shared\CombatStatItem.cs" />
     <Compile Include="Src\Class\DamageDeriv.cs" />
-    <Compile Include="Src\Class\FightTimeSummary.cs" />
+    <Compile Include="Src\Class\Shared\FightTimeSummary.cs" />
     <Compile Include="Src\Class\Haste.cs" />
-    <Compile Include="Src\Class\JBPZPanel.cs" />
-    <Compile Include="Src\Class\AbilityGenre.cs" />
-    <Compile Include="Src\Class\ProfitDF.cs" />
-    <Compile Include="Src\Class\QiXueConfig.cs" />
+    <Compile Include="Src\Class\Shared\JBPZPanel.cs" />
+    <Compile Include="Src\Class\Shared\AbilityGenre.cs" />
+    <Compile Include="Src\Class\Shared\JBPZPlan.cs" />
+    <Compile Include="Src\Class\Shared\ProfitDF.cs" />
+    <Compile Include="Src\Class\Shared\QiXueConfig.cs" />
     <Compile Include="Src\Class\SkillDamage.cs" />
-    <Compile Include="Src\Class\SkillDamageDF.cs" />
-    <Compile Include="Src\Class\SkillDamageFreqDF.cs" />
+    <Compile Include="Src\Class\Shared\SkillDamageFreqDF.cs" />
+    <Compile Include="Src\Class\Shared\SkillDamageShared.cs" />
     <Compile Include="Src\Class\SkillData.cs" />
-    <Compile Include="Src\Class\SkillDataDF.cs" />
-    <Compile Include="Src\Class\SkillFreqCT.cs" />
-    <Compile Include="Src\Class\SkillFreqCTDF.cs" />
-    <Compile Include="Src\Class\SkillFreqCTs.cs" />
+    <Compile Include="Src\Class\Shared\SkillFreqCT.cs" />
+    <Compile Include="Src\Class\Shared\SkillFreqCTDF.cs" />
+    <Compile Include="Src\Class\Shared\SkillFreqCTs.cs" />
+    <Compile Include="Src\Class\Shared\SkillDataShared.cs" />
     <Compile Include="Src\Class\SkillHasteTable.cs" />
+    <Compile Include="Src\Class\Shared\SkillHasteTableShared.cs" />
     <Compile Include="Src\ConsoleMainProgram.cs" />
-    <Compile Include="Src\Class\JYAbility.cs" />
-    <Compile Include="Src\Class\Target.cs" />
-    <Compile Include="Src\Data\JYDataLoader.cs" />
+    <Compile Include="Src\Class\Shared\XFAbility.cs" />
+    <Compile Include="Src\Data\CalcSettingShared.cs" />
+    <Compile Include="Src\Data\XFDataLoader.cs" />
     <Compile Include="Src\Data\ItemClass.cs" />
-    <Compile Include="Src\Data\StaticJYData.cs" />
-    <Compile Include="Src\DB\AbilityDB.cs" />
+    <Compile Include="Src\Data\StaticXFData.cs" />
+    <Compile Include="Src\DB\Shared\AttrWeightDBShared.cs" />
+    <Compile Include="Src\DB\Shared\AbilityDB.cs" />
     <Compile Include="Src\DB\AttrWeightDB.cs" />
-    <Compile Include="Src\DB\BigFMDB.cs" />
-    <Compile Include="Src\DB\BuffDB.cs" />
-    <Compile Include="Src\DB\EquipOptionDB.cs" />
-    <Compile Include="Src\DB\ItemDTDB.cs" />
-    <Compile Include="Src\DB\QiXueDB.cs" />
-    <Compile Include="Src\DB\RecipeDB.cs" />
-    <Compile Include="Src\DB\SetOptionDB.cs" />
-    <Compile Include="Src\DB\SkillInfoDB.cs" />
-    <Compile Include="Src\DB\SkillModifierDB.cs" />
-    <Compile Include="Src\DB\TargetDB.cs" />
-    <Compile Include="Src\DB\JYDataBase.cs" />
-    <Compile Include="Src\DB\ZhenFaDB.cs" />
-    <Compile Include="Src\DPSKernelOptimizer\DPSKernelOptimizerClass.cs" />
-    <Compile Include="Src\DPSKernelOptimizer\MultiZhenFaOptimizer.cs" />
-    <Compile Include="Src\DPSKernelOptimizer\OptimizedICharResult.cs" />
+    <Compile Include="Src\DB\Shared\BigFMDB.cs" />
+    <Compile Include="Src\DB\Shared\BuffDB.cs" />
+    <Compile Include="Src\DB\Shared\EquipOptionDB.cs" />
+    <Compile Include="Src\DB\Shared\ItemDTDB.cs" />
+    <Compile Include="Src\DB\Shared\QiXueDB.cs" />
+    <Compile Include="Src\DB\Shared\RecipeDB.cs" />
+    <Compile Include="Src\DB\Shared\SetOptionDB.cs" />
+    <Compile Include="Src\DB\Shared\SkillInfoDB.cs" />
+    <Compile Include="Src\DB\Shared\SkillModifierDB.cs" />
+    <Compile Include="Src\DB\Shared\TargetDB.cs" />
+    <Compile Include="Src\DB\Shared\XFDataBase.cs" />
+    <Compile Include="Src\DB\Shared\ZhenFaDB.cs" />
+    <Compile Include="Src\DPSKernelOptimizer\Shared\FullCharInfo.cs" />
+    <Compile Include="Src\DPSKernelOptimizer\Shared\MultiZhenFaOptimizer.cs" />
+    <Compile Include="Src\DPSKernelOptimizer\Shared\OptimizedICharResult.cs" />
     <Compile Include="Src\DPSKernelShell\DPSKernel.cs" />
-    <Compile Include="Src\DPSKernelOptimizer\DPSKernelOptimizer.cs" />
+    <Compile Include="Src\DPSKernelOptimizer\Shared\DPSKernelOptimizer.cs" />
+    <Compile Include="Src\DPSKernelShell\DPSCalcShellArg.cs" />
     <Compile Include="Src\DPSKernelShell\DPSKernelShell.cs" />
+    <Compile Include="Src\DPSKernelShell\Shared\DPSKernelShared.cs" />
+    <Compile Include="Src\DPSKernelShell\Shared\DPSKernelShellShared.cs" />
     <Compile Include="Src\Class\FullCharacter.cs" />
     <Compile Include="Src\Class\InitCharacter.cs" />
     <Compile Include="Src\Class\JYSkillCountItem.cs" />
     <Compile Include="Utils\PeriodClassTool.cs" />
+    <Compile Include="Utils\XFClassTool.cs" />
     <Compile Include="ViewModels\AboutDialogViewModel.cs" />
-    <Compile Include="ViewModels\AboutDialogViewModelBase.cs" />
-    <Compile Include="ViewModels\Debug\FightTimeSummaryViewModel.cs" />
-    <Compile Include="ViewModels\Main\BuffViewModels\AllBuffConfigViewModel.cs" />
-    <Compile Include="ViewModels\Main\FightOptionViewModels\FightOptionConfigViewModel.cs" />
-    <Compile Include="ViewModels\Main\FightOptionViewModels\TargetViewModel.cs" />
-    <Compile Include="ViewModels\Main\InitInputViewModel\BigFMConfigViewModel.cs" />
-    <Compile Include="ViewModels\Main\InitInputViewModel\EquipOptionConfigViewModel.cs" />
-    <Compile Include="ViewModels\Main\InitInputViewModel\InitInputViewModel.cs" />
-    <Compile Include="ViewModels\Main\ItemDTViewModels\ItemDTConfigViewModel.cs" />
+    <Compile Include="ViewModels\Debug\DebugWindowViewModel.cs" />
+    <Compile Include="ViewModels\Debug\DebugWindowViewModelShared.cs" />
+    <Compile Include="ViewModels\Debug\FightTimeSummaryViewModelShared.cs" />
     <Compile Include="ViewModels\Main\MainWindowViewModels.cs" />
-    <Compile Include="ViewModels\Main\MiJiViewModels\MiJiViewModel.cs" />
-    <Compile Include="ViewModels\Main\MiJiViewModels\SkillMiJiConfigViewModel.cs" />
-    <Compile Include="ViewModels\Main\MiJiViewModels\SkillMiJiViewModel.cs" />
-    <Compile Include="ViewModels\Main\ProfitChartViewModel.cs" />
-    <Compile Include="ViewModels\Main\QiXueViewModels\QiXueConfigViewModel.cs" />
-    <Compile Include="ViewModels\Main\SkillDataDFViewModel.cs" />
+    <Compile Include="ViewModels\Main\Shared\BuffViewModels\AllBuffConfigViewModel.cs" />
+    <Compile Include="ViewModels\Main\Shared\FightOptionViewModels\FightOptionConfigViewModel.cs" />
+    <Compile Include="ViewModels\Main\Shared\FightOptionViewModels\TargetViewModel.cs" />
+    <Compile Include="ViewModels\Main\Shared\InitInputViewModels\BigFMConfigViewModel.cs" />
+    <Compile Include="ViewModels\Main\Shared\InitInputViewModels\EquipOptionConfigViewModel.cs" />
+    <Compile Include="ViewModels\Main\Shared\InitInputViewModels\InitInputViewModel.cs" />
+    <Compile Include="ViewModels\Main\Shared\ItemDTViewModels\ItemDTConfigViewModel.cs" />
+    <Compile Include="ViewModels\Main\Shared\MainWindowViewModels.cs" />
+    <Compile Include="ViewModels\Main\Shared\MiJiViewModels\MiJiViewModel.cs" />
+    <Compile Include="ViewModels\Main\Shared\MiJiViewModels\SkillMiJiConfigViewModel.cs" />
+    <Compile Include="ViewModels\Main\Shared\MiJiViewModels\SkillMiJiViewModel.cs" />
+    <Compile Include="ViewModels\Main\Shared\OptimizationViewModel.cs" />
+    <Compile Include="ViewModels\Main\Shared\ProfitChartViewModel.cs" />
+    <Compile Include="ViewModels\Main\Shared\QiXueViewModels\QiXueConfigViewModel.cs" />
+    <Compile Include="ViewModels\Main\Shared\SkillDataDFViewModel.cs" />
     <Compile Include="Views\DebugMainWindow.xaml.cs">
       <DependentUpon>DebugMainWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\ImportJBDialog.xaml.cs">
-      <DependentUpon>ImportJBDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\MainWindowHelper.cs" />
+    <Compile Include="Views\Shared\MainWindowHelper.cs" />
     <Compile Include="Views\UserControls\InitCharPanel.xaml.cs">
       <DependentUpon>InitCharPanel.xaml</DependentUpon>
     </Compile>
@@ -432,10 +454,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\DebugWindowResources.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\ImportJBDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -465,10 +483,10 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\BigFMConfigModel.cs" />
-    <Compile Include="Models\BuffExtraTriggerModel\EventTriggerModel.cs" />
-    <Compile Include="Models\EquipOptionConfigModel.cs" />
-    <Compile Include="Models\MainWindowModel.cs" />
+    <Compile Include="Models\Shared\BigFMConfigModel.cs" />
+    <Compile Include="Models\EventTriggerModel\EventTriggerModel.cs" />
+    <Compile Include="Models\Shared\EquipOptionConfigModel.cs" />
+    <Compile Include="Models\Shared\MainWindowModel.cs" />
     <Compile Include="Models\QiXueConfigModel.cs" />
     <Compile Include="Models\SkillNumModel\BigXWSkillNumModel.cs" />
     <Compile Include="Models\SkillNumModel\CommonSkillNumModel.cs" />
@@ -491,6 +509,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="ClassDiagram1.cd" />
     <None Include="JYCalculator_TemporaryKey.pfx" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -673,16 +692,24 @@
   <ItemGroup>
     <Resource Include="Resource\Data\BuildDate.txt" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Views\Dialogs\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Resource Include="Resource\Images\ImportJBTutorial.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resource\Icons\15692.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resource\Icons\14632.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resource\Icons\18301.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resource\Icons\2040.png" />
+  </ItemGroup>
   <Import Project="..\..\JX3CalculatorShared\JX3CalculatorShared\JX3CalculatorShared.projitems" Label="Shared" />
+  <Import Project="..\..\JX3PZ\JX3PZ\JX3PZ.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\..\..\NuGetPackages\Fody.6.6.4\build\Fody.targets" Condition="Exists('..\..\..\NuGetPackages\Fody.6.6.4\build\Fody.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
@@ -694,13 +721,13 @@
     <Error Condition="!Exists('..\..\..\NuGetPackages\Costura.Fody.5.7.0\build\Costura.Fody.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\NuGetPackages\Costura.Fody.5.7.0\build\Costura.Fody.props'))" />
     <Error Condition="!Exists('..\..\..\NuGetPackages\Costura.Fody.5.7.0\build\Costura.Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\NuGetPackages\Costura.Fody.5.7.0\build\Costura.Fody.targets'))" />
     <Error Condition="!Exists('..\..\..\NuGetPackages\ToString.Fody.1.11.1\build\ToString.Fody.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\NuGetPackages\ToString.Fody.1.11.1\build\ToString.Fody.props'))" />
-    <Error Condition="!Exists('..\..\..\NuGetPackages\CommunityToolkit.Mvvm.8.0.0\build\netstandard2.0\CommunityToolkit.Mvvm.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\NuGetPackages\CommunityToolkit.Mvvm.8.0.0\build\netstandard2.0\CommunityToolkit.Mvvm.targets'))" />
     <Error Condition="!Exists('..\..\..\NuGetPackages\NETStandard.Library.2.0.3\build\netstandard2.0\NETStandard.Library.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\NuGetPackages\NETStandard.Library.2.0.3\build\netstandard2.0\NETStandard.Library.targets'))" />
+    <Error Condition="!Exists('..\..\..\NuGetPackages\CommunityToolkit.Mvvm.8.1.0\build\netstandard2.0\CommunityToolkit.Mvvm.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\NuGetPackages\CommunityToolkit.Mvvm.8.1.0\build\netstandard2.0\CommunityToolkit.Mvvm.targets'))" />
   </Target>
   <Import Project="..\..\..\NuGetPackages\Costura.Fody.5.7.0\build\Costura.Fody.targets" Condition="Exists('..\..\..\NuGetPackages\Costura.Fody.5.7.0\build\Costura.Fody.targets')" />
-  <Import Project="..\..\..\NuGetPackages\CommunityToolkit.Mvvm.8.0.0\build\netstandard2.0\CommunityToolkit.Mvvm.targets" Condition="Exists('..\..\..\NuGetPackages\CommunityToolkit.Mvvm.8.0.0\build\netstandard2.0\CommunityToolkit.Mvvm.targets')" />
   <Import Project="..\..\..\NuGetPackages\NETStandard.Library.2.0.3\build\netstandard2.0\NETStandard.Library.targets" Condition="Exists('..\..\..\NuGetPackages\NETStandard.Library.2.0.3\build\netstandard2.0\NETStandard.Library.targets')" />
   <PropertyGroup>
     <PreBuildEvent>echo %25date%25 %25time%25 &gt; "$(ProjectDir)\Resource\Data\BuildDate.txt"</PreBuildEvent>
   </PropertyGroup>
+  <Import Project="..\..\..\NuGetPackages\CommunityToolkit.Mvvm.8.1.0\build\netstandard2.0\CommunityToolkit.Mvvm.targets" Condition="Exists('..\..\..\NuGetPackages\CommunityToolkit.Mvvm.8.1.0\build\netstandard2.0\CommunityToolkit.Mvvm.targets')" />
 </Project>

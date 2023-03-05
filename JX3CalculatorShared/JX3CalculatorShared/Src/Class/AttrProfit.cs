@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Text;
 
-namespace JX3CalculatorShared.Src.Class
+namespace JX3CalculatorShared.Class
 {
     /// <summary>
     /// 存储属性收益值的结构体

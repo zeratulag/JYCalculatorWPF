@@ -3,7 +3,7 @@ using System.Collections.Immutable;
 using static JX3CalculatorShared.Utils.ImportTool;
 
 
-namespace JX3CalculatorShared.Src.Data
+namespace JX3CalculatorShared.Data
 {
     public static class AtLoader
     {

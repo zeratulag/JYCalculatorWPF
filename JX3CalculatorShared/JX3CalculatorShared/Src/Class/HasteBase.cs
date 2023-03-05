@@ -24,7 +24,7 @@ namespace JX3CalculatorShared.Class
 
         public int gHSP(int HSP, int extraHSP)
         {
-            int gHsp = (int) (HSP * 1024 / fHS);
+            int gHsp = (int)(HSP * 1024 / fHS);
             int res = gHsp + extraHSP;
             return res;
         }
@@ -46,7 +46,7 @@ namespace JX3CalculatorShared.Class
         public int SKT_FPS(int fps, int HSP, int extraHSP = 0)
         {
             int gHsp = Final_gHSP(HSP, extraHSP);
-            int finalFps = (int) (fps * 1024.0 / (1024 + gHsp));
+            int finalFps = (int)(fps * 1024.0 / (1024 + gHsp));
             return finalFps;
         }
 
@@ -59,14 +59,14 @@ namespace JX3CalculatorShared.Class
         /// <returns>加速后的读条时间（秒）</returns>
         public double SKT(double time, int HSP, int extraHSP = 0)
         {
-            int fps = (int) Math.Round(time * StaticData.FPS_PER_SECOND);
+            int fps = (int)Math.Round(time * StaticConst.FPS_PER_SECOND);
             int finalFps = SKT_FPS(fps: fps, HSP: HSP, extraHSP: extraHSP);
-            double res = finalFps / StaticData.FPS_PER_SECOND;
+            double res = finalFps / StaticConst.FPS_PER_SECOND;
             return res;
         }
 
         public (Dictionary<int, int> FPS2HSP, Dictionary<int, double> HSP2Time) Threshold_fps(
-            int fps = StaticData.GCD_FPS,
+            int fps = StaticConst.GCD_FPS,
             int extra_HSP = 0)
         {
             var fps2hsp = new Dictionary<int, int>(); // 最终帧数: 加速等级
@@ -79,7 +79,7 @@ namespace JX3CalculatorShared.Class
                 if (!fps2hsp.ContainsKey(final_fps))
                 {
                     fps2hsp.Add(final_fps, hsp);
-                    hsp2time.Add(hsp, final_fps / StaticData.FPS_PER_SECOND);
+                    hsp2time.Add(hsp, final_fps / StaticConst.FPS_PER_SECOND);
                 }
 
                 if (gHSP(HSP: hsp, extraHSP: 0) > 256)
@@ -92,7 +92,7 @@ namespace JX3CalculatorShared.Class
 
         public double Calc_GCD_time(int HSP, int extra_HSP = 0)
         {
-            var res = SKT(StaticData.GCD, HSP, extra_HSP);
+            var res = SKT(StaticConst.GCD, HSP, extra_HSP);
             return res;
         }
 
@@ -111,7 +111,10 @@ namespace JX3CalculatorShared.Class
             double rawtime = count * interval;
             var res = new SkillHasteTime()
             {
-                Count = count, RawInterval = interval, RawTime = rawtime, FinalInterval = finalinterval,
+                Count = count,
+                RawInterval = interval,
+                RawTime = rawtime,
+                FinalInterval = finalinterval,
                 FinalTime = finaltime
             };
             return res;
@@ -122,8 +125,8 @@ namespace JX3CalculatorShared.Class
         /// </summary>
         public int GetT1GCD_HSP()
         {
-            var (fps2Hsp, hsp2Time) = Threshold_fps(StaticData.GCD_FPS, 0);
-            return fps2Hsp[StaticData.GCD_FPS - 1];
+            var (fps2Hsp, hsp2Time) = Threshold_fps(StaticConst.GCD_FPS, 0);
+            return fps2Hsp[StaticConst.GCD_FPS - 1];
         }
     }
 
@@ -138,3 +141,4 @@ namespace JX3CalculatorShared.Class
         public double FinalInterval, FinalTime;
     }
 }
+

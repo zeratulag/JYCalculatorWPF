@@ -1,11 +1,11 @@
 ﻿using JX3CalculatorShared.Class;
+using JX3CalculatorShared.Common;
 using JX3CalculatorShared.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using JX3CalculatorShared.Common;
 
-namespace JX3CalculatorShared.Src.Data
+namespace JX3CalculatorShared.Data
 {
     /// <summary>
     /// 用于解析tab文件中形如(k, v1, v2)数据的工具

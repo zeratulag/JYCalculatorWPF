@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using JX3CalculatorShared.Globals;
+using System.Collections.Generic;
 using System.Collections.Immutable;
-using JX3CalculatorShared.Globals;
 
 namespace JX3CalculatorShared.Views
 {

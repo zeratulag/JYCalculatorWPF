@@ -1,10 +1,9 @@
-﻿using JX3CalculatorShared.Class;
-using JX3CalculatorShared.Utils;
+﻿using JX3CalculatorShared.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace JX3CalculatorShared.Src.Class
+namespace JX3CalculatorShared.Class
 {
     public class BaseBuffGroup
     {

@@ -1,10 +1,10 @@
-﻿using System;
+﻿using JX3CalculatorShared.Common;
+using JX3CalculatorShared.Data;
+using JX3CalculatorShared.Utils;
+using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
-using JX3CalculatorShared.Common;
-using JX3CalculatorShared.Src.Data;
-using JX3CalculatorShared.Utils;
 
 
 namespace JX3CalculatorShared.Class
@@ -102,7 +102,7 @@ namespace JX3CalculatorShared.Class
                 var s_ID = at_k.SID;
                 if (s_ID != null)
                 {
-                    result[s_ID] = result.GetValueOrUseDefault(s_ID, 0.0) + itemKvp.Value / (double) at_k.Denominator;
+                    result[s_ID] = result.GetValueOrUseDefault(s_ID, 0.0) + itemKvp.Value / at_k.Denominator;
                 }
             }
 
@@ -127,7 +127,7 @@ namespace JX3CalculatorShared.Class
                     }
                     else
                     {
-                        var v2t = from v2item in itemKvp.Value select Convert.ToDouble(v2item) / (double) deno;
+                        var v2t = from v2item in itemKvp.Value select Convert.ToDouble(v2item) / deno;
                         v2.AddRange(v2t.Cast<object>());
                     }
 

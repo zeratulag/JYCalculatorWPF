@@ -1,4 +1,4 @@
-﻿namespace JX3CalculatorShared.Src.Class
+﻿namespace JX3CalculatorShared.Class
 {
     public class FightTimeSummaryItem
     {

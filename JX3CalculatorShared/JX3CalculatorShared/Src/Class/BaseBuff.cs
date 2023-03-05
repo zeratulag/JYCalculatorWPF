@@ -1,10 +1,9 @@
-﻿using JX3CalculatorShared.Class;
+﻿using JX3CalculatorShared.Data;
 using JX3CalculatorShared.Globals;
-using JX3CalculatorShared.Src.Data;
 using System;
 using System.Collections.Generic;
 
-namespace JX3CalculatorShared.Src.Class
+namespace JX3CalculatorShared.Class
 {
     /// <summary>
     /// 描述游戏里基础buff的类

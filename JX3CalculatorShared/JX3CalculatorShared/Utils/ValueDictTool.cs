@@ -58,7 +58,7 @@ namespace JX3CalculatorShared.Utils
                 var distinctValues = dict.Values.Distinct().ToArray();
                 if (distinctValues.Length == 1)
                 {
-                    var prefixes = new string[2] {"P_", "M_"};
+                    var prefixes = new string[2] { "P_", "M_" };
                     var keys = from k in dict.Keys select k.RemovePrefixes(prefixes);
                     var distinctKeys = keys.Distinct().ToArray();
                     if (distinctKeys.Length == 1)

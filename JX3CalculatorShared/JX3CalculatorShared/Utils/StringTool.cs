@@ -1,9 +1,9 @@
-﻿using System;
+﻿using JX3CalculatorShared.Common;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using JX3CalculatorShared.Common;
 
 namespace JX3CalculatorShared.Utils
 {
@@ -29,7 +29,7 @@ namespace JX3CalculatorShared.Utils
 
         public static int ToInt(this char c)
         {
-            return (int) (c - '0');
+            return c - '0';
         }
 
         public static string StrJoin(this IEnumerable<string> stringList, string sep = "\n")
@@ -166,6 +166,18 @@ namespace JX3CalculatorShared.Utils
             string y = x.RemovePrefix("[").RemoveSuffix("]");
             var xs = y.Split(",");
             var res = from _ in xs select _.Trim();
+            return res;
+        }
+
+        /// <summary>
+        /// 将形如 "a, b" 或是 "[a, b]" 的字符串拆分为数组
+        /// </summary>
+        /// <param name="x">输入字符串</param>
+        /// <returns>整型数组</returns>
+        public static IEnumerable<int> ParseIntList(string x)
+        {
+            var strings = ParseStringList(x);
+            var res = from _ in strings select int.Parse(_);
             return res;
         }
 

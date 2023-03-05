@@ -4,25 +4,25 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 
-namespace JX3CalculatorShared.Src.Data
+namespace JX3CalculatorShared.Data
 {
     public partial class SkillEventItem
     {
         #region 方法
 
-        public bool CanTrigger(SkillInfoItem skillItem)
+        public bool CanTrigger(SkillInfoItemBase skillItem)
         {
             return skillItem.CanTrigger(this);
         }
 
-        public IEnumerable<string> SkillTrigger(IEnumerable<SkillInfoItem> skillItems)
+        public IEnumerable<string> SkillTrigger(IEnumerable<SkillInfoItemBase> skillItems)
         {
             var res = from item in skillItems
-                where CanTrigger(item)
-                select item.Name;
+                      where CanTrigger(item)
+                      select item.Name;
             return res.ToImmutableArray();
         }
-        
+
         // 设置可以触发的技能名
         public void SetTriggerSkillNames(IEnumerable<string> names)
         {

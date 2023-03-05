@@ -1,13 +1,13 @@
-﻿using JX3CalculatorShared.Class;
+﻿using JX3CalculatorShared.Data;
 using JX3CalculatorShared.Globals;
-using JX3CalculatorShared.Src.Data;
 using JX3CalculatorShared.Utils;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
+using Xceed.Wpf.Toolkit.PropertyGrid.Attributes;
 
 
-namespace JX3CalculatorShared.Src.Class
+namespace JX3CalculatorShared.Class
 {
     /// <summary>
     /// 用于描述游戏内修饰技能的秘籍（包括秘籍，奇穴，装备效果）的类
@@ -82,9 +82,49 @@ namespace JX3CalculatorShared.Src.Class
             {
                 EffectSkillName = (new HashSet<string>()).ToImmutableHashSet();
             }
-            
+
         }
 
+        /// <summary>
+        /// 按照倍数修改强度，并且生成新的虚拟秘籍
+        /// </summary>
+        /// <param name="old">旧的秘籍</param>
+        /// <param name="k">效果倍数</param>
+        public Recipe(Recipe old, double k = 1)
+        {
+            Name = old.Name;
+            string descName = old.DescName;
+            DescName = old.DescName;
+            RecipeID = old.RecipeID;
+            RecipeLevel = old.RecipeLevel;
+
+            SkillRecipeType = old.SkillRecipeType;
+            SkillID = old.SkillID;
+            SkillKey = old.SkillKey;
+
+            RecipeName = old.RecipeName;
+
+            SkillAttrs = old.SkillAttrs.Copy();
+            SSkillAttrs = old.SSkillAttrs.Copy();
+
+            IconID = old.IconID;
+            IsExclude = old.IsExclude;
+
+            ToolTip = old.ToolTip;
+            Type = old.Type;
+
+            EffectSkillName = old.EffectSkillName;
+
+
+            if (k != 1)
+            {
+                descName += $"[x{k:F2}]";
+                MultiplyEffect(k);
+            }
+
+            DescName = descName;
+
+        }
 
         /// <summary>
         /// 设定此秘籍可以修饰的技能名
@@ -110,6 +150,28 @@ namespace JX3CalculatorShared.Src.Class
         public int CompareTo(Recipe other)
         {
             return String.Compare(this.Name, other.Name, StringComparison.Ordinal);
+        }
+
+
+        /// <summary>
+        /// 就地按照倍数修改强度，用于模拟多层效果叠加
+        /// </summary>
+        /// <param name="k">效果倍数</param>
+        public void MultiplyEffect(double k)
+        {
+            SkillAttrs.MultiplyEffect(k);
+            SSkillAttrs.MultiplyEffect(k);
+        }
+
+        /// <summary>
+        /// 按照倍数修改强度，并且生成新的虚拟秘籍
+        /// </summary>
+        /// <param name="k">效果倍数</param>
+
+        public Recipe Emit(double k)
+        {
+            var res = new Recipe(this, k);
+            return res;
         }
 
         #endregion

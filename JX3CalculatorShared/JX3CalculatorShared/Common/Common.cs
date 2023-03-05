@@ -34,7 +34,7 @@ namespace JX3CalculatorShared.Common
         /// <param name="selfLevel">玩家等级</param>
         /// <param name="targetLevel">目标等级</param>
         /// <returns>等级压制伤害系数</returns>
-        public static double LevelCrushCoef(int targetLevel, int selfLevel = StaticData.CurrentLevel)
+        public static double LevelCrushCoef(int targetLevel, int selfLevel = StaticConst.CurrentLevel)
         {
             int levelDiff = Math.Min(Math.Abs(selfLevel - targetLevel), 10); // 绝对值等级差
             double res = 1;

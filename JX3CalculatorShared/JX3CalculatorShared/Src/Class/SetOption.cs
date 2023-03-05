@@ -1,8 +1,8 @@
-﻿using JX3CalculatorShared.Src.Data;
+﻿using JX3CalculatorShared.Data;
 using JX3CalculatorShared.Utils;
 using System.Collections.Immutable;
 
-namespace JX3CalculatorShared.Src.Class
+namespace JX3CalculatorShared.Class
 {
     public class SetOption
     {

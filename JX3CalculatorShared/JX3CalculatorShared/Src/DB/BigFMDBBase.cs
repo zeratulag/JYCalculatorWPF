@@ -1,21 +1,22 @@
-﻿using JX3CalculatorShared.Common;
+﻿using JX3CalculatorShared.Class;
+using JX3CalculatorShared.Common;
+using JX3CalculatorShared.Data;
 using JX3CalculatorShared.Globals;
-using JX3CalculatorShared.Src.Class;
-using JX3CalculatorShared.Src.Data;
 using JX3CalculatorShared.Utils;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 
-namespace JX3CalculatorShared.Src.DB
+namespace JX3CalculatorShared.DB
 {
-    public class BigFMDBBase: IDB<string, BigFM>
+    public class BigFMDBBase : IDB<string, BigFM>
     {
         public ImmutableDictionary<string, BigFM> Data;
 
         public static readonly ImmutableArray<EquipSubTypeEnum> SubTypeOrder = new EquipSubTypeEnum[]
         {
+            //用于分类排序存储各种大附魔的数组
             EquipSubTypeEnum.HAT,
             EquipSubTypeEnum.JACKET,
             EquipSubTypeEnum.BELT,
@@ -95,22 +96,22 @@ namespace JX3CalculatorShared.Src.DB
                 switch (KVP.Key)
                 {
                     case EquipSubTypeEnum.JACKET:
-                    { Jacket = valueArray; break; }
+                        { Jacket = valueArray; break; }
 
                     case EquipSubTypeEnum.HAT:
-                    { Hat = valueArray; break; }
+                        { Hat = valueArray; break; }
 
                     case EquipSubTypeEnum.BELT:
-                    { Belt = valueArray; break; }
+                        { Belt = valueArray; break; }
 
                     case EquipSubTypeEnum.SHOES:
-                    { Shoes = valueArray; break; }
+                        { Shoes = valueArray; break; }
 
                     case EquipSubTypeEnum.WRIST:
-                    { Wrist = valueArray; break; }
+                        { Wrist = valueArray; break; }
 
                     case EquipSubTypeEnum.BOTTOMS:
-                    { Bottoms = valueArray; break; }
+                        { Bottoms = valueArray; break; }
                 }
                 bigFMDict.Add(KVP.Key, valueArray);
             }

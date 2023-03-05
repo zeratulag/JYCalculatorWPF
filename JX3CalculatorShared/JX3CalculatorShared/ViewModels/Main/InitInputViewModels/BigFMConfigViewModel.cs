@@ -1,9 +1,8 @@
-﻿using JX3CalculatorShared.Globals;
-using JX3CalculatorShared.Src.Class;
+﻿using JX3CalculatorShared.Class;
+using JX3CalculatorShared.Globals;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
-using JX3CalculatorShared.Class;
 
 namespace JX3CalculatorShared.ViewModels
 {
@@ -100,7 +99,7 @@ namespace JX3CalculatorShared.ViewModels
         public static IEnumerable<BigFM> FilterBigFms(IEnumerable<BigFM> data)
         {
             IEnumerable<BigFM> res;
-            res = from _ in data where _.DLCLevel == StaticData.CurrentLevel select _;
+            res = from _ in data where _.DLCLevel == StaticConst.CurrentLevel select _;
             if (res.Any())
             {
                 return res;

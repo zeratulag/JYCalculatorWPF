@@ -1,7 +1,7 @@
 ﻿using JX3CalculatorShared.Class;
 using JX3CalculatorShared.Common;
 using JYCalculator.Globals;
-using static JX3CalculatorShared.Globals.StaticData;
+using static JX3CalculatorShared.Globals.StaticConst;
 
 
 namespace JYCalculator.Class
@@ -30,13 +30,14 @@ namespace JYCalculator.Class
 
             var BL_time = SKT(BLp, t1hsp, 0) * 4;
 
-            var BigXW_GCD_time = SKT(GCD, t1hsp, JYStaticData.XWConsts.ExtraSP);
-            var BigXW_BY_time = SKT(BY, t1hsp, JYStaticData.XWConsts.ExtraSP);
-            var BigXW_HX_time = SKT(CX, t1hsp, JYStaticData.XWConsts.ExtraSP);
-            var BigXW_BL_time = SKT(BLp, t1hsp, JYStaticData.XWConsts.ExtraSP) * 4;
+            var BigXW_GCD_time = SKT(GCD, t1hsp, XFStaticConst.XW.ExtraSP);
+            var BigXW_BY_time = SKT(BY, t1hsp, XFStaticConst.XW.ExtraSP);
+            var BigXW_HX_time = SKT(CX, t1hsp, XFStaticConst.XW.ExtraSP);
+            var BigXW_BL_time = SKT(BLp, t1hsp, XFStaticConst.XW.ExtraSP) * 4;
 
-            var Normal = new JYSkillStandardTime() {GCD = GCD_time, BY = BY_time, CX = CX_time, BL = BL_time};
-            var BigXW = new JYSkillStandardTime() {GCD = BigXW_GCD_time, BY = BigXW_BY_time, CX = BigXW_HX_time, BL = BigXW_BL_time};
+            var Normal = new JYSkillStandardTime() { GCD = GCD_time, BY = BY_time, CX = CX_time, BL = BL_time };
+            var BigXW = new JYSkillStandardTime()
+            { GCD = BigXW_GCD_time, BY = BigXW_BY_time, CX = BigXW_HX_time, BL = BigXW_BL_time };
             var Res = new Period<JYSkillStandardTime>(Normal, BigXW);
             return Res;
         }

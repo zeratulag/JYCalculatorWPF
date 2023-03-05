@@ -372,8 +372,12 @@
 
                 <TabControl>
 
-                    <TabItem Name="Tab_AllSkillTable" Header="技能数据">
-                        <uc:SkillDataGrid x:Name="DataGrid_AllSkillTable"/>
+                    <TabItem Name="Tab_NormalSkillTable" Header="常规技能数据">
+                        <uc:SkillDataGrid x:Name="DataGrid_NormalSkillTable" DataContext="{Binding Path=NormalSkillTable}"/>
+                    </TabItem>
+
+                    <TabItem Name="Tab_XWSkillTable" Header="心无技能数据">
+                        <uc:SkillDataGrid x:Name="DataGrid_XWSkillTable" DataContext="{Binding Path=XWSkillTable}"/>
                     </TabItem>
 
                     <TabItem Name="Tab_NormalSkillDamageTable" Header="常规技能伤害">

@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-namespace JX3CalculatorShared.Src
+namespace JX3CalculatorShared.Class
 {
     public class SkillNumDict
     {

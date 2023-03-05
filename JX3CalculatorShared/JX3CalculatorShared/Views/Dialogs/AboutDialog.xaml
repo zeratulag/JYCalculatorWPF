@@ -3,13 +3,16 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="clr-namespace:JX3CalculatorShared.ViewModels"
         x:Name="aboutDialog"
         WindowStartupLocation="CenterScreen"
         mc:Ignorable="d"
         ShowInTaskbar="False"
         ResizeMode ="NoResize"
         Title="关于计算器" Height="360" Width="600">
-	<Grid>
+
+
+    <Grid>
 		<Grid.RowDefinitions>
 			<RowDefinition Height="Auto"/>
 			<RowDefinition Height="Auto"/>
@@ -41,16 +44,20 @@
 			<Run Text="&#x09;&#x09;开发平台：.NET WPF"/>
             <LineBreak/>
 
-            <Run Text="资料片："/>
+            <Run Text="游戏版本："/>
             <Run Text="{Binding Path=GameDLC}"/>
-			<Run Text="&#x09;构建时间："/>
+            <Run Text="&#x09;技改版本："/>
+            <Hyperlink RequestNavigate="HandleLinkClick" NavigateUri="{Binding Path=LastPatchURL}">
+                <TextBlock Text="{Binding Path=LastPatchTime, StringFormat = \{0\}}" />
+            </Hyperlink>
+            <LineBreak/>
+			<Run Text="构建时间："/>
 			<Run Text="{Binding Path=BuildDateTime}"/>
 
 			<LineBreak/>
             <Run>鸣谢：</Run>
             <Run Text="{Binding Path=ThanksTo}"></Run>
-            <LineBreak/>
-			<Run>All rights reserved.</Run>
+			<Run>&#x09;All rights reserved.</Run>
 		</TextBlock>
 
 		<TextBlock Grid.Row="1" Grid.Column="2" Margin="0 5">

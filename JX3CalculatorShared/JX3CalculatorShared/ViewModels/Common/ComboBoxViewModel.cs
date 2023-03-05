@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace JX3CalculatorShared.ViewModels
@@ -24,6 +25,13 @@ namespace JX3CalculatorShared.ViewModels
         protected ComboBoxViewModel(IEnumerable<TItem> data) : base(nameof(SelectedIndex))
         {
             ItemsSource = data.ToArray();
+            SelectedIndex = 0;
+        }
+
+        protected ComboBoxViewModel(IEnumerable<TItem> data, Func<TItem, bool> filter) : base(nameof(SelectedIndex))
+        {
+            // 基于条件筛选目标
+            ItemsSource = data.Where(filter).ToArray();
             SelectedIndex = 0;
         }
 

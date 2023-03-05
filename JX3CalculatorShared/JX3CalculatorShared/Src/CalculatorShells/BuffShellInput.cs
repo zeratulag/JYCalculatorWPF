@@ -1,8 +1,7 @@
-﻿using JX3CalculatorShared.Class;
+﻿using JX3CalculatorShared.ViewModels;
 using System.Collections.Generic;
-using JX3CalculatorShared.ViewModels;
 
-namespace JX3CalculatorShared.Src
+namespace JX3CalculatorShared.Class
 {
     public class BuffShellInput
     {
@@ -16,7 +15,7 @@ namespace JX3CalculatorShared.Src
         public readonly BuffSpecialArg BuffSpecial; // 表示特殊Buff参数
 
         public readonly Dictionary<string, NamedAttrs> AllAttrsDict;
-        
+
 
         #endregion
 

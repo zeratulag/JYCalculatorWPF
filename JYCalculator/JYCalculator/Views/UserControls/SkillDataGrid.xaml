@@ -13,7 +13,7 @@
             dgx:DataGridFilter.IsAutoFilterEnabled="True"
             AutoGenerateColumns="False"
             FrozenColumnCount="1"
-            ItemsSource="{Binding Path=AllSkillTable}"
+            ItemsSource="{Binding}"
             VerticalScrollBarVisibility="Auto">
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding Path=Name}" Header="Name" />

@@ -1,6 +1,5 @@
 ﻿using JX3CalculatorShared.Class;
 using JX3CalculatorShared.Globals;
-using JX3CalculatorShared.Src.Class;
 using JX3CalculatorShared.Utils;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,7 +25,7 @@ namespace JX3CalculatorShared.ViewModels
         public BuffSpecialArg Arg; // 特殊Buff参数传递
 
 
-        public AllBuffConfigViewModelBase(): base()
+        public AllBuffConfigViewModelBase() : base()
         {
             Arg = new BuffSpecialArg(0.0);
         }

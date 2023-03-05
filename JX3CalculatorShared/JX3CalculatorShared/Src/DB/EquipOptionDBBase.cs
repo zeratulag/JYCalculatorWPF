@@ -1,15 +1,15 @@
-﻿using JX3CalculatorShared.Common;
-using JX3CalculatorShared.Src.Class;
-using JX3CalculatorShared.Src.Data;
+﻿using JX3CalculatorShared.Class;
+using JX3CalculatorShared.Common;
+using JX3CalculatorShared.Data;
 using JX3CalculatorShared.Utils;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.ComponentModel;
 using System.Linq;
 
-namespace JX3CalculatorShared.Src.DB
+namespace JX3CalculatorShared.DB
 {
-    public class EquipOptionDBBase:IDB<string, EquipOption>, INotifyPropertyChanged
+    public class EquipOptionDBBase : IDB<string, EquipOption>, INotifyPropertyChanged
     {
         public ImmutableDictionary<string, WPOption> WPData;
         public ImmutableDictionary<string, YZOption> YZData;
@@ -22,7 +22,7 @@ namespace JX3CalculatorShared.Src.DB
         public EquipOptionDBBase(IEnumerable<EquipOptionItem> wpitems, IEnumerable<EquipOptionItem> yzitems)
         {
             WPData = wpitems.ToImmutableDictionary(
-                _ => _.Name, _ => new WPOption(_)); 
+                _ => _.Name, _ => new WPOption(_));
             YZData = yzitems.ToImmutableDictionary(
                 _ => _.Name, _ => new YZOption(_));
 
@@ -65,10 +65,9 @@ namespace JX3CalculatorShared.Src.DB
             }
             return res;
         }
-
         public string GetWPNameByEquipID(string equipID)
         {
-            var res =  WPID2Name.GetValueOrUseDefault(equipID, "Normal_WP");
+            var res = WPID2Name.GetValueOrUseDefault(equipID, "Normal_WP");
             return res;
         }
 
@@ -96,16 +95,16 @@ namespace JX3CalculatorShared.Src.DB
             switch (type)
             {
                 case EquipOptionType.WP:
-                {
-                    result = GetWP(name);
-                    break;
-                }
+                    {
+                        result = GetWP(name);
+                        break;
+                    }
 
                 case EquipOptionType.YZ:
-                {
-                    result = GetYZ(name);
-                    break;
-                }
+                    {
+                        result = GetYZ(name);
+                        break;
+                    }
             }
             return result;
         }
