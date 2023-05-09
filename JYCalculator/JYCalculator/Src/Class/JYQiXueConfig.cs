@@ -58,29 +58,4 @@ namespace JYCalculator.Class
         #endregion
     }
 
-    /// <summary>
-    /// 奇穴库
-    /// </summary>
-    public static class JYQiXueLib
-    {
-        public static ImmutableDictionary<string, string> JBQiXueCodes = new Dictionary<string, string>()
-        {
-            {nameof(ZhuXingBaiLi_HuiChang), "2,2,3,2,1,2,4,2,2,1,1,4"},
-            {nameof(ZhuXingBaiLi_BaiYu), "2,2,3,2,1,2,4,2,2,3,1,4"},
-        }.ToImmutableDictionary();
-
-        public static ImmutableDictionary<string, JYQiXueConfig> QiXueDict;
-        public static readonly JYQiXueConfig ZhuXingBaiLi_HuiChang;
-        public static readonly JYQiXueConfig ZhuXingBaiLi_BaiYu;
-
-        static JYQiXueLib()
-        {
-            var qixuedict =
-                JBQiXueCodes.ToDictionary(jbQixue => jbQixue.Key, jbQixue => new JYQiXueConfig(jbQixue.Value));
-            QiXueDict = qixuedict.ToImmutableDictionary();
-
-            ZhuXingBaiLi_HuiChang = QiXueDict[nameof(ZhuXingBaiLi_HuiChang)];
-            ZhuXingBaiLi_BaiYu = QiXueDict[nameof(ZhuXingBaiLi_BaiYu)];
-        }
-    }
 }

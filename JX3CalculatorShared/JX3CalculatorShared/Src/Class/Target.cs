@@ -55,7 +55,7 @@ namespace JX3CalculatorShared.Class
         {
             var resList = new List<string>();
             resList.Add($"{DescName} {Level}级");
-            resList.Add(Strings.TooltipDivider0);
+            resList.Add(StringConsts.TooltipDivider0);
             resList.Add($"外功防御：{PDefReduceDmg:P2} ({Final_PDef:F0})");
             resList.Add($"内功防御：{MDefReduceDmg:P2} ({Final_MDef:F0})");
             var res = String.Join("\n", resList);
@@ -155,7 +155,7 @@ namespace JX3CalculatorShared.Class
         {
             List<string> res = new List<string>();
             res.Add($"{DescName} {Level}级");
-            res.Add(Strings.TooltipDivider0);
+            res.Add(StringConsts.TooltipDivider0);
             res.Add($"外功防御：{PDefReduceDmg:P2} ({Final_PDef:f0})");
             res.Add($"内功防御：{MDefReduceDmg:P2} ({Final_MDef:f0})");
             res.Add("");

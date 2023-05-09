@@ -172,10 +172,12 @@ namespace JX3CalculatorShared.Class
 
         public static AttrCollection Sum(IEnumerable<AttrCollection> ats)
         {
-            if (ats == null || !ats.Any()) return null;
+            if (ats == null) return null;
+            var real_at = ats.Where(_ => _ != null).ToArray();
+            if (real_at.Length == 0) return null;
 
-            var res = new AttrCollection(ats.First().Simplified);
-            foreach (var _ in ats)
+            var res = new AttrCollection(real_at[0].Simplified);
+            foreach (var _ in real_at)
             {
                 res.Append(_);
             }
@@ -193,7 +195,7 @@ namespace JX3CalculatorShared.Class
         #region 简化
 
         public static Dictionary<string, double> SimplifyValues(IDictionary<string, double> values,
-            Func<string, AbsAttrTemplate> func)
+            Func<string, AbsAttributeID> func)
         {
             var res = new Dictionary<string, double>();
             foreach (var KVP in values)
@@ -205,7 +207,7 @@ namespace JX3CalculatorShared.Class
                     throw new ArgumentException("未知的分母！");
                 }
 
-                var newvalue = KVP.Value / template.Denominator;
+                var newvalue = KVP.Value / (double)template.Denominator;
                 res.AppendKeyValue(newkey, newvalue);
             }
 
@@ -213,7 +215,7 @@ namespace JX3CalculatorShared.Class
         }
 
         public static Dictionary<string, List<object>> SimplifyOthers(IDictionary<string, List<object>> others,
-            Func<string, AbsAttrTemplate> func)
+            Func<string, AbsAttributeID> func)
         {
             var res = new Dictionary<string, List<object>>();
             foreach (var KVP in others)
@@ -224,7 +226,7 @@ namespace JX3CalculatorShared.Class
 
                 if (template.Denominator > 1)
                 {
-                    newvalue = (from _ in newvalue select (object)((int)_ / template.Denominator)).ToList();
+                    newvalue = (from _ in newvalue select (object)((int)_ / (double)template.Denominator)).ToList();
                 }
 
                 res.AppendObjectKeyValue(newkey, newvalue);
@@ -239,7 +241,7 @@ namespace JX3CalculatorShared.Class
         /// </summary>
         /// <param name="func"></param>
         /// <returns></returns>
-        public AttrCollection Simplify(Func<string, AbsAttrTemplate> func)
+        public AttrCollection Simplify(Func<string, AbsAttributeID> func)
         {
             if (Simplified)
             {

@@ -10,7 +10,7 @@ namespace JX3CalculatorShared.Common
         public static double DefReduceDmg(double finalDef, double defCoef)
         {
             double res = finalDef / (defCoef + finalDef);
-            res = Min(0.75, Max(res, -0.75));
+            res = Min(StaticConst.DefMax, Max(res, -StaticConst.DefMax));
             return res;
         }
 
@@ -23,7 +23,7 @@ namespace JX3CalculatorShared.Common
         public static double ETable(double CT, double CF)
         {
             double ct = Min(1.0, Max(0.0, CT));
-            double cf = Min(3.0, Max(1.75, CF));
+            double cf = Min(StaticConst.CriticalDamageMax, Max(StaticConst.CriticalDamageStart, CF));
             double res = ct * (cf - 1) + 1;
             return res;
         }

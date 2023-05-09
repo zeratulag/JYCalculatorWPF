@@ -3,6 +3,7 @@ using JX3CalculatorShared.Data;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
+using JX3CalculatorShared.Globals;
 
 namespace JX3CalculatorShared.DB
 {
@@ -15,7 +16,16 @@ namespace JX3CalculatorShared.DB
         {
             Data = zhenFaDict.ToImmutableDictionary();
 
-            ZhenFa = zhenFaDf.Select(zhenFaDfItem => zhenFaDfItem.Name).Select(name => Data[name]).ToImmutableArray();
+            var zf = zhenFaDf.Select(zhenFaDfItem => zhenFaDfItem.Name).Select(name => Data[name]);
+            if (AppStatic.XinFaTag == "JY")
+            {
+                ZhenFa = zf.Where(_ => ! _.IsOwn).ToImmutableArray(); // 惊羽暂时不考虑自己开阵，太复杂
+            }
+            else
+            {
+                ZhenFa = zf.ToImmutableArray();
+            }
+
         }
 
         public ZhenFa Get(string name)

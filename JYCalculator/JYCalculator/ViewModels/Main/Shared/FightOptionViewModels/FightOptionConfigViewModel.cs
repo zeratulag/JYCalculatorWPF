@@ -4,8 +4,10 @@ using JX3CalculatorShared.ViewModels;
 using JYCalculator.Data;
 using JYCalculator.DB;
 using System.Collections.Immutable;
+using System.Linq;
 using CommunityToolkit.Mvvm.Messaging;
 using JX3CalculatorShared.Globals;
+using JX3CalculatorShared.Messages;
 using JYCalculator.Globals;
 
 
@@ -25,9 +27,10 @@ namespace JYCalculator.ViewModels
 
         public int FightTime { get; set; }
         public bool ShortFight { get; set; } = true;
-
         public bool LongFight { get; set; }
 
+
+        public FightOptionSummaryViewModel Summary;
         #endregion
 
         #region 构造
@@ -58,7 +61,7 @@ namespace JYCalculator.ViewModels
         public static int GetDefaultFightTime()
         {
             int res = 0;
-            switch (XFAppStatic.XinFaTag)
+            switch (AppStatic.XinFaTag)
             {
                 case "JY":
                 {
@@ -80,6 +83,11 @@ namespace JYCalculator.ViewModels
         {
             // 通过生成器实现
             StaticMessager.Send(StaticMessager.FightTimeChangedMsg);
+        }
+
+        protected override void _Update()
+        {
+            Summary = ToSummary();
         }
 
         #endregion
@@ -114,7 +122,22 @@ namespace JYCalculator.ViewModels
             ActionUpdateOnce(_Load, sav);
         }
 
+        public FightOptionSummaryViewModel ToSummary()
+        {
+            var res = new FightOptionSummaryViewModel()
+            {
+                CAbility = SelectedAbility,
+                CTarget = SelectedTarget,
+                CZhenFa = SelectedZhenFa,
+                FightTime = FightTime,
+                ShortFight = ShortFight,
+            };
+            return res;
+        }
+
         #endregion
 
     }
+
+
 }

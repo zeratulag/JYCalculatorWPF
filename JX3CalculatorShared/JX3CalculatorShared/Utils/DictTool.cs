@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Windows;
 using Force.DeepCloner;
+using Newtonsoft.Json.Linq;
 
 namespace JX3CalculatorShared.Utils
 {
@@ -80,7 +81,7 @@ namespace JX3CalculatorShared.Utils
         /// <returns></returns>
         public static TValue GetValueOrUseDefault<TKey, TValue>(this IDictionary<TKey, TValue> dict,
             TKey key,
-            TValue defaultValue)
+            TValue defaultValue = default(TValue))
         {
             if (key == null) return defaultValue;
             return dict.TryGetValue(key, out var value) ? value : defaultValue;
@@ -406,6 +407,32 @@ namespace JX3CalculatorShared.Utils
         public static bool IsEmptyOrNull<TKey, TValue>(this Dictionary<TKey, TValue> dict)
         {
             var res = dict == null || dict.Count == 0;
+            return res;
+        }
+
+
+        /// <summary>
+        /// 从字典中尝试读取，如果有则返回，如果没有则创建对应的Key-Value
+        /// </summary>
+        /// <typeparam name="TKey">键类型</typeparam>
+        /// <typeparam name="TValue">值类型</typeparam>
+        /// <param name="key"></param>
+        /// <param name="Data">字典</param>
+        /// <param name="createFunc">从key中创建value的方法</param>
+        /// <returns></returns>
+        public static TValue GetOrCreate<TKey, TValue>(this IDictionary<TKey, TValue> Data, TKey key,
+            Func<TKey, TValue> createFunc)
+        {
+            TValue res;
+            if (Data.TryGetValue(key, out res))
+            {
+            }
+            else
+            {
+                res = createFunc(key);
+                Data.Add(key, res);
+            }
+
             return res;
         }
     }

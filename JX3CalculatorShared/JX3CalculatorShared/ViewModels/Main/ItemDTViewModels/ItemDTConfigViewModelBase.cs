@@ -7,10 +7,12 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using CommunityToolkit.Mvvm.Messaging;
+using JX3CalculatorShared.Messages;
 
 namespace JX3CalculatorShared.ViewModels
 {
-    public class ItemDTConfigViewModelBase : CollectionViewModel<ItemDTSlotViewModel>
+    public class ItemDTConfigViewModelBase : CollectionViewModel<ItemDTSlotViewModel>, IRecipient<CancelItemDTMessage>
     {
         public ImmutableDictionary<ItemDTTypeEnum, ItemDTSlotViewModel> ItemDTSlotDict;
         public Dictionary<string, double> SAts;
@@ -22,6 +24,12 @@ namespace JX3CalculatorShared.ViewModels
         public bool IsChecked { get; set; } = true;
         public int ValidItemDTNum { get; set; } // 有效单体数
         public string Header { get; set; }
+
+        public ItemDTConfigViewModelBase()
+        {
+            WeakReferenceMessenger.Default.Register(this);
+        }
+
 
         /// 整体是否启用
         public void OnIsCheckedChanged(object sender, PropertyChangedEventArgs e)
@@ -47,7 +55,7 @@ namespace JX3CalculatorShared.ViewModels
 
             SCharAttr = null;
 
-            Config = ItemDTSlotDict.ToDictionary(_ => _.Key, _ => _.Value.ItemID);
+            Config = ItemDTSlotDict.ToDictionary(_ => _.Key, _ => _.Value.SelectedUIID);
 
             if (!IsChecked) return;
             foreach (var VM in Data)
@@ -120,7 +128,7 @@ namespace JX3CalculatorShared.ViewModels
             var res = new ItemDTConfigSav()
             {
                 IsChecked = IsChecked,
-                Data = ItemDTSlotDict.ToDictionary(_ => _.Key, _ => _.Value.RawID),
+                Data = ItemDTSlotDict.ToDictionary(_ => _.Key, _ => _.Value.SelectedRawID),
             };
             return res;
         }
@@ -144,6 +152,11 @@ namespace JX3CalculatorShared.ViewModels
         public void Load(ItemDTConfigSav sav)
         {
             ActionUpdateOnce(_Load, sav);
+        }
+
+        public void Receive(CancelItemDTMessage message)
+        {
+            ItemDTSlotDict[message.Type].CancelItemDT(message);
         }
     }
 }

@@ -1,0 +1,28 @@
+﻿<UserControl x:Class="JX3CalculatorShared.Views.UserControls.FightOptionSummarySmallView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:JX3CalculatorShared.Views.UserControls"
+             xmlns:hc="https://handyorg.github.io/handycontrol"
+             mc:Ignorable="d"
+             d:DesignHeight="200" d:DesignWidth="200"
+             x:Name="fightOptionSummarySmallView">
+    <StackPanel Orientation="Horizontal">
+        <StackPanel.Resources>
+            <Style TargetType="hc:SimpleText">
+                <Setter Property="VerticalAlignment" Value="Center" />
+                <Setter Property="HorizontalAlignment" Value="Left" />
+            </Style>
+        </StackPanel.Resources>
+        <local:TargetItemView Grid.Row="0" Grid.Column="0" DataContext="{Binding CTarget}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10 0"/>
+        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"
+                   Text="{Binding ItemName, StringFormat={}{0}手法水平}" ToolTip="{Binding ToolTip}" TextAlignment="Center"
+                   DataContext="{Binding CAbility}"
+                   Margin="10 0"/>
+        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding FightTimeDesc, StringFormat=时长{0}}" Margin="10 0"/>
+
+    </StackPanel>
+
+
+</UserControl>

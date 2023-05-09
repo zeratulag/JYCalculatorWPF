@@ -1,0 +1,43 @@
+﻿<UserControl x:Class="JX3PZ.Views.EquipShow"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:JX3PZ.Views"
+             xmlns:hc="https://handyorg.github.io/handycontrol"
+             mc:Ignorable="d"
+             d:DesignHeight="450" d:DesignWidth="355"
+             Width="355" Padding="8">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/HandyControl;component/Themes/SkinDefault.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/HandyControl;component/Themes/Theme.xaml"/>
+                <ResourceDictionary Source="/Views/Resources/PzApp.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Border Style="{StaticResource BorderRegion}" Background="#132221" BorderBrush="Silver" BorderThickness="1">
+        <StackPanel Orientation="Vertical" >
+            <hc:SimpleText Text="⚠️ 暂未选择装备" Foreground="#999" Margin="0 10 0 10" FontSize="14" Visibility="{Binding NotHasEquip, Converter={StaticResource BooleanToVisibility}}" HorizontalAlignment="Center"/>
+            <StackPanel Orientation="Vertical"
+                        Visibility="{Binding HasEquip, Converter={StaticResource BooleanToVisibility}}">
+                <local:EquipShowHead DataContext="{Binding Head}" />
+                <local:EquipShowMagic DataContext="{Binding Magic}" />
+                <local:EquipShowStone DataContext="{Binding Stone}"
+                                      Visibility="{Binding HasStoneSlot, Converter={StaticResource BooleanToVisibility}}" />
+                <local:EquipShowRequire DataContext="{Binding Magic}" />
+                <local:EquipShowEnhance DataContext="{Binding Enhance}" HasBigFMSlot="{Binding HasBigFMSlot}"
+                                        HasBigFM="{Binding HasBigFM}" />
+                <local:EquipShowSet DataContext="{Binding Set}"
+                                    Visibility="{Binding HasSet, Converter= {StaticResource BooleanToVisibility}}"
+                                    Margin="0 15 0 0" />
+                <local:EquipShowTail DataContext="{Binding Tail}" Margin="0 15 0 0" />
+                <local:EquipShowExtra DataContext="{Binding Extra}" Margin="0 15 0 0" />
+            </StackPanel>
+        </StackPanel>
+    </Border>
+
+</UserControl>

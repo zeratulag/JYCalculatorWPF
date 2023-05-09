@@ -3,8 +3,29 @@
     // 伤害类型
     public enum DamageTypeEnum
     {
-        Physics,
-        Magic
+        Physics, // 外功
+        Magic // 内功
+    }
+
+    // 伤害类型
+    public enum DamageSubTypeEnum
+    {
+        Physics, // 外功
+        Magic, // 内功
+        Lunar, // 阴性
+        Solar, // 阳性
+        Neutral, // 混元
+        Poison, // 毒性
+    }
+
+    // 主属性
+    public enum PrimaryTypeEnum
+    {
+        Vitality, // 体质
+        Spirit, // 根骨
+        Strength, // 力道
+        Agility, // 身法
+        Spunk,  // 元气
     }
 
     // 物品品级
@@ -17,22 +38,23 @@
         BLUE = 3,
         PURPLE = 4,
         ORANGE = 5,
+        INVALID = 6,
     }
 
     // 装备子类型
     public enum EquipSubTypeEnum
     {
-        PRIMARY_WEAPON = 0,
-        SECONDARY_WEAPON = 1,
-        JACKET = 2,
-        HAT = 3,
+        PRIMARY_WEAPON = 0, // 主武器
+        SECONDARY_WEAPON = 1, // 副武器（暗器囊）
+        JACKET = 2, // 上衣
+        HAT = 3, // 帽子
         NECKLACE = 4,
-        RING = 5,
-        BELT = 6,
-        PENDANT = 7,
-        BOTTOMS = 8,
-        SHOES = 9,
-        WRIST = 10,
+        RING = 5, // 戒指
+        BELT = 6, // 腰带
+        PENDANT = 7, // 腰坠
+        BOTTOMS = 8, // 下装
+        SHOES = 9, // 鞋子
+        WRIST = 10, // 护腕
     }
 
     public enum EquipSubTypeEnumDesc
@@ -99,6 +121,7 @@
         Physics, // 外功
         PZ, // 破招
         Exclude, // 排除 
+        NormalDOT, // 穿心弩专用
     }
 
     public enum ItemDTTypeEnum

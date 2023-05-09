@@ -1,0 +1,17 @@
+﻿<UserControl x:Class="J3PZ.Views.UserControls.OverviewDiamondLevelSummaryItemView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:J3PZ.Views.UserControls"
+             xmlns:hc="https://handyorg.github.io/handycontrol"
+             mc:Ignorable="d"
+             d:DesignHeight="40" d:DesignWidth="100">
+    <StackPanel Orientation="Vertical" Width="27">
+        <Image Source="{Binding Level, Converter={StaticResource DiamondLevelToImgConverter}}" Height="18" Width="18"
+               ToolTip="{Binding ToolTip}"
+               HorizontalAlignment="Center"
+               VerticalAlignment="Center"/>
+        <TextBlock Text="{Binding EquipTag}" Foreground="White" TextAlignment="Center" Margin="0 1 0 0" FontSize="12" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+    </StackPanel>
+</UserControl>

@@ -60,10 +60,6 @@ namespace JYCalculator.ViewModels
             Model.Update(this);
         }
 
-        protected override void _Load<TSave>(TSave sav)
-        {
-        }
-
         protected override void _RefreshCommands()
         {
         }

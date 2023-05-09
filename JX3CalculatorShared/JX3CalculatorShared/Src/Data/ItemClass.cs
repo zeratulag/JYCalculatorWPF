@@ -5,6 +5,7 @@ using JX3CalculatorShared.Utils;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
+using JX3PZ.ViewModels;
 
 
 namespace JX3CalculatorShared.Data
@@ -44,9 +45,8 @@ namespace JX3CalculatorShared.Data
         public string ToolTip { get; set; }
     }
 
-    public class AbsSkillDataItem
+    public class AbsSkillDataItem: AbsGeneralItem
     {
-        public string Name { get; set; }
         public string Skill_Name { get; set; }
     }
 
@@ -75,8 +75,10 @@ namespace JX3CalculatorShared.Data
         public int Cast_SkillID { get; set; }
         public ulong Cast_SkillEventMask1 { get; set; }
         public ulong Cast_SkillEventMask2 { get; set; }
+        public string BelongKungfu { get; set; }
         public SkillDataTypeEnum Type { get; set; }
         public bool IsP => Type == SkillDataTypeEnum.PZ; // 是否为类破招技能
+        public int EnergyInjection { get; private set; } // 注能次数
 
         /// <summary>
         /// 判断技能能否触发事件
@@ -150,6 +152,39 @@ namespace JX3CalculatorShared.Data
                       select item.Name;
             return res.ToImmutableArray();
         }
+
+
+        // 获取充能次数
+        public int GetEnergyInjectionNum()
+        {
+            int res = 0;
+
+            if (Type == SkillDataTypeEnum.PZ || Type == SkillDataTypeEnum.DOT)
+            {
+                return 0;
+            }
+
+            if (AppStatic.XinFaTag == "JY")
+            {
+                if (BelongKungfu == "百步穿杨" || BelongKungfu == "乾坤一掷")
+                {
+                    res += 1;
+                }
+
+                if (Name == "ZX" || Name == "CXL")
+                {
+                    res += 3;
+                }
+            }
+
+            return res;
+        }
+
+        public void Parse()
+        {
+            EnergyInjection = GetEnergyInjectionNum();
+        }
+
     }
 
 
@@ -197,7 +232,7 @@ namespace JX3CalculatorShared.Data
     {
         public int SetID { get; set; }
         public string SetName { get; set; }
-        public string RawEquipIDs { get; set; }
+        public string EIDs_Str { get; set; }
         public string Effect2 { get; set; }
         public string Effect4 { get; set; }
     }
@@ -205,13 +240,11 @@ namespace JX3CalculatorShared.Data
     public abstract class AbsIconItem : AbsGeneralItem
     {
         public int IconID { get; set; } = -1;
-        public string IconPath => BindingTool.IconID2Path(IconID);
     }
 
     public abstract class AbsIconToolTipItem : AbsToolTipItem
     {
         public int IconID { get; set; }
-        public string IconPath => BindingTool.IconID2Path(IconID);
     }
 
     public class AbilitySkillNumItemBase
@@ -236,7 +269,7 @@ namespace JX3CalculatorShared.Data
 
     public abstract class AbsBuffItem : AbsIconToolTipItem, ILuaTable
     {
-        public static TabParser Parser = new TabParser("At_key{0:D}", "At_value{0:D}", AtLoader.At_is_Value);
+        public static TabParser Parser = new TabParser("At_key{0:D}", "At_value{0:D}", AttributeIDLoader.AttributeIsValue);
 
         public AttrCollection ParseItem()
         {
@@ -282,7 +315,7 @@ namespace JX3CalculatorShared.Data
 
     public class ItemDTItem : AbsBuffItem
     {
-        public int ItemID { get; set; }
+        public int UIID { get; set; }
         public int Quality { get; set; }
         public string ItemNameM { get; set; }
         public string 类型 { get; set; }
@@ -300,7 +333,6 @@ namespace JX3CalculatorShared.Data
         public int SkillID { get; set; }
         public int Level { get; set; }
         public string ItemName { get; set; }
-        public string ItemNameP => StringTool.PadQiXueItemName(ItemName);
         public string ShortName => ItemName.Substring(0, 2);
     }
 
@@ -309,15 +341,15 @@ namespace JX3CalculatorShared.Data
         public string ItemName { get; set; }
     }
 
-    public class AbsBigFMItem : AbsIconToolTipItem
+    public class AbsEnchant : AbsIconToolTipItem
     {
-        public int ItemID { get; set; }
-        public int Enchant_ID { get; set; }
+        public int UIID { get; set; }
+        public int ID { get; set; }
         public string ItemName { get; set; }
         public int DLCLevel { get; set; } = StaticConst.CurrentLevel;
     }
 
-    public class BigFMItem : AbsBigFMItem
+    public class Enchant : AbsEnchant
     {
         public int DestItemSubType { get; set; }
         public EquipSubTypeEnum SubType { get; set; }
@@ -328,9 +360,11 @@ namespace JX3CalculatorShared.Data
         public int Rank { get; set; }
         public int Magic { get; set; }
         public int Physics { get; set; }
+        public string EnhanceDesc { get; set; }
+
     }
 
-    public class BottomsFMItem : AbsBigFMItem
+    public class BottomsFMItem : AbsEnchant
     {
         public string DescName { get; set; }
         public int Quality { get; set; }
@@ -349,12 +383,12 @@ namespace JX3CalculatorShared.Data
         public int Order { get; set; }
         public int Quality { get; set; }
         public int DLCLevel { get; set; }
-        public string RawIDs { get; set; }
+        public string EIDs_Str { get; set; }
     }
 
     public class RecipeItem : AbsIconToolTipItem, ILuaTable
     {
-        public static TabParser Parser = new TabParser("SAt_key{0:D}", "SAt_value{0:D}", AtLoader.SkillAt_is_Value);
+        public static TabParser Parser = new TabParser("SAt_key{0:D}", "SAt_value{0:D}", AttributeIDLoader.SkillAttributeIsValue);
 
         public AttrCollection ParseItem()
         {

@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows;
+using JX3CalculatorShared.Data;
 
 namespace JX3CalculatorShared.Utils
 {
@@ -31,6 +32,14 @@ namespace JX3CalculatorShared.Utils
             return res.ToImmutableDictionary();
         }
 
+        public static ImmutableDictionary<TKey, TItem> ReadSheetAsDict<TKey, TItem>(string fileName, string sheetName,
+            Func<TItem, TKey> f) where TItem : class, new()
+        {
+            var stream = GetStreamFromResource(fileName);
+            var rows = MiniExcel.Query<TItem>(stream, sheetName: sheetName);
+            var res = rows.ToDictionary(_ => f(_));
+            return res.ToImmutableDictionary();
+        }
 
         public static ImmutableArray<TItem> ReadSheetAsArray<TItem>(string fileName, string sheetName)
             where TItem : class, new()
@@ -38,7 +47,6 @@ namespace JX3CalculatorShared.Utils
             var stream = GetStreamFromResource(fileName);
             var rows = MiniExcel.Query<TItem>(stream, sheetName: sheetName);
             var res = rows.ToArray().ToImmutableArray();
-
             return res;
         }
 
@@ -60,6 +68,7 @@ namespace JX3CalculatorShared.Utils
             var s = Application.GetResourceStream(uri).Stream;
             return s;
         }
+
 
         /// <summary>
         /// 从Resource中读取所有文本内容，以字符串返回，如同读取一个外部文本文件一样，统一使用UTF8编码

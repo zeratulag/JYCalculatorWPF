@@ -12,6 +12,7 @@ namespace JYCalculator.Class
     public partial class SkillDataDF : SkillDataDFBase
     {
         #region 共用区域
+
         public Dictionary<string, SkillData> Data;
 
         public SkillDataDF(SkillInfoDB db)
@@ -115,8 +116,12 @@ namespace JYCalculator.Class
             // 应用技能修饰效果（非秘籍部分），例如雷甲
             foreach (var name in modifier.SkillNames)
             {
-                Data[name].ApplySkillModifier(modifier);
-                Data[name].Update();
+                SkillData s;
+                if (Data.TryGetValue(name, out s))
+                {
+                    s.ApplySkillModifier(modifier);
+                    s.Update();
+                }
             }
         }
     }

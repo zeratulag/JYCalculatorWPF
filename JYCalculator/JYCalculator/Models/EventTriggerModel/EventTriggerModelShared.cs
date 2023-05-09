@@ -1,8 +1,8 @@
 ﻿using JX3CalculatorShared.Class;
 using JX3CalculatorShared.Common;
+using JX3CalculatorShared.Globals;
 using JYCalculator.Class;
 using JYCalculator.Data;
-using JYCalculator.Globals;
 
 namespace JYCalculator.Models
 {
@@ -140,7 +140,7 @@ namespace JYCalculator.Models
             var normal = SkillNum.Normal.BasicSLCover;
             var xw = SkillNum.XW.BasicSLCover;
 
-            if (XFAppStatic.XinFaTag == "JY")
+            if (AppStatic.XinFaTag == "JY")
             {
                 normal = SkillNum.Normal.GetFinalSLCover();
                 xw = SkillNum.XW.GetFinalSLCover();

@@ -7,6 +7,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using Newtonsoft.Json;
 
 
 namespace JX3CalculatorShared.ViewModels
@@ -48,13 +49,25 @@ namespace JX3CalculatorShared.ViewModels
 
         protected readonly bool _AllPropertiesAreInput = false; // 表示所有Property都是输入变量
 
+        [JsonIgnore]
         protected bool _AutoUpdate = true;
 
+        [JsonIgnore]
+        public bool _RaiseOutChanged = true; // 是否发送OutputChanged事件
+
+        [JsonIgnore]
         private string _OutName; // 表示触发OutputChanged时的参数名
 
-        private string _OutChangedArgPropertyName; // 表示触发OutputChanged时的参数名
+        [JsonIgnore]
+        public string _OutChangedArgPropertyName; // 表示触发OutputChanged时的参数名
 
         private PropertyChangedEventArgs OutChangedArg = InternalConstCache.OutChangedArg;
+
+        [JsonIgnore]
+        public bool _SendMessage { get; protected set; } = false;
+
+        [JsonIgnore]
+        public bool _RecieveMessage { get; protected set; } = false;
 
         #endregion
 
@@ -70,6 +83,10 @@ namespace JX3CalculatorShared.ViewModels
             InputChanged += UpdateAndRefresh;
             PropertyChanged += HandlePropertyChanged;
             SetOutName();
+        }
+
+        protected AbsViewModel(params string[] inputNames): this(inputPropertyNames: inputNames)
+        {
         }
 
         /// <summary>
@@ -106,6 +123,12 @@ namespace JX3CalculatorShared.ViewModels
             SetOutName();
         }
 
+
+        ~AbsViewModel()
+        {
+            DisConnect();
+        }
+
         /// <summary>
         /// 没有任何属性为输入属性，不建议使用
         /// </summary>
@@ -134,6 +157,20 @@ namespace JX3CalculatorShared.ViewModels
         {
             //UpdateAndRefresh();
         }
+
+        // 取消所有外部连接
+        public void DisConnect()
+        {
+            if (OutputChanged == null)
+            {
+                return;
+            }
+            foreach (var d in OutputChanged.GetInvocationList())
+            {
+                OutputChanged -= (PropertyChangedEventHandler) d;
+            }
+        }
+
 
         #endregion
 
@@ -213,7 +250,7 @@ namespace JX3CalculatorShared.ViewModels
         {
             _Update();
             _RefreshCommands();
-            RaiseOutputChanged();
+            if (_RaiseOutChanged) RaiseOutputChanged();
 
 #if DEBUG
             _DEBUG();
@@ -248,23 +285,26 @@ namespace JX3CalculatorShared.ViewModels
         public void ActionWithOutUpdate(Action act)
         {
             var autoUpdate = _AutoUpdate; // 如果处于自动更新状态则关闭
+            var send = _SendMessage;
+            var recieve = _RecieveMessage;
+
+            _SendMessage = false;
+            _RecieveMessage = false;
             DisableAutoUpdate();
             act();
             if (autoUpdate)
             {
                 EnableAutoUpdate();
             }
+
+            _RecieveMessage = recieve;
+            _SendMessage = send;
         }
 
         public void ActionWithOutUpdate<T>(Action<T> act, T param)
         {
-            var autoUpdate = _AutoUpdate; // 如果处于自动更新状态则关闭
-            DisableAutoUpdate();
-            act(param);
-            if (autoUpdate)
-            {
-                EnableAutoUpdate();
-            }
+
+            ActionWithOutUpdate(() => act(param));
         }
 
 
@@ -287,9 +327,7 @@ namespace JX3CalculatorShared.ViewModels
         /// <param name="param">参数</param>
         public void ActionUpdateOnce<T>(Action<T> act, T param)
         {
-            DisableAutoUpdate();
-            act(param);
-            EnableAutoUpdateAndRefresh();
+            ActionUpdateOnce(() => act(param));
         }
 
         /// <summary>
@@ -321,11 +359,6 @@ namespace JX3CalculatorShared.ViewModels
             return succ;
         }
 
-        public bool Load<TSave>(TSave sav)
-        {
-            return TryActionUpdateOnce(_Load, sav);
-        }
-
         //public virtual bool IsInitialized()
         //{
         //    return _Initialized;
@@ -336,7 +369,6 @@ namespace JX3CalculatorShared.ViewModels
         #region 方法（需要覆盖）
 
         protected abstract void _Update(); // 更新状态的真实方法，需要手动重写
-        protected abstract void _Load<TSave>(TSave sav); // 读取的逻辑
         protected abstract void _RefreshCommands(); // 刷新命令，如果有需要的话
 
         protected virtual void _DEBUG() // DEBUG状态下运行的方法，一般为Trace打印信息

@@ -4,17 +4,17 @@ using System.Linq;
 
 namespace JX3CalculatorShared.ViewModels
 {
-
-    public class ComboBoxViewModel<TItem> : AbsViewModel
+    public class ComboBoxViewModel<TItem> : AbsViewModel where TItem : class
     {
         /// <summary>
         /// 通用下拉框ViewModel
         /// </summary>
         /// <typeparam name="TItem"></typeparam>
+
         #region 成员
 
         public int Length => ItemsSource.Length;
-        public virtual TItem SelectedItem => ItemsSource[SelectedIndex];
+        public virtual TItem SelectedItem => SelectedIndex < 0 ? null : ItemsSource[SelectedIndex];
         public TItem[] ItemsSource { get; protected set; }
         public int SelectedIndex { get; set; }
 
@@ -47,10 +47,6 @@ namespace JX3CalculatorShared.ViewModels
         #endregion
 
         protected override void _Update()
-        {
-        }
-
-        protected override void _Load<TSave>(TSave sav)
         {
         }
 

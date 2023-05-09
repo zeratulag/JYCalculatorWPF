@@ -16,7 +16,6 @@ namespace JX3CalculatorShared.Class
         public string ItemName { get; }
         public string ItemNameP { get; }
         public string ShortName { get; }
-        public new string IconPath { get; }
 
         #endregion
 
@@ -30,14 +29,13 @@ namespace JX3CalculatorShared.Class
             SkillID = item.SkillID;
             Level = item.Level;
             ItemName = item.ItemName;
-            ItemNameP = StringTool.PadQiXueItemName(ItemName);
+            //ItemNameP = StringTool.PadQiXueItemName(ItemName);
             ShortName = ItemName.Substring(0, 2);
 
             IconID = item.IconID;
             Name = item.Name;
             ToolTip = item.ToolTip + GetToolTipTail();
 
-            IconPath = BindingTool.IconID2Path(IconID);
         }
 
         public string GetToolTipTail()

@@ -1,9 +1,9 @@
 ﻿using JX3CalculatorShared.Data;
+using JX3CalculatorShared.Globals;
 using JX3CalculatorShared.Models;
 using JX3CalculatorShared.Src;
 using JYCalculator.Class;
 using JYCalculator.Data;
-using JYCalculator.Globals;
 using System.Collections.Generic;
 
 namespace JYCalculator.Models
@@ -100,9 +100,13 @@ namespace JYCalculator.Models
             XW.CalcEvents();
             Normal.CalcEvents();
 
-            if (XFAppStatic.XinFaTag == "JY")
+            Normal.CommonCalcAfter();
+            XW.CommonCalcAfter();
+
+            if (AppStatic.XinFaTag == "JY")
             {
-                CalcZXXWCD();
+                CalcJYEnergyInjection();
+                CalcBaiYu();
             }
         }
     }

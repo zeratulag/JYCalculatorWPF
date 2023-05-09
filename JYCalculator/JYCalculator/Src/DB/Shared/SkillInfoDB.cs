@@ -3,6 +3,7 @@ using JX3CalculatorShared.Common;
 using JX3CalculatorShared.Data;
 using JX3CalculatorShared.Globals;
 using JX3CalculatorShared.Utils;
+using JX3PZ.Class;
 using JYCalculator.Data;
 using System;
 using System.Collections.Generic;
@@ -204,6 +205,29 @@ namespace JYCalculator.DB
                     var eventNames = QiXueToEvents[qxName];
                     var events = from _ in eventNames select Events[_];
                     res.AddRange(events);
+                }
+            }
+            return res;
+        }
+
+
+        /// <summary>
+        /// 计算注能频率
+        /// </summary>
+        /// <param name="skillFreq">技能频率字典</param>
+        /// <returns>注能频率</returns>
+        public double GetEnergyInjection(IDictionary<string, double> skillFreq)
+        {
+            double res = 0;
+            foreach (var kvp in skillFreq)
+            {
+                if (kvp.Value > 0)
+                {
+                    if (Skills.TryGetValue(kvp.Key, out var info))
+                    {
+                        var cfreq = kvp.Value * info.EnergyInjection;
+                        res += cfreq;
+                    }
                 }
             }
             return res;

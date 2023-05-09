@@ -3,6 +3,9 @@ using JX3CalculatorShared.Globals;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
+using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
+using JX3CalculatorShared.Messages;
 
 namespace JX3CalculatorShared.ViewModels
 {
@@ -14,10 +17,11 @@ namespace JX3CalculatorShared.ViewModels
         public readonly ImmutableDictionary<string, int> RawID2Index; // 通过ItemID导入与导出, ItemID RawID到Index的映射
         public bool IsEnabled { get; set; } = true;
 
-        public string ItemDTType;
+        public readonly ItemDTTypeEnum Type;
+        public readonly string ItemDTType;
         public string ItemDTShowType { get; }
-        public int ItemID => SelectedItem.ItemID;
-        public string RawID => SelectedItem.RawID;
+        public int SelectedUIID => SelectedItem.UIID;
+        public string SelectedRawID => SelectedItem.RawID;
 
         #endregion
 
@@ -28,7 +32,7 @@ namespace JX3CalculatorShared.ViewModels
 
             for (int i = 0; i < ItemsSource.Length; i++)
             {
-                dict.Add(ItemsSource[i].ItemID, i);
+                dict.Add(ItemsSource[i].UIID, i);
                 rdictb.Add(ItemsSource[i].RawID, i);
             }
 
@@ -36,8 +40,10 @@ namespace JX3CalculatorShared.ViewModels
             RawID2Index = rdictb.ToImmutable();
 
             ItemDTType = ItemsSource[0].ItemDTType;
+            Type = ItemsSource[0].Type;
             ItemDTShowType = GetItemDTShowType();
         }
+
 
         public string GetItemDTShowType()
         {
@@ -62,13 +68,19 @@ namespace JX3CalculatorShared.ViewModels
                 int itemid = Convert.ToInt32(rawID);
                 Load(itemid);
             }
-
-
         }
 
         public void Reset()
         {
             SelectedIndex = 0;
+        }
+
+        public void CancelItemDT(CancelItemDTMessage message)
+        {
+            if (message.Type == Type && message.UIID == SelectedUIID)
+            {
+                SelectedIndex = 0;
+            }
         }
     }
 

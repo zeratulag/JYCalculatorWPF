@@ -1,0 +1,65 @@
+﻿<UserControl x:Class="J3PZ.Views.UserControls.DiamondItemView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:J3PZ.Views.UserControls"
+             xmlns:hc="https://handyorg.github.io/handycontrol"
+             mc:Ignorable="d"
+             d:DesignHeight="40" d:DesignWidth="100">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/HandyControl;component/Themes/SkinDefault.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/HandyControl;component/Themes/Theme.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Grid Margin="0 5">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="10" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <Label Grid.Column="0"
+               VerticalAlignment="Center"
+               FontSize="12"
+               Content="{Binding Tag}" Style="{DynamicResource LabelSuccess}" />
+        <ComboBox Grid.Column="2" Name="DiamondItem_cbb" ItemsSource="{Binding LevelData}"
+                  ItemContainerStyle="{StaticResource Style.ComboBoxItemToolTip}"
+                  SelectedIndex="{Binding Level, UpdateSourceTrigger=PropertyChanged}">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <Image Source="{Binding Level, Converter={StaticResource DiamondLevelToImgConverter}}" Height="24" Width="24" />
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+            <ComboBox.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <UniformGrid Columns="3" />
+                </ItemsPanelTemplate>
+            </ComboBox.ItemsPanel>
+        </ComboBox>
+
+        <hc:NumericUpDown Grid.Column="3" Name="DiamondItem_npd"
+                          Maximum="8" Minimum="0" Value="{Binding Level, UpdateSourceTrigger=PropertyChanged}"
+                          VerticalAlignment="Center"
+                          DecimalPlaces="0" Increment="1"
+                          FontSize="12"
+                          FontWeight="Bold"
+                          Foreground="{Binding Level, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource StoneLevelToColorConverter}}"
+                          Margin="20 0 0 0" Height="30" Width="45" />
+        <Button Grid.Column="4" Name="Drop" Command="{Binding DropDiamondCmd}" Style="{StaticResource ButtonIcon}"
+                hc:IconElement.Geometry="{StaticResource CloseGeometry}" HorizontalAlignment="Left" ToolTip="取下五行石" />
+        <hc:SimpleText Grid.Column="5"
+                       Margin="3 0 0 0"
+                       VerticalAlignment="Center"
+                       FontSize="11"
+                       Text="{Binding Path=SimpleDesc}"
+                       Width="80"/>
+    </Grid>
+</UserControl>

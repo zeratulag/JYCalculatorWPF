@@ -1,0 +1,350 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects Condition="'$(MSBuildVersion)' == '' Or '$(MSBuildVersion)' &lt; '16.0'">$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>b1a0b764-b606-46b3-bca8-f5975ad59a23</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>JX3PZ</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Globals\Globals.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Globals\GlobalViewModels.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Messages\PzMessages.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Messages\PzStaticMessager.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\AttributeEntry\AttributeEntryCollection.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\AttributeEntry\EquipSnapShotAttributeEntry.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\CharacterPanel\CharacterPanelBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\CharacterPanel\CharacterPanelOvercome.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\CharacterPanel\CharacterPanelCriticalDamage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\CharacterPanel\CharacterPanelCriticalStrike.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\CharacterPanel\CharacterPanelAttack.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\CharacterPanel\CharacterPanelPrimary.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\CharacterPanel\XinFaCharacterPanel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\PanelAttributeSlots\IPanelAttributeSlot.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\PanelAttributeSlots\PanelAttackSlot.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\PanelAttributeSlots\PanelMaxLifeSlot.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\PanelAttributeSlots\PanelSurplusSlot.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\PanelAttributeSlots\PanelPercentAttributeSlot.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\PanelAttributeSlots\PanelCriticalDamageSlot.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\PanelAttributeSlots\PanelPercentSlots.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\PanelAttributeSlots\PanelSubTypePercentSlot.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\PanelAttributeSlots\PanelOvercomeSlot.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\PanelAttributeSlots\PanelCriticalStrikeSlot.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\PanelAttributeSlots\PanelAttributeSlot.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\PanelAttributeSlots\PanelPrimarySlot.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\PanelAttributeSlots\PanelSubTypeSlotBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\PanelAttributeSlots\PanelSubTypeValueSlot.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\CharacterPanel\XinFaAttribute.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Equip\EquipLevelScore.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Equip\EquipStoneModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Equip\EquipStrengthDiamondModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Equip\EquipStrengthModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\PanelAttributeSlots\PanelWeaponSlot.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\PzMainSav.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\PzOneKeyEnhanceModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Set\PzSetModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Set\SetCountItem.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Src\Class\Armor.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\CharacterPanel\CharacterPanel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Src\Class\EquipGetInfo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Src\Class\PzSetAttribute.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Src\Class\WeaponBaseAttrs.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Src\Data\StoneAttribute.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Src\Data\StoneCondition.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\AttributeEntry\AttributeEntryViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Src\Class\EquipAttribute.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\AttributeEntry\AttributeStrengthEntryViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\AttributeEntry\EnhanceAttributeEntryViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\EquipSnapShotModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Src\Class\EquipTag.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Src\Class\AttributeEntryBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Src\Class\AttributeStrengthEntry.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\AttributeEntry\FormattedEntryViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\AttributeEntry\IconAttributeEntryViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\PzPlanModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\AttributeEntry\StoneAttributeEntryViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Src\Class\Trinket.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Src\Class\Weapon.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Src\Data\AttributeTabItem.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Src\Data\AttributeTabLib.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Src\Class\AttributeEntry.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Src\Data\DiamondLevel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Src\Data\DiamondTabItem.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Src\Data\DiamondTabLib.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Src\Data\Enhance.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Src\Class\Equip.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Src\Data\EquipMapLib.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Src\Data\ItemClass.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Src\Data\PzData.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Src\Data\pzEnhanceData.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Src\Data\pzEquipData.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Src\Class\PzSet.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Src\Data\pzStoneData.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Src\Data\Stone.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Globals\PzEnums.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Src\StaticPzData.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\EquipShow\EquipShowEnhanceViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\EquipShow\EquipShowExtraViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\EquipShow\EquipShowMagicViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\EquipShow\EquipShowHeadViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\EquipShow\EquipShowSetViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\EquipShow\EquipShowStoneViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\EquipShow\EquipShowTailViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\EquipShow\EquipShowViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\EquipShow\IEquipShow.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\PanelAttributeSlots\PanelWeaponSlotViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\PanelAttributeSlots\PanelSurplusSlotViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\PanelAttributeSlots\PanelPercentSlotViewModelBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\PanelAttributeSlots\PanelPercentSlotViewModels.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\PanelAttributeSlots\PanelOvercomeSlotViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\PanelAttributeSlots\PanelCriticalSlotViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\PanelAttributeSlots\PanelMaxLifeSlotViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\PanelAttributeSlots\PanelAttackSlotViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\PanelAttributeSlots\PanelPrimarySlotViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\PzMainWindowViewModels.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\PzOverview\PzOverviewViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\PzOverview\PzOverviewWindowViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\PzResult\PzEquipScoreViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\PzResult\PzResultViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\PzResult\PzAttributeSlotsViewModelBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\PzTab\CheckItem.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\PzTab\DiamondSlotViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\PzTab\EquipDiamondViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\PzTab\EquipEmbedViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\PzTab\EquipEnhanceViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\PzTab\EquipSelectViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\PzTab\EquipStoneSelectViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\PzTab\PzEquipSummaryViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\PzTab\PzTabItemViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\PzMainWindow.xaml.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\UserControls\Items\ItemDTSmallView.xaml.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\UserControls\Items\QiXueItemSmallView.xaml.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\UserControls\Items\IconItemSmallView.xaml.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\UserControls\Items\BuffItemSmallView.xaml.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\UserControls\Items\OverviewDiamondLevelSummaryItemView.xaml.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\UserControls\Items\DiamondAttributeItemView.xaml.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\UserControls\Items\StoneItemView.xaml.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\UserControls\Items\EnchantItemView.xaml.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\UserControls\Items\EnhanceItemView.xaml.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\UserControls\Items\DiamondItemView.xaml.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\UserControls\Items\EquipItemView.xaml.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\UserControls\PzOverview\PzOverviewEquipSnapShot.xaml.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\UserControls\PzOverview\PzOverviewAttributeSlot.xaml.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\UserControls\PzOverview\PzOverviewWindow.xaml.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\UserControls\AttributeEntry\EquipShowStrengthStar.xaml.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\UserControls\AttributeEntry\FormattedEntry.xaml.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\UserControls\EquipShow\EquipShow.xaml.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\UserControls\EquipShow\EquipShowEnhance.xaml.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\UserControls\EquipShow\EquipShowExtra.xaml.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\UserControls\EquipShow\EquipShowRequire.xaml.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\UserControls\EquipShow\EquipShowMagic.xaml.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\UserControls\EquipShow\EquipShowHead.xaml.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\UserControls\EquipShow\EquipShowEnhanceItem.xaml.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\UserControls\EquipShow\EquipShowSet.xaml.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\UserControls\EquipShow\EquipShowTail.xaml.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\UserControls\EquipShow\EquipShowStone.xaml.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\UserControls\AttributeEntry\AttributeEntryView.xaml.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\UserControls\PzOverview\PzHorizontalOverview.xaml.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\UserControls\PzResult\PanelScoreView.xaml.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\UserControls\PzResult\PanelSlotView.xaml.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\UserControls\PzResult\PzResultShow.xaml.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\UserControls\PzTabHeader.xaml.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\UserControls\PzEquip\EquipStoneDetail.xaml.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\UserControls\PzEquip\EquipStoneSelect.xaml.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\UserControls\Items\EquipStoneView.xaml.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\UserControls\PzEquip\EquipEmbed.xaml.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\UserControls\PzEquip\EquipEnhance.xaml.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\UserControls\PzEquip\EquipSelect.xaml.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\UserControls\PzTabItem.xaml.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\ViewTool.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="$(MSBuildThisFileDirectory)Views\PzMainWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\UserControls\Items\ItemDTSmallView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\UserControls\Items\QiXueItemSmallView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\UserControls\Items\IconItemSmallView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\UserControls\Items\BuffItemSmallView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\UserControls\Items\OverviewDiamondLevelSummaryItemView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\UserControls\Items\DiamondAttributeItemView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\UserControls\Items\StoneItemView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\UserControls\Items\EnchantItemView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\UserControls\Items\EnhanceItemView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\UserControls\Items\DiamondItemView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\UserControls\Items\EquipItemView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\UserControls\PzOverview\PzOverviewEquipSnapShot.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\UserControls\PzOverview\PzOverviewAttributeSlot.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\UserControls\PzOverview\PzOverviewWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\Resources\DiamondItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\Resources\EquipShowElement.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\Resources\PzApp.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\Resources\PzEquip.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\Resources\FilterCheckListBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\UserControls\AttributeEntry\EquipShowStrengthStar.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\UserControls\AttributeEntry\FormattedEntry.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\UserControls\EquipShow\EquipShow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\UserControls\EquipShow\EquipShowEnhance.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\UserControls\EquipShow\EquipShowExtra.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\UserControls\EquipShow\EquipShowRequire.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\UserControls\EquipShow\EquipShowMagic.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\UserControls\EquipShow\EquipShowHead.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\UserControls\EquipShow\EquipShowEnhanceItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\UserControls\EquipShow\EquipShowSet.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\UserControls\EquipShow\EquipShowTail.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\UserControls\EquipShow\EquipShowStone.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\UserControls\AttributeEntry\AttributeEntryView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\UserControls\PzOverview\PzHorizontalOverview.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\UserControls\PzResult\PanelScoreView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\UserControls\PzResult\PanelSlotView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\UserControls\PzResult\PzResultShow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\UserControls\PzTabHeader.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\UserControls\PzEquip\EquipStoneDetail.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\UserControls\PzEquip\EquipStoneSelect.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\UserControls\Items\EquipStoneView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\UserControls\PzEquip\EquipEmbed.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\UserControls\PzEquip\EquipEnhance.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\UserControls\PzTabItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\UserControls\PzEquip\EquipSelect.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="$(MSBuildThisFileDirectory)Models\Set\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Resource\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Views\UserControls\PzEquip\" />
+  </ItemGroup>
+</Project>

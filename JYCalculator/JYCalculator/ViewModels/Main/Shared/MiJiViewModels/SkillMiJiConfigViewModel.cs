@@ -103,7 +103,7 @@ namespace JYCalculator.ViewModels
         {
             OtherRecipes.Clear();
 
-            if (XFAppStatic.XinFaTag == "JY") // 惊羽专属，追命无声20%增伤秘籍
+            if (AppStatic.XinFaTag == "JY") // 惊羽专属，追命无声20%增伤秘籍
             {
                 if (Config.ContainsKey(3096))
                 {

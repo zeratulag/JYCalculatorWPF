@@ -1,10 +1,14 @@
 ﻿using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 using JX3CalculatorShared.Class;
 using JX3CalculatorShared.Globals;
 using JX3CalculatorShared.ViewModels;
 using JX3CalculatorShared.Views;
 using JYCalculator.Class;
 using System.Windows;
+using System.Windows.Interop;
+using JX3CalculatorShared.Messages;
+using JYCalculator.Globals;
 
 
 namespace JYCalculator.ViewModels
@@ -16,7 +20,7 @@ namespace JYCalculator.ViewModels
         public readonly InitCharacter InitChar;
         public readonly EquipOptionConfigViewModel EquipOption;
         public readonly BigFMConfigViewModel BigFM;
-        public RelayCommand ImportJBPanelCmd { get; set; }
+        public RelayCommand OpenImportJBBBDialogCmd { get; set; }
 
         public NamedAttrs BigFMAttrsDesc; // 大附魔提供的属性
         public InitCharacter NoneBigFMInitCharacter;
@@ -34,7 +38,7 @@ namespace JYCalculator.ViewModels
             EquipOption = equip;
             BigFM = bigFM;
 
-            ImportJBPanelCmd = new RelayCommand(ImportJBPanel);
+            OpenImportJBBBDialogCmd = new RelayCommand(OpenImportJBBBDialog);
             NoneBigFMInitCharacter = initchar;
             PostConstructor();
             _Update();
@@ -44,59 +48,31 @@ namespace JYCalculator.ViewModels
 
         #region 方法
 
-        public void ImportJBPZPanel(JBPZPanel jbPanel)
+        public void ImportJBPZPanel(JBBBPZPanel jbPanel)
         {
             // 导入JB配装信息
             Load(jbPanel.InitInput);
-            JBPanelTitle = jbPanel.Title;
+            JBPanelTitle = jbPanel.BaseJBBB.Title;
         }
 
-        public bool ImportJBString(string jbString)
+        public void ImportJBBB(JBBB j)
         {
-            // 导入字符串形式的JB配装欣喜
-            var (success, jbPanel) = JBPZPanel.TryImportFromJSON(jbString);
+            var res = new JBBBPZPanel(j);
+            res.Parse();
+            ImportJBPZPanel(res);
+        }
+
+        public void OpenImportJBBBDialog()
+        {
+            var (success, j) = ImportJX3BOXViewModel.TryReadFromDialog();
             if (success)
             {
+                var jbPanel = new JBBBPZPanel(j);
                 jbPanel.Parse();
                 ImportJBPZPanel(jbPanel);
-                return success;
             }
             else
             {
-                return false;
-            }
-        }
-
-        public void ImportJBPanel()
-        {
-            bool end = false;
-            string jbString;
-
-            while (!end)
-            {
-                ImportJBDialog dialog = new ImportJBDialog("");
-                if (dialog.ShowDialog() == true)
-                {
-                    jbString = dialog.Answer;
-                    var success = ImportJBString(jbString);
-                    if (success)
-                    {
-                        end = true;
-                    }
-                    else
-                    {
-                        MessageBoxButton buttons = MessageBoxButton.OKCancel;
-                        var result = MessageBox.Show("数据格式有误！", "错误", buttons, MessageBoxImage.Warning);
-                        if (result == MessageBoxResult.Cancel)
-                        {
-                            end = true;
-                        }
-                    }
-                }
-                else
-                {
-                    end = true;
-                }
             }
         }
 
@@ -110,6 +86,7 @@ namespace JYCalculator.ViewModels
             GetBigFMNamedSAttrs();
             GetNoneBigFMInitCharacter();
             _AutoUpdate = old;
+            GlobalContext.IsPZSyncWithCalc = false;
         }
 
         // 如果自身属性已经包括了头和衣大附魔，那么必须选中头和衣大附魔
@@ -124,10 +101,6 @@ namespace JYCalculator.ViewModels
             BigFMAttrsDesc = BigFM.Model.GetNamedSAttrs(InitChar.Had_BigFM_hat, InitChar.Had_BigFM_jacket);
         }
 
-
-        protected override void _Load<TSave>(TSave sav)
-        {
-        }
 
         protected override void _RefreshCommands()
         {
@@ -163,13 +136,13 @@ namespace JYCalculator.ViewModels
             if (InitChar.Had_BigFM_jacket)
             {
                 var jacket = BigFM.Model.Jacket;
-                res.RemoveSAttrDict(jacket.SAttrs);
+                res.RemoveSAttrDict(jacket?.SAttrs);
             }
 
             if (InitChar.Had_BigFM_hat)
             {
                 var hat = BigFM.Model.Hat;
-                res.RemoveSAttrDict(hat.SAttrs);
+                res.RemoveSAttrDict(hat?.SAttrs);
             }
 
             NoneBigFMInitCharacter = res;
@@ -188,7 +161,6 @@ namespace JYCalculator.ViewModels
         public readonly InitCharacter InitChar;
         public readonly EquipOptionConfigSav EquipOption;
         public readonly BigFMSlotConfig[] BigFM;
-
 
         public InitInputSav(InitCharacter initChar, EquipOptionConfigSav equipOption, BigFMSlotConfig[] bigFM)
         {

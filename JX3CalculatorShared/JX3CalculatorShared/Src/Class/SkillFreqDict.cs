@@ -3,6 +3,12 @@ using JX3CalculatorShared.Utils;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.NetworkInformation;
+using JYCalculator.Data;
+using JYCalculator.DB;
+using JYCalculator.Globals;
+using JYCalculator.Class;
+using HandyControl.Controls;
 
 namespace JX3CalculatorShared.Class
 {
@@ -11,6 +17,14 @@ namespace JX3CalculatorShared.Class
         #region 成员
 
         public readonly Dictionary<string, double> Data;
+
+        public double EnergyInjectionFreq; //注能频率
+        public double PZEnergyInjectionFreq; //破招注能频率（逐星注能不触发破招）
+
+        public readonly Dictionary<string, double> GFDict = new Dictionary<string, double>()
+        {
+            {"DP", 1}, {"ZM", 1}, {"BL", 1}, {"_BYCast", 1}, {"ZM_SF", 1}, {"ZX", 1.5}, {"CXL", 1},
+        }; // 每个技能附带的罡风数
 
         #endregion
 
@@ -150,6 +164,9 @@ namespace JX3CalculatorShared.Class
             return res;
         }
 
+
+        #region 惊羽专用
+
         /// <summary>
         /// 刷新惊羽诀罡风频率，应该与Num.CalcGF保持同步
         /// </summary>
@@ -161,5 +178,105 @@ namespace JX3CalculatorShared.Class
             this["GF"] = GF;
             return GF;
         }
+
+        public void CalcJYBaiYuDuoPo()
+        {
+            // 计算惊羽白雨夺魄
+            const string dp = "DP";
+            double dpfreq = 0;
+            Data.TryGetValue(dp, out dpfreq);
+            Data.SetKeyValue("DP_BaiYu", dpfreq);
+            Data[dp] = 0;
+        }
+
+        public double CalcJYEnergyInjection()
+        {
+            // 计算惊羽注能次数
+            double pzRes = 0.0;
+            var res = StaticXFData.DB.SkillInfo.GetEnergyInjection(Data);
+            const string ZXKey = "ZX";
+            pzRes = res;
+
+            double zxfreq = 0;
+            if (Data.TryGetValue(ZXKey, out zxfreq))
+            {
+                StaticXFData.DB.SkillInfo.Skills.TryGetValue(ZXKey, out var ZXInfo);
+                if (ZXInfo != null)
+                {
+                    pzRes -= zxfreq * ZXInfo.EnergyInjection;
+                }
+            }
+            EnergyInjectionFreq = res;
+            PZEnergyInjectionFreq = pzRes;
+            Data.SetKeyValue("PZ", PZEnergyInjectionFreq / 3); // 3注能一次破招
+            return EnergyInjectionFreq;
+        }
+
+
+        /// <summary>
+        /// 重新调整百里频率
+        /// </summary>
+        /// <param name="newFreq">新的百里频率</param>
+        /// <param name="BLTime">百里时间</param>
+        public void ResetBLFreq(double newFreq, double BLTime, JYSkillCountItem count)
+        {
+            if (Data.TryGetValue("BL", out var oldFreq))
+            {
+                var oldcoef = 1 - oldFreq * BLTime; // 因为打百里导致其他技能少打的损失系数
+                var newcoef = 1 - newFreq * BLTime;
+                var fixcoef = newcoef / oldcoef; // 其他技能频率的修正系数
+
+                var effectNames = new HashSet<string>(JYSkillCountItem.BLEffectNames);
+                foreach (var kvp in count.FieldToDictionary)
+                {
+                    if (effectNames.Contains(kvp.Key))
+                    {
+                        effectNames.AddRange(kvp.Value);
+                    }
+                }
+
+                foreach (var _ in effectNames)
+                {
+                    if (Data.TryGetValue(_, out var oldValue))
+                    {
+                        Data[_] = oldValue * fixcoef;
+                    }
+                }
+                Data["BL"] = newFreq;
+            }
+        }
+
+        /// <summary>
+        /// 降低夺魄频率，增加给穿心弩
+        /// </summary>
+        /// <param name="freq">频率值</param>
+        public void MoveDPToCXL(double freq)
+        {
+            if (Data.TryGetValue("CXL", out var oldCXL))
+            {
+                // 穿心弩频率不能降低，这部分由夺魄支付
+                Data["DP"] -= freq;
+                Data["CXL"] += freq;
+            }
+        }
+
+        public double CalcGF()
+        {
+            double res = 0.0;
+            foreach (var kvp in GFDict)
+            {
+                if (Data.TryGetValue(kvp.Key, out double freq))
+                {
+                    res += freq * kvp.Value;
+                }
+            }
+
+            Data["GF"] = res;
+            return res;
+
+        }
+
+
+        #endregion
     }
 }

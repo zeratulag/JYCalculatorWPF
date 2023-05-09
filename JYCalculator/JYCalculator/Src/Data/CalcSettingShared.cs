@@ -1,14 +1,14 @@
-﻿using System.Collections.Immutable;
-using System.Linq;
+﻿using JX3CalculatorShared.Class;
 using JX3CalculatorShared.Data;
 using JX3CalculatorShared.Utils;
-using JYCalculator.Class;
+using System.Collections.Immutable;
+using System.Linq;
 
 namespace JYCalculator.Data
 {
     public class CalcSetting : CalcSettingBase
     {
-        public JBPZPanel DefaultJB { get; set; }
+        public JBBB DefaultJB { get; set; }
 
         // 以下为生成属性
 

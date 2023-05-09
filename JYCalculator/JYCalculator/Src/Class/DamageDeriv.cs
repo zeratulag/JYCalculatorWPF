@@ -31,7 +31,7 @@ namespace JYCalculator.Class
 
         public void GetFinal_L()
         {
-            Final_L = GetFinal_L(Base_AP, Final_AP, CT, Base_OC);
+            Final_L = GetFinal_L(Base_AP, Final_AP, CT_Point, Base_OC);
         }
 
         public void GetBase_L(double y_Percent)
@@ -44,7 +44,7 @@ namespace JYCalculator.Class
         // 修复会心收益
         public void FixCT(double ct)
         {
-            CT = ct;
+            CT_Point = ct;
             GetFinal_L();
         }
 

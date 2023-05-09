@@ -82,8 +82,8 @@ namespace JYCalculator.Class
         /// <param name="iChar">初始属性</param>
         public FullCharacter(InitCharacter iChar)
         {
-            Base_L = iChar.L;
-            Final_L = iChar.L;
+            Base_L = iChar.Base_L;
+            Final_L = iChar.Final_L;
             Base_AP = iChar.Base_AP;
             Final_AP = iChar.Final_AP;
             Base_OC = iChar.OC;
@@ -97,7 +97,7 @@ namespace JYCalculator.Class
             HS = iChar.HS;
 
 
-            L_Percent = 0.0;
+            L_Percent = iChar.L_Percent;
             AP_Percent = 0.0;
             OC_Percent = 0.0;
 

@@ -1,6 +1,5 @@
 ﻿using JX3CalculatorShared.Data;
 using JX3CalculatorShared.Globals;
-using JX3CalculatorShared.Utils;
 using Newtonsoft.Json;
 using Syncfusion.Windows.Shared;
 using System.Collections.Generic;
@@ -20,6 +19,7 @@ namespace JX3CalculatorShared.Class
         public static readonly ImmutableDictionary<DamageTypeEnum, string> AttrMap;
         public readonly string Name;
         public string ItemName { get; private set; }
+        public readonly string OptionType;
         public readonly string Tag;
         public string ToolTip { get; protected set; }
         public readonly int Order;
@@ -29,14 +29,15 @@ namespace JX3CalculatorShared.Class
         public readonly int DLCLevel;
         public string RawIDs;
 
-
         public string[] EquipIDs { get; protected set; } // 记录对应的装备ID
 
         public readonly string DamageTypeDesc; // 内功/外功文字说明
 
         public int IconID { get; }
         public int Quality { get; }
-        public string IconPath { get; }
+
+
+        public AttributeID AID;
 
         #endregion
 
@@ -64,13 +65,11 @@ namespace JX3CalculatorShared.Class
             ToolTip = toolTip;
 
             IconID = iconID;
-            IconPath = BindingTool.IconID2Path(IconID);
             Order = order;
 
             Value = value;
             Level = level;
             Quality = quality;
-
 
             DamageTypeDesc = DamageType == DamageTypeEnum.Magic ? "内功" : "外功";
         }
@@ -80,8 +79,9 @@ namespace JX3CalculatorShared.Class
                 item.ToolTip, item.IconID, item.Order,
                 item.Value, item.Level, item.Quality)
         {
+            OptionType = item.Type;
             DLCLevel = item.DLCLevel;
-            RawIDs = item.RawIDs;
+            RawIDs = item.EIDs_Str;
         }
 
         #endregion
@@ -145,6 +145,56 @@ namespace JX3CalculatorShared.Class
         public static string GetEquipID(int TabID, int ID)
         {
             return $"{TabID}_{ID}";
+        }
+
+        public void GetAttributeID()
+        {
+            string res = null;
+            if (OptionType == "YZ")
+            {
+                if (DamageType == DamageTypeEnum.Magic)
+                {
+                    res = "atMagicOvercome";
+                }
+
+                if (DamageType == DamageTypeEnum.Physics)
+                {
+                    res = "atPhysicsOvercomeBase";
+                }
+            }
+            else
+            {
+                if (OptionType == "WP" && Tag == "Water")
+                {
+                    res = $"at{DamageType.ToString()}AttackPowerBase";
+                }
+            }
+
+            if (res != null)
+            {
+                AID = AttributeID.Get(res);
+            }
+
+        }
+
+        public string GetDesc()
+        {
+            string res = null;
+            GetAttributeID();
+            if (AID != null)
+            {
+
+                if (Tag == "Water")
+                {
+                    res = $"（每层{Value / 10}{AID.EquipTag}）";
+                }
+
+                if (Tag == "Wind")
+                {
+                    res = $"（{Value}{AID.EquipTag}）";
+                }
+            }
+            return res ;
         }
     }
 

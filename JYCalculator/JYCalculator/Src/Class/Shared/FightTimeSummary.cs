@@ -1,4 +1,5 @@
 ﻿using JX3CalculatorShared.Class;
+using JYCalculator.Globals;
 using JYCalculator.ViewModels;
 
 
@@ -34,7 +35,7 @@ namespace JYCalculator.Class
         /// <param name="totalTime">总战斗时间（s）</param>
         /// <param name="xwCD">心无CD</param>
         /// <param name="xwDuration">心无持续时间</param>
-        public FightTimeSummary(double totalTime, double xwCD = 90.0, double xwDuration = 15.0) : base(totalTime, xwCD,
+        public FightTimeSummary(double totalTime, double xwCD = XFStaticConst.XW.CD, double xwDuration = XFStaticConst.XW.Time) : base(totalTime, xwCD,
             xwDuration)
         {
         }
@@ -52,7 +53,7 @@ namespace JYCalculator.Class
             }
         }
 
-        public new void Update(double totalTime, double xwCD = 90.0, double xwDuration = 15.0, bool isShort = false)
+        public new void Update(double totalTime, double xwCD = XFStaticConst.XW.CD, double xwDuration = XFStaticConst.XW.Time, bool isShort = false)
         {
             base.Update(totalTime, xwCD, xwDuration, isShort);
 

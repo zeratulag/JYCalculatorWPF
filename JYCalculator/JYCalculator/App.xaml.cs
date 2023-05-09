@@ -1,7 +1,18 @@
-﻿using JX3CalculatorShared.Class;
+﻿using System;
+using System.Diagnostics;
+using System.Threading.Tasks;
+using JX3CalculatorShared.Class;
 using JX3CalculatorShared.Data;
+using JX3CalculatorShared.Globals;
+using JX3PZ.Data;
 using JYCalculator.Globals;
 using System.Windows;
+using JX3CalculatorShared.Utils;
+using JX3PZ.Globals;
+using JX3PZ.Src;
+using JYCalculator.Data;
+using JX3PZ.ViewModels;
+using JYCalculator.Src;
 
 namespace JYCalculator
 {
@@ -18,8 +29,39 @@ namespace JYCalculator
         // 在界面呈现之前的预加载
         public void PreLoad()
         {
-            AtLoader.Load(XFAppStatic.AT_PATH);
+            XFAppStatic.SyncToAppStatic();
+            FuncTool.RunTime(LoadData);
             EquipOption.DamageType = XFConsts.CurrentDamnagType; // 设定全局伤害类型
+            JYXinFa.GetCurrentXinFa();
+        }
+
+        public void LoadData()
+        {
+            AttributeIDLoader.Load(AppStatic.AT_PATH);
+            EquipMapLib.Load(AppStatic.EquipMap_Path);
+            //AfterLoad();
+            StaticXFData.Load();
+            Task.Run(AfterLoad);
+        }
+
+        public void AfterLoad()
+        {
+            var watch = System.Diagnostics.Stopwatch.StartNew();
+            AttributeTabLib.Load(AppStatic.Pz_Path);
+            AttributeTabLib.Parse();
+            StaticPzData.SetPath(AppStatic.Pz_Path);
+            StaticPzData.Load();
+            EquipStoneSelectSources.Load();
+            StaticXFData.MakeStoneAttrFilter();
+
+            StaticPzData.Data.AttachEquipOptions(StaticXFData.DB.EquipOption);
+
+            watch.Stop();
+            var elapsedMs = watch.ElapsedMilliseconds;
+
+#if DEBUG
+            Trace.WriteLine($"解析配装数据耗时：{elapsedMs}ms");
+#endif
         }
     }
 }

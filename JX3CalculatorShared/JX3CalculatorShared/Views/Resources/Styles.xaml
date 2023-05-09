@@ -1,0 +1,212 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:views="clr-namespace:JX3CalculatorShared.Views"
+                    xmlns:xc="http://schemas.xceed.com/wpf/xaml/toolkit"
+                    xmlns:Syncfusion="http://schemas.syncfusion.com/wpf">
+
+    <!--  物品外部边界框  -->
+    <Style x:Key="Style.ItemExternalBorder" TargetType="Border">
+        <Setter Property="BorderBrush"
+                Value="{Binding Path=Quality, Converter={StaticResource QualityToExternalBorderColorConverter}}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="CornerRadius" Value="3" />
+    </Style>
+
+    <!--  物品内部边界框  -->
+    <Style x:Key="Style.ItemInternalBorder" TargetType="Border">
+        <Setter Property="BorderBrush"
+                Value="{Binding Path=Quality, Converter={StaticResource QualityToInternalBorderColorConverter}}" />
+        <Setter Property="Background"
+                Value="{Binding Path=Quality, Converter={StaticResource QualityToInternalBorderColorConverter}}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="CornerRadius" Value="3" />
+    </Style>
+
+    <!--  提示样式（限制最大宽度为400）  -->
+    <Style x:Key="Style.ToolTipM" TargetType="ToolTip">
+        <Style.Resources>
+            <Style TargetType="ContentPresenter">
+                <Style.Resources>
+                    <Style TargetType="TextBlock">
+                        <Setter Property="TextWrapping" Value="Wrap" />
+                    </Style>
+                </Style.Resources>
+            </Style>
+        </Style.Resources>
+        <Setter Property="MaxWidth" Value="350" />
+    </Style>
+
+
+    <!--  提示样式（限制最大宽度为350）  -->
+    <Style x:Key="Style.ToolTipTextBlock" TargetType="TextBlock">
+        <Setter Property="Text" Value="{Binding Path=ToolTip}"/>
+        <Setter Property="TextWrapping" Value="Wrap"/>
+        <Setter Property="MaxWidth" Value="350"/>
+    </Style>
+
+
+    <!--  带有提示的控件样式  -->
+    <Style x:Key="Style.ControlWithToolTip" TargetType="Control">
+        <Setter Property="ToolTip">
+            <Setter.Value>
+                <TextBlock Style="{StaticResource Style.ToolTipTextBlock}" />
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  下拉列表项目拉伸  -->
+    <Style x:Key="Style.ComboBoxItemStretch" TargetType="ComboBoxItem">
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+    </Style>
+
+    <!--  下拉列表项目提示  -->
+    <Style x:Key="Style.ComboBoxItemToolTip" TargetType="ComboBoxItem" BasedOn="{StaticResource Style.ControlWithToolTip}">
+    </Style>
+
+    <!--  下拉列表  -->
+    <Style x:Key="Style.CenterComboBox" TargetType="ComboBox">
+        <!-- <Setter Property="HorizontalContentAlignment" Value="Left"/> -->
+        <!-- <Setter Property="HorizontalAlignment" Value="Stretch"/> -->
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="ItemContainerStyle" Value="{StaticResource Style.ComboBoxItemToolTip}" />
+        <Setter Property="SelectedIndex" Value="{Binding Path=SelectedIndex}" />
+        <Setter Property="ItemsSource" Value="{Binding Path=ItemsSource}" />
+    </Style>
+
+    <!--  居中对齐的标签  -->
+    <Style x:Key="Style.CenterLabel" TargetType="{x:Type Label}">
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+    </Style>
+
+    <!--  居中对齐的文本块  -->
+    <Style x:Key="Style.CenterTextBlock" TargetType="TextBlock">
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+    </Style>
+
+    <!--  选项卡列表  -->
+    <Style x:Key="Style.TabITem" TargetType="{x:Type TabItem}">
+        <Setter Property="FontSize" Value="10" />
+    </Style>
+
+    <!--  自然数输入框  -->
+    <Style x:Key="Style.IntUpDown" TargetType="{x:Type xc:IntegerUpDown}">
+        <Setter Property="ShowButtonSpinner" Value="False" />
+        <Setter Property="Minimum" Value="0" />
+        <Setter Property="TextAlignment" Value="Center" />
+    </Style>
+
+    <!--  自然数输入框_人物属性  -->
+    <Style
+        x:Key="Style.IntUpDown_InitInput"
+        BasedOn="{StaticResource Style.IntUpDown}"
+        TargetType="{x:Type xc:IntegerUpDown}">
+        <Setter Property="Margin" Value="5" />
+    </Style>
+
+    <!--  百分数输入框  -->
+    <Style x:Key="Style.PercentUpDown" TargetType="{x:Type xc:DoubleUpDown}">
+        <Setter Property="ShowButtonSpinner" Value="False" />
+        <Setter Property="Minimum" Value="0" />
+        <Setter Property="TextAlignment" Value="Center" />
+        <Setter Property="FormatString" Value="P2" />
+        <Setter Property="Increment" Value="0.1" />
+    </Style>
+
+    <!--  百分数输入框_人物属性  -->
+    <Style
+        x:Key="Style.PercentUpDown_InitInput"
+        BasedOn="{StaticResource Style.PercentUpDown}"
+        TargetType="{x:Type xc:DoubleUpDown}">
+        <Setter Property="Margin" Value="5" />
+    </Style>
+
+    <!--  居中对齐的单选按钮  -->
+    <Style x:Key="Style.CenterRadioButton" TargetType="{x:Type RadioButton}">
+        <Setter Property="HorizontalContentAlignment" Value="Left" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+    </Style>
+
+
+    <!--  居中对齐的复选框（未绑定IsChecked）  -->
+    <Style x:Key="Style.CenterCheckBoxWithOutBind" TargetType="{x:Type CheckBox}">
+        <Setter Property="HorizontalContentAlignment" Value="Left" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+    </Style>
+
+    <!--  居中对齐的复选框  -->
+    <Style
+        x:Key="Style.CenterCheckBox"
+        BasedOn="{StaticResource Style.CenterCheckBoxWithOutBind}"
+        TargetType="{x:Type CheckBox}">
+        <Setter Property="IsChecked" Value="{Binding Path=IsChecked}" />
+    </Style>
+
+    <!--  只读的DataGrid  -->
+    <Style x:Key="Style.ReadOnlyDataGrid" TargetType="DataGrid">
+        <Setter Property="IsReadOnly" Value="True" />
+        <Setter Property="HorizontalAlignment" Value="Left" />
+    </Style>
+
+    <!--  居中的DataGrid单元格  -->
+    <Style x:Key="Style.CenterDataGridCell" TargetType="DataGridCell">
+        <Style.Resources>
+            <Style TargetType="ContentPresenter">
+                <Setter Property="HorizontalAlignment" Value="Center" />
+            </Style>
+        </Style.Resources>
+    </Style>
+
+    <!--  居中的DataGrid标题列  -->
+    <Style x:Key="Style.CenterDataTextColumn" TargetType="DataGridColumnHeader">
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+    </Style>
+
+    <!--  居中的sfDataGrid标题列  -->
+    <Style x:Key="Style.CenterSfDataTextColumn" TargetType="Syncfusion:SfDataGrid">
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+    </Style>
+
+    <!--  标题动态的Expander  -->
+    <Style x:Key="Style.HeaderedExpander" TargetType="Expander">
+        <Setter Property="Header" Value="{Binding Path=Header}" />
+    </Style>
+
+    <!--  多行标题的Expander  -->
+    <Style x:Key="Style.MultiLineHeaderedExpander" TargetType="Expander">
+        <Setter Property="Header">
+            <Setter.Value>
+                <TextBlock Text="{Binding Path=Header}" TextWrapping="Wrap" />
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  外观类似Block的Box（可以选中文字，不可编辑）  -->
+    <Style x:Key="Style.TextBlockBox" TargetType="TextBox">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="TextWrapping" Value="Wrap" />
+        <Setter Property="IsReadOnly" Value="True" />
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="HorizontalAlignment" Value="Left"/>
+    </Style>
+
+    <Style x:Key="Style.CenterSfDataGridCell" TargetType="Syncfusion:GridCell">
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+    </Style>
+
+
+    <!--  外观类似Block的RichBox（可以选中文字，不可编辑）  -->
+    <Style x:Key="Style.RichTextBlockBox" TargetType="RichTextBox">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="IsReadOnly" Value="True" />
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="HorizontalAlignment" Value="Left"/>
+        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Hidden"/>
+    </Style>
+
+</ResourceDictionary>

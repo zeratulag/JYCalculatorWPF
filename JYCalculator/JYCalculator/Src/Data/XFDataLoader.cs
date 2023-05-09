@@ -84,12 +84,13 @@ namespace JYCalculator.Data
 
         private void LoadSkillData()
         {
-            SkillData = ReadSheetAsDict<string, SkillInfoItem>(DataFile, "Skill_Data", "Name");
+            SkillData = ReadSheetAsDict<string, SkillInfoItem>(DataFile, "Skill_Data", GetName);
+            SkillData.Values.ForEach(_ => _.Parse());
         }
 
         private void LoadDiamondValue()
         {
-            DiamondValue = ReadSheetAsDict<int, DiamondValueItem>(DataFile, "Diamond", keyName: "Level");
+            DiamondValue = ReadSheetAsDict<int, DiamondValueItem>(DataFile, "Diamond", _ => _.Level);
         }
 
         protected void LoadSetting()

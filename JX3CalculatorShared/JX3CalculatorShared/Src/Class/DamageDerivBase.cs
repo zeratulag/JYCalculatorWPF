@@ -9,9 +9,9 @@ namespace JX3CalculatorShared.Class
         public double Base_AP { get; set; } // 基础攻击
         public double Base_OC { get; set; } // 基础破防
         public double PZ { get; set; } // 破招
-        public double WS { get; set; } // 无双
-        public double CT { get; set; } // 会心
-        public double CF { get; set; } // 会效
+        public double WS_Point { get; set; } // 无双
+        public double CT_Point { get; set; } // 会心
+        public double CF_Point { get; set; } // 会效
         public double WP { get; set; } // 武器伤害
         public double Final_AP { get; set; } // 最终攻击
         public double Final_OC { set; get; } // 最终破防
@@ -35,9 +35,9 @@ namespace JX3CalculatorShared.Class
             Final_AP = old.Final_AP;
             WP = old.WP;
             PZ = old.PZ;
-            WS = old.WS;
-            CT = old.CT;
-            CF = old.CF;
+            WS_Point = old.WS_Point;
+            CT_Point = old.CT_Point;
+            CF_Point = old.CF_Point;
             Final_OC = old.Final_OC;
             Base_AP = old.Base_AP;
             Base_OC = old.Base_OC;
@@ -60,9 +60,9 @@ namespace JX3CalculatorShared.Class
             Final_AP += other.Final_AP * w;
             WP += other.WP * w;
             PZ += other.PZ * w;
-            WS += other.WS * w;
-            CT += other.CT * w;
-            CF += other.CF * w;
+            WS_Point += other.WS_Point * w;
+            CT_Point += other.CT_Point * w;
+            CF_Point += other.CF_Point * w;
             Final_OC += other.Final_OC * w;
             Base_AP += other.Base_AP * w;
             Base_OC += other.Base_OC * w;
@@ -76,9 +76,9 @@ namespace JX3CalculatorShared.Class
             Name = aw.Name;
             Base_AP *= aw.AP;
             Base_OC *= aw.OC;
-            CT *= aw.CT;
-            CF *= aw.CF;
-            WS *= aw.WS;
+            CT_Point *= aw.CT_Point;
+            CF_Point *= aw.CF_Point;
+            WS_Point *= aw.WS_Point;
             PZ *= aw.PZ;
             WP *= aw.WP;
             Final_AP *= aw.Final_AP;
@@ -98,9 +98,9 @@ namespace JX3CalculatorShared.Class
                 new AttrProfitItem(nameof(Base_AP), "基础攻击", Base_AP),
                 new AttrProfitItem(nameof(Base_OC), "基础破防", Base_OC),
                 new AttrProfitItem(nameof(PZ), "破招", PZ),
-                new AttrProfitItem(nameof(WS), "无双", WS),
-                new AttrProfitItem(nameof(CT), "会心", CT),
-                new AttrProfitItem(nameof(CF), "会效", CF),
+                new AttrProfitItem(nameof(WS_Point), "无双", WS_Point),
+                new AttrProfitItem(nameof(CT_Point), "会心", CT_Point),
+                new AttrProfitItem(nameof(CF_Point), "会效", CF_Point),
                 new AttrProfitItem(nameof(WP), "武伤", WP)
             };
             return l;
@@ -113,9 +113,9 @@ namespace JX3CalculatorShared.Class
                 new AttrProfitItem(nameof(Base_AP), "攻击", Base_AP),
                 new AttrProfitItem(nameof(Base_OC), "破防", Base_OC),
                 new AttrProfitItem(nameof(PZ), "破招", PZ),
-                new AttrProfitItem(nameof(WS), "无双", WS),
-                new AttrProfitItem(nameof(CT), "会心", CT),
-                new AttrProfitItem(nameof(CF), "会效", CF),
+                new AttrProfitItem(nameof(WS_Point), "无双", WS_Point),
+                new AttrProfitItem(nameof(CT_Point), "会心", CT_Point),
+                new AttrProfitItem(nameof(CF_Point), "会效", CF_Point),
                 new AttrProfitItem(nameof(WP), "武伤", WP)
             };
             return l;
@@ -126,8 +126,8 @@ namespace JX3CalculatorShared.Class
             var res = new List<double>(8)
             {
                 Base_AP, Base_OC,
-                PZ, WS,
-                CT, CF,
+                PZ, WS_Point,
+                CT_Point, CF_Point,
                 //WP
             };
             return res;
@@ -143,6 +143,11 @@ namespace JX3CalculatorShared.Class
                 //"武伤"
             };
             return res;
+        }
+
+        public Dictionary<string, double> GetDict()
+        {
+            return ProfitList.Dict;
         }
     }
 }

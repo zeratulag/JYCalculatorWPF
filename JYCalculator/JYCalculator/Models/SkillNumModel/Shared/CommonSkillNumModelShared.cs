@@ -91,7 +91,6 @@ namespace JYCalculator.Models
             return res;
         }
 
-
         public void GetBigFMFreq()
         {
             if (BigFM.Wrist != null) // 伤腕大附魔
@@ -143,5 +142,7 @@ namespace JYCalculator.Models
         }
 
         #endregion
+
+
     }
 }

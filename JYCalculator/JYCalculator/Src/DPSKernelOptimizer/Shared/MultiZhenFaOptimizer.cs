@@ -87,7 +87,7 @@ namespace JYCalculator.Src
                 newShell.Name = _.Name;
                 DPSKernelShells[i] = newShell;
 
-                var resi = new MultiZhenRes(_.DescName, newShell.CurrentDPSKernel.FinalDPS);
+                var resi = new MultiZhenRes(_.IconID, newShell.CurrentDPSKernel.FinalDPS, _.DescName);
                 Result.Add(_.Name, resi);
             }
         }

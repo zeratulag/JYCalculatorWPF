@@ -37,6 +37,7 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="*" />
             <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
@@ -47,14 +48,12 @@
             <ColumnDefinition Width="*" MinWidth="60" SharedSizeGroup="InitCharSpb" />
         </Grid.ColumnDefinitions>
 
-
         <Label Grid.Row="0" Grid.Column="0">基础攻击</Label>
         <Label Grid.Row="1" Grid.Column="0">最终攻击</Label>
         <Label Grid.Row="2" Grid.Column="0">会心</Label>
         <Label Grid.Row="3" Grid.Column="0">会效</Label>
 
-
-        <Label Grid.Row="0" Grid.Column="3">力道</Label>
+        <Label Grid.Row="0" Grid.Column="3">基础力道</Label>
         <Label Grid.Row="1" Grid.Column="3">武器伤害</Label>
         <Label Grid.Row="2" Grid.Column="3">破招</Label>
         <Label Grid.Row="3" Grid.Column="3">无双</Label>
@@ -65,11 +64,14 @@
         <Label Grid.Row="4" Grid.Column="3">破防</Label>
         <Label Grid.Row="5" Grid.Column="3">加速</Label>
 
+        <Label Grid.Row="7" Grid.Column="0" Visibility="{Binding HasL_Percent, Converter={StaticResource BooleanToVisibility}}">力道提升</Label>
+        <Label Grid.Row="7" Grid.Column="3" Visibility="{Binding HasL_Percent, Converter={StaticResource BooleanToVisibility}}">最终力道</Label>
+
         <xc:IntegerUpDown x:Name="Base_AP_spb" Grid.Row="0" Grid.Column="1"
                           Value="{Binding Path = Base_AP}" />
 
         <xc:IntegerUpDown x:Name="L_spb" Grid.Row="0" Grid.Column="4"
-                          Value="{Binding Path = L}" />
+                          Value="{Binding Path = Base_L}" />
 
         <xc:IntegerUpDown x:Name="Final_AP_spb" Grid.Row="1" Grid.Column="1"
                           Value="{Binding Path = Final_AP}" />
@@ -106,6 +108,13 @@
 
         <CheckBox x:Name="Had_BigFM_jacket_chb" Grid.Row="6" Grid.Column="3" Grid.ColumnSpan="2" IsChecked="{Binding Path=Had_BigFM_jacket}" Margin="5"
                   ToolTip="如果填写的属性已经带了上衣大附魔，请勾选此项，避免重复计算大附魔收益">属性包括伤·衣</CheckBox>
+
+
+        <xc:DoubleUpDown x:Name="L_Percent_spb" Grid.Row="7" Grid.Column="1" Visibility="{Binding HasL_Percent, Converter={StaticResource BooleanToVisibility}}"
+                         Value="{Binding Path = L_Percent}" Minimum="0.01" Maximum="1" Increment="0.01"/>
+
+        <TextBlock x:Name="Final_L_spb" Grid.Row="7" Grid.Column="4" Visibility="{Binding HasL_Percent, Converter={StaticResource BooleanToVisibility}}"
+                   Text="{Binding Path = Final_L, StringFormat=F0}" />
 
     </Grid>
 </UserControl>

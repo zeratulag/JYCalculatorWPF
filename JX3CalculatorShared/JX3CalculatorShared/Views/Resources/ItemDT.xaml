@@ -1,0 +1,41 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:views="clr-namespace:JX3CalculatorShared.Views"
+                    xmlns:userControls="clr-namespace:JX3CalculatorShared.Views.UserControls">
+
+    <!--  单体_下拉列表数据模板  -->
+    <DataTemplate x:Key="DataTemplate.ItemDTCbb">
+        <userControls:ItemDTItemView/>
+    </DataTemplate>
+
+    <!--  单体_下拉列表  -->
+    <Style
+        x:Key="Style.ItemDTCbb"
+        BasedOn="{StaticResource Style.CenterComboBox}"
+        TargetType="ComboBox">
+        <!-- <Setter Property="Margin" Value="5 5" /> -->
+        <Setter Property="Margin" Value="5,3" />
+        <Setter Property="MinHeight" Value="40" />
+        <Setter Property="MinWidth" Value="150" />
+        <Setter Property="IsEnabled" Value="{Binding Path=IsEnabled}" />
+        <Setter Property="ItemTemplate" Value="{StaticResource DataTemplate.ItemDTCbb}" />
+    </Style>
+
+    <!--  单体_列表数据模板  -->
+    <DataTemplate x:Key="DataTemplate.ItemDTSlot">
+        <StackPanel Orientation="Horizontal">
+            <TextBlock
+                Margin="5,0"
+                VerticalAlignment="Center"
+                Text="{Binding Path=ItemDTShowType}" />
+            <ComboBox MinWidth="200" Style="{StaticResource Style.ItemDTCbb}"/>
+        </StackPanel>
+    </DataTemplate>
+
+    <!--  单体_列表样式  -->
+    <Style x:Key="Style.ItemDT" TargetType="ItemsControl">
+        <Setter Property="ItemTemplate" Value="{StaticResource DataTemplate.ItemDTSlot}" />
+        <Setter Property="ItemsSource" Value="{Binding Path=ItemsSource}" />
+    </Style>
+
+</ResourceDictionary>

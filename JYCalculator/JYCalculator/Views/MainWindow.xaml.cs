@@ -13,6 +13,8 @@ using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using JX3PZ.Views;
+using JYCalculator.Globals;
 
 namespace JYCalculator.Views
 {
@@ -24,10 +26,11 @@ namespace JYCalculator.Views
         #region 成员
 
         MainWindowHelper Helper;
-        private readonly MainWindowViewModels _VMs;
+        private readonly MainWindowViewModels _VM;
         private readonly DebugMainWindow _DebugMainWindow = null;
         private readonly AboutDialog _AboutDialog = null;
         private readonly AboutDialogViewModel _AboutVM = null;
+        public readonly PzMainWindow _PzMainWindow = null;
 
         #endregion
 
@@ -37,7 +40,7 @@ namespace JYCalculator.Views
             PreProceed();
 
             Helper = new MainWindowHelper(this);
-            _VMs = new MainWindowViewModels(this);
+            _VM = new MainWindowViewModels(this);
 
             _AboutDialog = new AboutDialog();
             _AboutVM = new AboutDialogViewModel();
@@ -47,7 +50,8 @@ namespace JYCalculator.Views
             MakeCommands();
             LoadDefault();
 
-            _DebugMainWindow = new DebugMainWindow(_VMs.DebugVM);
+            _DebugMainWindow = new DebugMainWindow(_VM.DebugVM);
+            _PzMainWindow = new PzMainWindow();
 
             Show();
             _DebugMainWindow.Owner = this;
@@ -56,7 +60,9 @@ namespace JYCalculator.Views
             _DEBUG();
 #endif
 
-            _VMs.EnableAutoUpdate();
+            _VM.EnableAutoUpdate();
+
+            GlobalContext.Views.Main = this;
 
             StartUp(); // 处理文件打开方式
         }
@@ -100,8 +106,8 @@ namespace JYCalculator.Views
         /// </summary>
         public void BindViewModels()
         {
-            JYMainWindow.DataContext = _VMs;
-            Author_txb.DataContext = _VMs;
+            JYMainWindow.DataContext = _VM;
+            Author_txb.DataContext = _VM;
             BindComboBoxes();
             BindMiJi();
             BindDPS();
@@ -128,20 +134,20 @@ namespace JYCalculator.Views
 
         public void BindEquipOption()
         {
-            Grid_EquipOption.DataContext = _VMs.EquipOptionVM;
+            Grid_EquipOption.DataContext = _VM.EquipOptionVM;
 
-            EquipOption_WP_cbb.DataContext = _VMs.EquipOptionVM.WPViewModel;
+            EquipOption_WP_cbb.DataContext = _VM.EquipOptionVM.WPViewModel;
 
-            EquipOption_YZ_cbb.DataContext = _VMs.EquipOptionVM.YZViewModel;
+            EquipOption_YZ_cbb.DataContext = _VM.EquipOptionVM.YZViewModel;
         }
 
         public void BindFightOption()
         {
-            Grid_FightOption.DataContext = _VMs.FightOptionVM;
+            Grid_FightOption.DataContext = _VM.FightOptionVM;
 
-            FightOption_Target_cbb.DataContext = _VMs.FightOptionVM.TargetViewModel;
-            FightOption_Ability_cbb.DataContext = _VMs.FightOptionVM.AbilityViewModel;
-            FightOption_ZhenFa_cbb.DataContext = _VMs.FightOptionVM.ZhenFaViewModel;
+            FightOption_Target_cbb.DataContext = _VM.FightOptionVM.TargetViewModel;
+            FightOption_Ability_cbb.DataContext = _VM.FightOptionVM.AbilityViewModel;
+            FightOption_ZhenFa_cbb.DataContext = _VM.FightOptionVM.ZhenFaViewModel;
         }
 
 
@@ -150,23 +156,23 @@ namespace JYCalculator.Views
         /// </summary>
         public void BindQiXue()
         {
-            var vm = _VMs.QiXueVM;
+            var vm = _VM.QiXueVM;
             Expander_QiXue.DataContext = vm;
         }
 
         public void BindItemDT()
         {
-            GroupBox_ItemDT.DataContext = _VMs.ItemDTVM;
+            GroupBox_ItemDT.DataContext = _VM.ItemDTVM;
         }
 
         public void BindBigFM()
         {
-            ItemsControl_BigFMConfig.DataContext = _VMs.BigFMVM;
+            ItemsControl_BigFMConfig.DataContext = _VM.BigFMVM;
         }
 
         public void BindMiJi()
         {
-            foreach (var kvp in _VMs.SkillMiJiVM.SkillMiJi)
+            foreach (var kvp in _VM.SkillMiJiVM.SkillMiJi)
             {
                 var skillKey = kvp.Key;
                 var viewModel = kvp.Value;
@@ -178,32 +184,32 @@ namespace JYCalculator.Views
 
         public void BindBuff()
         {
-            Expander_Buff_Self.DataContext = _VMs.BuffVM.Buff_Self;
-            Expander_Buff_Banquet.DataContext = _VMs.BuffVM.Buff_Banquet;
-            Expander_Buff_Normal.DataContext = _VMs.BuffVM.Buff_Normal;
+            Expander_Buff_Self.DataContext = _VM.BuffVM.Buff_Self;
+            Expander_Buff_Banquet.DataContext = _VM.BuffVM.Buff_Banquet;
+            Expander_Buff_Normal.DataContext = _VM.BuffVM.Buff_Normal;
 
-            Expander_DeBuff_Normal.DataContext = _VMs.BuffVM.DeBuff_Normal;
+            Expander_DeBuff_Normal.DataContext = _VM.BuffVM.DeBuff_Normal;
 
-            Expander_Buff_Extra.DataContext = _VMs.BuffVM.Buff_Extra;
-            Expander_Buff_ExtraStack.DataContext = _VMs.BuffVM.Buff_ExtraStack;
+            Expander_Buff_Extra.DataContext = _VM.BuffVM.Buff_Extra;
+            Expander_Buff_ExtraStack.DataContext = _VM.BuffVM.Buff_ExtraStack;
         }
 
 
         public void BindInitChar()
         {
-            TabItem_InitCharInput.DataContext = _VMs.InitInputVM;
-            InitCharPanelInput.DataContext = _VMs.InitChar;
+            Grid_InitChar.DataContext = _VM.InitInputVM;
+            InitCharPanelInput.DataContext = _VM.InitChar;
         }
 
         public void BindDPS()
         {
-            ProfitChart.DataContext = _VMs.ProfitChartVM;
-            ProfitWeight_cbb.DataContext = _VMs.ProfitChartVM;
+            ProfitChart.DataContext = _VM.ProfitChartVM;
+            ProfitWeight_cbb.DataContext = _VM.ProfitChartVM;
         }
 
         public void BindOptimization()
         {
-            GroupBox_Optimization.DataContext = _VMs.OptimizationVM;
+            GroupBox_Optimization.DataContext = _VM.OptimizationVM;
         }
 
         #endregion
@@ -213,15 +219,15 @@ namespace JYCalculator.Views
         // 加载默认奇穴
         public void LoadDefault()
         {
-            _VMs.LoadDefault();
-            _VMs.New();
+            _VM.LoadDefault();
+            _VM.New();
         }
 
         #endregion
 
         private void BtnExportMiJi_Click(object sender, RoutedEventArgs e)
         {
-            var res = _VMs.SkillMiJiVM.Config;
+            var res = _VM.SkillMiJiVM.Config;
             Trace.WriteLine(res.PrettyPrint());
         }
 
@@ -234,6 +240,7 @@ namespace JYCalculator.Views
         public void OpenDebugWindow()
         {
             _DebugMainWindow.Show();
+            _DebugMainWindow.Owner = this;
         }
 
         private void BtnExportAll_Click(object sender, RoutedEventArgs e)
@@ -243,7 +250,7 @@ namespace JYCalculator.Views
 
         private MainWindowSav ExportAll()
         {
-            var res = _VMs.Model.Export();
+            var res = _VM.Model.Export();
             var json = JsonConvert.SerializeObject(res, Formatting.Indented);
             Trace.WriteLine(json);
             return res;
@@ -252,7 +259,7 @@ namespace JYCalculator.Views
 
         private void NewCmd_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            _VMs.New();
+            _VM.New();
         }
 
         private bool NewCmd_CanExecuted(object sender, ExecutedRoutedEventArgs e)
@@ -269,7 +276,7 @@ namespace JYCalculator.Views
         // 退出时提醒保存
         protected override void OnClosing(CancelEventArgs e)
         {
-            var confirmed = _VMs.CanExit();
+            var confirmed = _VM.CanExit();
             e.Cancel = !confirmed; // cancels the window close
             if (confirmed)
             {
@@ -279,7 +286,7 @@ namespace JYCalculator.Views
 
         private void CopyFinalDPS(object sender, RoutedEventArgs e)
         {
-            Clipboard.SetText(_VMs.CalcShell.FinalDPStxtF);
+            Clipboard.SetText(_VM.CalcShell.FinalDPStxtF);
             CopyTextblock_pop.IsOpen = true;
         }
 
@@ -292,7 +299,7 @@ namespace JYCalculator.Views
 
         private void GroupBox_Profit_MouseDown(object sender, RoutedEventArgs e)
         {
-            Clipboard.SetText(_VMs.ProfitOrderDesc);
+            Clipboard.SetText(_VM.ProfitOrderDesc);
             CopyTextblock_pop.IsOpen = true;
         }
 
@@ -316,7 +323,23 @@ namespace JYCalculator.Views
 
         public void ReadFile(string filepath)
         {
-            _VMs.ReadFile(filepath);
+            _VM.ReadFile(filepath);
+        }
+
+        #region 配装器相关
+
+        public void OpenPzMainWindow()
+        {
+            _PzMainWindow.Show();
+            //_PzMainWindow.Owner = this;
+            _PzMainWindow.Activate();
+        }
+
+        #endregion
+
+        private void OpenPZ_btn_Click(object sender, RoutedEventArgs e)
+        {
+            OpenPzMainWindow();
         }
     }
 }

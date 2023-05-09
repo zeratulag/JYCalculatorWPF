@@ -1,0 +1,38 @@
+﻿<UserControl x:Class="JX3CalculatorShared.Views.UserControls.BuffItemSmallView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:JX3CalculatorShared.Views.UserControls"
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+             xmlns:hc="https://handyorg.github.io/handycontrol"
+             mc:Ignorable="d"
+             d:DesignHeight="24" d:DesignWidth="24"
+             x:Name="buffItemSmallView"
+             Style="{StaticResource Style.ControlWithToolTip}" Background="Transparent">
+    <UserControl.InputBindings>
+        <MouseBinding Gesture="RightClick" Command="{Binding CancelThisCmd}" />
+    </UserControl.InputBindings>    
+    <Canvas Width="32" Height="32">
+            <Image
+                Width="32"
+                Height="32"
+                Source="{Binding Path=IconID, Converter={StaticResource IconIDToImgConverter}}" />
+        <!--<local:OutlinedTextBlock  Canvas.Right="0" Canvas.Bottom="-2" Text="{Binding Stack}" Stroke="Black" Visibility="{Binding CanStack, Converter={StaticResource BooleanToVisibility}}"
+                                  ClipToBounds="False"
+                                  FontSize="13" 
+                                  Fill="White"
+                                  StrokePosition="Outside" Style="{x:Null}"
+                                  StrokeThickness ="1.4"
+                                  TextAlignment="Right"
+                                  VerticalAlignment="Bottom"
+                                  HorizontalAlignment="Right"/>-->
+        <hc:OutlineText Canvas.Right="0" Canvas.Bottom="-2"
+                        Text="{Binding Stack}" Visibility="{Binding CanStack, Converter={StaticResource BooleanToVisibility}}"
+                        Fill="White" Stroke="Black" StrokeThickness="1.4"
+                        StrokePosition="Outside" FontSize="14"
+                        ClipToBounds="False"
+                        VerticalAlignment="Bottom" HorizontalAlignment="Right"/>
+    </Canvas>
+
+</UserControl>

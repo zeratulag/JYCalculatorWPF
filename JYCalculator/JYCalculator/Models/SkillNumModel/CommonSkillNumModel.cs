@@ -20,6 +20,7 @@ namespace JYCalculator.Models
         public double CW_DOTPerCW = 30; // 单次橙武特效造成的伤害次数（常规10跳x3层，顶级可以多1跳2层）
         public double CW_DOTHitPerCW = 10; // 单次橙武特效在伤害统计记录的次数（顶级11）
 
+
         #endregion
 
         #region 构造
@@ -66,7 +67,7 @@ namespace JYCalculator.Models
         public void CommonCalcAfter()
         {
             // 在其他技能数已经确定时的通用计算
-            CalcGF();
+            CalcGFFinal();
         }
 
 
@@ -114,7 +115,7 @@ namespace JYCalculator.Models
                     interval = zx.IntervalTime;
                 }
 
-                Num.ZX_DOT = Math.Min(Num.ZX * 3, Num._Time / interval);
+                Num.ZX_DOT = Math.Min(Num.ZX * 6, Num._Time / interval);
             }
         }
 
@@ -124,7 +125,6 @@ namespace JYCalculator.Models
         public void CalcBL()
         {
             var bl = GetBLFreqTime();
-
             Num.ApplyBLFreq(bl.Freq, bl.Time);
         }
 
@@ -134,9 +134,16 @@ namespace JYCalculator.Models
         /// <returns></returns>
         public (double Freq, double Time) GetBLFreqTime()
         {
-            var bldata = SkillHaste.SkillDF.Data["BL"];
-            var blcd = bldata.CD;
-            var rawBLFreq = 1 / blcd;
+            double raw_blcd = StaticXFData.DB.SkillInfo.Skills["BL"].CD; // 原始CD
+            double real_cd = raw_blcd;
+
+            if (QiXue.寒江夜雨)
+            {
+                var efreq = Num.GetEnergyInjection();
+                real_cd = QiXue.GetBLCDByEnergyInjectionFreq(efreq * 0.986);
+            }
+
+            var rawBLFreq = 1 / real_cd;
             var abilityrankcoef = (0.85 + 0.05 * AbilityRank); // 顶级手法下无延迟，应该为1
             var realBLFreq = rawBLFreq * abilityrankcoef;
 
@@ -154,10 +161,16 @@ namespace JYCalculator.Models
         }
 
 
-        public void CalcGF()
+        /*public void CalcGF()
         {
             Num.CalcGF();
+        }*/
+
+        public void CalcGFFinal()
+        {
+            FinalSkillFreq.CalcGF();
         }
+
 
         /// <summary>
         /// 计算触发事件
@@ -170,22 +183,9 @@ namespace JYCalculator.Models
             FinalSkillFreq = FinalNum.ToSkillFreqDict();
             GetBigCWFreq(); // 惊羽需要先计算橙武频率，再计算其他频率
             GetBasicSLCover();
-            GetPZFreq();
             GetBigFMFreq();
             GetPiaoHuangFreq();
             GetLMJF();
-        }
-
-
-        public void GetPZFreq()
-        {
-            // 计算破招频率
-            FinalSkillFreq.AddByFreq("PZ_ZM", FinalSkillFreq["ZM_SF"]); // 瞬发追命带破招
-
-            if (IsXW)
-            {
-                FinalSkillFreq.AddByFreq("PZ_BY", FinalSkillFreq["LH7"]); // 心无期间完整施展暴雨带破招
-            }
         }
 
         public void GetBigCWFreq()
@@ -202,6 +202,8 @@ namespace JYCalculator.Models
             var ZX_Time = IsBigXW ? SkillHaste.GCD.XWTime : SkillHaste.GCD.Time; // 施展逐星所需时间;
 
             double Total_Interval_Time = CWInterval;
+
+            FinalSkillFreq.Data.TryGetValue("CXL", out var oldCXL);
 
             if (ZX_Origin_Num < ZX_Target_Num)
             {
@@ -229,7 +231,27 @@ namespace JYCalculator.Models
             CW_DP = SkillEvents[CW_DPkey].TriggerFreq(FinalSkillFreq["DP"]);
             FinalSkillFreq.AddByFreq(CW_DPkey, CW_DP);
 
+            GetBigCWBLFreq(); // 修正橙武百里数
+
+            FinalSkillFreq.Data.TryGetValue("CXL", out var newCXL);
+            var deltaCXL = oldCXL - newCXL;
+            FinalSkillFreq.MoveDPToCXL(deltaCXL); // 穿心弩的频率不能减少
+
             GetFinalEventHitFreq();
+        }
+
+
+        public void GetBigCWBLFreq()
+        {
+            // 修正大橙武百里数
+            if (!QiXue.寒江夜雨) return;
+
+            var freq = FinalSkillFreq.CalcJYEnergyInjection();
+            var rawBLFreq = 1 / QiXue.GetBLCDByEnergyInjectionFreq(freq);
+            var abilityrankcoef = (0.85 + 0.05 * AbilityRank); // 顶级手法下无延迟，应该为1
+            var realBLFreq = rawBLFreq * abilityrankcoef;
+            var bltime = IsXW ? SkillHaste.BL.XWTime : SkillHaste.BL.Time;
+            FinalSkillFreq.ResetBLFreq(realBLFreq, bltime, FinalNum);
         }
 
         #endregion

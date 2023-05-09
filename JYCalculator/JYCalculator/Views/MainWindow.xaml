@@ -9,12 +9,14 @@
     xmlns:uc="clr-namespace:JYCalculator.Views.UserControls"
     xmlns:local="clr-namespace:JYCalculator.Views"
     xmlns:xc="http://schemas.xceed.com/wpf/xaml/toolkit"
+    xmlns:viewModels="clr-namespace:JYCalculator.ViewModels"
+    xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
+    xmlns:suc="clr-namespace:JX3CalculatorShared.Views.UserControls"
     x:Name="JYMainWindow"
     Title="{Binding Path=Title}"
     Width="1440"
-    Height="800"
-    Icon="/Views/JY_icon.png"
-    SizeToContent="Height"
+    Height="830"
+    Icon="pack://application:,,,/Resource/Images/XF_icon.png"
     mc:Ignorable="d" AllowDrop="True" Drop="JYMainWindow_Drop">
     <!--  ReSharper disable InconsistentNaming  -->
     <Window.InputBindings>
@@ -22,7 +24,7 @@
         <KeyBinding Command="{Binding Path=SaveCurrentCmd}" Gesture="Ctrl+S" />
         <KeyBinding Command="{Binding Path=OpenFileCmd}" Gesture="Ctrl+O" />
         <KeyBinding Command="{Binding Path=NewCmd}" Gesture="Ctrl+N" />
-        <KeyBinding Command="{Binding Path=ImportJBPanelCmd}" Gesture="Ctrl+I" />
+        <KeyBinding Command="{Binding Path=OpenImportJBBBDialogCmd}" Gesture="Ctrl+I" />
     </Window.InputBindings>
 
     <DockPanel>
@@ -47,7 +49,8 @@
 
                 <Separator />
                 <MenuItem Header="导入">
-                    <MenuItem Command="{Binding Path=ImportJBPanelCmd}" Header="JX3BOX面板" InputGestureText="Ctrl+I"/>
+                    <MenuItem Command="{Binding Path=OpenImportJBBBDialogCmd}" Header="JX3BOX面板"
+                              InputGestureText="Ctrl+I" />
                 </MenuItem>
 
                 <MenuItem Header="导出" />
@@ -126,7 +129,7 @@
                     Grid.Row="0"
                     Height="Auto"
                     HorizontalAlignment="Stretch"
-                    Header="初始属性输入">
+                    Header="{Binding InitInputModeDesc}">
                     <GroupBox.Resources>
                         <Style BasedOn="{StaticResource Style.CenterLabel}" TargetType="Label" />
                         <Style BasedOn="{StaticResource Style.CenterCheckBoxWithOutBind}" TargetType="CheckBox" />
@@ -134,153 +137,180 @@
                         <Style BasedOn="{StaticResource Style.PercentUpDown_InitInput}" TargetType="xc:DoubleUpDown" />
                     </GroupBox.Resources>
 
-                    <TabControl x:Name="TabControl_InitChar">
-                        <TabItem x:Name="TabItem_InitCharInput" Header="手动输入">
+                    <Grid x:Name="Grid_InitChar">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
 
-                            <Grid x:Name="Grid_InitChar">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*" MinWidth="300" />
+                            <ColumnDefinition Width="2" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <GroupBox
+                            x:Name="GroupBox_InitChar"
+                            Grid.Row="0"
+                            Grid.RowSpan="2"
+                            Grid.Column="0"
+                            Grid.ColumnSpan="1"
+                            Header="角色初始属性">
+                            <uc:InitCharPanel x:Name="InitCharPanelInput" />
+                        </GroupBox>
+
+
+                        <GroupBox
+                            Name="GroupBox_BigFM"
+                            Grid.Row="0"
+                            Grid.RowSpan="2"
+                            Grid.Column="2"
+                            Header="大附魔">
+                            <ItemsControl Name="ItemsControl_BigFMConfig"
+                                          Style="{StaticResource Style.BigFMConfig}" />
+                        </GroupBox>
+
+
+                        <GroupBox
+                            x:Name="GroupBox_EquipOption"
+                            Grid.Row="2"
+                            Grid.Column="0"
+                            Header="装备效果">
+                            <Grid x:Name="Grid_EquipOption" MinWidth="150">
                                 <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
                                     <RowDefinition Height="Auto" />
                                     <RowDefinition Height="Auto" />
                                     <RowDefinition Height="Auto" />
                                 </Grid.RowDefinitions>
 
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="2*" MinWidth="300" />
-                                    <ColumnDefinition Width="2" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="5" />
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
 
-                                <GroupBox
-                                    x:Name="GroupBox_InitChar"
+                                <Grid.Resources>
+                                    <Style TargetType="ComboBox">
+                                        <Setter Property="Margin" Value="5" />
+                                    </Style>
+                                    <Style TargetType="CheckBox">
+                                        <Setter Property="Margin" Value="7" />
+                                    </Style>
+
+                                </Grid.Resources>
+
+
+                                <ComboBox
+                                    x:Name="EquipOption_WP_cbb"
                                     Grid.Row="0"
-                                    Grid.RowSpan="2"
                                     Grid.Column="0"
-                                    Grid.ColumnSpan="1"
-                                    Header="角色初始属性">
-                                    <uc:InitCharPanel x:Name="InitCharPanelInput" />
-                                </GroupBox>
+                                    Style="{StaticResource Style.EquipOptionCbb}" />
 
-
-                                <GroupBox
-                                    Name="GroupBox_BigFM"
+                                <ComboBox
+                                    x:Name="EquipOption_YZ_cbb"
                                     Grid.Row="0"
-                                    Grid.RowSpan="2"
                                     Grid.Column="2"
-                                    Header="大附魔">
-                                    <ItemsControl Name="ItemsControl_BigFMConfig"
-                                                  Style="{StaticResource Style.BigFMConfig}" />
-                                </GroupBox>
+                                    Style="{StaticResource Style.EquipOptionCbb}" />
 
-
-                                <GroupBox
-                                    x:Name="GroupBox_EquipOption"
+                                <Separator
                                     Grid.Row="2"
                                     Grid.Column="0"
-                                    Header="装备效果">
-                                    <Grid x:Name="Grid_EquipOption" MinWidth="150">
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="Auto" />
-                                            <RowDefinition Height="Auto" />
-                                            <RowDefinition Height="Auto" />
-                                            <RowDefinition Height="Auto" />
-                                            <RowDefinition Height="Auto" />
-                                        </Grid.RowDefinitions>
+                                    Grid.ColumnSpan="3"
+                                    Margin="0,5" />
 
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*" />
-                                            <ColumnDefinition Width="5" />
-                                            <ColumnDefinition Width="*" />
-                                        </Grid.ColumnDefinitions>
-
-                                        <Grid.Resources>
-                                            <Style TargetType="ComboBox">
-                                                <Setter Property="Margin" Value="5" />
-                                            </Style>
-                                            <Style TargetType="CheckBox">
-                                                <Setter Property="Margin" Value="7" />
-                                            </Style>
-
-                                        </Grid.Resources>
-
-
-                                        <ComboBox
-                                            x:Name="EquipOption_WP_cbb"
-                                            Grid.Row="0"
-                                            Grid.Column="0"
-                                            Style="{StaticResource Style.EquipOptionCbb}" />
-
-                                        <ComboBox
-                                            x:Name="EquipOption_YZ_cbb"
-                                            Grid.Row="0"
-                                            Grid.Column="2"
-                                            Style="{StaticResource Style.EquipOptionCbb}" />
-
-                                        <Separator
-                                            Grid.Row="2"
-                                            Grid.Column="0"
-                                            Grid.ColumnSpan="3"
-                                            Margin="0,5" />
-
-                                        <CheckBox
-                                            x:Name="EquipOption_JN_chb"
-                                            Grid.Row="3"
-                                            Grid.Column="0"
-                                            Margin="5"
-                                            IsChecked="{Binding Path=JN}"
-                                            ToolTip="{Binding Path=JNToolTip}">
-                                            套装：技能伤害
-                                        </CheckBox>
-                                        <CheckBox
-                                            x:Name="EquipOption_SL_chb"
-                                            Grid.Row="3"
-                                            Grid.Column="2"
-                                            Margin="5"
-                                            IsChecked="{Binding Path=SL}"
-                                            ToolTip="{Binding Path=SLToolTip}">
-                                            套装：神力效果
-                                        </CheckBox>
-                                    </Grid>
-
-                                </GroupBox>
-                                <DockPanel Grid.Row="2" Grid.Column="2">
-                                    <GroupBox
-                                        x:Name="GroupBox_InitCharCommands"
-                                        DockPanel.Dock="Top"
-                                        Header="操作">
-                                        <StackPanel Orientation="Vertical">
-                                            <Button Margin="10 10"
-                                                    Padding="5 5"
-                                                x:Name="InitChar_ImportJB"
-                                                Command="{Binding Path=ImportJBPanelCmd}"
-                                                Content="导入JX3BOX配装属性" />
-                                        </StackPanel>
-                                    </GroupBox>
-
-                                    <DockPanel DockPanel.Dock="Bottom">
-                                        <TextBlock x:Name="Author_txb" HorizontalAlignment="Center"
-                                                   VerticalAlignment="Center"
-                                                   FontSize="15">
-                                            作者：
-                                            <Hyperlink Command="{Binding Path=OpenHelpCmd}"
-                                                       CommandParameter="WB">
-                                                @Zeratulag
-                                            </Hyperlink>
-                                        </TextBlock>
-
-                                    </DockPanel>
-
-                                </DockPanel>
-
+                                <CheckBox
+                                    x:Name="EquipOption_JN_chb"
+                                    Grid.Row="3"
+                                    Grid.Column="0"
+                                    Margin="5"
+                                    IsChecked="{Binding Path=JN}"
+                                    ToolTip="{Binding Path=JNToolTip}">
+                                    套装：技能伤害
+                                </CheckBox>
+                                <CheckBox
+                                    x:Name="EquipOption_SL_chb"
+                                    Grid.Row="3"
+                                    Grid.Column="2"
+                                    Margin="5"
+                                    IsChecked="{Binding Path=SL}"
+                                    ToolTip="{Binding Path=SLToolTip}">
+                                    套装：神力效果
+                                </CheckBox>
                             </Grid>
 
-                        </TabItem>
-                        <TabItem x:Name="TabItem_InitCharPeiZhuang" Header="使用内置配装器">
-                            <Image
-                                Width="200"
-                                Height="200"
-                                Source="pack://application:,,,/Resource/Images/Gugugu.jpg" />
-                        </TabItem>
-                    </TabControl>
+                        </GroupBox>
+                        <DockPanel Grid.Row="2" Grid.Column="2">
+                            <GroupBox
+                                x:Name="GroupBox_InitCharCommands"
+                                DockPanel.Dock="Top"
+                                Header="操作">
+
+                                <StackPanel Orientation="Vertical">
+
+
+                                    <Button Margin="10 5"
+                                            Padding="5 5"
+                                            x:Name="InitChar_ImportJB_btn"
+                                            Command="{Binding Path=OpenImportJBBBDialogCmd}">
+                                        <Button.Resources>
+                                            <Style TargetType="{x:Type Border}">
+                                                <Setter Property="CornerRadius" Value="5" />
+                                            </Style>
+                                        </Button.Resources>
+
+                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                                            <Image Source="pack://application:,,,/Resource/Images/JB_Logo.png"
+                                                   Height="18" Width="18" />
+                                            <TextBlock Margin="5 0 0 0" VerticalAlignment="Center">导入JX3BOX属性</TextBlock>
+                                        </StackPanel>
+
+                                    </Button>
+                                    <Button Margin="10 5"
+                                            Padding="5 5"
+                                            x:Name="OpenPZ_btn"
+                                            Click="OpenPZ_btn_Click"
+                                            BorderThickness="0"
+                                            FontWeight="Bold">
+                                        <Button.Resources>
+                                            <Style TargetType="{x:Type Border}">
+                                                <Setter Property="CornerRadius" Value="5" />
+                                            </Style>
+                                        </Button.Resources>
+                                        <Button.Background>
+                                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,2">
+                                                <GradientStop Color="#7f7cf1" Offset="0" />
+                                                <GradientStop Color="#d3b7ff" Offset="1" />
+                                            </LinearGradientBrush>
+                                        </Button.Background>
+                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                                            <Image Source="pack://application:,,,/Resource/Images/PzIcon.png"
+                                                   Height="18" Width="18" />
+                                            <TextBlock Margin="5 0 0 0" VerticalAlignment="Center" Text="打开内置配装器" />
+                                        </StackPanel>
+                                    </Button>
+                                </StackPanel>
+                            </GroupBox>
+
+                            <DockPanel DockPanel.Dock="Bottom">
+                                <TextBlock x:Name="Author_txb" HorizontalAlignment="Center"
+                                           VerticalAlignment="Center"
+                                           FontSize="15">
+                                    作者：
+                                    <Hyperlink Command="{Binding Path=OpenHelpCmd}"
+                                               CommandParameter="WB">
+                                        @Zeratulag
+                                    </Hyperlink>
+                                </TextBlock>
+
+                            </DockPanel>
+
+                        </DockPanel>
+
+                    </Grid>
+
                 </GroupBox>
 
                 <DockPanel Grid.Row="1">
@@ -400,22 +430,15 @@
             </Grid>
 
             <!--  主界面（中间）  -->
-            <Grid
+            <DockPanel
                 x:Name="Grid_Main_Middle"
                 Grid.Column="3"
                 Grid.ColumnSpan="1"
                 Margin="4,0,0,0">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
-
 
                 <GroupBox
                     x:Name="GroupBox_FightOption"
-                    Grid.Row="0"
-                    Grid.Column="0"
+                    DockPanel.Dock="Top"
                     Header="战斗选项">
                     <Grid x:Name="Grid_FightOption">
                         <Grid.RowDefinitions>
@@ -490,8 +513,13 @@
                                 x:Name="FightOption_Target_cbb"
                                 Grid.Column="0"
                                 Margin="5,5"
-                                DisplayMemberPath="ItemName"
-                                Style="{StaticResource Style.FightOptionCbb}" />
+                                Style="{StaticResource Style.FightOptionCbb}">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <suc:TargetItemView />
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
 
                             <Label
                                 Grid.Column="1"
@@ -506,8 +534,8 @@
                                 MinWidth="30"
                                 Margin="0,5"
                                 DisplayMemberPath="ItemName"
-                                Style="{StaticResource Style.FightOptionCbb}"
-                                />
+                                Style="{StaticResource Style.FightOptionCbb}">
+                            </ComboBox>
 
                         </Grid>
 
@@ -523,108 +551,93 @@
                                 Margin="5,5"
                                 DataContext="{Binding Path=ZhenFa}"
                                 Style="{StaticResource Style.ZhenFaCbb}" />
-
                         </DockPanel>
-
                     </Grid>
-
-
                 </GroupBox>
 
+                <ScrollViewer DockPanel.Dock="Top" HorizontalScrollBarVisibility="Disabled"
+                              VerticalScrollBarVisibility="Auto">
+                    <StackPanel Orientation="Vertical">
+                        <GroupBox
+                            x:Name="GroupBox_Buff"
+                            Header="BUFF">
+                            <StackPanel x:Name="Grid_Buff">
 
-                <GroupBox
-                    x:Name="GroupBox_Buff"
-                    Grid.Row="1"
-                    Header="BUFF">
-                    <ScrollViewer MaxHeight="300">
-                        <StackPanel x:Name="Grid_Buff">
+                                <Expander x:Name="Expander_Buff_Self">
+                                    <Expander.Header>
+                                        <TextBlock Text="{Binding Path=Header}" TextWrapping="Wrap" />
+                                    </Expander.Header>
+                                    <ListView x:Name="ListView_Buff_Self"
+                                              Style="{StaticResource Style.BaseBuffListView}" />
+                                </Expander>
 
-                            <Expander x:Name="Expander_Buff_Self">
-                                <Expander.Header>
-                                    <TextBlock Text="{Binding Path=Header}" TextWrapping="Wrap" />
-                                </Expander.Header>
-                                <ListView x:Name="ListView_Buff_Self" Style="{StaticResource Style.BaseBuffListView}" />
+                                <Expander x:Name="Expander_Buff_Banquet">
+                                    <Expander.Header>
+                                        <TextBlock Text="{Binding Path=Header}" TextWrapping="Wrap" />
+                                    </Expander.Header>
+                                    <ListView x:Name="ListView_Buff_Banquet"
+                                              Style="{StaticResource Style.BaseBuffListView}" />
+                                </Expander>
+
+                                <Expander x:Name="Expander_Buff_Normal">
+                                    <Expander.Header>
+                                        <TextBlock Text="{Binding Path=Header}" TextWrapping="Wrap" />
+                                    </Expander.Header>
+                                    <ListView x:Name="ListView_Buff_Normal"
+                                              Style="{StaticResource Style.BaseBuffListView}" />
+                                </Expander>
+
+                                <Expander x:Name="Expander_DeBuff_Normal">
+                                    <Expander.Header>
+                                        <TextBlock Text="{Binding Path=Header}" TextWrapping="Wrap" />
+                                    </Expander.Header>
+                                    <ListView x:Name="ListView_DeBuff_Normal"
+                                              Style="{StaticResource Style.BaseBuffListView}" />
+                                </Expander>
+
+                                <Expander x:Name="Expander_Buff_Extra">
+                                    <Expander.Header>
+                                        <TextBlock Text="{Binding Path=Header}" TextWrapping="Wrap" />
+                                    </Expander.Header>
+                                    <ListView x:Name="ListView_Buff_Extra"
+                                              Style="{StaticResource Style.ExtraBuffListView}" />
+                                </Expander>
+
+                                <Expander x:Name="Expander_Buff_ExtraStack">
+                                    <Expander.Header>
+                                        <TextBlock Text="{Binding Path=Header}" TextWrapping="Wrap" />
+                                    </Expander.Header>
+                                    <ListView x:Name="ListView_Buff_ExtraStack"
+                                              Style="{StaticResource Style.ExtraStackBuffListView}" />
+                                </Expander>
+
+                            </StackPanel>
+
+                        </GroupBox>
+                        <GroupBox Name="GroupBox_ItemDT">
+                            <GroupBox.Header>
+                                <CheckBox x:Name="GroupBox_ItemDT_chb" Style="{StaticResource Style.CenterCheckBox}">单体</CheckBox>
+                            </GroupBox.Header>
+                            <Expander
+                                x:Name="Expander_ItemDT"
+                                IsExpanded="True"
+                                Style="{StaticResource Style.MultiLineHeaderedExpander}">
+                                <ItemsControl x:Name="ItemsControl_ItemDT" Style="{StaticResource Style.ItemDT}" />
                             </Expander>
+                        </GroupBox>
 
-                            <Expander x:Name="Expander_Buff_Banquet">
-                                <Expander.Header>
-                                    <TextBlock Text="{Binding Path=Header}" TextWrapping="Wrap" />
-                                </Expander.Header>
-                                <ListView x:Name="ListView_Buff_Banquet"
-                                          Style="{StaticResource Style.BaseBuffListView}" />
-                            </Expander>
+                    </StackPanel>
+                </ScrollViewer>
 
-                            <Expander x:Name="Expander_Buff_Normal">
-                                <Expander.Header>
-                                    <TextBlock Text="{Binding Path=Header}" TextWrapping="Wrap" />
-                                </Expander.Header>
-                                <ListView x:Name="ListView_Buff_Normal" Style="{StaticResource Style.BaseBuffListView}" />
-                            </Expander>
-
-                            <Expander x:Name="Expander_DeBuff_Normal">
-                                <Expander.Header>
-                                    <TextBlock Text="{Binding Path=Header}" TextWrapping="Wrap" />
-                                </Expander.Header>
-                                <ListView x:Name="ListView_DeBuff_Normal"
-                                          Style="{StaticResource Style.BaseBuffListView}" />
-                            </Expander>
-
-                            <Expander x:Name="Expander_Buff_Extra">
-                                <Expander.Header>
-                                    <TextBlock Text="{Binding Path=Header}" TextWrapping="Wrap" />
-                                </Expander.Header>
-                                <ListView x:Name="ListView_Buff_Extra" Style="{StaticResource Style.ExtraBuffListView}" />
-                            </Expander>
-
-                            <Expander x:Name="Expander_Buff_ExtraStack">
-                                <Expander.Header>
-                                    <TextBlock Text="{Binding Path=Header}" TextWrapping="Wrap" />
-                                </Expander.Header>
-                                <ListView x:Name="ListView_Buff_ExtraStack"
-                                          Style="{StaticResource Style.ExtraStackBuffListView}" />
-                            </Expander>
-
-                        </StackPanel>
-                    </ScrollViewer>
-
-                </GroupBox>
-
-                <GroupBox Name="GroupBox_ItemDT" Grid.Row="2">
-                    <GroupBox.Header>
-                        <CheckBox x:Name="GroupBox_ItemDT_chb" Style="{StaticResource Style.CenterCheckBox}">单体</CheckBox>
-                    </GroupBox.Header>
-                    <Expander
-                        x:Name="Expander_ItemDT"
-                        IsExpanded="True"
-                        Style="{StaticResource Style.MultiLineHeaderedExpander}">
-                        <ScrollViewer MaxHeight="210">
-                            <ItemsControl x:Name="ItemsControl_ItemDT" Style="{StaticResource Style.ItemDT}" />
-                        </ScrollViewer>
-                    </Expander>
-                </GroupBox>
-
-            </Grid>
+            </DockPanel>
 
             <!--  主界面（右半）  -->
 
-            <Grid Name="Grid_Main_Right" Grid.Column="5">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
-
-
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
+            <DockPanel Name="Grid_Main_Right" Grid.Column="5" LastChildFill="True">
 
                 <GroupBox
                     x:Name="GroupBox_DPS"
-                    Grid.Row="0"
-                    Grid.Column="0"
+                    DockPanel.Dock="Top"
                     Header="DPS期望">
                     <Grid x:Name="Grid_DPS">
                         <Grid.ColumnDefinitions>
@@ -637,7 +650,7 @@
                             <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
 
-                        <TextBlock
+                        <TextBox
                             Name="FinalDPS_txb"
                             Grid.Column="0"
                             Margin="10,10,10,5"
@@ -646,14 +659,15 @@
                             FontSize="24"
                             FontWeight="Bold"
                             Foreground="Red"
-                            Text="{Binding Path=FinalDPStxt}"
+                            Text="{Binding Path=FinalDPStxt, Mode=OneWay}"
                             MouseLeftButtonDown="CopyFinalDPS"
-                            ToolTip="点击复制"/>
-                        <Popup x:Name="CopyTextblock_pop" StaysOpen="False" Placement="Mouse" PopupAnimation="Slide" AllowsTransparency="True">
+                            Style="{StaticResource Style.TextBlockBox}"
+                            ToolTip="点击复制" />
+                        <Popup x:Name="CopyTextblock_pop" StaysOpen="False" Placement="Mouse" PopupAnimation="Slide"
+                               AllowsTransparency="True">
                             <Border BorderBrush="Beige" BorderThickness="2" Background="White">
                                 <TextBlock Margin="5">已复制！</TextBlock>
                             </Border>
-
                         </Popup>
 
                         <Expander Grid.Column="1" ExpandDirection="Right">
@@ -671,251 +685,85 @@
                             </DataGrid>
                         </Expander>
                         <Expander x:Name="Expander_CombatStat"
-                            Grid.Row="1"
-                            Grid.Column="0"
-                            Grid.ColumnSpan="2"
-                            Header="战斗统计"
-                            IsExpanded="True">
-                            <sf:SfDataGrid
-                                x:Name="SfDataGrid_SimpleCombatStatTable"
-                                Width="Auto"
-                                Height="Auto"
-                                Margin="5"
-                                HorizontalAlignment="Stretch"
-                                AllowResizingColumns="True"
-                                AutoGenerateColumns="False"
-                                ColumnSizer="AutoLastColumnFill"
-                                ItemsSource="{Binding Path=SimpleCombatStatTable}"
-                                RowHeight="20">
-                                <sf:SfDataGrid.Columns>
-                                    <sf:GridTextColumn
-                                        Width="20"
-                                        HeaderText="#"
-                                        MappingName="Rank"
-                                        TextAlignment="Center"/>
-
-                                    <sf:GridTextColumn
-                                        Width="100"
-                                        HeaderText="技能"
-                                        HorizontalHeaderContentAlignment="Center"
-                                        MappingName="Name" />
-
-                                    <sf:GridNumericColumn
-                                        Width="50"
-                                        HeaderText="次数"
-                                        MappingName="ShowNum"
-                                        NumberDecimalDigits="1" />
-                                    <sf:GridPercentColumn
-                                        Width="60"
-                                        HeaderText="会心"
-                                        MappingName="CTRatePct" />
-                                    <sf:GridNumericColumn
-                                        Width="70"
-                                        HeaderText="伤害"
-                                        MappingName="TotalDamage"
-                                        NumberDecimalDigits="0" />
-                                    <sf:GridNumericColumn
-                                        Width="90"
-                                        HeaderText="比重"
-                                        MappingName="ProportionPct"
-                                        SetCellBoundValue="True">
-                                        <sf:GridNumericColumn.CellTemplate>
-                                            <DataTemplate>
-                                                <Grid>
-                                                    <ProgressBar
-                                                        x:Name="progressBar"
-                                                        Height="15"
-                                                        Background="Transparent"
-                                                        BorderThickness="0"
-                                                        Foreground="Green"
-                                                        Maximum="100"
-                                                        Minimum="0"
-                                                        Visibility="Visible"
-                                                        Value="{Binding Path=Value}" />
-                                                    <TextBlock
-                                                        HorizontalAlignment="Right"
-                                                        VerticalAlignment="Center"
-                                                        Text="{Binding Path=Value, StringFormat='\{0\}%'}"
-                                                        TextAlignment="Center" />
-                                                </Grid>
-                                            </DataTemplate>
-                                        </sf:GridNumericColumn.CellTemplate>
-                                    </sf:GridNumericColumn>
-                                </sf:SfDataGrid.Columns>
-                            </sf:SfDataGrid>
+                                  Grid.Row="1"
+                                  Grid.Column="0"
+                                  Grid.ColumnSpan="2"
+                                  Header="战斗统计"
+                                  IsExpanded="True">
+                            <suc:CombatStatDataGrid x:Name="SfDataGrid_SimpleCombatStatTable"/>
                         </Expander>
                     </Grid>
                 </GroupBox>
 
-                <GroupBox
-                    x:Name="GroupBox_Profit"
-                    Grid.Row="1"
-                    MinWidth="400"
-                    Header="属性收益"
-                    MouseLeftButtonDown="GroupBox_Profit_MouseDown"
-                    ToolTip="点击复制">
 
-                    <Expander IsExpanded="True">
-                        <Expander.Header>
-                            <TextBox
-                                FontSize="14"
-                                FontWeight="Bold"
-                                Foreground="Red"
-                                Text="{Binding Path=ProfitOrderDesc}" 
-                                Style="{StaticResource Style.TextBlockBox}"
-                                />
-                        </Expander.Header>
-                        <StackPanel Orientation="Vertical">
+                <ScrollViewer DockPanel.Dock="Top" HorizontalScrollBarVisibility="Disabled"
+                              VerticalScrollBarVisibility="Auto">
+                    <StackPanel Orientation="Vertical">
 
-                            <StackPanel Orientation="Horizontal">
-                                <Label Margin="5">依据</Label>
-                                <ComboBox
-                                    x:Name="ProfitWeight_cbb"
-                                    Width="100"
-                                    Margin="5"
-                                    Style="{StaticResource Style.ProfitWeightCbb}" />
-                            </StackPanel>
+                        <GroupBox
+                            x:Name="GroupBox_Profit"
+                            Grid.Row="1"
+                            MinWidth="400"
+                            Header="属性收益"
+                            MouseLeftButtonDown="GroupBox_Profit_MouseDown"
+                            ToolTip="点击复制">
 
-                            <chart:SfChart
-                                x:Name="ProfitChart"
-                                MaxWidth="400"
-                                MaxHeight="250"
-                                Margin="0,5,0,0"
-                                HorizontalAlignment="Stretch"
-                                HorizontalContentAlignment="Stretch"
-                                Header="{Binding Path=Header}"
-                                FontSize="15">
-                                <!--  Initialize the horizontal axis for the WPF Chart  -->
-                                <chart:SfChart.PrimaryAxis>
-                                    <chart:CategoryAxis FontSize="12" ShowGridLines="False" />
-                                </chart:SfChart.PrimaryAxis>
+                            <Expander IsExpanded="True">
+                                <Expander.Header>
+                                    <TextBox
+                                        FontSize="14"
+                                        FontWeight="Bold"
+                                        Foreground="Red"
+                                        Text="{Binding Path=ProfitOrderDesc, Mode=OneWay}"
+                                        Style="{StaticResource Style.TextBlockBox}" />
+                                </Expander.Header>
+                                <StackPanel Orientation="Vertical">
 
-                                <!--  Initialize the vertical axis for the WPF Chart  -->
-                                <chart:SfChart.SecondaryAxis>
-                                    <chart:NumericalAxis FontSize="14" />
-                                </chart:SfChart.SecondaryAxis>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Label Margin="5">依据</Label>
+                                        <ComboBox
+                                            x:Name="ProfitWeight_cbb"
+                                            Width="100"
+                                            Margin="5"
+                                            Style="{StaticResource Style.ProfitWeightCbb}" />
+                                    </StackPanel>
 
-                                <!--  Adding Column Series to the WPF Chart  -->
-                                <chart:BarSeries
-                                    EnableAnimation="True"
-                                    ItemsSource="{Binding Path=Data}"
-                                    Palette="Elite"
-                                    ShowTooltip="True"
-                                    XBindingPath="DescName"
-                                    YBindingPath="Value">
-                                    <chart:BarSeries.AdornmentsInfo>
-                                        <chart:ChartAdornmentInfo
-                                            Background="Transparent"
-                                            LabelPosition="Inner"
-                                            ShowLabel="True"
-                                            ShowMarker="True" />
-                                    </chart:BarSeries.AdornmentsInfo>
+                                    <suc:ProfitChart x:Name="ProfitChart"/>
 
-                                    <chart:BarSeries.TooltipTemplate>
-                                        <DataTemplate>
-                                            <TextBlock
-                                                HorizontalAlignment="Right"
-                                                Foreground="White"
-                                                Text="{Binding Path=Item.Value, StringFormat='{}{0:F3}'}" 
-                                                FontSize="12"/>
-                                        </DataTemplate>
-                                    </chart:BarSeries.TooltipTemplate>
+                                </StackPanel>
 
-                                </chart:BarSeries>
+                            </Expander>
 
-                                <!--
-                        <chart:SfChart.Behaviors>
-                            <chart:ChartSelectionBehavior EnableSegmentSelection="True" EnableSeriesSelection="True" />
-                        </chart:SfChart.Behaviors>-->
+                        </GroupBox>
 
-                            </chart:SfChart>
+                        <GroupBox x:Name="GroupBox_Optimization">
+                            <GroupBox.Header>
+                                <CheckBox x:Name="GroupBox_Optimization_chb"
+                                          Style="{StaticResource Style.CenterCheckBox}"
+                                          IsChecked="True">
+                                    优化分析
+                                </CheckBox>
+                            </GroupBox.Header>
 
-                        </StackPanel>
+                            <TabControl
+                                Visibility="{Binding IsChecked,ElementName=GroupBox_Optimization_chb,Converter={StaticResource BooleanToVisibility}}"
+                                SelectionChanged="TabControl_SelectionChanged">
+                                <TabItem Header="最优初始属性">
 
+                                    <TextBlock Text="{Binding Path=OptimizationDesc}"
+                                               MouseLeftButtonDown="CopyTextBlock">
+                                    </TextBlock>
 
-                    </Expander>
+                                </TabItem>
+                                <TabItem Header="多重阵眼比较" x:Name="TabItem_MultiZhen">
+                                    <suc:MultiZhenFaDataGrid x:Name="SfDataGrid_MultiZhen"/>
+                                </TabItem>
+                            </TabControl>
+                        </GroupBox>
 
-                </GroupBox>
-
-                <GroupBox x:Name="GroupBox_Optimization"  Grid.Row="2">
-                    <GroupBox.Header>
-                        <CheckBox x:Name="GroupBox_Optimization_chb" Style="{StaticResource Style.CenterCheckBox}" IsChecked="True">优化分析</CheckBox>
-                    </GroupBox.Header>
-
-                    <TabControl Visibility="{Binding IsChecked,ElementName=GroupBox_Optimization_chb,Converter={StaticResource BooleanToVisibility}}" SelectionChanged="TabControl_SelectionChanged">
-                        <TabItem Header="最优初始属性">
-
-                            <TextBlock Text="{Binding Path=OptimizationDesc}" MouseLeftButtonDown="CopyTextBlock"></TextBlock>
-
-                        </TabItem>
-                        <TabItem Header="多重阵眼比较" x:Name="TabItem_MultiZhen">
-
-                            <sf:SfDataGrid
-                                x:Name="SfDataGrid_MultiZhen"
-                                Width="Auto"
-                                Height="Auto"
-                                Margin="5"
-                                HorizontalAlignment="Stretch"
-                                AllowResizingColumns="True"
-                                AutoGenerateColumns="False"
-                                ColumnSizer="AutoLastColumnFill"
-                                ItemsSource="{Binding Path=MultiZhenTable}"
-                                RowHeight="20">
-                                <sf:SfDataGrid.Columns>
-                                    <sf:GridTextColumn
-                                        Width="30"
-                                        HeaderText="#"
-                                        MappingName="Rank"
-                                        TextAlignment="Center" />
-
-                                    <sf:GridTextColumn
-                                        Width="100"
-                                        HeaderText="阵法"
-                                        HorizontalHeaderContentAlignment="Center"
-                                        MappingName="Name" />
-
-                                    <sf:GridNumericColumn
-                                        Width="80"
-                                        HeaderText="DPS"
-                                        MappingName="DPS"
-                                        NumberDecimalDigits="0" />
-                                    <sf:GridNumericColumn
-                                        Width="120"
-                                        HeaderText="相对"
-                                        MappingName="RelativePct"
-                                        SetCellBoundValue="True">
-                                        <sf:GridNumericColumn.CellTemplate>
-                                            <DataTemplate>
-                                                <Grid>
-                                                    <ProgressBar
-                                                        x:Name="progressBar"
-                                                        Height="15"
-                                                        Background="Transparent"
-                                                        BorderThickness="0"
-                                                        Foreground="IndianRed"
-                                                        Maximum="130"
-                                                        Minimum="100"
-                                                        Visibility="Visible"
-                                                        Value="{Binding Path=Value}" />
-                                                    <TextBlock
-                                                        HorizontalAlignment="Right"
-                                                        VerticalAlignment="Center"
-                                                        Text="{Binding Path=Value, StringFormat='\{0\}%'}"
-                                                        TextAlignment="Center" />
-                                                </Grid>
-                                            </DataTemplate>
-                                        </sf:GridNumericColumn.CellTemplate>
-                                    </sf:GridNumericColumn>
-                                </sf:SfDataGrid.Columns>
-                            </sf:SfDataGrid>
-
-
-
-                        </TabItem>
-                    </TabControl>
-                </GroupBox>
-
-            </Grid>
+                    </StackPanel>
+                </ScrollViewer>
+            </DockPanel>
         </Grid>
 
     </DockPanel>

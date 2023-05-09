@@ -1,0 +1,112 @@
+﻿<UserControl x:Class="JX3PZ.Views.EquipEmbed"
+             x:Name="equipEmbed"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:JX3PZ.Views"
+             xmlns:hc="https://handyorg.github.io/handycontrol"
+             xmlns:sf="http://schemas.syncfusion.com/wpf"
+             mc:Ignorable="d"
+             d:DesignHeight="500" d:DesignWidth="500">
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+    </UserControl.Resources>
+    <Grid Margin="10 0 0 0">
+        <Grid.Resources>
+            <ResourceDictionary>
+                <ResourceDictionary.MergedDictionaries>
+                    <ResourceDictionary Source="pack://application:,,,/HandyControl;component/Themes/SkinDefault.xaml"/>
+                    <ResourceDictionary Source="pack://application:,,,/HandyControl;component/Themes/Theme.xaml"/>
+                    <ResourceDictionary Source="/Views/Resources/PzApp.xaml"/>
+                    <ResourceDictionary Source="/Views/Resources/PzEquip.xaml" />
+                    <ResourceDictionary Source="/Views/Resources/DiamondItem.xaml" />
+                </ResourceDictionary.MergedDictionaries>
+                <Style TargetType="Label" BasedOn="{StaticResource Style.PzEquipLabel}" />
+            </ResourceDictionary>
+        </Grid.Resources>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="20" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <StackPanel Grid.Row="0" Grid.Column="0" Margin="0 10" Orientation="Vertical" VerticalAlignment="Center"
+                    Visibility="{Binding HasDiamond, Converter={StaticResource BooleanToVisibility}}">
+            <hc:SimpleText Text="五行石" Style="{StaticResource Style.PzEquipSimpleTextLabel}" />
+            <hc:SplitButton Style="{StaticResource SplitButtonPrimary.Small}" Content="一键" HitMode="Hover"
+                            HorizontalAlignment="Stretch"
+                            DataContext="{Binding DiamondVM}">
+                <hc:SplitButton.DropDownContent>
+                    <StackPanel>
+                        <StackPanel.Resources>
+                            <Style TargetType="MenuItem" BasedOn="{StaticResource Style.MenuItem}">
+                                <Style.Setters>
+                                    <Setter Property="Command" Value="{Binding OneKeyEmbedCmd}" />
+                                </Style.Setters>
+                            </Style>
+                        </StackPanel.Resources>
+                        <MenuItem Header="6级" CommandParameter="6" ToolTip="一键镶嵌6级五行石" />
+                        <MenuItem Header="7级" CommandParameter="7" ToolTip="一键镶嵌7级五行石" />
+                        <MenuItem Header="8级" CommandParameter="8" ToolTip="一键镶嵌8级五行石" />
+                    </StackPanel>
+                </hc:SplitButton.DropDownContent>
+            </hc:SplitButton>
+        </StackPanel>
+
+        <ItemsControl Name="ItemsControl_EquipDiamond" Grid.Row="0" Grid.Column="2" Margin="0 10"
+                      Style="{StaticResource Style.EquipDiamond}"
+                      DataContext="{Binding DiamondVM}"
+                      Visibility="{Binding HasDiamond, Converter={StaticResource BooleanToVisibility}}" />
+        <StackPanel Orientation="Vertical" Grid.Row="1" Grid.Column="0" Margin="0 10"
+                    Visibility="{Binding HasStoneSlot, Converter={StaticResource BooleanToVisibility}}">
+            <hc:SimpleText Text="五彩石" Style="{StaticResource Style.PzEquipSimpleTextLabel}" />
+            <hc:SimpleText Text="{Binding DiamondCount, StringFormat={}总数{0}}" HorizontalAlignment="Center" />
+            <hc:SimpleText Text="{Binding DiamondIntensity, StringFormat={}等级和{0}}" HorizontalAlignment="Center" />
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="2" Margin="0 10"
+                    Visibility="{Binding HasStoneSlot, Converter={StaticResource BooleanToVisibility}}">
+            <Border Style="{StaticResource BorderRegion}"
+                    Visibility="{Binding HasSelectedStone, Converter={StaticResource BooleanToVisibility}}" Height="60">
+                <local:EquipStoneView DataContext="{Binding SelectedStone}" VerticalAlignment="Center"
+                                  Visibility="{Binding ElementName=equipEmbed, Path=ShowStone, Converter={StaticResource BooleanToVisibility}}" />
+            </Border>
+            <Button Margin="0 10" Style="{StaticResource ButtonIcon}"
+                    Visibility="{Binding HasSelectedStone, Converter={StaticResource BooleanToVisibility}}"
+                    hc:IconElement.Geometry="{StaticResource CloseGeometry}" HorizontalAlignment="Left"
+                    Command="{Binding DropStoneCmd}" ToolTip="取下五彩石" />
+            <ToggleButton Margin="0 10" ToolTip="选择新的五彩石"
+                          IsChecked="{Binding IsOpen,ElementName=StoneSelectDrawer}">
+                选择五彩石
+            </ToggleButton>
+        </StackPanel>
+
+        <hc:Drawer Name="StoneSelectDrawer" Dock="Bottom" ShowMask="False" Grid.Row="2" Grid.Column="0"
+                   Grid.ColumnSpan="3" IsOpen="{Binding StoneSelectDrawerIsOpen}">
+            <Border Background="{DynamicResource RegionBrush}" Height="Auto" BorderThickness="0,1,0,0"
+                    BorderBrush="{DynamicResource BorderBrush}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <TextBlock Margin="10,0,0,0" Text="五彩石选择" Style="{StaticResource TextBlockTitle}"
+                               FontSize="16"
+                               HorizontalAlignment="Left" />
+                    <Button Command="hc:ControlCommands.Close" Grid.Row="0" HorizontalAlignment="Right"
+                            Foreground="{DynamicResource PrimaryTextBrush}" Style="{StaticResource ButtonIcon}"
+                            hc:IconElement.Geometry="{StaticResource DeleteFillCircleGeometry}" />
+                    <local:EquipStoneSelect x:Name="equipStoneSelect" Grid.Row="1"
+                                            DataContext="{Binding StoneSelectVM}"
+                                            FilterName="{Binding FilterName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                </Grid>
+            </Border>
+        </hc:Drawer>
+
+    </Grid>
+</UserControl>

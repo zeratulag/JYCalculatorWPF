@@ -12,6 +12,8 @@ namespace JYCalculator.Class
 
         public readonly HasteTableItem BL;
 
+        public readonly HasteTableItem LHBY; // 梨花暴雨
+
         public readonly HasteTableItem CX_DOT; // 穿心DOT
         public readonly HasteTableItem ZX_DOT; // 逐星DOT
 
@@ -30,12 +32,14 @@ namespace JYCalculator.Class
 
             CX_DOT = new HasteTableItem(df.Data[nameof(CX_DOT)]);
             ZX_DOT = new HasteTableItem(df.Data[nameof(ZX_DOT)]);
+            LHBY = new HasteTableItem(df.Data[nameof(LHBY)]);
 
             var dict = new Dictionary<string, HasteTableItem>()
             {
                 {nameof(GCD), GCD},
                 {nameof(DP), DP}, {nameof(BY), BY}, {nameof(BL), BL},
                 {nameof(CX_DOT), CX_DOT}, {nameof(ZX_DOT), ZX_DOT},
+                {nameof(LHBY), LHBY},
             };
             Dict = dict.ToImmutableDictionary();
         }

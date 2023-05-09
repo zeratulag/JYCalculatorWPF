@@ -21,13 +21,10 @@ namespace JX3CalculatorShared.ViewModels
         }
 
         [DoNotNotify]
-        public QiXueSkill CurrentQiXue => ItemsSource[SelectedIndex];
+        public string ShortName => SelectedItem.ShortName;
 
         [DoNotNotify]
-        public string ShortName => CurrentQiXue.ShortName;
-
-        [DoNotNotify]
-        public string ItemName => CurrentQiXue.ItemName;
+        public string ItemName => SelectedItem.ItemName;
 
         #endregion
 

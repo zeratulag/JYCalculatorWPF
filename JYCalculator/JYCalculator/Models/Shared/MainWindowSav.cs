@@ -2,6 +2,7 @@
 using JX3CalculatorShared.ViewModels;
 using JYCalculator.ViewModels;
 using System.Collections.Generic;
+using JX3PZ.Models;
 
 namespace JYCalculator.Models
 {
@@ -18,5 +19,7 @@ namespace JYCalculator.Models
         public ItemDTConfigSav ItemDT;
         public FightOptionSav FightOption;
 
+        public bool IsSync;
+        public PzMainSav PzSav;
     }
 }

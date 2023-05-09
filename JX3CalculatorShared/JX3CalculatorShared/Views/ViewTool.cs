@@ -2,8 +2,18 @@
 using JX3CalculatorShared.Utils;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.IO;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Documents;
+using System.Windows.Markup;
+using System.Windows.Media.Imaging;
+using System.Windows.Media.Media3D;
+using System.Windows.Media;
+using System.Xml;
+using System.Windows.Interop;
 
 namespace JX3CalculatorShared.Views
 {
@@ -34,6 +44,56 @@ namespace JX3CalculatorShared.Views
                 }
             }
             return res;
+        }
+
+        /// <summary>
+        /// 获取一个TabControl的子页面
+        /// </summary>
+        /// <param name="tabControl"></param>
+        /// <returns></returns>
+        public static TabItem[] GeTabItems(this TabControl tabControl)
+        {
+            var res = tabControl.Items.OfType<TabItem>().ToArray();
+            return res;
+        }
+    }
+
+
+    public class Attached
+    {
+        public static readonly DependencyProperty FormattedTextProperty = DependencyProperty.RegisterAttached(
+            "FormattedText",
+            typeof(string),
+            typeof(Attached),
+            new FrameworkPropertyMetadata(string.Empty, FrameworkPropertyMetadataOptions.AffectsMeasure, FormattedTextPropertyChanged));
+
+        public static void SetFormattedText(DependencyObject textBlock, string value)
+        {
+            textBlock.SetValue(FormattedTextProperty, value);
+        }
+
+        public static string GetFormattedText(DependencyObject textBlock)
+        {
+            return (string)textBlock.GetValue(FormattedTextProperty);
+        }
+
+        private static void FormattedTextPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var textBlock = d as TextBlock;
+            if (textBlock == null)
+            {
+                return;
+            }
+
+            var formattedText = (string)e.NewValue ?? string.Empty;
+            formattedText = string.Format("<Span xml:space=\"preserve\" xmlns=\"http://schemas.microsoft.com/winfx/2006/xaml/presentation\">{0}</Span>", formattedText);
+
+            textBlock.Inlines.Clear();
+            using (var xmlReader = XmlReader.Create(new StringReader(formattedText)))
+            {
+                var result = (Span)XamlReader.Load(xmlReader);
+                textBlock.Inlines.Add(result);
+            }
         }
     }
 
@@ -117,7 +177,56 @@ namespace JX3CalculatorShared.Views
             var listViewName = ViewGlobals.PREFIX.ListViewMiJi + skillkey;
             return (expanderName, listViewName);
         }
+    }
 
+
+    public static class RenderTool
+    {
+        public static void SaveToPng(FrameworkElement visual, string fileName)
+        {
+            var encoder = new PngBitmapEncoder();
+            SaveUsingEncoder(visual, fileName, encoder);
+        }
+
+        public static void SaveUsingEncoder(FrameworkElement visual, string fileName, BitmapEncoder encoder)
+        {
+            var realSize = GetElementPixelSize(visual);
+            var wpfsize = (Vector)visual.DesiredSize;
+            var xcoef = realSize.Width / wpfsize.X;
+            var ycoef = realSize.Height / wpfsize.Y;
+
+            RenderTargetBitmap bitmap = new RenderTargetBitmap((int)realSize.Width, (int)realSize.Height, 96 * xcoef, 96 * ycoef, PixelFormats.Pbgra32);
+            bitmap.Render(visual);
+            BitmapFrame frame = BitmapFrame.Create(bitmap);
+            encoder.Frames.Add(frame);
+
+            using (var stream = File.Create(fileName))
+            {
+                encoder.Save(stream);
+            }
+        }
+
+        public static Size GetElementPixelSize(UIElement element)
+        {
+            Matrix transformToDevice;
+            var source = PresentationSource.FromVisual(element);
+            if (source != null)
+                transformToDevice = source.CompositionTarget.TransformToDevice;
+            else
+                using (var source1 = new HwndSource(new HwndSourceParameters()))
+                    transformToDevice = source1.CompositionTarget.TransformToDevice;
+
+            if (element.DesiredSize == new Size())
+                element.Measure(new Size(double.PositiveInfinity, double.PositiveInfinity));
+
+            return (Size)transformToDevice.Transform((Vector)element.DesiredSize);
+        }
+        public enum LengthDirection
+        {
+            Vertical, // |
+            Horizontal // ——
+        }
 
     }
+
 }

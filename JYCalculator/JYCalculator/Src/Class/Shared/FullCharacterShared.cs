@@ -182,7 +182,7 @@ namespace JYCalculator.Class
             other.Add_CT(XFStaticConst.XW.CT);
             other.Add_CF(XFStaticConst.XW.CF);
 
-            if (XFAppStatic.XinFaTag == "TL")
+            if (AppStatic.XinFaTag == "TL")
             {
                 other.Add_AP_Percent(XFStaticConst.XW.AP_Percent);
             }

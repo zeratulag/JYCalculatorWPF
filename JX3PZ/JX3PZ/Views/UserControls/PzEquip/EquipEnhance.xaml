@@ -1,0 +1,105 @@
+﻿<UserControl x:Class="JX3PZ.Views.EquipEnhance"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:JX3PZ.Views"
+             xmlns:hc="https://handyorg.github.io/handycontrol"
+             xmlns:sf="http://schemas.syncfusion.com/wpf"
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+             xmlns:userControls="clr-namespace:J3PZ.Views.UserControls"
+             mc:Ignorable="d"
+             d:DesignHeight="500" d:DesignWidth="500"
+             x:Name="equipEnhance">
+    <Grid Margin="10 0 0 0">
+        <Grid.Resources>
+            <ResourceDictionary>
+                <ResourceDictionary.MergedDictionaries>
+                    <ResourceDictionary Source="pack://application:,,,/HandyControl;component/Themes/SkinDefault.xaml"/>
+                    <ResourceDictionary Source="pack://application:,,,/HandyControl;component/Themes/Theme.xaml"/>
+                    <ResourceDictionary Source="/Views/Resources/PzEquip.xaml" />
+                    <ResourceDictionary Source="/Views/Resources/BigFM.xaml" />
+                </ResourceDictionary.MergedDictionaries>
+                <Style TargetType="Label" BasedOn="{StaticResource Style.PzEquipLabel}" />
+            </ResourceDictionary>
+        </Grid.Resources>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="10" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+
+        <!--<hc:Divider Grid.Row="0" Grid.RowSpan="4" Grid.Column="1" LineStrokeThickness="8" Orientation="Vertical" Width="200"></hc:Divider>-->
+        <hc:SimpleText Grid.Row="0" Grid.Column="0" Margin="0 10"
+                       Text="精炼等级" Style="{StaticResource Style.PzEquipSimpleTextLabel}" />
+        <StackPanel Grid.Row="0" Grid.Column="2" Orientation="Horizontal" Margin="0 10">
+            <hc:Rate x:Name="EquipStrength_Rate"
+                     Value="{Binding Path=StrengthLevel, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                     Count="{Binding Path= MaxStrengthLevel, Mode=OneWay}"
+                     VerticalAlignment="Center" AllowHalf="False"
+                     AllowClear="True" ShowText="False" Foreground="{DynamicResource WarningBrush}" />
+            <hc:NumericUpDown x:Name="EquipStrength_Nud"
+                              Value="{Binding Path=StrengthLevel, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                              Increment="1" Minimum="0"
+                              Maximum="{Binding Path= MaxStrengthLevel, Mode=OneWay}"
+                              DecimalPlaces="0"
+                              FontSize="12" Margin="15 0 0 0" Height="30" VerticalAlignment="Center" />
+            <!--<xctk:IntegerUpDown Value="{Binding StrengthLevel}" Minimum="0" Maximum="{Binding MaxStrengthLevel}"/>-->
+            <Button x:Name="EquipRemoveStrength_btn" Style="{StaticResource ButtonIcon}" Margin="0 10"
+                    hc:IconElement.Geometry="{StaticResource CloseGeometry}" HorizontalAlignment="Left"
+                    Command="{Binding RemoveStrengthCmd}" CommandParameter="0" ToolTip="取消精炼" />
+        </StackPanel>
+        <hc:SimpleText Grid.Row="1" Grid.Column="0" Margin="0 10"
+                       Text="小附魔" Style="{StaticResource Style.PzEquipSimpleTextLabel}" />
+        <hc:ComboBox Grid.Row="1" Grid.Column="2" x:Name="Enhance_cbb"
+                     ItemsSource="{Binding EnhanceSource}"
+                     SelectedIndex="{Binding SelectedEnhanceIndex}" Margin="0 10"
+                     SelectedItem="{Binding SelectedEnhance}"
+                     Style="{StaticResource ComboBoxExtend}"
+                     hc:InfoElement.Placeholder="空"
+                     Width="260" Height="44" HorizontalAlignment="Left">
+            <hc:ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <userControls:EnhanceItemView />
+                </DataTemplate>
+            </hc:ComboBox.ItemTemplate>
+        </hc:ComboBox>
+        <Button Grid.Row="1" Grid.Column="3" Style="{StaticResource ButtonIcon}" Margin="0 10"
+                hc:IconElement.Geometry="{StaticResource CloseGeometry}" HorizontalAlignment="Left"
+                Command="{Binding DropEnhanceCmd}" CommandParameter="0" ToolTip="取下附魔" />
+
+        <hc:SimpleText Grid.Row="2" Grid.Column="0" Margin="0 10"
+                       Text="大附魔" Style="{StaticResource Style.PzEquipSimpleTextLabel}"
+                       Visibility="{Binding HasBigFM, Converter={StaticResource BooleanToVisibility}}" />
+        <hc:ComboBox Grid.Row="2" Grid.Column="2" x:Name="BigFM_cbb"
+                     ItemsSource="{Binding BigFMSource}"
+                     SelectedIndex="{Binding SelectedBigFMIndex}" Margin="0 10"
+                     SelectedItem="{Binding SelectedBigFM}"
+                     Style="{StaticResource ComboBoxExtend}"
+                     hc:InfoElement.Placeholder="空"
+                     Width="{Binding ElementName=Enhance_cbb, Path=Width}"
+                     Height="{Binding ElementName=Enhance_cbb, Path=Height}"
+                     HorizontalAlignment="Left"
+                     IsEnabled="{Binding HasBigFM}"
+                     Visibility="{Binding HasBigFM, Converter={StaticResource BooleanToVisibility}}">
+            <hc:ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <userControls:EnchantItemView />
+                </DataTemplate>
+            </hc:ComboBox.ItemTemplate>
+        </hc:ComboBox>
+        <Button Grid.Row="2" Grid.Column="3" Style="{StaticResource ButtonIcon}" Margin="0 10"
+                hc:IconElement.Geometry="{StaticResource CloseGeometry}" HorizontalAlignment="Left"
+                Command="{Binding DropEnhanceCmd}" CommandParameter="1"
+                IsEnabled="{Binding HasBigFM}"
+                Visibility="{Binding HasBigFM, Converter={StaticResource BooleanToVisibility}}"
+                ToolTip="取下附魔" />
+    </Grid>
+</UserControl>

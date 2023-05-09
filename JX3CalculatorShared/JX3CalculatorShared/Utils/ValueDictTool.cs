@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Windows.Markup;
 
 namespace JX3CalculatorShared.Utils
 {
@@ -27,6 +28,27 @@ namespace JX3CalculatorShared.Utils
         /// <returns>相加后的结果</returns>
         public static IDictionary<TKey, double> ValueDictAppend<TKey>(this IDictionary<TKey, double> dict,
             IDictionary<TKey, double> dict2)
+        {
+            if (dict2 != null)
+            {
+                foreach (var kvp in dict2)
+                {
+                    dict[kvp.Key] = dict.GetValueOrUseDefault(kvp.Key, 0.0) + kvp.Value;
+                }
+            }
+            return dict;
+        }
+
+
+        /// <summary>
+        /// 数值类字典相加，就地加给第一个dict，并且返回
+        /// </summary>
+        /// <typeparam name="TKey"></typeparam>
+        /// <param name="dict">原始字典</param>
+        /// <param name="dict2">需要相加的字典</param>
+        /// <returns>相加后的结果</returns>
+        public static IDictionary<TKey, int> ValueDictAppend<TKey>(this IDictionary<TKey, int> dict,
+            IDictionary<TKey, int> dict2)
         {
             if (dict2 != null)
             {

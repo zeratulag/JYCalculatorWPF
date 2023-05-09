@@ -9,12 +9,14 @@ namespace JYCalculator.Data
         public double BY_Cast { get; set; }
         public double ZM_SF { get; set; }
         public double ZX { get; set; }
+        public double CXL { get; set; } = 0;
     }
 
     public class SkillInfoItem : SkillInfoItemBase
     {
         public double AP_Coef { get; set; } = 0;
         public double IgnoreB { get; set; } = 0;
+
     }
 
     public class DiamondValueItem : DiamondValueItemBase

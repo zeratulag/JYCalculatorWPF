@@ -8,7 +8,7 @@ namespace JX3CalculatorShared.Data
 {
     public class SkillModifier : AbsGeneralItem, ILuaTable
     {
-        public static TabParser Parser = new TabParser("SAt_key{0:D}", "SAt_value{0:D}", AtLoader.SkillAt_is_Value);
+        public static TabParser Parser = new TabParser("SAt_key{0:D}", "SAt_value{0:D}", AttributeIDLoader.SkillAttributeIsValue);
 
         public string RawSkillNames { get; set; }
         public string Type { get; set; }

@@ -93,10 +93,10 @@ namespace JYCalculator.Class
             res.PZ = Data.Info.IsP ? XFStaticConst.fGP.XPZ * ExpectPhysicsDmg / OrgPDmg : 0;
 
             res.Final_OC = ExpectPhysicsDmg / ParaPOC / XFStaticConst.fGP.OC;
-            res.WS = FinalEDamage / ParaWS / XFStaticConst.fGP.WS;
+            res.WS_Point = FinalEDamage / ParaWS / XFStaticConst.fGP.WS;
 
-            res.CF = CF < 3 ? FinalEDamage / Expect * CT / XFStaticConst.fGP.CF : 0;
-            res.CT = CT < 1 ? FinalEDamage / Expect * (CF - 1) / XFStaticConst.fGP.CT : 0;
+            res.CF_Point = CF < 3 ? FinalEDamage / Expect * CT / XFStaticConst.fGP.CF : 0;
+            res.CT_Point = CT < 1 ? FinalEDamage / Expect * (CF - 1) / XFStaticConst.fGP.CT : 0;
 
             res.Base_OC = res.Final_OC * (1 + FChar.OC_Percent);
             res.Base_AP = res.Final_AP * (1 + FChar.AP_Percent);

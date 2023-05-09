@@ -20,8 +20,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Documents;
 using CommunityToolkit.Mvvm.Messaging;
 using JX3CalculatorShared.Globals;
+using JX3CalculatorShared.Messages;
+using JX3PZ.Models;
+using JX3PZ.ViewModels;
+using JYCalculator.Messages;
+using System.Numerics;
 
 
 namespace JYCalculator.ViewModels
@@ -29,7 +35,8 @@ namespace JYCalculator.ViewModels
     /// <summary>
     /// MainWindow的ViewModel，同时也是存储各个子ViewModels的类
     /// </summary>
-    public partial class MainWindowViewModels : AbsDependViewModel<AbsViewModel>, IRecipient<StringMessage>
+    public partial class MainWindowViewModels : AbsDependViewModel<AbsViewModel>, IRecipient<StringMessage>,
+        IRecipient<PzPlanMessage>
     {
         #region 成员
 
@@ -54,6 +61,7 @@ namespace JYCalculator.ViewModels
         public readonly MainWindowModel Model;
         public CalculatorShell CalcShell => Model.CalcShell;
 
+        private PzMainWindowViewModels _PZMW => _MW._PzMainWindow._VM;
 
         // 输出界面的VM
         public ProfitChartViewModel ProfitChartVM { get; set; }
@@ -69,6 +77,10 @@ namespace JYCalculator.ViewModels
         public string CurrentFileName { get; set; } = NewFileName;
 
         public readonly string RawTitle = XFAppStatic.MainTitle;
+
+        public bool IsPZSyncWithCalc { get; set; } // 是否同步
+
+        public string InitInputModeDesc => IsPZSyncWithCalc ? "配装器模式" : "手动输入模式";
 
         public string Title
         {
@@ -93,13 +105,15 @@ namespace JYCalculator.ViewModels
 
         // 命令
         public RelayCommand OpenDebugWindowCmd { get; }
-        public RelayCommand ImportJBPanelCmd { get; }
+        public RelayCommand OpenImportJBBBDialogCmd { get; }
         public RelayCommand SaveAsCmd { get; }
         public RelayCommand SaveCurrentCmd { get; }
         public RelayCommand OpenFileCmd { get; }
 
         public RelayCommand NewCmd { get; }
         public RelayCommand CloseCmd { get; }
+
+        public RelayCommand OpenPZMWCmd { get; }
 
         // 帮助命令
         public RelayCommand<string> OpenHelpCmd { get; }
@@ -109,10 +123,10 @@ namespace JYCalculator.ViewModels
         public DPSTableItem[] DPSTable { get; set; }
         public CombatStatItem[] SimpleCombatStatTable { get; set; }
 
-        public double FinalDPS { get; set; }
-        public string FinalDPStxt { get; set; }
+        public double FinalDPS { get; private set; }
+        public string FinalDPStxt { get; private set; }
 
-        public string ProfitOrderDesc { get; set; }
+        public string ProfitOrderDesc { get; private set; }
 
         public MainWindowViewModels(MainWindow mw) : base(InputPropertyNameType.None)
         {
@@ -147,18 +161,21 @@ namespace JYCalculator.ViewModels
             InputChanged += InputChangedEventHandler;
 
             // 注册信息接收处理
-            WeakReferenceMessenger.Default.Register(this);
+            WeakReferenceMessenger.Default.Register<StringMessage>(this);
+            WeakReferenceMessenger.Default.Register<PzPlanMessage>(this);
 
             Model = new MainWindowModel(this);
 
             // 初始化命令
             OpenDebugWindowCmd = new RelayCommand(OpenDebugWindow);
-            ImportJBPanelCmd = new RelayCommand(ImportJBPanel);
+            OpenImportJBBBDialogCmd = new RelayCommand(OpenImportJBPanelDialog);
             NewCmd = new RelayCommand(New);
             SaveAsCmd = new RelayCommand(SaveAs);
             SaveCurrentCmd = new RelayCommand(SaveCurrent);
             OpenFileCmd = new RelayCommand(OpenFile);
             CloseCmd = new RelayCommand(Exit);
+
+            OpenPZMWCmd = new RelayCommand(OpenPZMW);
 
             OpenHelpCmd = new RelayCommand<string>(OpenHelp);
             ShowAboutCmd = new RelayCommand(ShowAbout);
@@ -171,10 +188,11 @@ namespace JYCalculator.ViewModels
             // Debug界面VM
             DebugVM = new DebugWindowViewModel(this);
 
+            GlobalContext.ViewModels.Main = this;
+
             Proceed();
+            _SendMessage = true;
         }
-
-
 
         #endregion
 
@@ -200,14 +218,14 @@ namespace JYCalculator.ViewModels
         public ImmutableDictionary<string, SkillMiJiViewModel> MakeSkillMiJiViewModels()
         {
             var res = SkillMiJiViewModel.MakeViewModels();
-            return (ImmutableDictionary<string, SkillMiJiViewModel>)res;
+            return (ImmutableDictionary<string, SkillMiJiViewModel>) res;
         }
 
         protected void _Load(CalcData data)
         {
             QiXueVM.Load(data.QiXueConfig);
             SkillMiJiVM.Load(data.SkillMiJiConfig);
-            InitInputVM.ImportJBPZPanel(data.JBPz);
+            InitInputVM.ImportJBBB(data.JBPz);
         }
 
         public void Load(CalcData data)
@@ -234,6 +252,12 @@ namespace JYCalculator.ViewModels
             var watch = System.Diagnostics.Stopwatch.StartNew();
             await Task.Run(Model.Calc);
             UpdateResults();
+
+            if (_SendMessage)
+            {
+                SendResultMessage();
+            }
+
             watch.Stop();
             var elapsedMs = watch.ElapsedMilliseconds;
 #if DEBUG
@@ -248,9 +272,29 @@ namespace JYCalculator.ViewModels
             {
                 UpdateResultTables();
                 UpdateOptimization();
-                DebugVM.Update(); // 同步到Debug界面
+            }
+
+            DebugVM.Update(); // 同步到Debug界面
+        }
+
+        protected void SendResultMessage()
+        {
+            if (GlobalContext.IsPZSyncWithCalc)
+            {
+                var msg = GetCalcResultMessage();
+                WeakReferenceMessenger.Default.Send(msg);
             }
         }
+
+        private CalcResultMessage GetCalcResultMessage()
+        {
+            var calcResult = Model.CalcShell.GetCalcResult();
+            var calcVM = new CalcInputViewModel(QiXueVM.SelectedQiXueSkills,
+                ItemDTVM.ValidItemDts.ToArray(), FightOptionVM.Summary, BuffVM.ValidBuffViewModels);
+            var res = new CalcResultMessage(calcResult, calcVM);
+            return res;
+        }
+
 
         protected void UpdateResultTables()
         {
@@ -291,10 +335,6 @@ namespace JYCalculator.ViewModels
         public override void EnableAutoUpdate()
         {
             _AutoUpdate = true;
-        }
-
-        protected override void _Load<TSave>(TSave sav)
-        {
         }
 
         protected void _Load(MainWindowSav sav)
@@ -358,23 +398,23 @@ namespace JYCalculator.ViewModels
             switch (message.Value)
             {
                 case StaticMessager.Senders.QiXue:
-                    {
-                        ConnectQiXueBuff();
-                        break;
-                    }
+                {
+                    ConnectQiXueBuff();
+                    break;
+                }
 
                 case StaticMessager.Senders.MiJi:
                 case StaticMessager.Senders.BaoYuMiJi:
-                    {
-                        ConnectSkillMiJiBuff();
-                        break;
-                    }
+                {
+                    ConnectSkillMiJiBuff();
+                    break;
+                }
 
                 case StaticMessager.Senders.FightTime:
-                    {
-                        ConnectFightTimeBuffCover();
-                        break;
-                    }
+                {
+                    ConnectFightTimeBuffCover();
+                    break;
+                }
             }
         }
 
@@ -435,9 +475,9 @@ namespace JYCalculator.ViewModels
         }
 
 
-        public void ImportJBPanel()
+        public void OpenImportJBPanelDialog()
         {
-            InitInputVM.ImportJBPanel();
+            InitInputVM.OpenImportJBBBDialog();
         }
 
         #endregion
@@ -501,9 +541,8 @@ namespace JYCalculator.ViewModels
         // 读取文件
         public void ReadFile(string filepath)
         {
-            var jsontxt = File.ReadAllText(filepath);
-            (bool success, MainWindowSav sav) = ImportTool.TryDeJSON<MainWindowSav>(jsontxt);
-            if (success)
+            var sav = ReadFileAsSav(filepath);
+            if (sav != null)
             {
                 CurrentFilePath = filepath;
                 CurrentFileName = Path.GetFileName(CurrentFilePath);
@@ -519,8 +558,24 @@ namespace JYCalculator.ViewModels
             }
         }
 
+        // 读取文件
+        public MainWindowSav ReadFileAsSav(string filepath)
+        {
+            var jsontxt = File.ReadAllText(filepath);
+            (bool success, MainWindowSav sav) = ImportTool.TryDeJSON<MainWindowSav>(jsontxt);
+            if (success)
+            {
+                return sav;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+
         // 打开文件（对话框）
-        public void OpenFile()
+        public MainWindowSav OpenFileAsSav(bool syncCurrentFilePath = false)
         {
             var openFileDialog = new OpenFileDialog
             {
@@ -530,7 +585,25 @@ namespace JYCalculator.ViewModels
             };
             if (openFileDialog.ShowDialog() == true)
             {
-                ReadFile(openFileDialog.FileName);
+                var res = ReadFileAsSav(openFileDialog.FileName);
+                if (syncCurrentFilePath) CurrentFilePath = openFileDialog.FileName;
+                return res;
+            }
+
+            return null;
+        }
+
+        // 打开文件（对话框）
+        public void OpenFile()
+        {
+            var sav = OpenFileAsSav(true);
+            if (sav != null)
+            {
+                Load(sav);
+                HadSaveAs = true;
+                IsDirty = false;
+                IsNew = false;
+                InitInputVM.ClearJBTitle();
             }
         }
 
@@ -573,21 +646,21 @@ namespace JYCalculator.ViewModels
             switch (msgResult)
             {
                 case MessageBoxResult.Yes:
-                    {
-                        SaveCurrent();
-                        canExit = true; // 完成保存，正常退出
-                        break;
-                    }
+                {
+                    SaveCurrent();
+                    canExit = true; // 完成保存，正常退出
+                    break;
+                }
                 case MessageBoxResult.No:
-                    {
-                        canExit = true; // 不保存直接退出
-                        break;
-                    }
+                {
+                    canExit = true; // 不保存直接退出
+                    break;
+                }
                 case MessageBoxResult.Cancel:
-                    {
-                        canExit = false; // 不再退出
-                        break;
-                    }
+                {
+                    canExit = false; // 不再退出
+                    break;
+                }
             }
 
             return canExit;
@@ -603,6 +676,30 @@ namespace JYCalculator.ViewModels
             }
 
             return res;
+        }
+
+
+        #region 配装器页面
+
+        public void OpenPZMW()
+        {
+            _MW.OpenPzMainWindow();
+        }
+
+        #endregion
+
+        public void Receive(PzPlanMessage message)
+        {
+            ImportPzPlan(message.Plan);
+            CurrentFileName = message.Title;
+        }
+
+        public void ImportPzPlan(PzPlanModel plan)
+        {
+            var adapter = new PzToXinFaInputAdapter(plan);
+            adapter.Calc();
+            InitInputVM.Load(adapter.InputSav);
+            GlobalContext.IsPZSyncWithCalc = true;
         }
     }
 }

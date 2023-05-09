@@ -1,4 +1,5 @@
-﻿using JX3CalculatorShared.Data;
+﻿using JX3CalculatorShared.Class;
+using JX3CalculatorShared.Data;
 using JYCalculator.Data;
 
 namespace JYCalculator.Class
@@ -10,7 +11,7 @@ namespace JYCalculator.Class
     {
         #region 成员
 
-        public JBPZPanel JBPz;
+        public JBBB JBPz;
 
         #endregion
 
@@ -23,7 +24,6 @@ namespace JYCalculator.Class
             SkillMiJiConfig = setting.SkillMiJiConfig;
             QiXueConfig = setting.QiXueLib[setting.DefaultQiXue];
             JBPz = setting.DefaultJB;
-            JBPz.Parse();
         }
 
         public static CalcData GetSample()

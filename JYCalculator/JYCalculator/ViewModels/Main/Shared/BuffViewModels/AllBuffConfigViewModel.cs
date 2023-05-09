@@ -5,6 +5,7 @@ using JYCalculator.Data;
 using JYCalculator.DB;
 using System.Collections.Generic;
 using System.Collections.Immutable;
+using System.Linq;
 
 
 namespace JYCalculator.ViewModels
@@ -52,10 +53,17 @@ namespace JYCalculator.ViewModels
             UpdateEmitedBuffGroups();
             UpdateNamedAttrs();
             UpdateSpecial();
+            GetValidBuffViewModels();
         }
 
         protected override void _DEBUG()
         {
+        }
+
+
+        public void GetValidBuffViewModels()
+        {
+            ValidBuffViewModels = Data.ToDictionary(_ => _.BuffType, _ => _.ValidBuffViewModels);
         }
 
         #endregion

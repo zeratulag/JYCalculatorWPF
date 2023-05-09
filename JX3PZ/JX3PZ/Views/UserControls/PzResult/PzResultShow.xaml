@@ -1,0 +1,45 @@
+﻿<UserControl x:Class="JX3PZ.Views.PzResultShow"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:JX3PZ.Views"
+             xmlns:hc="https://handyorg.github.io/handycontrol"
+             mc:Ignorable="d"
+             d:DesignHeight="500" d:DesignWidth="200">
+    <StackPanel Orientation="Vertical" HorizontalAlignment="Left">
+        <StackPanel.Resources>
+        </StackPanel.Resources>
+
+        <local:PanelScoreView DataContext="{Binding Score}"/>
+
+        <hc:Divider Content="基础" Margin="0 10 0 10" FontSize="14"/>
+
+        <local:PanelSlotView DataContext="{Binding Vitality}" />
+
+        <local:PanelSlotView DataContext="{Binding Primary}" />
+
+        <hc:Divider Content="伤害" Margin="0 10 0 10" FontSize="14"/>
+
+        <local:PanelSlotView DataContext="{Binding Attack}" />
+
+        <local:PanelSlotView DataContext="{Binding CriticalStrike}" />
+
+        <local:PanelSlotView DataContext="{Binding CriticalDamage}" />
+
+        <local:PanelSlotView DataContext="{Binding Overcome}" />
+
+        <local:PanelSlotView DataContext="{Binding Strain}" />
+        <local:PanelSlotView DataContext="{Binding Surplus}" />
+        <local:PanelSlotView DataContext="{Binding Haste}" />
+        <local:PanelSlotView DataContext="{Binding MeleeWeapon}" />
+
+        <hc:Divider Content="生存" Margin="0 10 0 10" FontSize="14"/>
+
+        <local:PanelSlotView DataContext="{Binding MaxLife}" />
+        <local:PanelSlotView DataContext="{Binding PhysicsShield}" />
+        <local:PanelSlotView DataContext="{Binding MagicShield}" />
+        <local:PanelSlotView DataContext="{Binding Toughness}" />
+        <local:PanelSlotView DataContext="{Binding DecriticalDamage}" />
+    </StackPanel>
+</UserControl>

@@ -6,6 +6,7 @@ using System;
 using System.Collections.Immutable;
 using System.Reflection;
 using System.Text;
+using System.Windows.Input;
 
 
 namespace JYCalculator.Globals
@@ -17,7 +18,8 @@ namespace JYCalculator.Globals
         public const string OUTPUT_PATH = DATA_FOLDER + "JY_Output.xlsx";
         public const string ZHENFA_PATH = DATA_FOLDER + "JY_Zhenfa.json";
         public const string SETTING_PATH = DATA_FOLDER + "JY_Setting.json";
-        public const string AT_PATH = DATA_FOLDER + "TM_Ats.xlsx";
+
+        public const string DB_PATH = DATA_FOLDER + "JY_Output.db";
 
         public const string XinFa = "惊羽诀";
         public const string XinFaTag = "JY";
@@ -27,11 +29,11 @@ namespace JYCalculator.Globals
         public const string FileExtension = "jyd"; // 扩展名
         public static readonly string FileFilter; // 打开方式的Filter;
 
-        public const string GameVersion = "横刀断浪";
+        public const string GameVersion = "群侠万变";
 
         public const string JX3BOXURL = @"https://www.jx3box.com/bps/49353"; // JX3BOX主页
         public const string GitHubURL = @"https://github.com/zeratulag/JYCalculatorWPF"; // GitHub主页
-        public const string XFTutorialURL = @"https://www.jx3box.com/bps/46381"; // 当前版本惊羽攻略
+        public const string XFTutorialURL = @"https://www.jx3box.com/bps/58609"; // 当前版本惊羽攻略
         public const string TMTutorialURL = @"https://www.jx3box.com/bps/21041"; // 个人作品合集
 
         public static readonly ImmutableDictionary<string, string> URLDict; // URL 字典，方便Cmd调用
@@ -41,12 +43,12 @@ namespace JYCalculator.Globals
         public static readonly string MainTitle;
         public static readonly DateTime BuildDateTime; // 构建时间
         public static readonly DateTime LastPatchTime; // 最新技改时间
-        public const string LastPatchURL = @"https://jx3.xoyo.com/show-2466-5610-1.html"; // 最新技改内容
+        public const string LastPatchURL = @"https://jx3.xoyo.com/show-2466-5706-1.html"; // 最新技改内容
 
 
         static XFAppStatic()
         {
-            LastPatchTime = new DateTime(2023, 02, 20); // 最新技改时间
+            LastPatchTime = new DateTime(2023, 04, 27); // 最新技改时间
 
             AppVersion = Assembly.GetExecutingAssembly().GetName().Version;
             var version = AppVersion.ToString();
@@ -56,7 +58,7 @@ namespace JYCalculator.Globals
             CurrentAppMeta =
                 new AppMetaInfo(AppVersion, XinFa, GameVersion, StaticConst.CurrentLevel, LastPatchTime);
 
-            MainTitle = $"惊羽诀计算器 Pro（v{version} 公测版）";
+            MainTitle = $"惊羽诀配装计算器 Pro（v{version} 公测版）";
             FileFilter = $"计算方案 (*.{FileExtension})|*.{FileExtension}"; // 打开方式的Filter
 
             var urlB = ImmutableDictionary.CreateBuilder<string, string>();
@@ -83,6 +85,24 @@ namespace JYCalculator.Globals
                     }
             }
         }
+
+        public static void SyncToAppStatic()
+        {
+            AppStatic.XinFaTag = XinFaTag;
+            AppStatic.XinFa = XinFa;
+        }
+
+        public static string GetXFSID(string key)
+        {
+            string key1 = key;
+            if (!key1.EndsWith("_DmgAdd"))
+            {
+                key1 = key.RemovePrefix(TypePrefix);
+            }
+
+            return key1;
+        }
+
     }
 
 
@@ -139,12 +159,20 @@ namespace JYCalculator.Globals
 
         public static readonly Haste CurrentHaste;
 
+        public static readonly string[] UsefulStoneAttrs =
+        {
+            "atStrengthBase", "atPhysicsAttackPowerBase",
+            "atPhysicsCriticalStrike", "atPhysicsOvercomeBase", "atPhysicsCriticalDamagePowerBase",
+        };
+
         public static class XW
         {
             public const double CT = 1500.0 / 10000.0;
             public const double CF = 300.0 / 1024.0;
             public const int ExtraSP = 204;
             public const double AP_Percent = 512.0 / 1024.0; // 天罗专用
+            public const double CD = 90.0; // CD时间
+            public const double Time = 15.0; // 持续时间
         }
 
         public static class Genre
@@ -152,6 +180,7 @@ namespace JYCalculator.Globals
             // 流派命名
             public const string 逐星百里_回肠 = "逐星百里_回肠";
             public const string 逐星百里_白雨 = "逐星百里_白雨";
+            public const string 逐一白雨 = "逐一白雨";
         }
 
         static XFStaticConst()

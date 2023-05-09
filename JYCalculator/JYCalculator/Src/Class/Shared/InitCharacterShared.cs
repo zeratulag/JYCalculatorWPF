@@ -53,16 +53,16 @@ namespace JYCalculator.Class
             return new InitCharacter(this);
         }
 
-        public InitCharacter(JBPZPanel panel) : base()
+        public InitCharacter(JBBBPZPanel panel) : base()
         {
-            _UpdateFromJBPanel(panel);
+            _UpdateFromJBPanel(panel.BaseJBBB);
         }
 
         #endregion
 
-        public void LoadFromJBPanel(JBPZPanel panel)
+        public void LoadFromJBPanel(JBBBPZPanel panel)
         {
-            ActionUpdateOnce(_UpdateFromJBPanel, panel);
+            ActionUpdateOnce(_UpdateFromJBPanel, panel.BaseJBBB);
         }
 
         public void LoadFromIChar(InitCharacter ichar)
@@ -140,9 +140,6 @@ namespace JYCalculator.Class
         {
         }
 
-        protected override void _Load<TSave>(TSave sav)
-        {
-        }
 
         protected override void _RefreshCommands()
         {

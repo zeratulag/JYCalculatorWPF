@@ -23,6 +23,7 @@ namespace JX3CalculatorShared.ViewModels
         public NamedAttrs DebuffAttrsDesc;
 
         public BuffSpecialArg Arg; // 特殊Buff参数传递
+        public Dictionary<BuffTypeEnum, BuffViewModel[]> ValidBuffViewModels = null;
 
 
         public AllBuffConfigViewModelBase() : base()
@@ -90,6 +91,8 @@ namespace JX3CalculatorShared.ViewModels
             var res = Buff_Extra.GetPiaoHuangCover();
             Arg.PiaoHuangCover = res;
         }
+
+
 
     }
 

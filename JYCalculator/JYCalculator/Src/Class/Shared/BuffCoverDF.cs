@@ -1,5 +1,5 @@
 ﻿using JX3CalculatorShared.Class;
-using JYCalculator.Globals;
+using JX3CalculatorShared.Globals;
 
 
 namespace JYCalculator.Class
@@ -11,7 +11,7 @@ namespace JYCalculator.Class
     {
         public BuffCoverDF() : base()
         {
-            if (XFAppStatic.XinFaTag == "TL")
+            if (AppStatic.XinFaTag == "TL")
             {
                 var NX = new CoverItem("NX", "弩心");
                 var CH = new CoverItem("CH", "催寒");

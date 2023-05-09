@@ -9,9 +9,9 @@ namespace JX3CalculatorShared.Class
         public string Name { get; }
         public double AP { get; set; }
         public double OC { get; set; } = 1;
-        public double CT { get; set; } = 1;
-        public double CF { get; set; } = 1;
-        public double WS { get; set; } = 1;
+        public double CT_Point { get; set; } = 1;
+        public double CF_Point { get; set; } = 1;
+        public double WS_Point { get; set; } = 1;
         public double PZ { get; set; } = 1;
         public double WP { get; set; } = 0;
         public double Final_AP { get; set; } = double.NaN;
@@ -26,11 +26,11 @@ namespace JX3CalculatorShared.Class
             Name = $"{item.Level}{DiamondSuffix}";
             AP = item.AP;
             OC = item.OC;
-            CF = item.CF;
-            CT = item.CT;
+            CF_Point = item.CF;
+            CT_Point = item.CT;
 
             PZ = item.PZ;
-            WS = item.WS;
+            WS_Point = item.WS;
             WP = Double.NaN;
 
             ToolTip = $"{item.Level}级五行石镶嵌孔增加的DPS";
@@ -56,9 +56,9 @@ namespace JX3CalculatorShared.Class
             {
                 {nameof(AP), AP},
                 {nameof(OC), OC},
-                {nameof(CT), CT},
-                {nameof(CF), CF},
-                {nameof(WS), WS},
+                {nameof(CT_Point), CT_Point},
+                {nameof(CF_Point), CF_Point},
+                {nameof(WS_Point), WS_Point},
                 {nameof(PZ), PZ},
                 {nameof(WP), WP},
                 {nameof(Final_AP), Final_AP},

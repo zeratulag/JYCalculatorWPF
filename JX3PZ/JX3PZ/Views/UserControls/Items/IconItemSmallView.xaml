@@ -1,0 +1,19 @@
+﻿<UserControl x:Class="JX3CalculatorShared.Views.UserControls.IconItemSmallView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+             mc:Ignorable="d"
+             d:DesignHeight="24" d:DesignWidth="24"
+             x:Name="iconItemSmallView"
+             Style="{StaticResource Style.ControlWithToolTip}" Background="Transparent">
+    <StackPanel>
+        <Image HorizontalAlignment="Center" VerticalAlignment="Center"
+            Width="{Binding Path=IconWidth, ElementName=iconItemSmallView}"
+            Height="{Binding Path=IconHeight, ElementName=iconItemSmallView}"
+            Source="{Binding Path=IconID, Converter={StaticResource IconIDToImgConverter}}" />
+    </StackPanel>
+
+
+</UserControl>

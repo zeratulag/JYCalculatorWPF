@@ -1,6 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using JX3PZ.Data;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using JX3CalculatorShared.Globals;
+using JYCalculator.Globals;
 
 namespace JX3CalculatorShared.Class
 {
@@ -28,6 +31,7 @@ namespace JX3CalculatorShared.Class
         public const double ThresHold3 = 0.01;
 
         public List<AttrProfitItem> Data;
+        public Dictionary<string, double> Dict;
         public string OrderDesc;
 
         public AttrProfitList(List<AttrProfitItem> data)
@@ -100,7 +104,29 @@ namespace JX3CalculatorShared.Class
             }
 
             Proceed();
-
         }
+
+        public Dictionary<string, double> ToDict()
+        {
+            Dict = Data.ToDictionary(_ => _.Name, _ => _.Value);
+            return Dict;
+        }
+
+        public double CalcProfit(SimpleAttributeEntry e)
+        {
+            double res = 0.0;
+            var xSID = XFAppStatic.GetXFSID(e.SID); // 去除心法的前缀
+            if (Dict.TryGetValue(xSID, out double v))
+            {
+                res = v * e.Value;
+            }
+            return res;
+        }
+
+        public double CalcProfit(Enhance e)
+        {
+            return CalcProfit(e.SEntry);
+        }
+
     }
 }

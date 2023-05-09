@@ -10,6 +10,7 @@ using JYCalculator.Models;
 using JYCalculator.ViewModels;
 using System.Collections.Generic;
 using System.Diagnostics;
+using JX3CalculatorShared.Globals;
 
 namespace JYCalculator.Src
 {
@@ -141,18 +142,12 @@ namespace JYCalculator.Src
 
         public CalculatorShell Calc() // 全流程计算
         {
-            if (!IsSupport)
-            {
-                SetUnSupport();
-                CalcStatus = 1;
-                return this;
-            }
 
             var watch = System.Diagnostics.Stopwatch.StartNew();
 
             GetAbilityGenre();
 
-            if (XFAppStatic.XinFaTag == "TL")
+            if (AppStatic.XinFaTag == "TL")
             {
                 CalcBoLiangFenXingArg();
             }
@@ -181,7 +176,17 @@ namespace JYCalculator.Src
 #if DEBUG
             Trace.WriteLine($"计算DPS耗时：{elapsedMs}ms");
 #endif
-            CalcStatus = 0;
+
+            if (!IsSupport)
+            {
+                SetUnSupport();
+                CalcStatus = 1;
+            }
+            else
+            {
+                CalcStatus = 0;
+            }
+            
             return this;
         }
 
@@ -196,7 +201,7 @@ namespace JYCalculator.Src
         {
             SkillDF.AddRecipesAndApply(Equip.OtherRecipes); // TODO: 天罗需要在这一步计算分星和杀机断魂的效果
             SkillDFs = new Period<SkillDataDF>(SkillDF, SkillDF.Copy());
-            if (XFAppStatic.XinFaTag == "TL")
+            if (AppStatic.XinFaTag == "TL")
             {
                 CalcTLSkillDataDFModel();
             }
@@ -277,7 +282,7 @@ namespace JYCalculator.Src
 
         public void CalcFightTime()
         {
-            if (XFAppStatic.XinFaTag == "JY")
+            if (AppStatic.XinFaTag == "JY")
             {
                 var ZXXWCD = QiXue.XWCD;
                 FightTime.UpdateXWCD(ZXXWCD);
@@ -291,6 +296,18 @@ namespace JYCalculator.Src
 
             MultiZhenDPSOp = new MultiZhenFaOptimizer(KernelShell, Zhen);
             MultiZhenDPSOp.Calc();
+        }
+
+        public CalcResult GetCalcResult()
+        {
+            var res = new CalcResult()
+            {
+                Success = (CalcStatus == 0),
+                FinalDPS = CDPSKernel.FinalDPS,
+                ProfitOrderDesc = CDPSKernel.FinalScoreProfit.OrderDesc,
+                DamageDeriv = CDPSKernel.FinalProfitDF.PointDeriv
+            };
+            return res;
         }
     }
 }

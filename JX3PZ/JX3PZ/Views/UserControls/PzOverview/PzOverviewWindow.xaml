@@ -1,0 +1,78 @@
+﻿<Window x:Class="J3PZ.Views.PzOverviewWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:J3PZ.Views"
+        xmlns:hc="https://handyorg.github.io/handycontrol"
+        xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
+        mc:Ignorable="d"
+        SizeToContent="WidthAndHeight"
+        ResizeMode="CanMinimize"
+        Title="配装总览" Icon="pack://application:,,,/Resource/Images/OverviewIcon.png">
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/HandyControl;component/Themes/SkinDefault.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/HandyControl;component/Themes/Theme.xaml" />
+                <ResourceDictionary Source="/Views/Resources/PzApp.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    <Grid DataContext="{Binding OverviewVM}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
+
+        </Grid.ColumnDefinitions>
+        <local:PzHorizontalOverview x:Name="HorizontalOverview" Height="720" Width="1280" Grid.Column="0"
+                                    ShowDPS="{Binding ShowDPS}" />
+        <GroupBox Grid.Column="1" Header="方案信息">
+            <hc:SimpleStackPanel>
+                <hc:SimpleStackPanel.Resources>
+                    <Style TargetType="TextBox" BasedOn="{StaticResource TextBoxExtend}">
+                        <Setter Property="hc:InfoElement.Necessary" Value="True" />
+                        <Setter Property="VerticalAlignment" Value="Center" />
+                        <Setter Property="Width" Value="170" />
+                        <Setter Property="Margin" Value="5"></Setter>
+                    </Style>
+                </hc:SimpleStackPanel.Resources>
+                <TextBox x:Name="Title_Txb"
+                         hc:InfoElement.Title="方案"
+                         hc:InfoElement.Placeholder="请输入方案名称"
+                         Text="{Binding Title, UpdateSourceTrigger=PropertyChanged}" />
+
+                <TextBox
+                    hc:InfoElement.Title="作者"
+                    hc:InfoElement.Placeholder="请输入作者名称"
+                    Text="{Binding Author, UpdateSourceTrigger=PropertyChanged}" />
+
+                <Button Command="{Binding ConfirmInfoCmd}" Margin="5" Style="{StaticResource ButtonInfo}">
+                    <hc:SimpleStackPanel Orientation="Horizontal" >
+                        <fa:IconImage Icon="Check" Height="18" Width="18" />
+                        <hc:SimpleText Margin="5 0 0 0" VerticalAlignment="Center" TextAlignment="Left" Text="确定" />
+                    </hc:SimpleStackPanel>
+                </Button>
+                <ToggleButton IsChecked="{Binding ShowDPS}" Style="{StaticResource ToggleButtonSwitch}" Content="显示DPS"
+                              Height="30" Width="100" Margin="5" />
+
+                <hc:UniformSpacingPanel HorizontalAlignment="Stretch" Margin="5">
+                    <Button x:Name="CaptureOverviewScreenShot_Btn" Style="{StaticResource ButtonSuccess}"
+                            Click="CaptureOverviewScreenShot_Btn_OnClick" Margin="5">
+                        <hc:SimpleStackPanel Orientation="Horizontal">
+                            <fa:IconImage Icon="Image" Height="18" Width="18" />
+                            <hc:SimpleText Margin="5 0 0 0" VerticalAlignment="Center" TextAlignment="Left" Text="保存图片" />
+                        </hc:SimpleStackPanel>
+                    </Button>
+
+                    <Button x:Name="CloseWindow_Btn" Content="关闭窗口" Margin="5" Style="{StaticResource ButtonDanger}"
+                            Click="CloseWindow_Btn_OnClick">
+                    </Button>
+
+                </hc:UniformSpacingPanel>
+
+            </hc:SimpleStackPanel>
+        </GroupBox>
+    </Grid>
+</Window>

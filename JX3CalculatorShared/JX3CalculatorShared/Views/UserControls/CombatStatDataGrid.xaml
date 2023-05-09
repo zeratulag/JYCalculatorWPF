@@ -1,0 +1,76 @@
+﻿<UserControl x:Class="JX3CalculatorShared.Views.UserControls.CombatStatDataGrid"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:Syncfusion="http://schemas.syncfusion.com/wpf"
+             mc:Ignorable="d"
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Syncfusion:SfDataGrid
+        x:Name="combatStatDataGrid"
+        Width="Auto"
+        Height="Auto"
+        Margin="5 5 5 0"
+        HorizontalAlignment="Stretch"
+        AllowResizingColumns="True"
+        AutoGenerateColumns="False"
+        ColumnSizer="AutoLastColumnFill"
+        ItemsSource="{Binding Path=SimpleCombatStatTable}"
+        RowHeight="20">
+        <Syncfusion:SfDataGrid.Columns>
+            <Syncfusion:GridTextColumn
+                Width="20"
+                HeaderText="#"
+                MappingName="Rank"
+                TextAlignment="Center" />
+
+            <Syncfusion:GridTextColumn
+                Width="100"
+                HeaderText="技能"
+                HorizontalHeaderContentAlignment="Center"
+                MappingName="Name" />
+
+            <Syncfusion:GridNumericColumn
+                Width="50"
+                HeaderText="次数"
+                MappingName="ShowNum"
+                NumberDecimalDigits="1" />
+            <Syncfusion:GridPercentColumn
+                Width="60"
+                HeaderText="会心"
+                MappingName="CTRatePct" />
+            <Syncfusion:GridNumericColumn
+                Width="70"
+                HeaderText="伤害"
+                MappingName="TotalDamage"
+                NumberDecimalDigits="0" />
+            <Syncfusion:GridNumericColumn
+                Width="90"
+                HeaderText="比重"
+                MappingName="ProportionPct"
+                SetCellBoundValue="True">
+                <Syncfusion:GridNumericColumn.CellTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <ProgressBar
+                                x:Name="progressBar"
+                                Height="15"
+                                Background="Transparent"
+                                BorderThickness="0"
+                                Foreground="Green"
+                                Maximum="100"
+                                Minimum="0"
+                                Visibility="Visible"
+                                Value="{Binding Path=Value}" />
+                            <TextBlock
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Center"
+                                Text="{Binding Path=Value, StringFormat='\{0\}%'}"
+                                TextAlignment="Center" />
+                        </Grid>
+                    </DataTemplate>
+                </Syncfusion:GridNumericColumn.CellTemplate>
+            </Syncfusion:GridNumericColumn>
+        </Syncfusion:SfDataGrid.Columns>
+    </Syncfusion:SfDataGrid>
+</UserControl>

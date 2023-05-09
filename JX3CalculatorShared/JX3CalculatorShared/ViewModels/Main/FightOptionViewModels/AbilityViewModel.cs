@@ -31,5 +31,10 @@ namespace JX3CalculatorShared.ViewModels
             SelectedIndex = Item2Index.GetValueOrDefault(name, 0);
         }
 
+        public void Load(string name)
+        {
+            SelectedIndex = Item2Index.GetValueOrDefault(name, 0);
+        }
+
     }
 }

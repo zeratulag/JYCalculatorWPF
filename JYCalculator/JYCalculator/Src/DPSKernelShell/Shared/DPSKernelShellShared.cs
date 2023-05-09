@@ -5,6 +5,7 @@ using JYCalculator.Class;
 using JYCalculator.Models;
 using JYCalculator.Utils;
 using System.Linq;
+using JX3CalculatorShared.Globals;
 
 namespace JYCalculator.Src
 {
@@ -226,7 +227,12 @@ namespace JYCalculator.Src
         {
             LongDPSKernel.CalcDerivs();
             ShortDPSKernel.CalcDerivs();
-            FixProfit();
+            if (AppStatic.XinFaTag == "TL")
+            {
+                FixProfit(); // 仅有天罗需要
+            }
+
+            GetFinal();
         }
 
         // 计算会心属性的收益
@@ -246,6 +252,12 @@ namespace JYCalculator.Src
 
             LongDPSKernel.FixCTProfit(LongCT);
             ShortDPSKernel.FixCTProfit(ShortCT);
+        }
+
+        public void GetFinal()
+        {
+            LongDPSKernel.GetFinal();
+            ShortDPSKernel.GetFinal();
         }
     }
 }

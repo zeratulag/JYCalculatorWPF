@@ -14,17 +14,23 @@
     <Compile Include="$(MSBuildThisFileDirectory)Common\CommonInterface.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Globals\GlobalEnums.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Globals\Globals.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Src\Class\CalcResult.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Messages\StaticMessager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\BigFMConfigModelBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\EquipOptionConfigModelBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\QiXueConfigModelBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\SkillNumModelArg.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Src\CalculatorShells\BuffShellInput.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Src\CalculatorShells\CalculatorShellArg.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Src\Class\AbsDataFrame.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Src\Class\AttributeID.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Src\Class\CharAttrCollection.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Src\Class\CoverDFBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Src\Class\CoverItem.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Src\Class\SimpleAttributeEntry.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Src\Class\SkillAttrCollection.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Src\Class\SkillCountItemBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Src\Data\AttributeIDLoader.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Src\Data\CalcDataBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Src\Data\CalcSettingBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Src\DPSKernelOptimizer\CharacterInfo.cs" />
@@ -36,7 +42,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Src\Class\AppMetaInfo.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Src\Class\AttrCollection.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Src\Class\AttrModifier.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Src\Class\AttrTemplate.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Src\Class\BaseBuff.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Src\Class\BaseBuffGroup.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Src\Class\Buff.cs" />
@@ -61,7 +66,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Src\Class\Target.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Src\Class\DamageDerivBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Src\Data\AtItemClass.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Src\Data\AtLoader.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Src\Data\CalculatorSettings.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Src\Data\DataLoader.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Src\Data\ItemClass.cs" />
@@ -77,8 +81,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)Src\DB\SetOptionDBBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Src\DB\SkillModifierDBBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Src\DB\ZhenFaDBBase.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Src\Class\JBPZPanelBase.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Src\Class\JBPZPlanBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Src\Class\JBBB.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Src\Class\JBPZEquipSnapshotCollection.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Src\Class\SkillFreqDict.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Src\Class\SkillNumDict.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Src\DPSKernelOptimizer\OptimizedICharResultBase.cs" />
@@ -87,18 +91,24 @@
     <Compile Include="$(MSBuildThisFileDirectory)Utils\CommandTool.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\DictTool.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\EnumTool.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utils\FuncTool.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\HashSetTool.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\IEnumerableTool.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\ImportTool.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utils\ArrayTool.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utils\ListTool.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\MiscTools.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\OptimizationTool.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\ReflectionTool.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\StringTool.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\ValueDictTool.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\AboutDialogViewModelBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\CalcViewModel\CalcResultViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\CalcViewModel\CalcInputViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Commands.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Common\AbsDependViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Common\AbsViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ImportJX3BOXViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Main\BuffViewModel\AllBuffConfigViewModelBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Main\BuffViewModel\BuffConfigViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Main\BuffViewModel\BuffViewModel.cs" />
@@ -106,26 +116,43 @@
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Common\CollectionViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Common\ComboBoxViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Main\FightOptionViewModels\AbilityViewModel.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Main\FightOptionViewModels\FightOptionConfigViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Main\FightOptionViewModels\FightOptionSav.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Main\FightOptionViewModels\FightOptionSummaryViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Main\FightOptionViewModels\ZhenFaViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Main\InitInputViewModels\BigFMConfigViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Main\InitInputViewModels\EquipOptionConfigSav.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Main\InitInputViewModels\EquipOptionSlotViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Main\ItemDTViewModels\ItemDTConfigViewModelBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Main\ItemDTViewModels\ItemDTSlotViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Main\MiJiViewModels\MiJiViewModelBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Main\OptimizationViewModelBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Main\QiXueViewModels\QiXueSlotViewModel.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Messages.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Messages\Messages.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\Converter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\Dialogs\AboutDialog.xaml.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\Dialogs\ImportJBDialog.xaml.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\InputDialog.xaml.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\UserControls\CalcView\FightOptionSummarySmallView.xaml.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\UserControls\CalcView\FightOptionSummaryView.xaml.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\UserControls\CalcView\CalcResultView.xaml.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\UserControls\CombatStatDataGrid.xaml.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\UserControls\Items\BigFMItemView.xaml.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\UserControls\Items\BuffItemView.xaml.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\UserControls\Items\EquipOptionItemView.xaml.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\UserControls\Items\TargetItemView.xaml.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\UserControls\Items\ItemDTItemView.xaml.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\UserControls\Items\MiJiItemView.xaml.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\UserControls\Items\QiXueSkillItemViewSmall.xaml.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\UserControls\Items\QiXueSkillItemView.xaml.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\UserControls\Items\ZhenFaItemView.xaml.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\UserControls\MultiZhenFaDataGrid.xaml.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\UserControls\OutlinedTextBlock.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\UserControls\ProfitChart.xaml.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\ViewGlobals.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\ViewTool.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)ViewModels\Common\" />
-    <Folder Include="$(MSBuildThisFileDirectory)Views\UserControls\" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="$(MSBuildThisFileDirectory)Views\Dialogs\AboutDialog.xaml">
@@ -137,6 +164,102 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="$(MSBuildThisFileDirectory)Views\InputDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\Resources\Converters.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\Resources\BigFM.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\Resources\DataTemplate.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\Resources\Buff.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\Resources\MiJi.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\Resources\ItemDT.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\Resources\QiXue.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\Resources\Resource.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\Resources\Styles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\UserControls\CalcView\FightOptionSummarySmallView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\UserControls\CalcView\FightOptionSummaryView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\UserControls\CalcView\CalcResultView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\UserControls\CombatStatDataGrid.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\UserControls\Items\BigFMItemView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\UserControls\Items\BuffItemView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\UserControls\Items\EquipOptionItemView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\UserControls\Items\TargetItemView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\UserControls\Items\ItemDTItemView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\UserControls\Items\MiJiItemView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\UserControls\Items\QiXueSkillItemViewSmall.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\UserControls\Items\QiXueSkillItemView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\UserControls\Items\ZhenFaItemView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\UserControls\MultiZhenFaDataGrid.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\UserControls\ProfitChart.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

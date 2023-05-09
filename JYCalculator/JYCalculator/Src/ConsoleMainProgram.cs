@@ -1,8 +1,15 @@
-﻿using JX3CalculatorShared.Globals;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
+using System.Windows;
+using System.Windows.Media;
+using HandyControl.Tools;
+using JX3CalculatorShared.Globals;
+using JX3PZ.Class;
+using JX3PZ.Data;
+using JX3PZ.Src;
 using JYCalculator.Data;
 using JYCalculator.Globals;
-using System;
-using System.Linq;
 
 namespace JYCalculator.Src
 {
@@ -10,7 +17,7 @@ namespace JYCalculator.Src
     {
         public static void ConsoleMain()
         {
-            var args = new string[] { "0" };
+            var args = new string[] {"0"};
             ConsoleMain(args);
 
         }
@@ -28,9 +35,18 @@ namespace JYCalculator.Src
             var xGp = XFStaticConst.fGP;
 
 
-            var guard = 0;
+            //var d2 = new SqliteConnectionStringBuilder(dbpath);
+            //var ds2 = d2.ToString();
 
+            //var db = new SQLiteConnection(dburi);
+            //var res = db.Query<AbilityItem>("select * from Ability");
+            var tmp = StaticPzData.Enhance;
+            var d1 = DiamondTabLib.Data;
+
+            var xf = new JYXinFa();
+            var guard = 0;
 #endif
         }
     }
+
 }

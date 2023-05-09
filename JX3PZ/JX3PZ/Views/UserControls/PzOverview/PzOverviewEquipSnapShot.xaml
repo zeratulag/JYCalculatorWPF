@@ -1,0 +1,140 @@
+﻿<UserControl x:Class="J3PZ.Views.UserControls.PzOverviewEquipSnapShot"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:J3PZ.Views.UserControls"
+             xmlns:hc="https://handyorg.github.io/handycontrol"
+             xmlns:views="clr-namespace:JX3PZ.Views"
+             mc:Ignorable="d"
+             d:DesignHeight="100" d:DesignWidth="180"
+             Background="Transparent"
+             x:Name="pzOverviewEquipSnapShot"
+             Style="{StaticResource Style.ToolTipEquipShowControl}">
+
+    <Grid Background="Transparent"
+          Visibility="{Binding Path=HasEquip, Converter={StaticResource BooleanToVisibilityHiddenConverter}}">
+        <Grid.Resources>
+            <ResourceDictionary>
+                <ResourceDictionary.MergedDictionaries>
+                    <ResourceDictionary Source="../../Resources/DiamondItem.xaml" />
+                </ResourceDictionary.MergedDictionaries>
+                <Style TargetType="TextBox" BasedOn="{StaticResource Style.TextBlockBox}" />
+                <Style TargetType="hc:SimpleText">
+                    <Setter Property="Foreground" Value="White" />
+                    <Setter Property="VerticalAlignment" Value="Center" />
+                </Style>
+                <Style TargetType="Image">
+                    <Setter Property="ToolTip">
+                        <Setter.Value>
+                            <TextBlock TextWrapping="Wrap" MaxWidth="400" />
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+                <Style TargetType="ToolTip">
+                    <Setter Property="Background" Value="White"/>
+                    <Setter Property="Foreground" Value="Black"/>
+                </Style>
+            </ResourceDictionary>
+        </Grid.Resources>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="4" />
+            <ColumnDefinition Width="230" />
+            <ColumnDefinition Width="110" />
+            <ColumnDefinition Width="150" />
+        </Grid.ColumnDefinitions>
+
+        <Image Grid.Row="0" Grid.RowSpan="2" Grid.Column="0"
+               Width="42"
+               Height="42"
+               Source="{Binding Path=IconID, Converter={StaticResource IconIDToImgConverter}}" />
+
+        <Image Grid.Row="0" Grid.RowSpan="2" Grid.Column="0"
+               Width="42"
+               Height="42"
+               Source="{Binding Path=BorderImage, Converter={StaticResource FileNameToImgConverter}}">
+        </Image>
+
+        <StackPanel Grid.Row="0" Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center">
+            <hc:SimpleText Text="{Binding Path=EquipName, Mode=OneWay}" FontSize="16" FontWeight="Bold"
+                           VerticalAlignment="Center" />
+            <hc:SimpleText Text="{Binding Path=StrengthStr, Mode=OneWay, StringFormat={}({0})}" FontSize="14"
+                           VerticalAlignment="Center" Margin="5 0 0 0" />
+            <hc:SimpleText Text="{Binding Path=SlotName, Mode=OneWay}" Margin="5 0 0 0" FontSize="14" VerticalAlignment="Center"/>
+        </StackPanel>
+
+        <StackPanel Grid.Row="1" Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center">
+            <hc:SimpleText Text="{Binding Level, StringFormat={}{0}品}" Width="50" VerticalAlignment="Center"/>
+            <hc:SimpleText Text="{Binding CEquip.BasicTag_Str}" Margin="5 0 0 0" Foreground="GhostWhite" VerticalAlignment="Center"/>
+            <hc:SimpleText Text="{Binding CEquip.ExtraTag_Str}" Margin="5 0 0 0" Foreground="#00c848" VerticalAlignment="Center"/>
+        </StackPanel>
+
+        <ItemsControl Grid.Row="0" Grid.Column="3" Grid.ColumnSpan="2" Grid.RowSpan="2" HorizontalAlignment="Left"
+                      ItemsSource="{Binding Diamonds}"
+                      Margin="0 5 0 0">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <local:OverviewDiamondLevelSummaryItemView/>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Horizontal" />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+        </ItemsControl>
+
+        <StackPanel Grid.Row="1" Grid.Column="4" Orientation="Horizontal" HorizontalAlignment="Right">
+
+            <StackPanel.Resources>
+                <Style TargetType="hc:SimpleText">
+                    <Style.Setters>
+                        <Setter Property="TextWrapping" Value="Wrap" />
+                        <Setter Property="MaxHeight" Value="250" />
+                    </Style.Setters>
+                </Style>
+            </StackPanel.Resources>
+
+        </StackPanel>
+
+        <StackPanel Grid.Column="4" Grid.Row="0" Orientation="Horizontal" Visibility="{Binding Path=HasEnhance, Converter={StaticResource BooleanToVisibility}}">
+            <Image Source="{Binding Path=EnhanceIcon, Converter={StaticResource FileNameToImgConverter}}"
+                   Width="18" Height="18"
+                   Visibility="{Binding Path=HasEnhance, Converter={StaticResource BooleanToVisibility}}"
+                   >
+                <Image.ToolTip>
+                    <hc:SimpleText Text="{Binding CEnhance.ToolTip}" TextWrapping="Wrap" MaxWidth="300" Foreground="Black"/>
+                </Image.ToolTip>
+            </Image>
+            <hc:SimpleText Text="{Binding CEnhance.Name}" Margin="3 0 0 0"/>
+        </StackPanel>
+
+        <StackPanel Grid.Column="4" Grid.Row="1" Orientation="Horizontal">
+            <StackPanel  Orientation="Horizontal" Visibility="{Binding Path=HasBigFM, Converter={StaticResource BooleanToVisibility}}">
+                <Image Source="{Binding Path=BigFMIcon, Converter={StaticResource FileNameToImgConverter}}"
+                       Width="18" Height="18">
+                    <Image.ToolTip>
+                        <hc:SimpleText Text="{Binding CBigFM.ToolTip}" TextWrapping="Wrap" MaxWidth="300" Foreground="Black"/>
+                    </Image.ToolTip>
+                </Image>
+                <hc:SimpleText Text="{Binding CBigFM.ItemName}" Margin="3 0 0 0"/>
+            </StackPanel>
+            <StackPanel  Orientation="Horizontal" Visibility="{Binding Path=HasStone, Converter={StaticResource BooleanToVisibility}}">
+                <Image Source="{Binding Path=CStone.IconID, Converter={StaticResource IconIDToImgConverter}}"
+                       Width="18" Height="18"
+                       Visibility="{Binding Path=HasStone, Converter={StaticResource BooleanToVisibility}}">
+                    <Image.ToolTip>
+                        <hc:SimpleText Text="{Binding CStone.ToolTip}" TextWrapping="Wrap" MaxWidth="400" Foreground="Black"/>
+                    </Image.ToolTip>
+                </Image>
+                <hc:SimpleText Text="{Binding CStone.Name}" Margin="3 0 0 0"/>
+            </StackPanel>
+        </StackPanel>
+
+    </Grid>
+</UserControl>

@@ -64,5 +64,35 @@ namespace JX3CalculatorShared.Utils
             return SkillAttrCollection.Sum(group);
         }
 
+
+        // a 是否为 b 的子集
+        public static bool IsSubsetOf<T>(this IEnumerable<T> a, IEnumerable<T> b)
+        {
+            return !a.Except(b).Any();
+        }
+
+        /// <summary>
+        /// 寻找一个序列中最大值出现的位置
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="l"></param>
+        /// <returns>位置</returns>
+        public static int WhichMax<T>(this IEnumerable<T> l) where T : IComparable
+        {
+            int i = 0;
+            int res = 0;
+            T m = l.First();
+            foreach (var e in l)
+            {
+                if (e.CompareTo(m) > 0)
+                {
+                    m = e;
+                    res = i;
+                }
+                i++;
+            }
+            return res;
+        }
+
     }
 }

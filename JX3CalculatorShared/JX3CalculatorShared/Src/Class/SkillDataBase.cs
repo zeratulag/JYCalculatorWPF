@@ -24,6 +24,7 @@ namespace JX3CalculatorShared.Class
         public double nChannelInterval => Info.nChannelInterval * ChannelIntervalCoef;
         public double WPCoef => Info.WP_Coef; // 武伤系数
 
+
         public SkillInfoItemBase Info;
         public HashSet<string> RecipeNames; // 已应用的秘籍名称
         public HashSet<string> SkillModifierNames; // 已应用的SkillModifier名称
@@ -85,31 +86,33 @@ namespace JX3CalculatorShared.Class
             switch (Info.Type)
             {
                 case SkillDataTypeEnum.Channel:
-                    {
-                        finalG += Frame;
-                        ap_Coef = CalcAPCoef(finalG);
-                        break;
-                    }
+                {
+                    finalG += Frame;
+                    ap_Coef = CalcAPCoef(finalG);
+                    break;
+                }
 
                 case SkillDataTypeEnum.Normal:
                 case SkillDataTypeEnum.Exclude:
-                    {
-                        ap_Coef = CalcAPCoef(finalG);
-                        break;
-                    }
+                {
+                    ap_Coef = CalcAPCoef(finalG);
+                    break;
+                }
 
                 case SkillDataTypeEnum.DOT:
-                    {
-                        ap_Coef = CalcDOTAPCoef(finalG, nCount, Frame);
-                        break;
-                    }
+                {
+                    ap_Coef = CalcDOTAPCoef(finalG, nCount, Frame);
+                    break;
+                }
 
                 case SkillDataTypeEnum.Physics:
                 case SkillDataTypeEnum.NoneAP:
                 case SkillDataTypeEnum.PZ:
-                    {
-                        break;
-                    }
+                case SkillDataTypeEnum.NormalDOT:
+                {
+                    ap_Coef = 0;
+                    break;
+                }
             }
 
             return ap_Coef;
@@ -128,7 +131,7 @@ namespace JX3CalculatorShared.Class
         public double CalcDOTAPCoef(double finalG, int count, double intervalframe)
         {
             var coef1 = CalcAPCoef(finalG);
-            var coef2 = Math.Max(16, (int)(intervalframe * count / 12.0)) / StaticConst.FPS_PER_SECOND / count;
+            var coef2 = Math.Max(16, (int) (intervalframe * count / 12.0)) / StaticConst.FPS_PER_SECOND / count;
             return coef1 * coef2;
         }
 
@@ -143,58 +146,58 @@ namespace JX3CalculatorShared.Class
             switch (key)
             {
                 case "Add_CT":
-                    {
-                        AddCT += value;
-                        break;
-                    }
+                {
+                    AddCT += value;
+                    break;
+                }
 
                 case "Add_Dmg":
-                    {
-                        AddDmg += value;
-                        break;
-                    }
+                {
+                    AddDmg += value;
+                    break;
+                }
 
                 case "Add_CF":
-                    {
-                        AddCF += value;
-                        break;
-                    }
+                {
+                    AddCF += value;
+                    break;
+                }
 
                 case "Frame":
-                    {
-                        Frame += (int)value;
-                        break;
-                    }
+                {
+                    Frame += (int) value;
+                    break;
+                }
 
                 case "CD":
-                    {
-                        CD += value;
-                        break;
-                    }
+                {
+                    CD += value;
+                    break;
+                }
 
                 case "Add_nCount":
-                    {
-                        nCount += (int)value;
-                        break;
-                    }
+                {
+                    nCount += (int) value;
+                    break;
+                }
 
                 case "Add_CostEnergy":
-                    {
-                        CostEnergy += value;
-                        break;
-                    }
+                {
+                    CostEnergy += value;
+                    break;
+                }
 
                 case "Range":
                 case "Target":
                 case "Add_Energy":
-                    {
-                        break;
-                    }
+                {
+                    break;
+                }
                 default:
-                    {
-                        handled = false;
-                        break;
-                    }
+                {
+                    handled = false;
+                    break;
+                }
             }
 
             return handled;
@@ -207,27 +210,28 @@ namespace JX3CalculatorShared.Class
             switch (key)
             {
                 case "Coef":
+                {
+                    foreach (var v in value)
                     {
-                        foreach (var v in value)
-                        {
-                            var realv = (double)v;
-                            ChannelIntervalCoef *= realv;
-                        }
-
-                        break;
+                        var realv = (double) v;
+                        ChannelIntervalCoef *= realv;
                     }
+
+                    break;
+                }
 
                 case "QiPo":
-                    {
-                        break;
-                    }
+                {
+                    break;
+                }
 
                 default:
-                    {
-                        handled = false;
-                        break;
-                    }
+                {
+                    handled = false;
+                    break;
+                }
             }
+
             return handled;
         }
 

@@ -1,4 +1,5 @@
-﻿using JYCalculator.ViewModels;
+﻿using JYCalculator.Globals;
+using JYCalculator.ViewModels;
 using System.ComponentModel;
 using System.Windows;
 
@@ -16,6 +17,8 @@ namespace JYCalculator.Views
             _VM = vm;
             InitializeComponent();
             BindViewModels();
+
+            GlobalContext.Views.Debug = this;
         }
 
         public void BindViewModels()

@@ -3,6 +3,7 @@ using JX3CalculatorShared.Common;
 using JX3CalculatorShared.Data;
 using JX3CalculatorShared.Globals;
 using JX3CalculatorShared.Utils;
+using JX3CalculatorShared.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
@@ -25,9 +26,9 @@ namespace JX3CalculatorShared.DB
             //EquipSubTypeEnum.BOTTOMS
         }.ToImmutableArray();
 
-        public ImmutableDictionary<int, int> EnchantID2ItemID; // 大附魔ID到物品ID的映射关系
+        public ImmutableDictionary<int, int> ID2UIID; // 大附魔ID到物品ID的映射关系
 
-        public BigFMDBBase(IEnumerable<BigFMItem> itemdata, IEnumerable<BottomsFMItem> bottomsdata)
+        public BigFMDBBase(IEnumerable<Enchant> itemdata, IEnumerable<BottomsFMItem> bottomsdata)
         {
             var data1 = itemdata.ToDictionary(_ => _.Name,
                 _ => new BigFM(_));
@@ -46,11 +47,11 @@ namespace JX3CalculatorShared.DB
             var e2i = new Dictionary<int, int>(Data.Count);
             foreach (var _ in Data.Values)
             {
-                if (e2i.ContainsKey(_.EnchantID)) continue;
-                e2i.Add(_.EnchantID, _.ItemID);
+                if (e2i.ContainsKey(_.ID)) continue;
+                e2i.Add(_.ID, _.UIID);
             }
 
-            EnchantID2ItemID = e2i.ToImmutableDictionary();
+            ID2UIID = e2i.ToImmutableDictionary();
 
         }
 
@@ -61,7 +62,6 @@ namespace JX3CalculatorShared.DB
         public ImmutableArray<BigFM> Wrist { get; private set; }
         public ImmutableArray<BigFM> Bottoms { get; private set; }
         public ImmutableDictionary<EquipSubTypeEnum, ImmutableArray<BigFM>> TypeData { get; private set; } // 按照不同类型分别构建大附魔列表的字典
-
         public static IDictionary<EquipSubTypeEnum, BigFM[]> GroupBigFM(IEnumerable<BigFM> BigFMs)
         {
             var res = BigFMs.GroupBy(_ => _.SubType).
@@ -71,7 +71,7 @@ namespace JX3CalculatorShared.DB
                         OrderBy(_ => _.DLCLevel).
                         ThenBy(_ => _.Rank).
                         ThenBy(_ => _.LevelMax).
-                        ThenBy(_ => _.EnchantID).
+                        ThenBy(_ => _.ID).
                         ToArray());
             return res;
         }
@@ -109,14 +109,11 @@ namespace JX3CalculatorShared.DB
 
                     case EquipSubTypeEnum.WRIST:
                         { Wrist = valueArray; break; }
-
-                    case EquipSubTypeEnum.BOTTOMS:
-                        { Bottoms = valueArray; break; }
                 }
-                bigFMDict.Add(KVP.Key, valueArray);
-            }
-            TypeData = Dict.ToImmutableDictionary(data => data.Key, data => data.Value.ToImmutableArray());
 
+                if (KVP.Key != EquipSubTypeEnum.BOTTOMS) bigFMDict.Add(KVP.Key, valueArray);
+            }
+            TypeData = bigFMDict.ToImmutableDictionary(data => data.Key, data => data.Value.ToImmutableArray());
         }
 
         public BigFM Get(string name)
@@ -134,7 +131,7 @@ namespace JX3CalculatorShared.DB
         /// <returns></returns>
         public int GetItemID(int enchantId)
         {
-            var res = EnchantID2ItemID.GetValueOrUseDefault(enchantId, -1);
+            var res = ID2UIID.GetValueOrUseDefault(enchantId, -1);
             return res;
         }
     }

@@ -4,6 +4,9 @@ using JX3CalculatorShared.Globals;
 using JX3CalculatorShared.Utils;
 using System.Collections.Generic;
 using System.Linq;
+using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
+using JX3CalculatorShared.Messages;
 
 namespace JX3CalculatorShared.Class
 {
@@ -14,8 +17,8 @@ namespace JX3CalculatorShared.Class
 
         public readonly string Name;
         public readonly string DescName;
-        public readonly int IconID = -1;
-        public readonly int ItemID = -1;
+        public int IconID { get; } = -1;
+        public readonly int UIID = -1;
         public readonly ItemDTTypeEnum Type;
         public readonly string ItemName;
         public readonly Dictionary<string, double> Data;
@@ -29,13 +32,12 @@ namespace JX3CalculatorShared.Class
         public readonly string RawID; // 用于存储的编码
 
         public int Quality { get; } = -1;
-        public string IconPath { get; }
         public string ItemNamePart1 { get; }
         public string ItemNamePart2 { get; }
         public string ToolTip { get; }
         public string ItemDTType { get; } // 中文类型（食品增强，食品辅助……）
 
-
+        public RelayCommand CancelThisCmd { get; }
         #endregion
 
         #region 构造
@@ -68,11 +70,11 @@ namespace JX3CalculatorShared.Class
         public string GetToolTipTail()
         {
             string res = "";
-            if (ItemID > 0)
+            if (UIID > 0)
             {
 
             }
-            res = $"\n\nID: {ItemID}";
+            res = $"\n\nUIID: {UIID}";
             return res;
         }
 
@@ -83,7 +85,7 @@ namespace JX3CalculatorShared.Class
             Name = item.Name;
             DescName = item.DescName;
             IconID = item.IconID;
-            ItemID = item.ItemID;
+            UIID = item.UIID;
             Quality = item.Quality;
             Type = item.Type;
             ItemName = item.ItemName;
@@ -91,7 +93,7 @@ namespace JX3CalculatorShared.Class
             BuffEnchantID = item.BuffEnchantID;
             Level = item.Level;
 
-            RawID = $"{ItemID}#{Level}";
+            RawID = $"{UIID}#{Level}";
 
             ItemDTType = item.类型;
 
@@ -102,10 +104,16 @@ namespace JX3CalculatorShared.Class
 
             (ItemNamePart1, ItemNamePart2) = GetItemNames(item.ItemNameM);
 
-            IconPath = BindingTool.IconID2Path(IconID);
             IsValid = (Quality > 0);
+
+
+            CancelThisCmd = new RelayCommand(CancelThis);
         }
 
+        private void CancelThis()
+        {
+            WeakReferenceMessenger.Default.Send(new CancelItemDTMessage(Type, UIID));
+        }
 
         #endregion
 

@@ -3,6 +3,8 @@ using JX3CalculatorShared.Utils;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
+using JX3PZ.Src;
+using static JX3CalculatorShared.Utils.ImportTool;
 
 namespace JX3CalculatorShared.Data
 {
@@ -21,7 +23,7 @@ namespace JX3CalculatorShared.Data
         public ImmutableArray<ItemDTItem> ItemDT;
         public ImmutableArray<Buff_dfItem> Buff_df;
         public ImmutableDictionary<string, QiXueItem> QiXue;
-        public ImmutableArray<BigFMItem> BigFM;
+        public ImmutableArray<Enchant> BigFM;
         public ImmutableArray<BottomsFMItem> BottomsFM;
         public ImmutableArray<EquipOptionItem> EquipOptionWP;
         public ImmutableArray<EquipOptionItem> EquipOptionYZ;
@@ -32,55 +34,64 @@ namespace JX3CalculatorShared.Data
         public ImmutableArray<AbilityItem> Ability;
         public ImmutableDictionary<string, SkillEventItem> SkillEvent;
 
+        public static string GetName(AbsGeneralItem item) => item.Name;
 
         protected void LoadTarget()
         {
-            Target = ImportTool.ReadSheetAsArray<TargetItem>(OutFile, "Target");
+            Target = ReadSheetAsArray<TargetItem>(OutFile, "Target");
         }
 
         protected void LoadRecipe()
         {
-            RecipeMJ = ImportTool.ReadSheetAsArray<RecipeItem>(OutFile, "Recipe_MJ");
+            RecipeMJ = ReadSheetAsArray<RecipeItem>(OutFile, "Recipe_MJ");
 
             foreach (var recipe in RecipeMJ)
             {
                 recipe.Type = RecipeTypeEnum.秘籍;
             }
 
-            RecipeOther = ImportTool.ReadSheetAsArray<RecipeItem>(OutFile, "Recipe_Other");
+            RecipeOther = ReadSheetAsArray<RecipeItem>(OutFile, "Recipe_Other");
         }
 
         protected void LoadZhenFa()
         {
-            ZhenFa_df = ImportTool.ReadSheetAsArray<ZhenFa_dfItem>(OutFile, "ZhenFa_df");
-            var res = ImportTool.ReadJSON<Dictionary<string, ZhenFa>>(ZhenFaFile);
+            ZhenFa_df = ReadSheetAsArray<ZhenFa_dfItem>(OutFile, "ZhenFa_df");
+            var res = ReadJSON<Dictionary<string, ZhenFa>>(ZhenFaFile);
             ZhenFa_dict = res.ToImmutableDictionary();
         }
 
         protected void LoadItemDT()
         {
-            ItemDT = ImportTool.ReadSheetAsArray<ItemDTItem>(OutFile, "Item_DT_df");
+            ItemDT = ReadSheetAsArray<ItemDTItem>(OutFile, "Item_DT_df");
         }
 
         protected void LoadBuff_df()
         {
-            Buff_df = ImportTool.ReadSheetAsArray<Buff_dfItem>(OutFile, "Buff_df");
+            Buff_df = ReadSheetAsArray<Buff_dfItem>(OutFile, "Buff_df");
         }
 
         protected void LoadQiXue()
         {
-            QiXue = ImportTool.ReadSheetAsDict<string, QiXueItem>(OutFile, "QiXue", "key");
+            QiXue = ReadSheetAsDict<string, QiXueItem>(OutFile, "QiXue", _ => _.key);
         }
 
         protected void LoadBigFM()
         {
-            BigFM = ImportTool.ReadSheetAsArray<BigFMItem>(OutFile, "Big_FM");
-            BottomsFM = ImportTool.ReadSheetAsArray<BottomsFMItem>(OutFile, "Bottoms_FM");
+            if (StaticPzData.Data.Enchant != null)
+            {
+                BigFM = StaticPzData.Data.Enchant.Values.ToImmutableArray();
+            }
+            else
+            {
+                BigFM = ReadSheetAsArray<Enchant>(OutFile, "Big_FM");
+            }
+            
+            BottomsFM = ReadSheetAsArray<BottomsFMItem>(OutFile, "Bottoms_FM");
         }
 
         protected void LoadEquipOption()
         {
-            var equipOptions = ImportTool.ReadSheetAsArray<EquipOptionItem>(OutFile, "Equip_Option");
+            var equipOptions = ReadSheetAsArray<EquipOptionItem>(OutFile, "Equip_Option");
             List<EquipOptionItem> WP = new List<EquipOptionItem>();
             List<EquipOptionItem> YZ = new List<EquipOptionItem>();
             foreach (var equip_option in equipOptions)
@@ -102,14 +113,14 @@ namespace JX3CalculatorShared.Data
 
         protected void LoadUselessAttrs()
         {
-            UselessAttrItems = ImportTool.ReadSheetAsArray<UselessAttr>(DataFile, "UselessAttrs");
+            UselessAttrItems = ReadSheetAsArray<UselessAttr>(DataFile, "UselessAttrs");
             var res = from _ in UselessAttrItems select _.ID;
             UselessAttrs = res.ToImmutableHashSet();
         }
 
         protected void LoadSkillModifier()
         {
-            SkillModifier = ImportTool.ReadSheetAsDict<string, SkillModifier>(DataFile, "Skill_Modifier");
+            SkillModifier = ReadSheetAsDict<string, SkillModifier>(DataFile, "Skill_Modifier", GetName);
             foreach (var _ in SkillModifier.Values)
             {
                 _.Parse();
@@ -118,17 +129,17 @@ namespace JX3CalculatorShared.Data
 
         protected void LoadSetOption()
         {
-            SetOption = ImportTool.ReadSheetAsDict<int, SetOptionItem>(OutFile, "Set_Option", keyName: "SetID");
+            SetOption = ReadSheetAsDict<int, SetOptionItem>(OutFile, "Set_Option", _ => _.SetID);
         }
 
         protected void LoadAbility()
         {
-            Ability = ImportTool.ReadSheetAsArray<AbilityItem>(OutFile, "Ability");
+            Ability = ReadSheetAsArray<AbilityItem>(OutFile, "Ability");
         }
 
         protected void LoadSkillEvent()
         {
-            SkillEvent = ImportTool.ReadSheetAsDict<string, SkillEventItem>(OutFile, "Skill_Event", "Name");
+            SkillEvent = ReadSheetAsDict<string, SkillEventItem>(OutFile, "Skill_Event", GetName);
             foreach (var _ in SkillEvent.Values)
             {
                 _.Parse();

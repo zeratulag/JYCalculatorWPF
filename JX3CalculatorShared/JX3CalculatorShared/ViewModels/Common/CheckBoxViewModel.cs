@@ -19,10 +19,6 @@ namespace JX3CalculatorShared.ViewModels
         {
         }
 
-        protected override void _Load<TSave>(TSave sav)
-        {
-        }
-
         protected override void _RefreshCommands()
         {
         }
@@ -42,6 +38,5 @@ namespace JX3CalculatorShared.ViewModels
 
         [DoNotNotify] public int IconID { get; protected set; }
 
-        [DoNotNotify] public string IconPath => BindingTool.IconID2Path(IconID);
     }
 }

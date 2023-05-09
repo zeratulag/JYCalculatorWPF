@@ -1,11 +1,16 @@
 ﻿using PropertyChanged;
 using System.Collections.Generic;
 using System.Collections.Immutable;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Linq;
+using Syncfusion.Data.Extensions;
 
 namespace JX3CalculatorShared.ViewModels
 {
     public abstract class CollectionViewModel<TViewModel> : AbsViewModel where TViewModel : AbsViewModel
     {
+        // 用于描述成员不变的集合VM
         #region 成语
 
         [DoNotNotify]
@@ -51,10 +56,6 @@ namespace JX3CalculatorShared.ViewModels
         #region 方法
 
         protected override void _Update()
-        {
-        }
-
-        protected override void _Load<TSave>(TSave sav)
         {
         }
 

@@ -11,7 +11,6 @@
         ResizeMode ="NoResize"
         Title="关于计算器" Height="360" Width="600">
 
-
     <Grid>
 		<Grid.RowDefinitions>
 			<RowDefinition Height="Auto"/>

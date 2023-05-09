@@ -1,4 +1,5 @@
-﻿using JYCalculator.Class;
+﻿using JX3CalculatorShared.Globals;
+using JYCalculator.Class;
 using JYCalculator.Globals;
 
 namespace JYCalculator.Src
@@ -10,12 +11,16 @@ namespace JYCalculator.Src
         public void FixCTProfit(double ct)
         {
             // 修复会心收益
-            FinalProfit = RawDeriv.Copy();
             FinalProfit.FixCT(ct, FinalFChars.Normal.L_Percent);
-            FinalProfit.Name = "单点收益";
+        }
+
+        public void GetFinal()
+        {
             FinalProfitDF = new ProfitDF(FinalProfit);
             FinalScoreProfit = FinalProfitDF.ScoreDeriv;
             FinalScoreProfit.GetScoreAttrDerivList();
+            FinalProfitDF.PointDeriv.GetPointAttrDerivList();
+            FinalProfitDF.PointDeriv.ProfitList.ToDict();
         }
 
         #endregion
@@ -28,7 +33,7 @@ namespace JYCalculator.Src
             var normal = new CombatStat(DamageFreqDFs.Normal);
             var xw = new CombatStat(DamageFreqDFs.XW);
 
-            if (XFAppStatic.XinFaTag == "JY")
+            if (AppStatic.XinFaTag == "JY")
             {
                 string CX_DOT_Name = "CX_DOT";
                 if (Arg.SkillNum.QiXue.鹰扬虎视)

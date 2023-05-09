@@ -17,10 +17,6 @@ namespace JX3CalculatorShared.ViewModels
             MultiZhenTable = IsChecked ? MultiZhenResSource.ToArray() : null;
         }
 
-        protected override void _Load<TSave>(TSave sav)
-        {
-        }
-
         protected override void _RefreshCommands()
         {
         }
@@ -37,11 +33,13 @@ namespace JX3CalculatorShared.ViewModels
         public double DPS { get; }
         public double Relative { get; set; }
 
+        public int IconID { get; }
         public double RelativePct => Relative * 100;
         public int Rank { get; set; }
 
-        public MultiZhenRes(string name, double dps)
+        public MultiZhenRes(int iconID, double dps, string name)
         {
+            IconID = iconID;
             Name = name;
             DPS = dps;
         }

@@ -86,7 +86,7 @@ namespace JX3CalculatorShared.Class
         /// </summary>
         public static bool At_is_Target(string fullID)
         {
-            bool res = (AtLoader.GetAtTemplate(fullID).Target == 1);
+            bool res = (AttributeIDLoader.GetAttributeID(fullID).Target == 1);
             return res;
         }
 
@@ -125,7 +125,7 @@ namespace JX3CalculatorShared.Class
             var head = GetToolTipHead();
             var desc = ToolTipDesc;
             var tail = string.IsNullOrEmpty(BuffID) ? "" : $"\n\nID: {BuffID}";
-            var res = $"{head} {Strings.TooltipDivider} {desc}{tail}";
+            var res = $"{head} {StringConsts.TooltipDivider} {desc}{tail}";
             return res;
         }
 

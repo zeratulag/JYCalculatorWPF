@@ -29,7 +29,7 @@ namespace JYCalculator.Src
         public double FinalDPS;
         public Period<DamageDeriv> DamageDerivs; // 记录不同时期的属性收益导数
         public DamageDeriv RawDeriv; // 最终导数收益（未修复会心额外收益）
-        public DamageDeriv FinalProfit; // 最终导数收益
+        public DamageDeriv FinalProfit; // 最终导数收益 
         public DamageDeriv FinalScoreProfit; // 最终单分收益
         public ProfitDF FinalProfitDF; // 最终收益总结
 
@@ -124,6 +124,8 @@ namespace JYCalculator.Src
             var weights = new[] { FightTime.NormalCover, FightTime.XWCover };
             var res = DamageDeriv.WeightedSum(derivs, weights);
             RawDeriv = res;
+            FinalProfit = RawDeriv.Copy(); // 待修正
+            FinalProfit.Name = "单点收益";
         }
 
         #endregion

@@ -33,7 +33,7 @@ namespace JYCalculator.Models
         /// </summary>
         public void GetXW()
         {
-            XWCD = 90;
+            XWCD = XFStaticConst.XW.CD;
             XWDuration = 10 + 5.0 * 聚精凝神.ToInt();
             XWExtraSP = XFStaticConst.XW.ExtraSP * 聚精凝神.ToInt();
             NormalDuration = XWCD - XWDuration;
@@ -79,6 +79,5 @@ namespace JYCalculator.Models
         {
             IsSupport = this.IsSupported(StaticXFData.Data.Setting);
         }
-
     }
 }

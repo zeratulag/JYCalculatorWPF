@@ -104,7 +104,7 @@ namespace JX3CalculatorShared.Utils
         {
             var len = itemName.Length;
             var n = (4 - len);
-            var res = itemName.PadLeft(len + n).PadRight(len + 2 * n);
+            var res = itemName.PadLeft(len + 2 * n).PadRight(len + 2 * n);
             return res;
         }
 
@@ -151,20 +151,19 @@ namespace JX3CalculatorShared.Utils
         /// <returns></returns>
         public static string GetSafeFilename(string filename)
         {
-
             return string.Join("_", filename.Split(Path.GetInvalidFileNameChars()));
-
         }
 
         /// <summary>
         /// 将形如 "a, b" 或是 "[a, b]" 的字符串拆分为数组
         /// </summary>
         /// <param name="x">输入字符串</param>
+        /// <param name="sep">分隔符</param>
         /// <returns>字符串数组</returns>
-        public static IEnumerable<string> ParseStringList(string x)
+        public static IEnumerable<string> ParseStringList(string x, string sep = ",")
         {
             string y = x.RemovePrefix("[").RemoveSuffix("]");
-            var xs = y.Split(",");
+            var xs = y.Split(sep);
             var res = from _ in xs select _.Trim();
             return res;
         }
@@ -173,13 +172,13 @@ namespace JX3CalculatorShared.Utils
         /// 将形如 "a, b" 或是 "[a, b]" 的字符串拆分为数组
         /// </summary>
         /// <param name="x">输入字符串</param>
+        /// <param name="sep">分隔符</param>
         /// <returns>整型数组</returns>
-        public static IEnumerable<int> ParseIntList(string x)
+        public static IEnumerable<int> ParseIntList(string x, string sep = ",")
         {
-            var strings = ParseStringList(x);
+            var strings = ParseStringList(x, sep);
             var res = from _ in strings select int.Parse(_);
             return res;
         }
-
     }
 }

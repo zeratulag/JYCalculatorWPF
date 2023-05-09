@@ -1,4 +1,5 @@
-﻿using JYCalculator.Globals;
+﻿using JX3CalculatorShared.Globals;
+using JYCalculator.Globals;
 
 namespace JYCalculator.Class
 {
@@ -6,7 +7,7 @@ namespace JYCalculator.Class
     {
         public override void PostProceed()
         {
-            switch (XFAppStatic.XinFaTag)
+            switch (AppStatic.XinFaTag)
             {
                 case "JY":
                     {

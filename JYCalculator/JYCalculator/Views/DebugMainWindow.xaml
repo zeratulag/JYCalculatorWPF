@@ -7,6 +7,7 @@
     xmlns:local="clr-namespace:JYCalculator.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:uc="clr-namespace:JYCalculator.Views.UserControls"
+    xmlns:viewModels="clr-namespace:JYCalculator.ViewModels"
     x:Name="JYDebugWindow"
     Title="DebugWindow"
     Width="1400"

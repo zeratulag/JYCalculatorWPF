@@ -70,9 +70,29 @@
   <PropertyGroup>
     <SignManifests>false</SignManifests>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CommunityToolkit.Mvvm, Version=8.1.0.0, Culture=neutral, PublicKeyToken=4aff67a105548ee2, processorArchitecture=MSIL">
-      <HintPath>..\..\..\NuGetPackages\CommunityToolkit.Mvvm.8.1.0\lib\netstandard2.0\CommunityToolkit.Mvvm.dll</HintPath>
+    <Reference Include="CommunityToolkit.Mvvm, Version=8.2.0.0, Culture=neutral, PublicKeyToken=4aff67a105548ee2, processorArchitecture=MSIL">
+      <HintPath>..\..\..\NuGetPackages\CommunityToolkit.Mvvm.8.2.0\lib\netstandard2.0\CommunityToolkit.Mvvm.dll</HintPath>
     </Reference>
     <Reference Include="Costura, Version=5.7.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\NuGetPackages\Costura.Fody.5.7.0\lib\netstandard1.0\Costura.dll</HintPath>
@@ -82,6 +102,15 @@
     </Reference>
     <Reference Include="DeepCloner, Version=0.10.0.0, Culture=neutral, PublicKeyToken=dc0b95cf99bf4e99, processorArchitecture=MSIL">
       <HintPath>..\..\..\NuGetPackages\DeepCloner.0.10.4\lib\net40\DeepCloner.dll</HintPath>
+    </Reference>
+    <Reference Include="FontAwesome.Sharp, Version=6.3.0.0, Culture=neutral, PublicKeyToken=d16d1e4e568ec10f, processorArchitecture=MSIL">
+      <HintPath>..\..\..\NuGetPackages\FontAwesome.Sharp.6.3.0\lib\net48\FontAwesome.Sharp.dll</HintPath>
+    </Reference>
+    <Reference Include="FontAwesome.Sharp.Material, Version=6.3.0.0, Culture=neutral, PublicKeyToken=d16d1e4e568ec10f, processorArchitecture=MSIL">
+      <HintPath>..\..\..\NuGetPackages\FontAwesome.Sharp.Material.6.3.0\lib\net48\FontAwesome.Sharp.Material.dll</HintPath>
+    </Reference>
+    <Reference Include="HandyControl, Version=3.4.0.0, Culture=neutral, PublicKeyToken=45be8712787a1e5b, processorArchitecture=MSIL">
+      <HintPath>..\..\..\NuGetPackages\HandyControl.3.4.0\lib\net48\HandyControl.dll</HintPath>
     </Reference>
     <Reference Include="MathNet.Numerics, Version=5.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\NuGetPackages\MathNet.Numerics.5.0.0\lib\net48\MathNet.Numerics.dll</HintPath>
@@ -100,11 +129,11 @@
     <Reference Include="Microsoft.Xaml.Behaviors, Version=1.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\..\..\NuGetPackages\Microsoft.Xaml.Behaviors.Wpf.1.1.39\lib\net45\Microsoft.Xaml.Behaviors.dll</HintPath>
     </Reference>
-    <Reference Include="MiniExcel, Version=1.30.0.0, Culture=neutral, PublicKeyToken=e7310002a53eac39, processorArchitecture=MSIL">
-      <HintPath>..\..\..\NuGetPackages\MiniExcel.1.30.0\lib\net45\MiniExcel.dll</HintPath>
+    <Reference Include="MiniExcel, Version=1.30.3.0, Culture=neutral, PublicKeyToken=e7310002a53eac39, processorArchitecture=MSIL">
+      <HintPath>..\..\..\NuGetPackages\MiniExcel.1.30.3\lib\net45\MiniExcel.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\..\..\NuGetPackages\Newtonsoft.Json.13.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\..\..\NuGetPackages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json.Bson, Version=1.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\..\..\NuGetPackages\Newtonsoft.Json.Bson.1.0.2\lib\net45\Newtonsoft.Json.Bson.dll</HintPath>
@@ -115,20 +144,32 @@
     <Reference Include="PropertyChanged, Version=4.1.0.0, Culture=neutral, PublicKeyToken=ee3ee20bcf148ddd, processorArchitecture=MSIL">
       <HintPath>..\..\..\NuGetPackages\PropertyChanged.Fody.4.1.0\lib\net40\PropertyChanged.dll</HintPath>
     </Reference>
-    <Reference Include="Syncfusion.Data.WPF, Version=20.4460.0.38, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
-      <HintPath>D:\Program Files (x86)\Syncfusion\Essential Studio\WPF\20.4.0.38\precompiledassemblies\4.6\Syncfusion.Data.WPF.dll</HintPath>
+    <Reference Include="Syncfusion.Data.WPF, Version=21.2460.3.0, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>D:\Program Files (x86)\Syncfusion\Essential Studio\WPF\21.2.3\precompiledassemblies\4.6\Syncfusion.Data.WPF.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Syncfusion.SfChart.Wpf, Version=20.4460.0.38, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
-      <HintPath>D:\Program Files (x86)\Syncfusion\Essential Studio\WPF\20.4.0.38\precompiledassemblies\4.6\Syncfusion.SfChart.Wpf.dll</HintPath>
+    <Reference Include="Syncfusion.SfChart.Wpf, Version=21.2460.3.0, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>D:\Program Files (x86)\Syncfusion\Essential Studio\WPF\21.2.3\precompiledassemblies\4.6\Syncfusion.SfChart.Wpf.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Syncfusion.SfGrid.WPF, Version=20.4460.0.38, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
-      <HintPath>D:\Program Files (x86)\Syncfusion\Essential Studio\WPF\20.4.0.38\precompiledassemblies\4.6\Syncfusion.SfGrid.WPF.dll</HintPath>
+    <Reference Include="Syncfusion.SfGrid.WPF, Version=21.2460.3.0, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>D:\Program Files (x86)\Syncfusion\Essential Studio\WPF\21.2.3\precompiledassemblies\4.6\Syncfusion.SfGrid.WPF.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Syncfusion.Shared.Wpf, Version=20.4460.0.38, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
-      <HintPath>D:\Program Files (x86)\Syncfusion\Essential Studio\WPF\20.4.0.38\precompiledassemblies\4.6\Syncfusion.Shared.Wpf.dll</HintPath>
+    <Reference Include="Syncfusion.SfInput.WPF, Version=21.2460.3.0, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>D:\Program Files (x86)\Syncfusion\Essential Studio\WPF\21.2.3\precompiledassemblies\4.6\Syncfusion.SfInput.WPF.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Syncfusion.SfShared.WPF, Version=21.2460.3.0, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>D:\Program Files (x86)\Syncfusion\Essential Studio\WPF\21.2.3\precompiledassemblies\4.6\Syncfusion.SfShared.WPF.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Syncfusion.Shared.Wpf, Version=21.2460.3.0, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>D:\Program Files (x86)\Syncfusion\Essential Studio\WPF\21.2.3\precompiledassemblies\4.6\Syncfusion.Shared.Wpf.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Syncfusion.Tools.Wpf, Version=21.2460.3.0, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>D:\Program Files (x86)\Syncfusion\Essential Studio\WPF\21.2.3\precompiledassemblies\4.6\Syncfusion.Tools.Wpf.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -154,8 +195,8 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Data" />
-    <Reference Include="System.Diagnostics.DiagnosticSource, Version=7.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\..\..\NuGetPackages\System.Diagnostics.DiagnosticSource.7.0.0\lib\net462\System.Diagnostics.DiagnosticSource.dll</HintPath>
+    <Reference Include="System.Diagnostics.DiagnosticSource, Version=7.0.0.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\..\..\NuGetPackages\System.Diagnostics.DiagnosticSource.7.0.2\lib\net462\System.Diagnostics.DiagnosticSource.dll</HintPath>
     </Reference>
     <Reference Include="System.Diagnostics.Tracing, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\..\..\NuGetPackages\System.Diagnostics.Tracing.4.3.0\lib\net462\System.Diagnostics.Tracing.dll</HintPath>
@@ -282,6 +323,7 @@
     <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\..\..\NuGetPackages\System.ValueTuple.4.5.0\lib\net47\System.ValueTuple.dll</HintPath>
     </Reference>
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -323,12 +365,15 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Globals\Globals.cs" />
+    <Compile Include="Globals\PzGlobalViewModels.cs" />
+    <Compile Include="Messages\Messages.cs" />
     <Compile Include="Minimods\Minimod.PrettyDateAndTime.Generated.cs" />
     <Compile Include="Minimods\Minimod.PrettyPrint.Generated.cs" />
     <Compile Include="Minimods\Minimod.PrettyText.Generated.cs" />
     <Compile Include="Minimods\Minimod.PrettyTypeSignatures.Generated.cs" />
     <Compile Include="Models\EventTriggerModel\EventTriggerModelShared.cs" />
     <Compile Include="Models\EventTriggerModel\EventTriggerArg.cs" />
+    <Compile Include="Models\PzXinFaModel\PzToXinFaModel.cs" />
     <Compile Include="Models\Shared\MainWindowSav.cs" />
     <Compile Include="Models\Shared\QiXueConfigModelShared.cs" />
     <Compile Include="Models\SkillNumModel\Shared\CommonSkillNumModelShared.cs" />
@@ -353,7 +398,7 @@
     <Compile Include="Src\Class\DamageDeriv.cs" />
     <Compile Include="Src\Class\Shared\FightTimeSummary.cs" />
     <Compile Include="Src\Class\Haste.cs" />
-    <Compile Include="Src\Class\Shared\JBPZPanel.cs" />
+    <Compile Include="Src\Class\Shared\JBBBPZPanel.cs" />
     <Compile Include="Src\Class\Shared\AbilityGenre.cs" />
     <Compile Include="Src\Class\Shared\JBPZPlan.cs" />
     <Compile Include="Src\Class\Shared\ProfitDF.cs" />
@@ -401,7 +446,9 @@
     <Compile Include="Src\Class\FullCharacter.cs" />
     <Compile Include="Src\Class\InitCharacter.cs" />
     <Compile Include="Src\Class\JYSkillCountItem.cs" />
+    <Compile Include="Src\JYXinFa.cs" />
     <Compile Include="Utils\PeriodClassTool.cs" />
+    <Compile Include="Utils\SharedClassTool.cs" />
     <Compile Include="Utils\XFClassTool.cs" />
     <Compile Include="ViewModels\AboutDialogViewModel.cs" />
     <Compile Include="ViewModels\Debug\DebugWindowViewModel.cs" />
@@ -509,30 +556,76 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="ClassDiagram1.cd" />
     <None Include="JYCalculator_TemporaryKey.pfx" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <Resource Include="Resource\Data\levelData.json" />
+    <Resource Include="Resource\Data\pz.xlsx" />
+    <Resource Include="Resource\Data\EquipMap.xlsx" />
     <Resource Include="Resource\Data\JY_Setting.json" />
     <Resource Include="Resource\Data\JY_Data.xlsx" />
     <Resource Include="Resource\Data\JY_Output.xlsx" />
     <Resource Include="Resource\Data\JY_Zhenfa.json" />
     <Resource Include="Resource\Data\TM_Ats.xlsx" />
     <Resource Include="Resource\Icons\-1.png" />
+    <Resource Include="Resource\Icons\-100.png" />
+    <Resource Include="Resource\Icons\-1000.png" />
+    <Resource Include="Resource\Icons\-101.png" />
+    <Resource Include="Resource\Icons\-102.png" />
+    <Resource Include="Resource\Icons\-103.png" />
+    <Resource Include="Resource\Icons\-104.png" />
+    <Resource Include="Resource\Icons\-105.png" />
+    <Resource Include="Resource\Icons\-106.png" />
+    <Resource Include="Resource\Icons\-107.png" />
+    <Resource Include="Resource\Icons\-108.png" />
+    <Resource Include="Resource\Icons\-109.png" />
+    <Resource Include="Resource\Icons\-110.png" />
     <Resource Include="Resource\Icons\-2.png" />
     <Resource Include="Resource\Icons\-3.png" />
+    <Resource Include="Resource\Icons\1048.png" />
     <Resource Include="Resource\Icons\1084.png" />
     <Resource Include="Resource\Icons\11.png" />
+    <Resource Include="Resource\Icons\11041.png" />
+    <Resource Include="Resource\Icons\11042.png" />
+    <Resource Include="Resource\Icons\11043.png" />
+    <Resource Include="Resource\Icons\11044.png" />
+    <Resource Include="Resource\Icons\11045.png" />
+    <Resource Include="Resource\Icons\11046.png" />
+    <Resource Include="Resource\Icons\11079.png" />
     <Resource Include="Resource\Icons\11194.png" />
+    <Resource Include="Resource\Icons\11598.png" />
+    <Resource Include="Resource\Icons\11599.png" />
+    <Resource Include="Resource\Icons\11600.png" />
+    <Resource Include="Resource\Icons\11601.png" />
+    <Resource Include="Resource\Icons\11602.png" />
+    <Resource Include="Resource\Icons\11603.png" />
+    <Resource Include="Resource\Icons\11754.png" />
     <Resource Include="Resource\Icons\11835.png" />
     <Resource Include="Resource\Icons\11836.png" />
     <Resource Include="Resource\Icons\11838.png" />
+    <Resource Include="Resource\Icons\1199.png" />
+    <Resource Include="Resource\Icons\1200.png" />
+    <Resource Include="Resource\Icons\1201.png" />
+    <Resource Include="Resource\Icons\1206.png" />
+    <Resource Include="Resource\Icons\1207.png" />
+    <Resource Include="Resource\Icons\1211.png" />
+    <Resource Include="Resource\Icons\1213.png" />
     <Resource Include="Resource\Icons\12130.png" />
+    <Resource Include="Resource\Icons\1214.png" />
     <Resource Include="Resource\Icons\1215.png" />
+    <Resource Include="Resource\Icons\1216.png" />
     <Resource Include="Resource\Icons\1222.png" />
+    <Resource Include="Resource\Icons\1227.png" />
+    <Resource Include="Resource\Icons\1228.png" />
+    <Resource Include="Resource\Icons\1229.png" />
+    <Resource Include="Resource\Icons\1231.png" />
+    <Resource Include="Resource\Icons\1232.png" />
+    <Resource Include="Resource\Icons\1233.png" />
+    <Resource Include="Resource\Icons\1234.png" />
+    <Resource Include="Resource\Icons\12490.png" />
     <Resource Include="Resource\Icons\1278.png" />
     <Resource Include="Resource\Icons\13.png" />
     <Resource Include="Resource\Icons\13424.png" />
@@ -547,7 +640,9 @@
     <Resource Include="Resource\Icons\14317.png" />
     <Resource Include="Resource\Icons\14408.png" />
     <Resource Include="Resource\Icons\1450.png" />
+    <Resource Include="Resource\Icons\14632.png" />
     <Resource Include="Resource\Icons\15025.png" />
+    <Resource Include="Resource\Icons\15692.png" />
     <Resource Include="Resource\Icons\15929.png" />
     <Resource Include="Resource\Icons\16214.png" />
     <Resource Include="Resource\Icons\16216.png" />
@@ -557,16 +652,75 @@
     <Resource Include="Resource\Icons\16916.png" />
     <Resource Include="Resource\Icons\17177.png" />
     <Resource Include="Resource\Icons\17783.png" />
+    <Resource Include="Resource\Icons\17813.png" />
+    <Resource Include="Resource\Icons\17894.png" />
+    <Resource Include="Resource\Icons\17896.png" />
+    <Resource Include="Resource\Icons\17897.png" />
+    <Resource Include="Resource\Icons\17898.png" />
+    <Resource Include="Resource\Icons\17899.png" />
+    <Resource Include="Resource\Icons\17942.png" />
+    <Resource Include="Resource\Icons\17943.png" />
+    <Resource Include="Resource\Icons\17944.png" />
+    <Resource Include="Resource\Icons\17945.png" />
+    <Resource Include="Resource\Icons\17946.png" />
+    <Resource Include="Resource\Icons\17947.png" />
+    <Resource Include="Resource\Icons\17948.png" />
+    <Resource Include="Resource\Icons\17949.png" />
+    <Resource Include="Resource\Icons\17950.png" />
+    <Resource Include="Resource\Icons\17951.png" />
+    <Resource Include="Resource\Icons\17952.png" />
+    <Resource Include="Resource\Icons\17953.png" />
     <Resource Include="Resource\Icons\1798.png" />
+    <Resource Include="Resource\Icons\18032.png" />
     <Resource Include="Resource\Icons\1804.png" />
     <Resource Include="Resource\Icons\18116.png" />
     <Resource Include="Resource\Icons\18117.png" />
     <Resource Include="Resource\Icons\18185.png" />
     <Resource Include="Resource\Icons\18300.png" />
+    <Resource Include="Resource\Icons\18301.png" />
     <Resource Include="Resource\Icons\18303.png" />
+    <Resource Include="Resource\Icons\18714.png" />
+    <Resource Include="Resource\Icons\2040.png" />
+    <Resource Include="Resource\Icons\2315.png" />
+    <Resource Include="Resource\Icons\2316.png" />
+    <Resource Include="Resource\Icons\2317.png" />
+    <Resource Include="Resource\Icons\2319.png" />
+    <Resource Include="Resource\Icons\2320.png" />
+    <Resource Include="Resource\Icons\2321.png" />
+    <Resource Include="Resource\Icons\2324.png" />
+    <Resource Include="Resource\Icons\2325.png" />
+    <Resource Include="Resource\Icons\2327.png" />
+    <Resource Include="Resource\Icons\2328.png" />
+    <Resource Include="Resource\Icons\2330.png" />
+    <Resource Include="Resource\Icons\2337.png" />
+    <Resource Include="Resource\Icons\2339.png" />
+    <Resource Include="Resource\Icons\2340.png" />
+    <Resource Include="Resource\Icons\2341.png" />
+    <Resource Include="Resource\Icons\2346.png" />
+    <Resource Include="Resource\Icons\2347.png" />
+    <Resource Include="Resource\Icons\2348.png" />
+    <Resource Include="Resource\Icons\2349.png" />
+    <Resource Include="Resource\Icons\2350.png" />
+    <Resource Include="Resource\Icons\2351.png" />
+    <Resource Include="Resource\Icons\2355.png" />
+    <Resource Include="Resource\Icons\2356.png" />
+    <Resource Include="Resource\Icons\2358.png" />
+    <Resource Include="Resource\Icons\2359.png" />
+    <Resource Include="Resource\Icons\2360.png" />
+    <Resource Include="Resource\Icons\2361.png" />
     <Resource Include="Resource\Icons\2546.png" />
     <Resource Include="Resource\Icons\2747.png" />
+    <Resource Include="Resource\Icons\2833.png" />
+    <Resource Include="Resource\Icons\2838.png" />
+    <Resource Include="Resource\Icons\2840.png" />
     <Resource Include="Resource\Icons\2842.png" />
+    <Resource Include="Resource\Icons\2845.png" />
+    <Resource Include="Resource\Icons\2847.png" />
+    <Resource Include="Resource\Icons\2851.png" />
+    <Resource Include="Resource\Icons\2853.png" />
+    <Resource Include="Resource\Icons\2856.png" />
+    <Resource Include="Resource\Icons\2899.png" />
+    <Resource Include="Resource\Icons\2903.png" />
     <Resource Include="Resource\Icons\2987.png" />
     <Resource Include="Resource\Icons\3144.png" />
     <Resource Include="Resource\Icons\3152.png" />
@@ -600,30 +754,56 @@
     <Resource Include="Resource\Icons\3239.png" />
     <Resource Include="Resource\Icons\3240.png" />
     <Resource Include="Resource\Icons\3241.png" />
+    <Resource Include="Resource\Icons\3322.png" />
     <Resource Include="Resource\Icons\3798.png" />
     <Resource Include="Resource\Icons\397.png" />
     <Resource Include="Resource\Icons\403.png" />
+    <Resource Include="Resource\Icons\4246.png" />
+    <Resource Include="Resource\Icons\4248.png" />
+    <Resource Include="Resource\Icons\4249.png" />
+    <Resource Include="Resource\Icons\4254.png" />
     <Resource Include="Resource\Icons\4268.png" />
     <Resource Include="Resource\Icons\4269.png" />
     <Resource Include="Resource\Icons\4278.png" />
     <Resource Include="Resource\Icons\4279.png" />
+    <Resource Include="Resource\Icons\4295.png" />
     <Resource Include="Resource\Icons\4302.png" />
     <Resource Include="Resource\Icons\4303.png" />
+    <Resource Include="Resource\Icons\4362.png" />
+    <Resource Include="Resource\Icons\4363.png" />
+    <Resource Include="Resource\Icons\4370.png" />
+    <Resource Include="Resource\Icons\4380.png" />
+    <Resource Include="Resource\Icons\4386.png" />
+    <Resource Include="Resource\Icons\4392.png" />
+    <Resource Include="Resource\Icons\4394.png" />
+    <Resource Include="Resource\Icons\4399.png" />
+    <Resource Include="Resource\Icons\4400.png" />
     <Resource Include="Resource\Icons\4487.png" />
     <Resource Include="Resource\Icons\4488.png" />
     <Resource Include="Resource\Icons\4503.png" />
     <Resource Include="Resource\Icons\4557.png" />
     <Resource Include="Resource\Icons\4612.png" />
     <Resource Include="Resource\Icons\4892.png" />
+    <Resource Include="Resource\Icons\52.png" />
     <Resource Include="Resource\Icons\548.png" />
     <Resource Include="Resource\Icons\549.png" />
     <Resource Include="Resource\Icons\550.png" />
     <Resource Include="Resource\Icons\552.png" />
+    <Resource Include="Resource\Icons\5881.png" />
+    <Resource Include="Resource\Icons\5882.png" />
+    <Resource Include="Resource\Icons\5883.png" />
+    <Resource Include="Resource\Icons\5886.png" />
     <Resource Include="Resource\Icons\6347.png" />
     <Resource Include="Resource\Icons\635.png" />
     <Resource Include="Resource\Icons\6436.png" />
     <Resource Include="Resource\Icons\6446.png" />
     <Resource Include="Resource\Icons\647.png" />
+    <Resource Include="Resource\Icons\6478.png" />
+    <Resource Include="Resource\Icons\6479.png" />
+    <Resource Include="Resource\Icons\6480.png" />
+    <Resource Include="Resource\Icons\6551.png" />
+    <Resource Include="Resource\Icons\6552.png" />
+    <Resource Include="Resource\Icons\6553.png" />
     <Resource Include="Resource\Icons\7059.png" />
     <Resource Include="Resource\Icons\7215.png" />
     <Resource Include="Resource\Icons\7370.png" />
@@ -636,9 +816,32 @@
     <Resource Include="Resource\Icons\7514.png" />
     <Resource Include="Resource\Icons\7531.png" />
     <Resource Include="Resource\Icons\7533.png" />
+    <Resource Include="Resource\Icons\7536.png" />
+    <Resource Include="Resource\Icons\7539.png" />
+    <Resource Include="Resource\Icons\7554.png" />
+    <Resource Include="Resource\Icons\7555.png" />
+    <Resource Include="Resource\Icons\7564.png" />
+    <Resource Include="Resource\Icons\7566.png" />
+    <Resource Include="Resource\Icons\7575.png" />
+    <Resource Include="Resource\Icons\7578.png" />
+    <Resource Include="Resource\Icons\7584.png" />
+    <Resource Include="Resource\Icons\7585.png" />
+    <Resource Include="Resource\Icons\7587.png" />
+    <Resource Include="Resource\Icons\7588.png" />
+    <Resource Include="Resource\Icons\7589.png" />
+    <Resource Include="Resource\Icons\7591.png" />
+    <Resource Include="Resource\Icons\7592.png" />
+    <Resource Include="Resource\Icons\7593.png" />
     <Resource Include="Resource\Icons\7595.png" />
     <Resource Include="Resource\Icons\7646.png" />
     <Resource Include="Resource\Icons\7667.png" />
+    <Resource Include="Resource\Icons\798.png" />
+    <Resource Include="Resource\Icons\801.png" />
+    <Resource Include="Resource\Icons\802.png" />
+    <Resource Include="Resource\Icons\804.png" />
+    <Resource Include="Resource\Icons\805.png" />
+    <Resource Include="Resource\Icons\806.png" />
+    <Resource Include="Resource\Icons\814.png" />
     <Resource Include="Resource\Icons\8425.png" />
     <Resource Include="Resource\Icons\8426.png" />
     <Resource Include="Resource\Icons\8638.png" />
@@ -650,15 +853,31 @@
     <Resource Include="Resource\Icons\9025.png" />
     <Resource Include="Resource\Icons\904.png" />
     <Resource Include="Resource\Icons\907.png" />
+    <Resource Include="Resource\Icons\9174.png" />
     <Resource Include="Resource\Icons\923.png" />
+    <Resource Include="Resource\Icons\9240.png" />
+    <Resource Include="Resource\Icons\9243.png" />
+    <Resource Include="Resource\Icons\9244.png" />
+    <Resource Include="Resource\Icons\9245.png" />
     <Resource Include="Resource\Icons\9291.png" />
     <Resource Include="Resource\Icons\9551.png" />
     <Resource Include="Resource\Icons\9552.png" />
+    <Resource Include="Resource\Icons\9684.png" />
+    <Resource Include="Resource\Icons\9685.png" />
+    <Resource Include="Resource\Icons\9686.png" />
+    <Resource Include="Resource\Icons\9687.png" />
+    <Resource Include="Resource\Icons\9688.png" />
+    <Resource Include="Resource\Icons\9689.png" />
+    <Resource Include="Resource\Icons\9763.png" />
     <Resource Include="Resource\Icons\9989.png" />
     <Resource Include="Resource\Icons\9996.png" />
     <Resource Include="Resource\Icons\9997.png" />
     <Resource Include="Resource\Icons\9999.png" />
     <Resource Include="Resource\Images\Gugugu.jpg" />
+    <Resource Include="Resource\Images\ImportJBTutorial.png" />
+    <Resource Include="Resource\Images\XF_icon.ico" />
+    <Resource Include="Resource\Images\XF_icon.png" />
+    <Resource Include="Resource\Images\MyHead.jpg" />
     <Resource Include="Views\JY_icon.png" />
   </ItemGroup>
   <ItemGroup>
@@ -683,51 +902,154 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resource\Images\JY_icon.ico" />
-    <Resource Include="Resource\Images\JY_icon.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resource\Images\MyHead.jpg" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Resource\Data\BuildDate.txt" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
-    <Resource Include="Resource\Images\ImportJBTutorial.png" />
+    <Folder Include="Resource\Images\Diamond\" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resource\Icons\15692.png" />
+    <Resource Include="Resource\Diamond\0.png" />
+    <Resource Include="Resource\Diamond\1.png" />
+    <Resource Include="Resource\Diamond\2.png" />
+    <Resource Include="Resource\Diamond\3.png" />
+    <Resource Include="Resource\Diamond\4.png" />
+    <Resource Include="Resource\Diamond\5.png" />
+    <Resource Include="Resource\Diamond\6.png" />
+    <Resource Include="Resource\Diamond\7.png" />
+    <Resource Include="Resource\Diamond\8.png" />
+    <Resource Include="Resource\Diamond\empty-slot.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resource\Icons\14632.png" />
+    <Resource Include="Resource\Images\enchant.png" />
+    <Resource Include="Resource\Images\enhance-null.png" />
+    <Resource Include="Resource\Images\enhance.png" />
+    <Resource Include="Resource\Images\frame.png" />
+    <Resource Include="Resource\Images\star.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resource\Icons\18301.png" />
+    <Resource Include="Resource\Images\enchant-null.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resource\Icons\2040.png" />
+    <Resource Include="Resource\Images\null.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resource\Images\3.png" />
+    <Resource Include="Resource\Images\4-max.png" />
+    <Resource Include="Resource\Images\4.png" />
+    <Resource Include="Resource\Images\5.png" />
+    <Resource Include="Resource\Images\sp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resource\Icons\10387.png" />
+    <Resource Include="Resource\Icons\10417.png" />
+    <Resource Include="Resource\Icons\10418.png" />
+    <Resource Include="Resource\Icons\10419.png" />
+    <Resource Include="Resource\Icons\10420.png" />
+    <Resource Include="Resource\Icons\10421.png" />
+    <Resource Include="Resource\Icons\10422.png" />
+    <Resource Include="Resource\Icons\11359.png" />
+    <Resource Include="Resource\Icons\1212.png" />
+    <Resource Include="Resource\Icons\1217.png" />
+    <Resource Include="Resource\Icons\1219.png" />
+    <Resource Include="Resource\Icons\1220.png" />
+    <Resource Include="Resource\Icons\12203.png" />
+    <Resource Include="Resource\Icons\12205.png" />
+    <Resource Include="Resource\Icons\12206.png" />
+    <Resource Include="Resource\Icons\12207.png" />
+    <Resource Include="Resource\Icons\12208.png" />
+    <Resource Include="Resource\Icons\12273.png" />
+    <Resource Include="Resource\Icons\1230.png" />
+    <Resource Include="Resource\Icons\1236.png" />
+    <Resource Include="Resource\Icons\12923.png" />
+    <Resource Include="Resource\Icons\13280.png" />
+    <Resource Include="Resource\Icons\13281.png" />
+    <Resource Include="Resource\Icons\13282.png" />
+    <Resource Include="Resource\Icons\13283.png" />
+    <Resource Include="Resource\Icons\13284.png" />
+    <Resource Include="Resource\Icons\13285.png" />
+    <Resource Include="Resource\Icons\19021.png" />
+    <Resource Include="Resource\Icons\19022.png" />
+    <Resource Include="Resource\Icons\19023.png" />
+    <Resource Include="Resource\Icons\19024.png" />
+    <Resource Include="Resource\Icons\19025.png" />
+    <Resource Include="Resource\Icons\19026.png" />
+    <Resource Include="Resource\Icons\19027.png" />
+    <Resource Include="Resource\Icons\19028.png" />
+    <Resource Include="Resource\Icons\19029.png" />
+    <Resource Include="Resource\Icons\19030.png" />
+    <Resource Include="Resource\Icons\19091.png" />
+    <Resource Include="Resource\Icons\19092.png" />
+    <Resource Include="Resource\Icons\19093.png" />
+    <Resource Include="Resource\Icons\19094.png" />
+    <Resource Include="Resource\Icons\19095.png" />
+    <Resource Include="Resource\Icons\19230.png" />
+    <Resource Include="Resource\Icons\19231.png" />
+    <Resource Include="Resource\Icons\19337.png" />
+    <Resource Include="Resource\Icons\19356.png" />
+    <Resource Include="Resource\Icons\2834.png" />
+    <Resource Include="Resource\Icons\2835.png" />
+    <Resource Include="Resource\Icons\2836.png" />
+    <Resource Include="Resource\Icons\2846.png" />
+    <Resource Include="Resource\Icons\2848.png" />
+    <Resource Include="Resource\Icons\2900.png" />
+    <Resource Include="Resource\Icons\7899.png" />
+    <Resource Include="Resource\Icons\799.png" />
+    <Resource Include="Resource\Icons\800.png" />
+    <Resource Include="Resource\Icons\808.png" />
+    <Resource Include="Resource\Icons\810.png" />
+    <Resource Include="Resource\Icons\811.png" />
+    <Resource Include="Resource\Icons\815.png" />
+    <Resource Include="Resource\Icons\821.png" />
+    <Resource Include="Resource\Icons\9236.png" />
+    <Resource Include="Resource\Icons\9555.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resource\Images\-1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resource\Images\JB_Logo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resource\Images\pop-up.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resource\Images\copy.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resource\Icons\19175.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resource\Images\overview.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resource\Images\QRCodeUrl.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resource\Images\OverviewIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resource\Images\PzIcon.png" />
   </ItemGroup>
   <Import Project="..\..\JX3CalculatorShared\JX3CalculatorShared\JX3CalculatorShared.projitems" Label="Shared" />
   <Import Project="..\..\JX3PZ\JX3PZ\JX3PZ.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Import Project="..\..\..\NuGetPackages\Fody.6.6.4\build\Fody.targets" Condition="Exists('..\..\..\NuGetPackages\Fody.6.6.4\build\Fody.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>这台计算机上缺少此项目引用的 NuGet 程序包。使用“NuGet 程序包还原”可下载这些程序包。有关更多信息，请参见 http://go.microsoft.com/fwlink/?LinkID=322105。缺少的文件是 {0}。</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\..\..\NuGetPackages\Fody.6.6.4\build\Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\NuGetPackages\Fody.6.6.4\build\Fody.targets'))" />
     <Error Condition="!Exists('..\..\..\NuGetPackages\PropertyChanged.Fody.4.1.0\build\PropertyChanged.Fody.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\NuGetPackages\PropertyChanged.Fody.4.1.0\build\PropertyChanged.Fody.props'))" />
     <Error Condition="!Exists('..\..\..\NuGetPackages\Costura.Fody.5.7.0\build\Costura.Fody.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\NuGetPackages\Costura.Fody.5.7.0\build\Costura.Fody.props'))" />
     <Error Condition="!Exists('..\..\..\NuGetPackages\Costura.Fody.5.7.0\build\Costura.Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\NuGetPackages\Costura.Fody.5.7.0\build\Costura.Fody.targets'))" />
     <Error Condition="!Exists('..\..\..\NuGetPackages\ToString.Fody.1.11.1\build\ToString.Fody.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\NuGetPackages\ToString.Fody.1.11.1\build\ToString.Fody.props'))" />
     <Error Condition="!Exists('..\..\..\NuGetPackages\NETStandard.Library.2.0.3\build\netstandard2.0\NETStandard.Library.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\NuGetPackages\NETStandard.Library.2.0.3\build\netstandard2.0\NETStandard.Library.targets'))" />
-    <Error Condition="!Exists('..\..\..\NuGetPackages\CommunityToolkit.Mvvm.8.1.0\build\netstandard2.0\CommunityToolkit.Mvvm.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\NuGetPackages\CommunityToolkit.Mvvm.8.1.0\build\netstandard2.0\CommunityToolkit.Mvvm.targets'))" />
+    <Error Condition="!Exists('..\..\..\NuGetPackages\Fody.6.7.0\build\Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\NuGetPackages\Fody.6.7.0\build\Fody.targets'))" />
+    <Error Condition="!Exists('..\..\..\NuGetPackages\CommunityToolkit.Mvvm.8.2.0\build\netstandard2.0\CommunityToolkit.Mvvm.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\NuGetPackages\CommunityToolkit.Mvvm.8.2.0\build\netstandard2.0\CommunityToolkit.Mvvm.targets'))" />
   </Target>
   <Import Project="..\..\..\NuGetPackages\Costura.Fody.5.7.0\build\Costura.Fody.targets" Condition="Exists('..\..\..\NuGetPackages\Costura.Fody.5.7.0\build\Costura.Fody.targets')" />
   <Import Project="..\..\..\NuGetPackages\NETStandard.Library.2.0.3\build\netstandard2.0\NETStandard.Library.targets" Condition="Exists('..\..\..\NuGetPackages\NETStandard.Library.2.0.3\build\netstandard2.0\NETStandard.Library.targets')" />
   <PropertyGroup>
     <PreBuildEvent>echo %25date%25 %25time%25 &gt; "$(ProjectDir)\Resource\Data\BuildDate.txt"</PreBuildEvent>
   </PropertyGroup>
-  <Import Project="..\..\..\NuGetPackages\CommunityToolkit.Mvvm.8.1.0\build\netstandard2.0\CommunityToolkit.Mvvm.targets" Condition="Exists('..\..\..\NuGetPackages\CommunityToolkit.Mvvm.8.1.0\build\netstandard2.0\CommunityToolkit.Mvvm.targets')" />
+  <Import Project="..\..\..\NuGetPackages\Fody.6.7.0\build\Fody.targets" Condition="Exists('..\..\..\NuGetPackages\Fody.6.7.0\build\Fody.targets')" />
+  <Import Project="..\..\..\NuGetPackages\CommunityToolkit.Mvvm.8.2.0\build\netstandard2.0\CommunityToolkit.Mvvm.targets" Condition="Exists('..\..\..\NuGetPackages\CommunityToolkit.Mvvm.8.2.0\build\netstandard2.0\CommunityToolkit.Mvvm.targets')" />
 </Project>

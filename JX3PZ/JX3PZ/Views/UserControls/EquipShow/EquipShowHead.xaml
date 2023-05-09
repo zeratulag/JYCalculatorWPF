@@ -1,0 +1,54 @@
+﻿<UserControl x:Class="JX3PZ.Views.EquipShowHead"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:JX3PZ.Views"
+             xmlns:sf="http://schemas.syncfusion.com/wpf"
+             xmlns:hc="https://handyorg.github.io/handycontrol"
+             mc:Ignorable="d"
+             x:Name="equipShowHead">
+    <Grid Visibility="{Binding HasEquip, Converter={StaticResource BooleanToVisibility}}" Margin="-2 0 0 0">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid.Resources>
+            <ResourceDictionary>
+                <ResourceDictionary.MergedDictionaries>
+                    <ResourceDictionary Source="/Views/Resources/EquipShowElement.xaml" />
+                </ResourceDictionary.MergedDictionaries>
+                <Style TargetType="TextBox" BasedOn="{StaticResource Style.TextBlockBox}" />
+                <Style TargetType="RichTextBox" BasedOn="{StaticResource Style.RichTextBlockBox}" />
+            </ResourceDictionary>
+        </Grid.Resources>
+
+        <TextBox Grid.Row="0" Grid.Column="0" Text="{Binding Name, Mode=OneWay}"
+                 Foreground="{Binding Quality, Converter={StaticResource QualityToColorConverter}}" />
+
+        <local:EquipShowStrengthStar Grid.Row="0" Grid.Column="1" Margin="5 0 0 0" />
+
+        <TextBox Grid.Row="0" Grid.Column="2" Text="{Binding StrengthStr, Mode=OneWay}" Foreground="#7ee3a3" HorizontalAlignment="Right" TextWrapping="NoWrap"/>
+
+        <TextBox Grid.Row="1" Grid.Column="0" Text="{Binding SubTypeName, Mode=OneWay}" Foreground="White" />
+
+        <TextBox Grid.Row="1" Grid.Column="2" Text="{Binding WeaponDetailTypeName, Mode=OneWay}"
+                 Visibility="{Binding IsWeapon, Converter={StaticResource BooleanToVisibility}}" Foreground="White"
+                 HorizontalAlignment="Right" />
+
+        <TextBox Grid.Row="2" Grid.Column="2" Text="{Binding WeaponSpeed, Mode=OneWay}"
+                 Visibility="{Binding IsWeapon, Converter={StaticResource BooleanToVisibility}}" Foreground="White"
+                 HorizontalAlignment="Right" />
+
+        <ItemsControl Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" ItemsSource="{Binding BaseAttributeVMs}"
+                      ItemTemplate="{StaticResource DataTemplate.EquipAttribute}">
+        </ItemsControl>
+
+    </Grid>
+</UserControl>

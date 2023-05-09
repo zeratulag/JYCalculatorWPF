@@ -10,7 +10,7 @@ namespace JX3CalculatorShared.Class
     /// </summary>
     public class SkillAttrCollection : AttrCollection
     {
-        public static readonly Func<string, SkillAttrTemplate> GetTemplate = AtLoader.GetSkillAttrTemplate;
+        public static readonly Func<string, SkillAttributeId> GetTemplate = AttributeIDLoader.GetSkillAttributeID;
 
         public static SkillAttrCollection Empty = new SkillAttrCollection();
         public static SkillAttrCollection SimplifiedEmpty = new SkillAttrCollection();
@@ -26,7 +26,7 @@ namespace JX3CalculatorShared.Class
             Simplified = attr.Simplified;
         }
 
-        public SkillAttrCollection(IDictionary<string, double> data) : base(data, AtLoader.SkillAt_is_Value)
+        public SkillAttrCollection(IDictionary<string, double> data) : base(data, AttributeIDLoader.SkillAttributeIsValue)
         {
         }
 

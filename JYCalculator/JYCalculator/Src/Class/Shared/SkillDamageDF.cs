@@ -1,13 +1,14 @@
-﻿using JX3CalculatorShared.Class;
+﻿using System;
+using JX3CalculatorShared.Class;
 using System.Collections.Generic;
 using System.Linq;
+using JX3CalculatorShared.Globals;
 using JYCalculator.Globals;
 
 namespace JYCalculator.Class
 {
-    public class SkillDamageDF
+    public class SkillDamageDF : AbsDataFrame<string, SkillDamage>
     {
-
         public Dictionary<string, SkillDamage> Data;
         public FullCharacter FChar; // 人物属性
         public FullCharacter SnapFChar; // DOT快照的人物属性
@@ -25,7 +26,7 @@ namespace JYCalculator.Class
 
             Data = DataDf.Data.ToDictionary(_ => _.Key, _ => new SkillDamage(_.Value, FChar, CTarget));
 
-            switch (XFAppStatic.XinFaTag)
+            switch (AppStatic.XinFaTag)
             {
                 case "JY":
                 {
@@ -60,7 +61,6 @@ namespace JYCalculator.Class
                 var freq = KVP.Value.Freq;
                 Data[key].SetFreq(freq);
                 Data[key].GetDPS();
-
             }
         }
 

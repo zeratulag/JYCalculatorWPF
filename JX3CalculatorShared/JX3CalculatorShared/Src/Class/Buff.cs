@@ -3,6 +3,7 @@ using JX3CalculatorShared.Globals;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
+using System.Windows.Documents;
 
 
 namespace JX3CalculatorShared.Class
@@ -16,7 +17,7 @@ namespace JX3CalculatorShared.Class
         public double Time; // 持续时间
         public double DefaultCover;
 
-        public readonly BuffTypeEnum Type;
+        public readonly BuffTypeEnum BuffType;
 
         public static readonly ImmutableDictionary<BuffTypeEnum, string> Type2Header =
             new Dictionary<BuffTypeEnum, string>()
@@ -68,7 +69,7 @@ namespace JX3CalculatorShared.Class
             ToolTipDesc = item.ToolTipDesc;
             Source = item.Source;
 
-            Type = item.Type;
+            BuffType = item.Type;
 
             Order = item.Order;
             AppendType = item.AppendType;
@@ -199,5 +200,18 @@ namespace JX3CalculatorShared.Class
         }
 
         #endregion
+
+        public bool HasStackInput()
+        {
+            // 是否需要选择叠加层数
+            return BuffType == BuffTypeEnum.Buff_ExtraStack;
+        }
+
+        public bool HasCoverInput()
+        {
+            // 是否需要选择覆盖率
+            return BuffType == BuffTypeEnum.Buff_Extra || BuffType == BuffTypeEnum.Buff_ExtraStack;
+        }
+
     }
 }

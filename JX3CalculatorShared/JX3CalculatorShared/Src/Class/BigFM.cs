@@ -2,10 +2,14 @@
 using JX3CalculatorShared.Data;
 using JX3CalculatorShared.Globals;
 using JX3CalculatorShared.Utils;
+using JX3PZ.Data;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
+using JX3PZ.Class;
+using JX3PZ.ViewModels;
+using JX3PZ.Globals;
 
 
 namespace JX3CalculatorShared.Class
@@ -14,17 +18,18 @@ namespace JX3CalculatorShared.Class
     {
         #region 成员
 
-        public static readonly ImmutableDictionary<EquipSubTypeEnum, string> AttrMap = new Dictionary<EquipSubTypeEnum, string>
-        {
-            {EquipSubTypeEnum.JACKET, "Base_AP"}, {EquipSubTypeEnum.HAT, "Base_OC"}
-        }.ToImmutableDictionary();
+        public static readonly ImmutableDictionary<EquipSubTypeEnum, string> AttrMap =
+            new Dictionary<EquipSubTypeEnum, string>
+            {
+                {EquipSubTypeEnum.JACKET, "Base_AP"}, {EquipSubTypeEnum.HAT, "Base_OC"}
+            }.ToImmutableDictionary();
 
         public readonly string Name;
         public readonly string DescName;
 
-        public readonly int IconID;
-        public readonly int ItemID;
-        public readonly int EnchantID;
+        public int IconID { get; }
+        public readonly int UIID;
+        public readonly int ID;
 
         public readonly EquipSubTypeEnum SubType;
 
@@ -32,19 +37,20 @@ namespace JX3CalculatorShared.Class
         public readonly int LevelMax;
         public readonly int Rank;
         public readonly int DLCLevel;
-
-
+        public string EnhanceDesc;
+        public readonly int Score;
         public readonly int Magic;
         public readonly int Physics;
 
         public readonly BottomsFMTag Tag;
         public readonly ImmutableDictionary<string, double> SAttrs; // 大附魔包括的属性（简化后）
-
+        public readonly ImmutableArray<AttributeEntry> AttributeEntries; // 以AttributeEntry表示的属性
         public int Quality { get; }
         public string ItemName => DescName;
-        public string IconPath { get; }
-
         public string ToolTip { get; }
+        public string Desc { get; }
+
+        public readonly EnhanceAttributeEntryViewModel VM;
 
         #endregion
 
@@ -57,8 +63,8 @@ namespace JX3CalculatorShared.Class
         /// <param name="descName">描述名称</param>
         /// <param name="toolTip"></param>
         /// <param name="iconId">图标ID</param>
-        /// <param name="itemID">物品ID</param>
-        /// <param name="enchant_Id">附魔ID</param>
+        /// <param name="uiid">物品ID</param>
+        /// <param name="id">附魔ID</param>
         /// <param name="quality">物品等级</param>
         /// <param name="subType">附魔位置</param>
         /// <param name="levelMin">最小品级</param>
@@ -69,7 +75,7 @@ namespace JX3CalculatorShared.Class
         /// <param name="tag"></param>
         public BigFM(string name, string descName,
             string toolTip,
-            int iconId, int itemID, int enchant_Id,
+            int iconId, int uiid, int id,
             int quality, EquipSubTypeEnum subType,
             int levelMin, int levelMax, int rank,
             int magic = -1, int physics = -1, BottomsFMTag tag = BottomsFMTag.NotBottoms)
@@ -78,10 +84,9 @@ namespace JX3CalculatorShared.Class
             DescName = descName;
 
             IconID = iconId;
-            IconPath = BindingTool.IconID2Path(IconID);
 
-            ItemID = itemID;
-            EnchantID = enchant_Id;
+            UIID = uiid;
+            ID = id;
 
             Quality = quality;
             SubType = subType;
@@ -94,20 +99,53 @@ namespace JX3CalculatorShared.Class
             Physics = physics;
             Tag = tag;
 
-
             SAttrs = GetSAttrs().ToImmutableDictionary();
+            var ae = GetAttributeEntries();
+            AttributeEntries = ae?.ToImmutableArray() ?? ImmutableArray<AttributeEntry>.Empty;
+
             ToolTip = toolTip + GetToolTipTail();
+            Desc = GetDesc();
         }
 
         public Dictionary<string, double> GetSAttrs()
         {
             var res = new Dictionary<string, double>(2);
             string key;
-            if (AttrMap.ContainsKey(SubType))
+            if (AttrMap.TryGetValue(SubType, out var value))
             {
-                key = AttrMap[SubType];
+                key = value;
                 res.Add($"M_{key}", Magic);
                 res.Add($"P_{key}", Physics);
+            }
+
+            return res;
+        }
+
+        public AttributeEntry[] GetAttributeEntries()
+        {
+            AttributeEntry[] res = null;
+            if (SubType == EquipSubTypeEnum.HAT)
+            {
+                // 帽子大附魔加破防
+                res = new AttributeEntry[]
+                {
+                    new AttributeEntry("atPhysicsOvercomeBase", Physics, AttributeEntryTypeEnum.BigFM),
+                    new AttributeEntry("atMagicOvercome", Magic, AttributeEntryTypeEnum.BigFM),
+                };
+            }
+            else
+            {
+                if (SubType == EquipSubTypeEnum.JACKET)
+                {
+                    // 上衣大附魔加攻击减承疗
+                    var ld = new Dictionary<string, int>()
+                    {
+                        {"BE_THERAPY_COEFFICIENT", -102},
+                        {"PHYSICS_ATTACK_POWER_BASE", Physics},
+                        {"MAGIC_ATTACK_POWER_BASE", Magic},
+                    };
+                    res = AttributeIDLoader.GetAttributeEntriesFromLuaDict(ld, AttributeEntryTypeEnum.BigFM);
+                }
             }
 
             return res;
@@ -116,21 +154,31 @@ namespace JX3CalculatorShared.Class
 
         public string GetToolTipTail()
         {
-            var res = $"\n\n物品ID: {ItemID}\t附魔ID: {EnchantID}";
+            var res = $"\n\nUIID: {UIID}\t附魔ID: {ID}";
             return res;
         }
+
+        public string GetDesc()
+        {
+            var res = $"{LevelMin}品 ~ {LevelMax}品";
+            return res;
+        }
+
 
         /// <summary>
         /// 从BigFMItem构造
         /// </summary>
         /// <param name="item">BigFMItem对象</param>
-        public BigFM(BigFMItem item) : this(item.Name, item.ItemName, item.ToolTip,
-            item.IconID, item.ItemID, item.Enchant_ID,
+        public BigFM(Enchant item) : this(item.Name, item.ItemName, item.ToolTip,
+            item.IconID, item.UIID, item.ID,
             item.Quality, item.SubType,
             item.Level_Min, item.Level_Max, item.Rank,
             magic: item.Magic, physics: item.Physics, tag: BottomsFMTag.NotBottoms)
         {
             DLCLevel = item.DLCLevel;
+            EnhanceDesc = item.EnhanceDesc;
+            Score = item.Score;
+            VM = new EnhanceAttributeEntryViewModel(this);
         }
 
         public static BottomsFMTag ParseBottomsFMTag(string name)
@@ -146,19 +194,35 @@ namespace JX3CalculatorShared.Class
                 var success = Enum.TryParse(realname, out BottomsFMTag res);
                 result = success ? res : BottomsFMTag.NotBottoms;
             }
+
             return result;
         }
 
         public BigFM(BottomsFMItem item) : this(item.Name, item.ItemName, item.ToolTip,
-            item.IconID, item.ItemID, item.Enchant_ID,
+            item.IconID, item.UIID, item.ID,
             item.Quality, EquipSubTypeEnum.BOTTOMS,
             0, item.Level_Max, item.Rank,
             magic: 0, physics: 0, tag: ParseBottomsFMTag(item.Name))
         {
         }
 
-
         #endregion
+
+        public override int GetHashCode()
+        {
+            return UIID.GetHashCode();
+        }
+
+
+        public bool Equals(BigFM other)
+        {
+            return other != null && other.UIID == UIID;
+        }
+
+        public override bool Equals(object obj)
+        {
+            return Equals(obj as BigFM);
+        }
 
         #region 显示
 
@@ -186,6 +250,7 @@ namespace JX3CalculatorShared.Class
             {
                 res.Add($"- 外功：{Physics:D}, 内功：{Magic:D}");
             }
+
             return res;
         }
 
@@ -213,13 +278,30 @@ namespace JX3CalculatorShared.Class
                     }
 
                     res.Add(k2, KVP.Value);
-
                 }
             }
+
             return res;
         }
 
         #endregion
 
+        public static (string Color, string Path) GetColorImage(BigFM b)
+        {
+            string color;
+            string path;
+            if (b == null)
+            {
+                color = ColorConst.INACTIVE;
+                path = BindingTool.ImageName2Path("enchant-null");
+            }
+            else
+            {
+                color = ColorConst.Enhance;
+                path = BindingTool.ImageName2Path("enchant");
+            }
+
+            return (color, path);
+        }
     }
 }

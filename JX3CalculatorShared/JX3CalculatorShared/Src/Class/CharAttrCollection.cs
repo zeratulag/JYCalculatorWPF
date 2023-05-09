@@ -6,7 +6,7 @@ namespace JX3CalculatorShared.Class
 {
     public class CharAttrCollection : AttrCollection
     {
-        public static readonly Func<string, AttrTemplate> GetTemplate = AtLoader.GetAtTemplate;
+        public static readonly Func<string, AttributeID> GetTemplate = AttributeIDLoader.GetAttributeID;
 
         public static CharAttrCollection Empty = new CharAttrCollection(false);
         public static CharAttrCollection SimplifiedEmpty = new CharAttrCollection(true);
@@ -22,7 +22,7 @@ namespace JX3CalculatorShared.Class
             Simplified = attr.Simplified;
         }
 
-        public CharAttrCollection(IDictionary<string, double> data) : base(data, AtLoader.At_is_Value)
+        public CharAttrCollection(IDictionary<string, double> data) : base(data, AttributeIDLoader.AttributeIsValue)
         {
         }
 

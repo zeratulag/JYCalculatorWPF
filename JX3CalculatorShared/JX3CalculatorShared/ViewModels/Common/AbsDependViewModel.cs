@@ -37,6 +37,10 @@ namespace JX3CalculatorShared.ViewModels
         {
         }
 
+        protected AbsDependViewModel()
+        {
+        }
+
         /// <summary>
         /// 设定这些VM为依赖项
         /// </summary>
@@ -45,6 +49,10 @@ namespace JX3CalculatorShared.ViewModels
         {
             _DependVMs = dependVMs.ToImmutableArray();
             AttachDependVMsOutputChanged();
+        }
+        protected void SetDependVMs(params TViewModel[] depends)
+        {
+            SetDependVMs(dependVMs: depends);
         }
 
         /// <summary>

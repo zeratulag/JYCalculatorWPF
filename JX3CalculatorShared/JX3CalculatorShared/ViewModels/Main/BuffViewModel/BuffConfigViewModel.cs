@@ -25,6 +25,8 @@ namespace JX3CalculatorShared.ViewModels
 
         public readonly string HeaderType; // Header类型文字提示（自身/宴席）
         public string Header { get; set; }
+
+        public BuffViewModel[] ValidBuffViewModels = null;
         #endregion
 
         #region 构造
@@ -35,7 +37,7 @@ namespace JX3CalculatorShared.ViewModels
                 _ => new BuffViewModel(_.Value));
             Data = BuffVMDict.Values.OrderBy(_ => _._Buff.Order).ToImmutableArray();
             IsTarget = Data[0].IsTarget;
-            BuffType = Data[0]._Buff.Type;
+            BuffType = Data[0]._Buff.BuffType;
 
             BuffDescNameVMDict = BuffVMDict.ToImmutableDictionary(_ => _.Value.DescName, _ => _.Value);
             BuffIDVMDict = BuffVMDict.ToImmutableDictionary(_ => _.Value._Buff.BuffID, _ => _.Value);
@@ -58,6 +60,7 @@ namespace JX3CalculatorShared.ViewModels
             UpdateEnabledBuffVMs();
             UpdateEmitBaseBuffGroup();
             UpdateHeader();
+            GetValidBuffViewModels();
         }
 
         protected void UpdateEnabledBuffVMs()
@@ -95,7 +98,7 @@ namespace JX3CalculatorShared.ViewModels
         {
             string res;
             var buffvm = BuffVMDict.Values.First();
-            res = Buff.Type2Header[buffvm._Buff.Type];
+            res = Buff.Type2Header[buffvm._Buff.BuffType];
             return res;
         }
 
@@ -109,6 +112,21 @@ namespace JX3CalculatorShared.ViewModels
                 res = $"{res}：{content}";
             }
             Header = res;
+        }
+
+        public void GetValidBuffViewModels()
+        {
+            // 在buff叠加规则下，获取有效的VM
+            var IDs = EmitedBaseBuffGroup.Items.Select(_ => _.BuffID).ToHashSet();
+            var res = new List<BuffViewModel>(BuffIDVMDict.Count);
+            foreach (var kvp in BuffIDVMDict)
+            {
+                if (IDs.Contains(kvp.Value._Buff.BuffID))
+                {
+                    res.Add(kvp.Value);
+                }
+            }
+            ValidBuffViewModels = res.ToArray();
         }
 
 

@@ -13,7 +13,6 @@ namespace JYCalculator.Class
         public readonly SkillFreqCTDF FreqDF;
         public readonly double Time;
 
-
         public string[] ValidSkillNames; // 频率大于0的技能Name集合
         public double RawDPS { get; private set; }
 

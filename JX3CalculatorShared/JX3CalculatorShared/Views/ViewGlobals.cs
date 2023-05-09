@@ -38,14 +38,16 @@ namespace JX3CalculatorShared.Views
 
     public static class QualityColor
     {
-        public static ImmutableDictionary<QualityEnum, string> ColorMap = new Dictionary<QualityEnum, string>()
+        public static ImmutableDictionary<QualityEnum, string> Dict = new Dictionary<QualityEnum, string>()
         {
             {QualityEnum.None, "#000000"},
+            {QualityEnum.GREY, "#a9a9a9"},
             {QualityEnum.WHITE, "#ffffff"},
             {QualityEnum.GREEN, "#00d24b"},
             {QualityEnum.BLUE, "#007eff"},
             {QualityEnum.PURPLE, "#ff2dff"},
             {QualityEnum.ORANGE, "#ffa500"},
+            {QualityEnum.INVALID, "#000000"}
         }.ToImmutableDictionary();
 
         static QualityColor()
@@ -55,7 +57,7 @@ namespace JX3CalculatorShared.Views
         // 品级到字体颜色转换
         public static string GetColor(this QualityEnum quality)
         {
-            return ColorMap[quality];
+            return Dict[quality];
         }
 
         // 品级到物品外边框颜色转换

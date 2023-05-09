@@ -31,38 +31,18 @@ namespace JX3CalculatorShared.ViewModels
         public int Load(string name)
         {
             var res = 0;
-            if (Name2IndexDict.ContainsKey(name))
+            if (name != null && Name2IndexDict.TryGetValue(name, out var value))
             {
-                SelectedIndex = Name2IndexDict[name];
+                SelectedIndex = value;
                 res = 0;
             }
             else
             {
+                SelectedIndex = 0;
                 res = 1;
             }
 
             return res;
-        }
-    }
-
-    public class EquipOptionConfigSav
-    {
-        public bool JN { get; set; }
-        public bool SL { get; set; }
-        public string WPName { get; set; } = "";
-        public string YZName { get; set; } = "";
-
-
-        public EquipOptionConfigSav()
-        {
-        }
-
-        public EquipOptionConfigSav(bool jn, bool sl, string wpName, string yzName)
-        {
-            JN = jn;
-            SL = sl;
-            WPName = wpName;
-            YZName = yzName;
         }
     }
 }

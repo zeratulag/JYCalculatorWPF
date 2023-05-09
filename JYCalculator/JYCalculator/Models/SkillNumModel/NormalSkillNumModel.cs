@@ -38,7 +38,6 @@ namespace JYCalculator.Models
         {
             CommonCalcBefore();
             CalcNormalSkillNum();
-            CommonCalcAfter();
         }
 
         /// <summary>
@@ -48,7 +47,6 @@ namespace JYCalculator.Models
         {
             CalcBL();
         }
-
 
     }
 

@@ -17,6 +17,7 @@ namespace JYCalculator.Class
         public SkillDataTypeEnum Type => Data.Info.Type;
         public double Freq { get; private set; } = 0; // 频率（默认为0）
         public double DPS { get; private set; } = 0;
+
         public double OrgPhysicsDmg { get; set; } = 0; // 原始外功伤害（固定部分+外功攻击部分+武器部分）
         public double OrgPDmg { get; set; } = 0; // 原始破招伤害（仅当技能是破招类才有）
         public double StdPhysicsDmg { get; set; } // 基准外功伤害
@@ -41,6 +42,7 @@ namespace JYCalculator.Class
         public double Expect { get; set; } // 期望
         public double ExpectPhysicsDmg { get; set; } // 实际外功伤害期望
         public double FinalEDamage { get; set; } // 最终伤害期望
+
         public double RelativeDamage { get; set; } // 相对伤害
 
         [ExcelIgnore] public DamageDeriv Deriv { get; protected set; } // 求导
@@ -61,6 +63,7 @@ namespace JYCalculator.Class
             CTarget = target;
         }
 
+
         public void SetFChar(FullCharacter fchar)
         {
             // 重新设定人物面板
@@ -72,7 +75,7 @@ namespace JYCalculator.Class
         public void GetETable()
         {
             CT = Math.Min(1, Data.AddCT + FChar.CT);
-            CF = Math.Min(3, Data.AddCF + FChar.CF);
+            CF = Math.Max(StaticConst.CriticalDamageStart, Math.Min(StaticConst.CriticalDamageMax, Data.AddCF + FChar.CF));
             Expect = CT * (CF - 1) + 1;
             RealCriticalDmg = RealDmg * Expect;
         }

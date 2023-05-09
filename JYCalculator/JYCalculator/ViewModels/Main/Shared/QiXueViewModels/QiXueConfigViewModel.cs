@@ -10,6 +10,7 @@ using System.Linq;
 using System.Windows.Interop;
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
+using JX3CalculatorShared.Class;
 
 namespace JYCalculator.ViewModels
 {
@@ -25,7 +26,7 @@ namespace JYCalculator.ViewModels
 
         public readonly string[] ItemNames; //存储奇穴名称
 
-        
+        public QiXueSkill[] SelectedQiXueSkills = null;
 
         public readonly QiXueConfigModel Model;
 
@@ -82,7 +83,7 @@ namespace JYCalculator.ViewModels
             int step = 6;
             var nameline = new List<string>();
 
-            var itempnames = (from _ in Data select _.SelectedItem.ItemNameP).ToArray();
+            var itempnames = (from _ in Data select _.SelectedItem.ItemName).ToArray();
 
             int skiped = 0;
 
@@ -100,10 +101,16 @@ namespace JYCalculator.ViewModels
 
         protected override void _Update()
         {
+            GetSelectedQiXues();
             GetItemNames();
             UpdateHeaderName();
             UpdateModel();
             SendMessage();
+        }
+
+        private void GetSelectedQiXues()
+        {
+            SelectedQiXueSkills = Data.Select(_ => _.SelectedItem).ToArray();
         }
 
         protected void SendMessage()
@@ -116,7 +123,7 @@ namespace JYCalculator.ViewModels
         {
             for (int i = 0; i < NSLOTS; i++)
             {
-                ItemNames[i] = Data[i].CurrentQiXue.ItemName;
+                ItemNames[i] = Data[i].SelectedItem.ItemName;
             }
         }
 
@@ -131,6 +138,7 @@ namespace JYCalculator.ViewModels
         {
             Model.UpdateInput(this);
         }
+
 
 
         public int[] Export()

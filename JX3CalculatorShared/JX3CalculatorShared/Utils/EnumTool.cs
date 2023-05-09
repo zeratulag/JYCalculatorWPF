@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using JX3CalculatorShared.Globals;
 
 namespace JX3CalculatorShared.Utils
 {
@@ -26,6 +27,18 @@ namespace JX3CalculatorShared.Utils
         public static IEnumerable<T> GetValues<T>()
         {
             return Enum.GetValues(typeof(T)).Cast<T>();
+        }
+
+        public static DamageTypeEnum GetDamageType(this DamageSubTypeEnum e)
+        {
+            if (e == DamageSubTypeEnum.Physics)
+            {
+                return DamageTypeEnum.Physics;
+            }
+            else
+            {
+                return DamageTypeEnum.Magic;
+            }
         }
 
     }

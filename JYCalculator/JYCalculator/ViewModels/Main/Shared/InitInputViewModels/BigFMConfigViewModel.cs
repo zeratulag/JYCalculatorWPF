@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Diagnostics;
 using System.Linq;
+using JYCalculator.Globals;
 
 
 namespace JYCalculator.ViewModels
@@ -58,6 +59,7 @@ namespace JYCalculator.ViewModels
             NSlot = Data.Length;
             Config = new BigFMSlotConfig[NSlot];
 
+            GlobalContext.BigFMSlots = Data.Select(_ => _.SubType).ToImmutableArray();
             AttachDependVMsOutputChanged();
             PostConstructor();
             _Update();
@@ -97,7 +99,7 @@ namespace JYCalculator.ViewModels
 
             foreach (var _ in Config)
             {
-                Trace.Write($"{_.IsChecked}: {_.ItemID},  ");
+                Trace.Write($"{_.IsChecked}: {_.UIID},  ");
             }
         }
 

@@ -36,7 +36,6 @@ namespace JX3CalculatorShared.ViewModels
             ShortDesc = item.ShortDesc;
 
             IconID = item.IconID;
-            IconPath = BindingTool.IconID2Path(IconID);
 
             ToolTip = item.ToolTip + item.GetToolTipTail();
 
@@ -48,7 +47,6 @@ namespace JX3CalculatorShared.ViewModels
 
         [DoNotNotify] public string ShortDesc { get; }
         [DoNotNotify] public int Quality { get; }
-        [DoNotNotify] public new string IconPath { get; }
 
         /// <summary>
         /// 从描述中提取技能名称

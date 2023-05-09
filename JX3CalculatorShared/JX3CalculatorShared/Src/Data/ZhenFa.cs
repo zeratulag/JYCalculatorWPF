@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Text;
-using static JX3CalculatorShared.Globals.Strings;
+using static JX3CalculatorShared.Globals.StringConsts;
 
 namespace JX3CalculatorShared.Data
 {
@@ -26,8 +26,6 @@ namespace JX3CalculatorShared.Data
         public string BuffID { get; }
         public string BuffZ5ID { get; }
 
-        public string IconPath { get; }
-
         public ImmutableDictionary<string, double> Buff_dict { get; set; } = null;
         public ImmutableDictionary<string, double> BuffZ5_dict { get; set; } = null;
 
@@ -46,6 +44,7 @@ namespace JX3CalculatorShared.Data
         #endregion
 
         public bool IsNone => Name == "None";
+        public bool IsNotNone => !IsNone;
 
         public bool IsOwn => Name.EndsWith("#Self"); // 是否为自己开阵
 
@@ -136,7 +135,7 @@ namespace JX3CalculatorShared.Data
 
             Emit = FuncExtensions.Memoize<double, int?, BaseBuffGroup>(Emit0);
 
-            IconPath = BindingTool.IconID2Path(IconID);
+
             EmitDefault();
         }
 

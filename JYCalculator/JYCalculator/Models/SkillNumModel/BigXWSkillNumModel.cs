@@ -30,7 +30,6 @@ namespace JYCalculator.Models
         {
             CommonCalcBefore();
             CalcBigXWSkillNum();
-            CommonCalcAfter();
         }
 
 

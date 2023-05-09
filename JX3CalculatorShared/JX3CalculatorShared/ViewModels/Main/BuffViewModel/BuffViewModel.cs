@@ -1,5 +1,5 @@
-﻿using JX3CalculatorShared.Class;
-using JX3CalculatorShared.Utils;
+﻿using CommunityToolkit.Mvvm.Input;
+using JX3CalculatorShared.Class;
 using PropertyChanged;
 
 namespace JX3CalculatorShared.ViewModels
@@ -18,8 +18,6 @@ namespace JX3CalculatorShared.ViewModels
 
         [DoNotNotify] public int IconID { get; protected set; }
 
-        [DoNotNotify] public string IconPath { get; }
-
         public string ToolTip { get; protected set; }
 
         public readonly Buff _Buff; // 基础模板
@@ -29,12 +27,17 @@ namespace JX3CalculatorShared.ViewModels
         public string DescName { get; }
 
         public int Stack { get; set; }
-
         public int MaxStack { get; }
         public double Cover { get; set; }
 
         public bool IsTarget;
 
+        public bool HasStackInput { get; } // 是否需要输入叠加层数
+        public bool HasCoverInput { get; } // 是否需要输入覆盖率
+
+        public bool CanStack { get; } // 是否有多层叠加
+
+        public RelayCommand CancelThisCmd { get; }
         #endregion
 
         #region 构造
@@ -49,11 +52,16 @@ namespace JX3CalculatorShared.ViewModels
             Stack = buff.DefaultStack;
             MaxStack = buff.MaxStack;
             Cover = buff.DefaultCover;
-            IconPath = BindingTool.IconID2Path(IconID);
+            CanStack = MaxStack > 1;
 
             IsTarget = buff.IsTarget;
 
+            HasStackInput = _Buff.HasStackInput();
+            HasCoverInput = _Buff.HasCoverInput();
+
             ExtendInputNames(nameof(Stack), nameof(Cover));
+
+            CancelThisCmd = new RelayCommand(CancelThis);
 
             PostConstructor();
             EmitBaseBuff();
@@ -79,6 +87,11 @@ namespace JX3CalculatorShared.ViewModels
         {
             EmitedBaseBuff = _Buff.Emit(Cover, Stack);
             ToolTip = EmitedBaseBuff.ToolTip;
+        }
+
+        public void CancelThis()
+        {
+            IsChecked = false;
         }
 
         #endregion

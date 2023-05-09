@@ -9,12 +9,12 @@ namespace JX3CalculatorShared.ViewModels
     public struct BigFMSlotConfig
     {
         public bool IsChecked;
-        public int ItemID;
+        public int UIID;
 
-        public BigFMSlotConfig(bool isChecked, int itemId)
+        public BigFMSlotConfig(bool isChecked, int uiid = -1)
         {
             IsChecked = isChecked;
-            ItemID = itemId;
+            UIID = uiid;
         }
     }
 
@@ -54,12 +54,25 @@ namespace JX3CalculatorShared.ViewModels
 
         public BigFMSlotConfig Config;
 
-        public BigFM EnabledItem => IsChecked ? ItemsSource[SelectedIndex] : null;
+        public BigFM EnabledItem
+        {
+            get
+            {
+                if (IsChecked && SelectedIndex >= 0)
+                {
+                    return ItemsSource[SelectedIndex];
+                }
+                else
+                {
+                    return null;
+                }
+            }
+        }
+
         public int EnabledRank => EnabledItem?.Rank ?? -1;
 
         public int DefaultIndex; // 默认选项
-
-
+        
         /// <summary>
         /// 构建VM
         /// </summary>
@@ -82,7 +95,7 @@ namespace JX3CalculatorShared.ViewModels
             var map = new Dictionary<int, int>(6);
             for (int i = 0; i < ItemsSource.Length; i++)
             {
-                map.Add(ItemsSource[i].ItemID, i);
+                map.Add(ItemsSource[i].UIID, i);
             }
 
             ItemIDMap = map.ToImmutableDictionary();
@@ -124,7 +137,13 @@ namespace JX3CalculatorShared.ViewModels
 
         protected void GetConfig()
         {
-            Config = new BigFMSlotConfig(IsChecked, SelectedItem.ItemID);
+            int uiid = -1;
+            if (SelectedItem != null)
+            {
+                uiid = SelectedItem.UIID;
+            }
+
+            Config = new BigFMSlotConfig(IsChecked, uiid);
         }
 
         public bool Load(bool isChecked, int enchantId)
@@ -142,12 +161,14 @@ namespace JX3CalculatorShared.ViewModels
                 SelectedIndex = DefaultIndex;
             }
 
+            //if (!IsChecked) SelectedIndex = -1;
+            //CheckBoxIsEnabled = oldEnabled;
             return res;
         }
 
         public bool Load(BigFMSlotConfig config)
         {
-            return Load(config.IsChecked, config.ItemID);
+            return Load(config.IsChecked, config.UIID);
         }
 
 

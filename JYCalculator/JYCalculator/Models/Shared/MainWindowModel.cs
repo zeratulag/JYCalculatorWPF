@@ -5,6 +5,8 @@ using JYCalculator.Class;
 using JYCalculator.Src;
 using JYCalculator.ViewModels;
 using System.Collections.Generic;
+using JYCalculator.Globals;
+using JX3PZ.Models;
 
 namespace JYCalculator.Models
 {
@@ -71,13 +73,9 @@ namespace JYCalculator.Models
         public void Calc()
         {
             var res = UpdateCalcShell();
-            if (res.CalcStatus == 0)
-            {
-                CalcShell = res;
-                CalcAllAttrs();
-                UpdateResult();
-            }
-
+            CalcShell = res;
+            CalcAllAttrs();
+            UpdateResult();
             CalcShellStatus = res.CalcStatus;
         }
 
@@ -123,7 +121,16 @@ namespace JYCalculator.Models
                 FightOption = FightOptionVM.Export(),
                 AppMeta = Globals.XFAppStatic.CurrentAppMeta,
                 SnapFinalDPS = CalcShell.CDPSKernel.FinalDPS,
+                IsSync = GlobalContext.IsPZSyncWithCalc,
             };
+
+            var pzSav = GlobalContext.ViewModels.PzMain?.Export();
+            if (pzSav != null)
+            {
+                pzSav.IsSync = GlobalContext.IsPZSyncWithCalc;
+            }
+
+            res.PzSav = pzSav;
 
             return res;
         }
@@ -136,6 +143,9 @@ namespace JYCalculator.Models
             BuffVM.Load(sav.Buff);
             ItemDTVM.Load(sav.ItemDT);
             FightOptionVM.Load(sav.FightOption);
+
+            GlobalContext.IsPZSyncWithCalc = sav.IsSync;
+            GlobalContext.ViewModels.PzMain.Load(sav.PzSav);
         }
 
         #endregion

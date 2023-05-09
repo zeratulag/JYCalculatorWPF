@@ -10,7 +10,7 @@ namespace JYCalculator.ViewModels
         public AboutDialogViewModel()
         {
             URLDict = XFAppStatic.URLDict;
-            MainName = "惊羽计算器Pro v" + XFAppStatic.AppVersion.ToString() + " \"Nirvana\" Release";
+            MainName = "惊羽诀配装计算器Pro v" + XFAppStatic.AppVersion.ToString() + " \"Nirvana\" Release";
             Description = "Desc";
 
             BuildDateTime = XFAppStatic.BuildDateTime.ToString("G");

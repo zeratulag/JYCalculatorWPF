@@ -7,13 +7,35 @@ using System.Linq;
 
 namespace JYCalculator.Class
 {
-    public class JBPZPlan : JBPZPlanBase
+    public class JBPZPlan : JBPZEquipSnapshotCollection
     {
         #region 成员
 
         [JsonIgnore] public EquipOptionConfigSav EquipOptionSav;
 
         [JsonIgnore] public BigFMSlotConfig[] BigFMConfig;
+
+        public JBPZPlan(JBPZEquipSnapshotCollection equipSnapshotCollection)
+        {
+            if (equipSnapshotCollection != null)
+            {
+                HAT = equipSnapshotCollection.HAT;
+                BELT = equipSnapshotCollection.BELT;
+                SHOES = equipSnapshotCollection.SHOES;
+                WRIST = equipSnapshotCollection.WRIST;
+                JACKET = equipSnapshotCollection.JACKET;
+                RING_1 = equipSnapshotCollection.RING_1;
+                RING_2 = equipSnapshotCollection.RING_2;
+                BOTTOMS = equipSnapshotCollection.BOTTOMS;
+                PENDANT = equipSnapshotCollection.PENDANT;
+                NECKLACE = equipSnapshotCollection.NECKLACE;
+                PRIMARY_WEAPON = equipSnapshotCollection.PRIMARY_WEAPON;
+                SECONDARY_WEAPON = equipSnapshotCollection.SECONDARY_WEAPON;
+                TERTIARY_WEAPON = equipSnapshotCollection.TERTIARY_WEAPON;
+            }
+        }
+
+        public JBPZPlan(JBBB j) : this(j?.EquipList) { }
 
         #endregion
 
@@ -52,7 +74,6 @@ namespace JYCalculator.Class
             ParseEquipOption();
             ParseBigFMSlotConfig();
         }
-
 
         public EquipOptionConfigSav ParseEquipOption()
         {
@@ -105,16 +126,13 @@ namespace JYCalculator.Class
                 {
                     c = new BigFMSlotConfig(true, StaticXFData.DB.BigFM.GetItemID(cenchantid));
                 }
+
                 res[i] = c;
             }
 
             BigFMConfig = res;
 
-            Had_BigFM_hat = res[0].IsChecked;
-            Had_BigFM_jacket = res[1].IsChecked;
-
             return BigFMConfig;
-
         }
 
         #endregion
