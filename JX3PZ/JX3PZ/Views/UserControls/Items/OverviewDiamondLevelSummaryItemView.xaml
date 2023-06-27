@@ -7,11 +7,11 @@
              xmlns:hc="https://handyorg.github.io/handycontrol"
              mc:Ignorable="d"
              d:DesignHeight="40" d:DesignWidth="100">
-    <StackPanel Orientation="Vertical" Width="27">
+    <StackPanel Orientation="Vertical" Width="28" Margin="0 0 0 0">
         <Image Source="{Binding Level, Converter={StaticResource DiamondLevelToImgConverter}}" Height="18" Width="18"
                ToolTip="{Binding ToolTip}"
                HorizontalAlignment="Center"
                VerticalAlignment="Center"/>
-        <TextBlock Text="{Binding EquipTag}" Foreground="White" TextAlignment="Center" Margin="0 1 0 0" FontSize="12" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+        <TextBlock Text="{Binding EquipTag}" Foreground="White" TextAlignment="Center" Margin="0 2 0 0" FontSize="12" VerticalAlignment="Center" HorizontalAlignment="Center"/>
     </StackPanel>
 </UserControl>

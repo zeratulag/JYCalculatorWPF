@@ -10,8 +10,10 @@ using JYCalculator.Globals;
 using JYCalculator.Messages;
 using JYCalculator.Utils;
 using System;
+using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
+using System.Windows;
 using CalcResultViewModel = JX3CalculatorShared.ViewModels.CalcResultViewModel;
 
 namespace JX3PZ.ViewModels
@@ -107,10 +109,16 @@ namespace JX3PZ.ViewModels
             GlobalContext.ViewModels.Main.SaveCurrent();
         }
 
-        private void OpenLoadPZ()
+        public void OpenLoadPZ()
         {
             var res = GlobalContext.ViewModels.Main.OpenFileAsSav(false);
             if (res != null) Load(res.PzSav);
+        }
+
+        // 读取文件
+        public void ReadFile(string filepath)
+        {
+            GlobalContext.ViewModels.Main.ReadFile(filepath);
         }
 
         #region 一键操作
@@ -361,8 +369,14 @@ namespace JX3PZ.ViewModels
 
         public void Receive(PzInfoMessage message)
         {
-            Title = message.Title;
+            UpdateTitle(message.Title);
             Author = message.Author;
+        }
+
+        public void UpdateTitle(string title)
+        {
+            Title = title;
+            Model.XFPanel.Name = title;
         }
     }
 }

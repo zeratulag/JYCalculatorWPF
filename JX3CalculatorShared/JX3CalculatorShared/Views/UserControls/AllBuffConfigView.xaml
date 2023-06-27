@@ -1,0 +1,52 @@
+﻿<UserControl
+    x:Class="JX3CalculatorShared.Views.UserControls.AllBuffConfigView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+    <StackPanel>
+        <Expander x:Name="Expander_Buff_Self" DataContext="{Binding Path=Buff_Self}">
+            <Expander.Header>
+                <TextBlock Text="{Binding Path=Header}" TextWrapping="Wrap" />
+            </Expander.Header>
+            <ListView x:Name="ListView_Buff_Self" Style="{StaticResource Style.BaseBuffListView}" />
+        </Expander>
+
+        <Expander x:Name="Expander_Buff_Banquet" DataContext="{Binding Path=Buff_Banquet}">
+            <Expander.Header>
+                <TextBlock Text="{Binding Path=Header}" TextWrapping="Wrap" />
+            </Expander.Header>
+            <ListView x:Name="ListView_Buff_Banquet" Style="{StaticResource Style.BaseBuffListView}" />
+        </Expander>
+
+        <Expander x:Name="Expander_Buff_Normal" DataContext="{Binding Path=Buff_Normal}">
+            <Expander.Header>
+                <TextBlock Text="{Binding Path=Header}" TextWrapping="Wrap" />
+            </Expander.Header>
+            <ListView x:Name="ListView_Buff_Normal" Style="{StaticResource Style.BaseBuffListView}" />
+        </Expander>
+
+        <Expander x:Name="Expander_DeBuff_Normal" DataContext="{Binding Path=DeBuff_Normal}">
+            <Expander.Header>
+                <TextBlock Text="{Binding Path=Header}" TextWrapping="Wrap" />
+            </Expander.Header>
+            <ListView x:Name="ListView_DeBuff_Normal" Style="{StaticResource Style.BaseBuffListView}" />
+        </Expander>
+
+        <Expander x:Name="Expander_Buff_Extra" DataContext="{Binding Path=Buff_Extra}">
+            <Expander.Header>
+                <TextBlock Text="{Binding Path=Header}" TextWrapping="Wrap" />
+            </Expander.Header>
+            <ListView x:Name="ListView_Buff_Extra" Style="{StaticResource Style.ExtraBuffListView}" />
+        </Expander>
+
+        <Expander x:Name="Expander_Buff_ExtraStack" DataContext="{Binding Path=Buff_ExtraStack}">
+            <Expander.Header>
+                <TextBlock Text="{Binding Path=Header}" TextWrapping="Wrap" />
+            </Expander.Header>
+            <ListView x:Name="ListView_Buff_ExtraStack" Style="{StaticResource Style.ExtraStackBuffListView}" />
+        </Expander>
+
+    </StackPanel>
+</UserControl>

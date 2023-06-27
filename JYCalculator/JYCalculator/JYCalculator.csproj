@@ -97,8 +97,8 @@
     <Reference Include="Costura, Version=5.7.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\NuGetPackages\Costura.Fody.5.7.0\lib\netstandard1.0\Costura.dll</HintPath>
     </Reference>
-    <Reference Include="DataGridExtensions, Version=2.5.14.0, Culture=neutral, PublicKeyToken=43de855f87de903a, processorArchitecture=MSIL">
-      <HintPath>..\..\..\NuGetPackages\DataGridExtensions.2.5.14\lib\net452\DataGridExtensions.dll</HintPath>
+    <Reference Include="DataGridExtensions, Version=2.5.15.0, Culture=neutral, PublicKeyToken=43de855f87de903a, processorArchitecture=MSIL">
+      <HintPath>..\..\..\NuGetPackages\DataGridExtensions.2.5.15\lib\net452\DataGridExtensions.dll</HintPath>
     </Reference>
     <Reference Include="DeepCloner, Version=0.10.0.0, Culture=neutral, PublicKeyToken=dc0b95cf99bf4e99, processorArchitecture=MSIL">
       <HintPath>..\..\..\NuGetPackages\DeepCloner.0.10.4\lib\net40\DeepCloner.dll</HintPath>
@@ -129,8 +129,8 @@
     <Reference Include="Microsoft.Xaml.Behaviors, Version=1.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\..\..\NuGetPackages\Microsoft.Xaml.Behaviors.Wpf.1.1.39\lib\net45\Microsoft.Xaml.Behaviors.dll</HintPath>
     </Reference>
-    <Reference Include="MiniExcel, Version=1.30.3.0, Culture=neutral, PublicKeyToken=e7310002a53eac39, processorArchitecture=MSIL">
-      <HintPath>..\..\..\NuGetPackages\MiniExcel.1.30.3\lib\net45\MiniExcel.dll</HintPath>
+    <Reference Include="MiniExcel, Version=1.31.0.0, Culture=neutral, PublicKeyToken=e7310002a53eac39, processorArchitecture=MSIL">
+      <HintPath>..\..\..\NuGetPackages\MiniExcel.1.31.0\lib\net45\MiniExcel.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\..\..\NuGetPackages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -477,8 +477,23 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Shared\MainWindowHelper.cs" />
+    <Compile Include="Views\UserControls\AllSkillMiJiConfigView.xaml.cs">
+      <DependentUpon>AllSkillMiJiConfigView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UserControls\FullCharacterGroupDataGrid.xaml.cs">
+      <DependentUpon>FullCharacterGroupDataGrid.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UserControls\DebugGroupBox.xaml.cs">
+      <DependentUpon>DebugGroupBox.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\UserControls\InitCharPanel.xaml.cs">
       <DependentUpon>InitCharPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UserControls\InitInputGroupBox.xaml.cs">
+      <DependentUpon>InitInputGroupBox.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UserControls\OptimizationGroupBox.xaml.cs">
+      <DependentUpon>OptimizationGroupBox.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\UserControls\ProfitDataGrid.xaml.cs">
       <DependentUpon>ProfitDataGrid.xaml</DependentUpon>
@@ -508,9 +523,29 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Views\UserControls\AllSkillMiJiConfigView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UserControls\FullCharacterGroupDataGrid.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UserControls\DebugGroupBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\UserControls\InitCharPanel.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\UserControls\InitInputGroupBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UserControls\OptimizationGroupBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\UserControls\ProfitDataGrid.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -585,6 +620,13 @@
     <Resource Include="Resource\Icons\-110.png" />
     <Resource Include="Resource\Icons\-2.png" />
     <Resource Include="Resource\Icons\-3.png" />
+    <Resource Include="Resource\Icons\10387.png" />
+    <Resource Include="Resource\Icons\10417.png" />
+    <Resource Include="Resource\Icons\10418.png" />
+    <Resource Include="Resource\Icons\10419.png" />
+    <Resource Include="Resource\Icons\10420.png" />
+    <Resource Include="Resource\Icons\10421.png" />
+    <Resource Include="Resource\Icons\10422.png" />
     <Resource Include="Resource\Icons\1048.png" />
     <Resource Include="Resource\Icons\1084.png" />
     <Resource Include="Resource\Icons\11.png" />
@@ -596,6 +638,7 @@
     <Resource Include="Resource\Icons\11046.png" />
     <Resource Include="Resource\Icons\11079.png" />
     <Resource Include="Resource\Icons\11194.png" />
+    <Resource Include="Resource\Icons\11359.png" />
     <Resource Include="Resource\Icons\11598.png" />
     <Resource Include="Resource\Icons\11599.png" />
     <Resource Include="Resource\Icons\11600.png" />
@@ -612,22 +655,41 @@
     <Resource Include="Resource\Icons\1206.png" />
     <Resource Include="Resource\Icons\1207.png" />
     <Resource Include="Resource\Icons\1211.png" />
+    <Resource Include="Resource\Icons\1212.png" />
     <Resource Include="Resource\Icons\1213.png" />
     <Resource Include="Resource\Icons\12130.png" />
     <Resource Include="Resource\Icons\1214.png" />
     <Resource Include="Resource\Icons\1215.png" />
     <Resource Include="Resource\Icons\1216.png" />
+    <Resource Include="Resource\Icons\1217.png" />
+    <Resource Include="Resource\Icons\1219.png" />
+    <Resource Include="Resource\Icons\1220.png" />
+    <Resource Include="Resource\Icons\12203.png" />
+    <Resource Include="Resource\Icons\12205.png" />
+    <Resource Include="Resource\Icons\12206.png" />
+    <Resource Include="Resource\Icons\12207.png" />
+    <Resource Include="Resource\Icons\12208.png" />
     <Resource Include="Resource\Icons\1222.png" />
     <Resource Include="Resource\Icons\1227.png" />
+    <Resource Include="Resource\Icons\12273.png" />
     <Resource Include="Resource\Icons\1228.png" />
     <Resource Include="Resource\Icons\1229.png" />
+    <Resource Include="Resource\Icons\1230.png" />
     <Resource Include="Resource\Icons\1231.png" />
     <Resource Include="Resource\Icons\1232.png" />
     <Resource Include="Resource\Icons\1233.png" />
     <Resource Include="Resource\Icons\1234.png" />
+    <Resource Include="Resource\Icons\1236.png" />
     <Resource Include="Resource\Icons\12490.png" />
     <Resource Include="Resource\Icons\1278.png" />
+    <Resource Include="Resource\Icons\12923.png" />
     <Resource Include="Resource\Icons\13.png" />
+    <Resource Include="Resource\Icons\13280.png" />
+    <Resource Include="Resource\Icons\13281.png" />
+    <Resource Include="Resource\Icons\13282.png" />
+    <Resource Include="Resource\Icons\13283.png" />
+    <Resource Include="Resource\Icons\13284.png" />
+    <Resource Include="Resource\Icons\13285.png" />
     <Resource Include="Resource\Icons\13424.png" />
     <Resource Include="Resource\Icons\13426.png" />
     <Resource Include="Resource\Icons\13428.png" />
@@ -680,6 +742,26 @@
     <Resource Include="Resource\Icons\18301.png" />
     <Resource Include="Resource\Icons\18303.png" />
     <Resource Include="Resource\Icons\18714.png" />
+    <Resource Include="Resource\Icons\19021.png" />
+    <Resource Include="Resource\Icons\19022.png" />
+    <Resource Include="Resource\Icons\19023.png" />
+    <Resource Include="Resource\Icons\19024.png" />
+    <Resource Include="Resource\Icons\19025.png" />
+    <Resource Include="Resource\Icons\19026.png" />
+    <Resource Include="Resource\Icons\19027.png" />
+    <Resource Include="Resource\Icons\19028.png" />
+    <Resource Include="Resource\Icons\19029.png" />
+    <Resource Include="Resource\Icons\19030.png" />
+    <Resource Include="Resource\Icons\19091.png" />
+    <Resource Include="Resource\Icons\19092.png" />
+    <Resource Include="Resource\Icons\19093.png" />
+    <Resource Include="Resource\Icons\19094.png" />
+    <Resource Include="Resource\Icons\19095.png" />
+    <Resource Include="Resource\Icons\19175.png" />
+    <Resource Include="Resource\Icons\19230.png" />
+    <Resource Include="Resource\Icons\19231.png" />
+    <Resource Include="Resource\Icons\19337.png" />
+    <Resource Include="Resource\Icons\19356.png" />
     <Resource Include="Resource\Icons\2040.png" />
     <Resource Include="Resource\Icons\2315.png" />
     <Resource Include="Resource\Icons\2316.png" />
@@ -711,15 +793,21 @@
     <Resource Include="Resource\Icons\2546.png" />
     <Resource Include="Resource\Icons\2747.png" />
     <Resource Include="Resource\Icons\2833.png" />
+    <Resource Include="Resource\Icons\2834.png" />
+    <Resource Include="Resource\Icons\2835.png" />
+    <Resource Include="Resource\Icons\2836.png" />
     <Resource Include="Resource\Icons\2838.png" />
     <Resource Include="Resource\Icons\2840.png" />
     <Resource Include="Resource\Icons\2842.png" />
     <Resource Include="Resource\Icons\2845.png" />
+    <Resource Include="Resource\Icons\2846.png" />
     <Resource Include="Resource\Icons\2847.png" />
+    <Resource Include="Resource\Icons\2848.png" />
     <Resource Include="Resource\Icons\2851.png" />
     <Resource Include="Resource\Icons\2853.png" />
     <Resource Include="Resource\Icons\2856.png" />
     <Resource Include="Resource\Icons\2899.png" />
+    <Resource Include="Resource\Icons\2900.png" />
     <Resource Include="Resource\Icons\2903.png" />
     <Resource Include="Resource\Icons\2987.png" />
     <Resource Include="Resource\Icons\3144.png" />
@@ -755,6 +843,7 @@
     <Resource Include="Resource\Icons\3240.png" />
     <Resource Include="Resource\Icons\3241.png" />
     <Resource Include="Resource\Icons\3322.png" />
+    <Resource Include="Resource\Icons\3791.png" />
     <Resource Include="Resource\Icons\3798.png" />
     <Resource Include="Resource\Icons\397.png" />
     <Resource Include="Resource\Icons\403.png" />
@@ -835,18 +924,31 @@
     <Resource Include="Resource\Icons\7595.png" />
     <Resource Include="Resource\Icons\7646.png" />
     <Resource Include="Resource\Icons\7667.png" />
+    <Resource Include="Resource\Icons\7899.png" />
     <Resource Include="Resource\Icons\798.png" />
+    <Resource Include="Resource\Icons\799.png" />
+    <Resource Include="Resource\Icons\800.png" />
     <Resource Include="Resource\Icons\801.png" />
     <Resource Include="Resource\Icons\802.png" />
     <Resource Include="Resource\Icons\804.png" />
     <Resource Include="Resource\Icons\805.png" />
     <Resource Include="Resource\Icons\806.png" />
+    <Resource Include="Resource\Icons\808.png" />
+    <Resource Include="Resource\Icons\810.png" />
+    <Resource Include="Resource\Icons\811.png" />
     <Resource Include="Resource\Icons\814.png" />
+    <Resource Include="Resource\Icons\815.png" />
+    <Resource Include="Resource\Icons\821.png" />
     <Resource Include="Resource\Icons\8425.png" />
     <Resource Include="Resource\Icons\8426.png" />
     <Resource Include="Resource\Icons\8638.png" />
     <Resource Include="Resource\Icons\88.png" />
     <Resource Include="Resource\Icons\8859.png" />
+    <Resource Include="Resource\Icons\8888.png" />
+    <Resource Include="Resource\Icons\8889.png" />
+    <Resource Include="Resource\Icons\8890.png" />
+    <Resource Include="Resource\Icons\8891.png" />
+    <Resource Include="Resource\Icons\8893.png" />
     <Resource Include="Resource\Icons\8909.png" />
     <Resource Include="Resource\Icons\8910.png" />
     <Resource Include="Resource\Icons\8915.png" />
@@ -855,6 +957,7 @@
     <Resource Include="Resource\Icons\907.png" />
     <Resource Include="Resource\Icons\9174.png" />
     <Resource Include="Resource\Icons\923.png" />
+    <Resource Include="Resource\Icons\9236.png" />
     <Resource Include="Resource\Icons\9240.png" />
     <Resource Include="Resource\Icons\9243.png" />
     <Resource Include="Resource\Icons\9244.png" />
@@ -862,6 +965,7 @@
     <Resource Include="Resource\Icons\9291.png" />
     <Resource Include="Resource\Icons\9551.png" />
     <Resource Include="Resource\Icons\9552.png" />
+    <Resource Include="Resource\Icons\9555.png" />
     <Resource Include="Resource\Icons\9684.png" />
     <Resource Include="Resource\Icons\9685.png" />
     <Resource Include="Resource\Icons\9686.png" />
@@ -940,70 +1044,6 @@
     <Resource Include="Resource\Images\sp.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resource\Icons\10387.png" />
-    <Resource Include="Resource\Icons\10417.png" />
-    <Resource Include="Resource\Icons\10418.png" />
-    <Resource Include="Resource\Icons\10419.png" />
-    <Resource Include="Resource\Icons\10420.png" />
-    <Resource Include="Resource\Icons\10421.png" />
-    <Resource Include="Resource\Icons\10422.png" />
-    <Resource Include="Resource\Icons\11359.png" />
-    <Resource Include="Resource\Icons\1212.png" />
-    <Resource Include="Resource\Icons\1217.png" />
-    <Resource Include="Resource\Icons\1219.png" />
-    <Resource Include="Resource\Icons\1220.png" />
-    <Resource Include="Resource\Icons\12203.png" />
-    <Resource Include="Resource\Icons\12205.png" />
-    <Resource Include="Resource\Icons\12206.png" />
-    <Resource Include="Resource\Icons\12207.png" />
-    <Resource Include="Resource\Icons\12208.png" />
-    <Resource Include="Resource\Icons\12273.png" />
-    <Resource Include="Resource\Icons\1230.png" />
-    <Resource Include="Resource\Icons\1236.png" />
-    <Resource Include="Resource\Icons\12923.png" />
-    <Resource Include="Resource\Icons\13280.png" />
-    <Resource Include="Resource\Icons\13281.png" />
-    <Resource Include="Resource\Icons\13282.png" />
-    <Resource Include="Resource\Icons\13283.png" />
-    <Resource Include="Resource\Icons\13284.png" />
-    <Resource Include="Resource\Icons\13285.png" />
-    <Resource Include="Resource\Icons\19021.png" />
-    <Resource Include="Resource\Icons\19022.png" />
-    <Resource Include="Resource\Icons\19023.png" />
-    <Resource Include="Resource\Icons\19024.png" />
-    <Resource Include="Resource\Icons\19025.png" />
-    <Resource Include="Resource\Icons\19026.png" />
-    <Resource Include="Resource\Icons\19027.png" />
-    <Resource Include="Resource\Icons\19028.png" />
-    <Resource Include="Resource\Icons\19029.png" />
-    <Resource Include="Resource\Icons\19030.png" />
-    <Resource Include="Resource\Icons\19091.png" />
-    <Resource Include="Resource\Icons\19092.png" />
-    <Resource Include="Resource\Icons\19093.png" />
-    <Resource Include="Resource\Icons\19094.png" />
-    <Resource Include="Resource\Icons\19095.png" />
-    <Resource Include="Resource\Icons\19230.png" />
-    <Resource Include="Resource\Icons\19231.png" />
-    <Resource Include="Resource\Icons\19337.png" />
-    <Resource Include="Resource\Icons\19356.png" />
-    <Resource Include="Resource\Icons\2834.png" />
-    <Resource Include="Resource\Icons\2835.png" />
-    <Resource Include="Resource\Icons\2836.png" />
-    <Resource Include="Resource\Icons\2846.png" />
-    <Resource Include="Resource\Icons\2848.png" />
-    <Resource Include="Resource\Icons\2900.png" />
-    <Resource Include="Resource\Icons\7899.png" />
-    <Resource Include="Resource\Icons\799.png" />
-    <Resource Include="Resource\Icons\800.png" />
-    <Resource Include="Resource\Icons\808.png" />
-    <Resource Include="Resource\Icons\810.png" />
-    <Resource Include="Resource\Icons\811.png" />
-    <Resource Include="Resource\Icons\815.png" />
-    <Resource Include="Resource\Icons\821.png" />
-    <Resource Include="Resource\Icons\9236.png" />
-    <Resource Include="Resource\Icons\9555.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Resource\Images\-1.png" />
   </ItemGroup>
   <ItemGroup>
@@ -1016,9 +1056,6 @@
     <Resource Include="Resource\Images\copy.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resource\Icons\19175.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Resource\Images\overview.jpg" />
   </ItemGroup>
   <ItemGroup>
@@ -1029,6 +1066,15 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resource\Images\PzIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resource\Icons\6839.png" />
+    <Resource Include="Resource\Icons\7986.png" />
+    <Resource Include="Resource\Icons\7987.png" />
+    <Resource Include="Resource\Icons\7988.png" />
+    <Resource Include="Resource\Icons\7989.png" />
+    <Resource Include="Resource\Icons\7991.png" />
+    <Resource Include="Resource\Icons\8746.png" />
   </ItemGroup>
   <Import Project="..\..\JX3CalculatorShared\JX3CalculatorShared\JX3CalculatorShared.projitems" Label="Shared" />
   <Import Project="..\..\JX3PZ\JX3PZ\JX3PZ.projitems" Label="Shared" />

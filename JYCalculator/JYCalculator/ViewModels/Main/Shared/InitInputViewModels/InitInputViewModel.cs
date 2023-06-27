@@ -17,9 +17,9 @@ namespace JYCalculator.ViewModels
     {
         #region 成员
 
-        public readonly InitCharacter InitChar;
-        public readonly EquipOptionConfigViewModel EquipOption;
-        public readonly BigFMConfigViewModel BigFM;
+        public InitCharacter InitCharVM { get; }
+        public EquipOptionConfigViewModel EquipOptionVM { get; }
+        public BigFMConfigViewModel BigFMVM { get; }
         public RelayCommand OpenImportJBBBDialogCmd { get; set; }
 
         public NamedAttrs BigFMAttrsDesc; // 大附魔提供的属性
@@ -31,12 +31,12 @@ namespace JYCalculator.ViewModels
 
         #region 构造
 
-        public InitInputViewModel(InitCharacter initchar, EquipOptionConfigViewModel equip, BigFMConfigViewModel bigFM)
-            : base(InputPropertyNameType.None, initchar, equip, bigFM)
+        public InitInputViewModel(InitCharacter initchar, EquipOptionConfigViewModel equip, BigFMConfigViewModel bigFmvm)
+            : base(InputPropertyNameType.None, initchar, equip, bigFmvm)
         {
-            InitChar = initchar;
-            EquipOption = equip;
-            BigFM = bigFM;
+            InitCharVM = initchar;
+            EquipOptionVM = equip;
+            BigFMVM = bigFmvm;
 
             OpenImportJBBBDialogCmd = new RelayCommand(OpenImportJBBBDialog);
             NoneBigFMInitCharacter = initchar;
@@ -92,13 +92,13 @@ namespace JYCalculator.ViewModels
         // 如果自身属性已经包括了头和衣大附魔，那么必须选中头和衣大附魔
         protected void ConnectedBigFM()
         {
-            BigFM.BigFMSlotDict[EquipSubTypeEnum.HAT].SetInitCharConnect(InitChar.Had_BigFM_hat);
-            BigFM.BigFMSlotDict[EquipSubTypeEnum.JACKET].SetInitCharConnect(InitChar.Had_BigFM_jacket);
+            BigFMVM.BigFMSlotDict[EquipSubTypeEnum.HAT].SetInitCharConnect(InitCharVM.Had_BigFM_hat);
+            BigFMVM.BigFMSlotDict[EquipSubTypeEnum.JACKET].SetInitCharConnect(InitCharVM.Had_BigFM_jacket);
         }
 
         protected void GetBigFMNamedSAttrs()
         {
-            BigFMAttrsDesc = BigFM.Model.GetNamedSAttrs(InitChar.Had_BigFM_hat, InitChar.Had_BigFM_jacket);
+            BigFMAttrsDesc = BigFMVM.Model.GetNamedSAttrs(InitCharVM.Had_BigFM_hat, InitCharVM.Had_BigFM_jacket);
         }
 
 
@@ -109,15 +109,15 @@ namespace JYCalculator.ViewModels
 
         public InitInputSav Export()
         {
-            var res = new InitInputSav(InitChar, EquipOption.Export(), BigFM.Config);
+            var res = new InitInputSav(InitCharVM, EquipOptionVM.Export(), BigFMVM.Config);
             return res;
         }
 
         protected void _Load(InitInputSav sav)
         {
-            InitChar.LoadFromIChar(sav.InitChar);
-            EquipOption.Load(sav.EquipOption);
-            BigFM.Load(sav.BigFM);
+            InitCharVM.LoadFromIChar(sav.InitChar);
+            EquipOptionVM.Load(sav.EquipOption);
+            BigFMVM.Load(sav.BigFM);
         }
 
         public void Load(InitInputSav sav)
@@ -132,16 +132,16 @@ namespace JYCalculator.ViewModels
         /// <returns></returns>
         protected InitCharacter GetNoneBigFMInitCharacter()
         {
-            var res = InitChar.Copy();
-            if (InitChar.Had_BigFM_jacket)
+            var res = InitCharVM.Copy();
+            if (InitCharVM.Had_BigFM_jacket)
             {
-                var jacket = BigFM.Model.Jacket;
+                var jacket = BigFMVM.Model.Jacket;
                 res.RemoveSAttrDict(jacket?.SAttrs);
             }
 
-            if (InitChar.Had_BigFM_hat)
+            if (InitCharVM.Had_BigFM_hat)
             {
-                var hat = BigFM.Model.Hat;
+                var hat = BigFMVM.Model.Hat;
                 res.RemoveSAttrDict(hat?.SAttrs);
             }
 

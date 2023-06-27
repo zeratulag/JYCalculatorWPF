@@ -16,8 +16,8 @@ namespace JYCalculator.ViewModels
     {
         #region 成员
 
-        public readonly EquipOptionSlotViewModel WPViewModel;
-        public readonly EquipOptionSlotViewModel YZViewModel;
+        public EquipOptionSlotViewModel WPViewModel { get; }
+        public EquipOptionSlotViewModel YZViewModel { get; }
 
         public bool JN { get; set; } // 套装技能增强
         public bool SL { get; set; } // 套装神力效果

@@ -56,7 +56,7 @@ namespace JYCalculator.Models
             ItemDTVM = vm.ItemDTVM;
             BuffVM = vm.BuffVM;
             InitInputVM = vm.InitInputVM;
-            InitChar = vm.InitChar;
+            InitChar = vm.InitCharVM;
             EquipOptionVM = vm.EquipOptionVM;
             FightTimeSummaryVM = vm.FightTimeSummaryVM;
             SkillDataDFMiJiQiXueVM = vm.SkillDFMiJiQiXueVM;
@@ -84,7 +84,7 @@ namespace JYCalculator.Models
             Shellbuffs = new BuffShellInput(BuffVM.BuffAttrsDesc, BuffVM.DebuffAttrsDesc, ItemDTVM.AttrsDesc,
                 BuffVM.Arg);
             CalcShellArg = new CalculatorShellArg(_VMs.SkillMiJiVM.IsSupport, (int) InitChar.HS,
-                _VMs.OptimizationVM.IsChecked, InitInputVM.BigFM.Arg, BuffVM.Arg);
+                _VMs.OptimizationVM.IsChecked, InitInputVM.BigFMVM.Arg, BuffVM.Arg);
             var calcShell = new CalculatorShell(this);
             calcShell.UpdateInput(this);
             var res = calcShell.Calc();

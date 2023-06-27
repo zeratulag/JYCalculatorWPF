@@ -36,7 +36,7 @@ namespace JX3CalculatorShared.Class
 
         #region 修改
 
-        public new CharAttrCollection MultiplyValues(double k)
+        public CharAttrCollection MultiplyValues(double k)
         {
             var attr = base.Multiply(k);
             return new CharAttrCollection(attr);

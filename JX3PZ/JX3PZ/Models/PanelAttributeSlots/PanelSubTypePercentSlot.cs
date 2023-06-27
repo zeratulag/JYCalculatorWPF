@@ -14,7 +14,7 @@ namespace JX3PZ.Models
         public double RatePct { get; protected set; }
 
         public static readonly double PointCoef;
-        public static readonly string Suffix;
+        public new static readonly string Suffix;
         public void AddPoint(int value)
         {
             Point += value;

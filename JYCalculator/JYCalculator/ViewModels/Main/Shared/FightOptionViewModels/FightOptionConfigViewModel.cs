@@ -17,13 +17,13 @@ namespace JYCalculator.ViewModels
     {
         #region 成员
 
-        public readonly TargetViewModel TargetViewModel;
-        public readonly AbilityViewModel AbilityViewModel;
-        public readonly ZhenFaViewModel ZhenFaViewModel;
+        public TargetViewModel TargetVM { get; }
+        public AbilityViewModel AbilityVM { get; }
+        public ZhenFaViewModel ZhenFaVM { get; }
 
-        public Target SelectedTarget => TargetViewModel.SelectedItem;
-        public AbilityItem SelectedAbility => AbilityViewModel.SelectedItem;
-        public ZhenFa SelectedZhenFa => ZhenFaViewModel.SelectedItem;
+        public Target SelectedTarget => TargetVM.SelectedItem;
+        public AbilityItem SelectedAbility => AbilityVM.SelectedItem;
+        public ZhenFa SelectedZhenFa => ZhenFaVM.SelectedItem;
 
         public int FightTime { get; set; }
         public bool ShortFight { get; set; } = true;
@@ -37,13 +37,13 @@ namespace JYCalculator.ViewModels
 
         public FightOptionConfigViewModel(XFDataBase xfdb)
         {
-            TargetViewModel = new TargetViewModel(xfdb.Target.Target);
-            AbilityViewModel = new AbilityViewModel(xfdb.Ability.AbilityItem);
-            ZhenFaViewModel = new ZhenFaViewModel(xfdb.ZhenFa.ZhenFa);
+            TargetVM = new TargetViewModel(xfdb.Target.Target);
+            AbilityVM = new AbilityViewModel(xfdb.Ability.AbilityItem);
+            ZhenFaVM = new ZhenFaViewModel(xfdb.ZhenFa.ZhenFa);
 
             FightTime = GetDefaultFightTime();
 
-            var data = new AbsViewModel[] { TargetViewModel, AbilityViewModel, ZhenFaViewModel };
+            var data = new AbsViewModel[] { TargetVM, AbilityVM, ZhenFaVM };
             Data = data.ToImmutableArray();
 
             ExtendInputNames(nameof(FightTime), nameof(ShortFight));
@@ -98,9 +98,9 @@ namespace JYCalculator.ViewModels
         {
             var res = new FightOptionSav()
             {
-                ZhenFa = ZhenFaViewModel.Export(),
-                Target = TargetViewModel.Export(),
-                Ability = AbilityViewModel.Export(),
+                ZhenFa = ZhenFaVM.Export(),
+                Target = TargetVM.Export(),
+                Ability = AbilityVM.Export(),
                 FightTime = FightTime,
                 ShortFight = ShortFight,
             };
@@ -109,9 +109,9 @@ namespace JYCalculator.ViewModels
 
         protected void _Load(FightOptionSav sav)
         {
-            ZhenFaViewModel.Load(sav.ZhenFa);
-            TargetViewModel.Load(sav.Target);
-            AbilityViewModel.Load(sav.Ability);
+            ZhenFaVM.Load(sav.ZhenFa);
+            TargetVM.Load(sav.Target);
+            AbilityVM.Load(sav.Ability);
             FightTime = sav.FightTime;
             ShortFight = sav.ShortFight;
             LongFight = !ShortFight;

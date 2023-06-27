@@ -63,14 +63,14 @@ namespace JYCalculator.Class
         /// </summary>
         /// <param name="other">另一个对象</param>
         /// <param name="w">权重系数（技能频率）</param>
-        public new void WeightedAdd(DamageDeriv other, double w = 1.0)
+        public void WeightedAdd(DamageDeriv other, double w = 1.0)
         {
             base.WeightedAdd(other, w);
             Final_L += other.Final_L * w;
             Base_L += other.Base_L * w;
         }
 
-        public new void ApplyAttrWeight(AttrWeight aw)
+        public void ApplyAttrWeight(AttrWeight aw)
         {
             // 根据属性加权求收益
             base.ApplyAttrWeight(aw);

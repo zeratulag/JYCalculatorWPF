@@ -39,5 +39,10 @@ namespace J3PZ.Views
         {
             this.Hide();
         }
+
+        private void CopyOverviewScreenShot_Btn_OnClick(object sender, RoutedEventArgs e)
+        {
+            HorizontalOverview.CopyRenderImg();
+        }
     }
 }

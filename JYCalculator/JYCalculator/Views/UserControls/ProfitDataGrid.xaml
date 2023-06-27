@@ -6,28 +6,24 @@
     xmlns:local="clr-namespace:JYCalculator.Views.UserControls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     x:Name="profitDataGrid"
-    d:DesignHeight="200"
-    d:DesignWidth="600"
     mc:Ignorable="d">
-    <Grid>
-        <DataGrid
-            Name="DataGrid_Profit"
-            AutoGenerateColumns="False"
-            ItemsSource="{Binding}">
-            <DataGrid.Columns>
-                <DataGridTextColumn Binding="{Binding Path=Name}" Header="类型" />
-                <DataGridTextColumn Binding="{Binding Path=Base_AP, StringFormat={}{0:F2}}" Header="基础攻击" />
-                <DataGridTextColumn Binding="{Binding Path=Base_OC, StringFormat={}{0:F2}}" Header="基础破防" />
-                <DataGridTextColumn Binding="{Binding Path=Base_L, StringFormat={}{0:F2}}" Header="基础力道" />
-                <DataGridTextColumn Binding="{Binding Path=PZ, StringFormat={}{0:F2}}" Header="破招" />
-                <DataGridTextColumn Binding="{Binding Path=WS, StringFormat={}{0:F2}}" Header="无双" />
-                <DataGridTextColumn Binding="{Binding Path=CT, StringFormat={}{0:F2}}" Header="会心" />
-                <DataGridTextColumn Binding="{Binding Path=CF, StringFormat={}{0:F2}}" Header="会效" />
-                <DataGridTextColumn Binding="{Binding Path=WP, StringFormat={}{0:F2}}" Header="武器伤害" />
-                <DataGridTextColumn Binding="{Binding Path=Final_AP, StringFormat={}{0:F2}}" Header="最终攻击" />
-                <DataGridTextColumn Binding="{Binding Path=Final_OC, StringFormat={}{0:F2}}" Header="最终破防" />
-                <DataGridTextColumn Binding="{Binding Path=Final_L, StringFormat={}{0:F2}}" Header="最终力道" />
-            </DataGrid.Columns>
-        </DataGrid>
-    </Grid>
+    <DataGrid
+        Name="DataGrid_Profit"
+        AutoGenerateColumns="False"
+        ItemsSource="{Binding}">
+        <DataGrid.Columns>
+            <DataGridTextColumn Binding="{Binding Path=Name}" Header="类型" />
+            <DataGridTextColumn Binding="{Binding Path=Base_AP, StringFormat={}{0:F2}}" Header="基础攻击" />
+            <DataGridTextColumn Binding="{Binding Path=Base_OC, StringFormat={}{0:F2}}" Header="基础破防" />
+            <DataGridTextColumn Binding="{Binding Path=Base_L, StringFormat={}{0:F2}}" Header="基础力道" />
+            <DataGridTextColumn Binding="{Binding Path=PZ, StringFormat={}{0:F2}}" Header="破招" />
+            <DataGridTextColumn Binding="{Binding Path=WS_Point, StringFormat={}{0:F2}}" Header="无双" />
+            <DataGridTextColumn Binding="{Binding Path=CT_Point, StringFormat={}{0:F2}}" Header="会心" />
+            <DataGridTextColumn Binding="{Binding Path=CF_Point, StringFormat={}{0:F2}}" Header="会效" />
+            <DataGridTextColumn Binding="{Binding Path=WP, StringFormat={}{0:F2}}" Header="武器伤害" />
+            <DataGridTextColumn Binding="{Binding Path=Final_AP, StringFormat={}{0:F2}}" Header="最终攻击" />
+            <DataGridTextColumn Binding="{Binding Path=Final_OC, StringFormat={}{0:F2}}" Header="最终破防" />
+            <DataGridTextColumn Binding="{Binding Path=Final_L, StringFormat={}{0:F2}}" Header="最终力道" />
+        </DataGrid.Columns>
+    </DataGrid>
 </UserControl>

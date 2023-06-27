@@ -31,13 +31,15 @@ namespace JX3PZ.ViewModels.PzOverview
         private bool _SendingInfoMessage = false;
         public string Info { get; }
         public string Url { get; }
-        public RelayCommand ConfirmInfoCmd { get; }
+        public RelayCommand ConfirmAndSaveInfoCmd { get; }
 
         public PzOverviewViewModel()
         {
             CalcInputVM = new CalcInputViewModel();
             Info = $"{AppStatic.XinFa}配装计算器 v{XFAppStatic.AppVersion}";
             Url = XFAppStatic.JX3BOXURL;
+
+            ConfirmAndSaveInfoCmd = new RelayCommand(ConfirmAndSaveInfo);
         }
 
         public void Receive(CalcResultMessage message)
@@ -86,9 +88,10 @@ namespace JX3PZ.ViewModels.PzOverview
             }
         }
 
-        private void ConfirmInfo()
+        private void ConfirmAndSaveInfo()
         {
             SendInfoMessageIfNecessary();
+            GlobalContext.ViewModels.Main.SaveCurrent();
         }
     }
 

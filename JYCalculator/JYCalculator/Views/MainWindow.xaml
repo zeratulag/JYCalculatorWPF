@@ -9,7 +9,6 @@
     xmlns:uc="clr-namespace:JYCalculator.Views.UserControls"
     xmlns:local="clr-namespace:JYCalculator.Views"
     xmlns:xc="http://schemas.xceed.com/wpf/xaml/toolkit"
-    xmlns:viewModels="clr-namespace:JYCalculator.ViewModels"
     xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
     xmlns:suc="clr-namespace:JX3CalculatorShared.Views.UserControls"
     x:Name="JYMainWindow"
@@ -17,7 +16,7 @@
     Width="1440"
     Height="830"
     Icon="pack://application:,,,/Resource/Images/XF_icon.png"
-    mc:Ignorable="d" AllowDrop="True" Drop="JYMainWindow_Drop">
+    mc:Ignorable="d" AllowDrop="True" Drop="MainWindow_Drop">
     <!--  ReSharper disable InconsistentNaming  -->
     <Window.InputBindings>
         <KeyBinding Command="{Binding Path=OpenDebugWindowCmd}" Gesture="Ctrl+Alt+D" />
@@ -28,69 +27,7 @@
     </Window.InputBindings>
 
     <DockPanel>
-        <Menu DockPanel.Dock="Top" IsMainMenu="True">
-            <MenuItem Header="文件(_F)">
-                <MenuItem
-                    Command="{Binding Path=NewCmd}"
-                    Header="新建(_N)"
-                    InputGestureText="Ctrl+N" />
-                <MenuItem
-                    Command="{Binding Path=OpenFileCmd}"
-                    Header="打开(_O)..."
-                    InputGestureText="Ctrl+O" />
-                <MenuItem
-                    Command="{Binding Path=SaveCurrentCmd}"
-                    Header="保存(_S)"
-                    InputGestureText="Ctrl+S" />
-                <MenuItem
-                    Command="{Binding Path=SaveAsCmd}"
-                    Header="另存为(_A)..."
-                    InputGestureText="Ctrl+A" />
-
-                <Separator />
-                <MenuItem Header="导入">
-                    <MenuItem Command="{Binding Path=OpenImportJBBBDialogCmd}" Header="JX3BOX面板"
-                              InputGestureText="Ctrl+I" />
-                </MenuItem>
-
-                <MenuItem Header="导出" />
-                <Separator />
-                <MenuItem Command="{Binding Path=CloseCmd}" Header="退出(_X)" />
-            </MenuItem>
-
-            <MenuItem Header="帮助(_H)">
-
-                <MenuItem
-                    Command="{Binding Path=OpenHelpCmd}"
-                    CommandParameter="JB"
-                    Header="使用帮助(_H)" />
-                <MenuItem
-                    Command="{Binding Path=OpenHelpCmd}"
-                    CommandParameter="XF"
-                    Header="入门攻略(_T)" />
-                <Separator />
-                <MenuItem
-                    Command="{Binding Path=OpenHelpCmd}"
-                    CommandParameter="WB"
-                    Header="联系作者(_C)" />
-                <Separator />
-                <MenuItem
-                    Command="{Binding Path=OpenHelpCmd}"
-                    CommandParameter="JB"
-                    Header="检查更新(_U)" />
-                <MenuItem
-                    Command="{Binding Path=OpenHelpCmd}"
-                    CommandParameter="Git"
-                    Header="项目主页(_G)" />
-
-                <MenuItem Header="关于(_A)"
-                          Command="{Binding Path=ShowAboutCmd}" />
-
-            </MenuItem>
-
-
-        </Menu>
-
+        <suc:MainWindowMenuView DockPanel.Dock="Top"/>
         <Grid x:Name="Grid_Main">
             <!--  主界面  -->
             <Grid.ColumnDefinitions>
@@ -123,195 +60,7 @@
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
 
-
-                <GroupBox
-                    x:Name="GroupBox_InitInput"
-                    Grid.Row="0"
-                    Height="Auto"
-                    HorizontalAlignment="Stretch"
-                    Header="{Binding InitInputModeDesc}">
-                    <GroupBox.Resources>
-                        <Style BasedOn="{StaticResource Style.CenterLabel}" TargetType="Label" />
-                        <Style BasedOn="{StaticResource Style.CenterCheckBoxWithOutBind}" TargetType="CheckBox" />
-                        <Style BasedOn="{StaticResource Style.IntUpDown_InitInput}" TargetType="xc:IntegerUpDown" />
-                        <Style BasedOn="{StaticResource Style.PercentUpDown_InitInput}" TargetType="xc:DoubleUpDown" />
-                    </GroupBox.Resources>
-
-                    <Grid x:Name="Grid_InitChar">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                        </Grid.RowDefinitions>
-
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="2*" MinWidth="300" />
-                            <ColumnDefinition Width="2" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-
-                        <GroupBox
-                            x:Name="GroupBox_InitChar"
-                            Grid.Row="0"
-                            Grid.RowSpan="2"
-                            Grid.Column="0"
-                            Grid.ColumnSpan="1"
-                            Header="角色初始属性">
-                            <uc:InitCharPanel x:Name="InitCharPanelInput" />
-                        </GroupBox>
-
-
-                        <GroupBox
-                            Name="GroupBox_BigFM"
-                            Grid.Row="0"
-                            Grid.RowSpan="2"
-                            Grid.Column="2"
-                            Header="大附魔">
-                            <ItemsControl Name="ItemsControl_BigFMConfig"
-                                          Style="{StaticResource Style.BigFMConfig}" />
-                        </GroupBox>
-
-
-                        <GroupBox
-                            x:Name="GroupBox_EquipOption"
-                            Grid.Row="2"
-                            Grid.Column="0"
-                            Header="装备效果">
-                            <Grid x:Name="Grid_EquipOption" MinWidth="150">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="Auto" />
-                                </Grid.RowDefinitions>
-
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="5" />
-                                    <ColumnDefinition Width="*" />
-                                </Grid.ColumnDefinitions>
-
-                                <Grid.Resources>
-                                    <Style TargetType="ComboBox">
-                                        <Setter Property="Margin" Value="5" />
-                                    </Style>
-                                    <Style TargetType="CheckBox">
-                                        <Setter Property="Margin" Value="7" />
-                                    </Style>
-
-                                </Grid.Resources>
-
-
-                                <ComboBox
-                                    x:Name="EquipOption_WP_cbb"
-                                    Grid.Row="0"
-                                    Grid.Column="0"
-                                    Style="{StaticResource Style.EquipOptionCbb}" />
-
-                                <ComboBox
-                                    x:Name="EquipOption_YZ_cbb"
-                                    Grid.Row="0"
-                                    Grid.Column="2"
-                                    Style="{StaticResource Style.EquipOptionCbb}" />
-
-                                <Separator
-                                    Grid.Row="2"
-                                    Grid.Column="0"
-                                    Grid.ColumnSpan="3"
-                                    Margin="0,5" />
-
-                                <CheckBox
-                                    x:Name="EquipOption_JN_chb"
-                                    Grid.Row="3"
-                                    Grid.Column="0"
-                                    Margin="5"
-                                    IsChecked="{Binding Path=JN}"
-                                    ToolTip="{Binding Path=JNToolTip}">
-                                    套装：技能伤害
-                                </CheckBox>
-                                <CheckBox
-                                    x:Name="EquipOption_SL_chb"
-                                    Grid.Row="3"
-                                    Grid.Column="2"
-                                    Margin="5"
-                                    IsChecked="{Binding Path=SL}"
-                                    ToolTip="{Binding Path=SLToolTip}">
-                                    套装：神力效果
-                                </CheckBox>
-                            </Grid>
-
-                        </GroupBox>
-                        <DockPanel Grid.Row="2" Grid.Column="2">
-                            <GroupBox
-                                x:Name="GroupBox_InitCharCommands"
-                                DockPanel.Dock="Top"
-                                Header="操作">
-
-                                <StackPanel Orientation="Vertical">
-
-
-                                    <Button Margin="10 5"
-                                            Padding="5 5"
-                                            x:Name="InitChar_ImportJB_btn"
-                                            Command="{Binding Path=OpenImportJBBBDialogCmd}">
-                                        <Button.Resources>
-                                            <Style TargetType="{x:Type Border}">
-                                                <Setter Property="CornerRadius" Value="5" />
-                                            </Style>
-                                        </Button.Resources>
-
-                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-                                            <Image Source="pack://application:,,,/Resource/Images/JB_Logo.png"
-                                                   Height="18" Width="18" />
-                                            <TextBlock Margin="5 0 0 0" VerticalAlignment="Center">导入JX3BOX属性</TextBlock>
-                                        </StackPanel>
-
-                                    </Button>
-                                    <Button Margin="10 5"
-                                            Padding="5 5"
-                                            x:Name="OpenPZ_btn"
-                                            Click="OpenPZ_btn_Click"
-                                            BorderThickness="0"
-                                            FontWeight="Bold">
-                                        <Button.Resources>
-                                            <Style TargetType="{x:Type Border}">
-                                                <Setter Property="CornerRadius" Value="5" />
-                                            </Style>
-                                        </Button.Resources>
-                                        <Button.Background>
-                                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,2">
-                                                <GradientStop Color="#7f7cf1" Offset="0" />
-                                                <GradientStop Color="#d3b7ff" Offset="1" />
-                                            </LinearGradientBrush>
-                                        </Button.Background>
-                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-                                            <Image Source="pack://application:,,,/Resource/Images/PzIcon.png"
-                                                   Height="18" Width="18" />
-                                            <TextBlock Margin="5 0 0 0" VerticalAlignment="Center" Text="打开内置配装器" />
-                                        </StackPanel>
-                                    </Button>
-                                </StackPanel>
-                            </GroupBox>
-
-                            <DockPanel DockPanel.Dock="Bottom">
-                                <TextBlock x:Name="Author_txb" HorizontalAlignment="Center"
-                                           VerticalAlignment="Center"
-                                           FontSize="15">
-                                    作者：
-                                    <Hyperlink Command="{Binding Path=OpenHelpCmd}"
-                                               CommandParameter="WB">
-                                        @Zeratulag
-                                    </Hyperlink>
-                                </TextBlock>
-
-                            </DockPanel>
-
-                        </DockPanel>
-
-                    </Grid>
-
-                </GroupBox>
+                <uc:InitInputGroupBox x:Name="GroupBox_InitInput" Grid.Row="0" />
 
                 <DockPanel Grid.Row="1">
                     <GroupBox
@@ -319,112 +68,21 @@
                         VerticalAlignment="Stretch"
                         DockPanel.Dock="Left"
                         Header="秘籍">
-                        <GroupBox.Resources>
-                            <Style BasedOn="{StaticResource Style.ExpanderMiJi}" TargetType="Expander" />
-
-                            <Style BasedOn="{StaticResource Style.CenterCheckBox}" TargetType="CheckBox">
-                                <Setter Property="FontSize" Value="11" />
-                                <Setter Property="Margin" Value="5,2" />
-                            </Style>
-
-                            <Style BasedOn="{StaticResource Style.MiJiListView}" TargetType="ListView" />
-                        </GroupBox.Resources>
-
-                        <Grid x:Name="Grid_MiJi">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                            </Grid.RowDefinitions>
-
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="Auto" />
-                            </Grid.ColumnDefinitions>
-
-                            <Expander
-                                x:Name="Expander_MiJi_DP"
-                                Grid.Row="0"
-                                Grid.Column="0">
-                                <ListView x:Name="ListView_MiJi_DP" />
-                            </Expander>
-
-                            <Expander
-                                x:Name="Expander_MiJi_CX"
-                                Grid.Row="0"
-                                Grid.Column="1">
-                                <ListView x:Name="ListView_MiJi_CX" />
-                            </Expander>
-
-                            <Expander
-                                x:Name="Expander_MiJi_BY"
-                                Grid.Row="1"
-                                Grid.Column="0">
-                                <ListView x:Name="ListView_MiJi_BY" />
-                            </Expander>
-
-                            <Expander
-                                x:Name="Expander_MiJi_ZX"
-                                Grid.Row="1"
-                                Grid.Column="1">
-                                <ListView x:Name="ListView_MiJi_ZX" />
-                            </Expander>
-
-                            <Expander
-                                x:Name="Expander_MiJi_ZM"
-                                Grid.Row="2"
-                                Grid.Column="0"
-                                Grid.ColumnSpan="2">
-                                <ListView x:Name="ListView_MiJi_ZM" Style="{StaticResource Style.MiJiListView_ZM}" />
-                            </Expander>
-
-                        </Grid>
-
+                        <uc:AllSkillMiJiConfigView x:Name="CAllSkillMiJiConfigView" />
                     </GroupBox>
 
-                    <GroupBox
+                    <uc:DebugGroupBox
                         x:Name="GroupBox_Debug"
-                        MaxWidth="120"
-                        DockPanel.Dock="Right"
-                        Header="Debug">
-                        <GroupBox.Resources>
-                            <Style TargetType="Button">
-                                <Setter Property="Margin" Value="5,2,2,5" />
-                                <Setter Property="Padding" Value="0,3" />
-                            </Style>
-                        </GroupBox.Resources>
-                        <StackPanel Orientation="Vertical">
-                            <Button
-                                x:Name="BtnOpenDebugWindow"
-                                HorizontalContentAlignment="Center"
-                                Command="{Binding Path=OpenDebugWindowCmd}">
-                                <TextBlock HorizontalAlignment="Center">
-                                    Debug窗口<LineBreak />
-                                    (C+A+D)
-                                </TextBlock>
-                            </Button>
-                            <Button x:Name="BtnExportMiJi" Click="BtnExportMiJi_Click">导出秘籍</Button>
-                            <Button x:Name="BtnExportAll" Click="BtnExportAll_Click">导出全部</Button>
-                        </StackPanel>
-
-                    </GroupBox>
-
+                        DockPanel.Dock="Right">
+                    </uc:DebugGroupBox>
                 </DockPanel>
-
 
                 <GroupBox
                     x:Name="GroupBox_QiXue"
                     Grid.Row="2"
                     MinWidth="180"
                     Header="奇穴">
-
-                    <Expander
-                        x:Name="Expander_QiXue"
-                        Header="{Binding Path=HeaderName}"
-                        IsExpanded="True">
-                        <ItemsControl x:Name="ItemsControl_QiXueConfig" Style="{StaticResource Style.QiXueConfig}" />
-                    </Expander>
-
+                    <suc:QiXueConfigView DataContext="{Binding QiXueVM}" />
                 </GroupBox>
 
             </Grid>
@@ -440,119 +98,7 @@
                     x:Name="GroupBox_FightOption"
                     DockPanel.Dock="Top"
                     Header="战斗选项">
-                    <Grid x:Name="Grid_FightOption">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="*" />
-                            <RowDefinition Height="*" />
-                            <RowDefinition Height="*" />
-                        </Grid.RowDefinitions>
-
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-
-                        <Grid.Resources>
-                            <Style BasedOn="{StaticResource Style.CenterRadioButton}" TargetType="RadioButton" />
-                        </Grid.Resources>
-
-
-                        <Label Grid.Row="0" Grid.Column="0">时长</Label>
-                        <Grid Grid.Row="0" Grid.Column="1">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="15*" />
-                                <ColumnDefinition Width="10*" />
-                                <ColumnDefinition Width="10*" />
-                            </Grid.ColumnDefinitions>
-
-                            <StackPanel Grid.Column="0" Orientation="Horizontal">
-                                <xc:IntegerUpDown
-                                    x:Name="FightTime_spb"
-                                    MinWidth="50"
-                                    HorizontalAlignment="Left"
-                                    FontSize="16"
-                                    Increment="10"
-                                    Minimum="180"
-                                    Style="{StaticResource Style.IntUpDown_InitInput}"
-                                    Text="300"
-                                    Value="{Binding Path=FightTime}" />
-                                <Label>秒</Label>
-                            </StackPanel>
-
-                            <RadioButton
-                                x:Name="LongFight_rbt"
-                                Grid.Column="1"
-                                GroupName="FightTime"
-                                IsChecked="{Binding Path=LongFight}"
-                                ToolTip="模拟副本长时间战斗">
-                                长时间
-                            </RadioButton>
-                            <RadioButton
-                                x:Name="ShortFight_rbt"
-                                Grid.Column="2"
-                                GroupName="FightTime"
-                                IsChecked="{Binding Path=ShortFight}"
-                                ToolTip="模拟木桩战斗（起手有一波心无）">
-                                短时间
-                            </RadioButton>
-
-                        </Grid>
-
-                        <Label Grid.Row="1" Grid.Column="0">目标</Label>
-
-
-                        <Grid Grid.Row="1" Grid.Column="1">
-
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="15*" />
-                                <ColumnDefinition Width="6*" />
-                                <ColumnDefinition Width="8*" />
-                            </Grid.ColumnDefinitions>
-
-                            <ComboBox
-                                x:Name="FightOption_Target_cbb"
-                                Grid.Column="0"
-                                Margin="5,5"
-                                Style="{StaticResource Style.FightOptionCbb}">
-                                <ComboBox.ItemTemplate>
-                                    <DataTemplate>
-                                        <suc:TargetItemView />
-                                    </DataTemplate>
-                                </ComboBox.ItemTemplate>
-                            </ComboBox>
-
-                            <Label
-                                Grid.Column="1"
-                                Margin="5,5,0,5"
-                                HorizontalAlignment="Right"
-                                DockPanel.Dock="Right">
-                                手法
-                            </Label>
-                            <ComboBox
-                                x:Name="FightOption_Ability_cbb"
-                                Grid.Column="2"
-                                MinWidth="30"
-                                Margin="0,5"
-                                DisplayMemberPath="ItemName"
-                                Style="{StaticResource Style.FightOptionCbb}">
-                            </ComboBox>
-
-                        </Grid>
-
-
-                        <Label Grid.Row="2" Grid.Column="0">阵法</Label>
-                        <DockPanel
-                            Grid.Row="2"
-                            Grid.Column="1"
-                            LastChildFill="False">
-
-                            <ComboBox
-                                x:Name="FightOption_ZhenFa_cbb"
-                                Margin="5,5"
-                                DataContext="{Binding Path=ZhenFa}"
-                                Style="{StaticResource Style.ZhenFaCbb}" />
-                        </DockPanel>
-                    </Grid>
+                    <suc:FightOptionView x:Name="CFightOptionView" DataContext="{Binding FightOptionVM}" />
                 </GroupBox>
 
                 <ScrollViewer DockPanel.Dock="Top" HorizontalScrollBarVisibility="Disabled"
@@ -561,206 +107,38 @@
                         <GroupBox
                             x:Name="GroupBox_Buff"
                             Header="BUFF">
-                            <StackPanel x:Name="Grid_Buff">
-
-                                <Expander x:Name="Expander_Buff_Self">
-                                    <Expander.Header>
-                                        <TextBlock Text="{Binding Path=Header}" TextWrapping="Wrap" />
-                                    </Expander.Header>
-                                    <ListView x:Name="ListView_Buff_Self"
-                                              Style="{StaticResource Style.BaseBuffListView}" />
-                                </Expander>
-
-                                <Expander x:Name="Expander_Buff_Banquet">
-                                    <Expander.Header>
-                                        <TextBlock Text="{Binding Path=Header}" TextWrapping="Wrap" />
-                                    </Expander.Header>
-                                    <ListView x:Name="ListView_Buff_Banquet"
-                                              Style="{StaticResource Style.BaseBuffListView}" />
-                                </Expander>
-
-                                <Expander x:Name="Expander_Buff_Normal">
-                                    <Expander.Header>
-                                        <TextBlock Text="{Binding Path=Header}" TextWrapping="Wrap" />
-                                    </Expander.Header>
-                                    <ListView x:Name="ListView_Buff_Normal"
-                                              Style="{StaticResource Style.BaseBuffListView}" />
-                                </Expander>
-
-                                <Expander x:Name="Expander_DeBuff_Normal">
-                                    <Expander.Header>
-                                        <TextBlock Text="{Binding Path=Header}" TextWrapping="Wrap" />
-                                    </Expander.Header>
-                                    <ListView x:Name="ListView_DeBuff_Normal"
-                                              Style="{StaticResource Style.BaseBuffListView}" />
-                                </Expander>
-
-                                <Expander x:Name="Expander_Buff_Extra">
-                                    <Expander.Header>
-                                        <TextBlock Text="{Binding Path=Header}" TextWrapping="Wrap" />
-                                    </Expander.Header>
-                                    <ListView x:Name="ListView_Buff_Extra"
-                                              Style="{StaticResource Style.ExtraBuffListView}" />
-                                </Expander>
-
-                                <Expander x:Name="Expander_Buff_ExtraStack">
-                                    <Expander.Header>
-                                        <TextBlock Text="{Binding Path=Header}" TextWrapping="Wrap" />
-                                    </Expander.Header>
-                                    <ListView x:Name="ListView_Buff_ExtraStack"
-                                              Style="{StaticResource Style.ExtraStackBuffListView}" />
-                                </Expander>
-
-                            </StackPanel>
-
-                        </GroupBox>
-                        <GroupBox Name="GroupBox_ItemDT">
-                            <GroupBox.Header>
-                                <CheckBox x:Name="GroupBox_ItemDT_chb" Style="{StaticResource Style.CenterCheckBox}">单体</CheckBox>
-                            </GroupBox.Header>
-                            <Expander
-                                x:Name="Expander_ItemDT"
-                                IsExpanded="True"
-                                Style="{StaticResource Style.MultiLineHeaderedExpander}">
-                                <ItemsControl x:Name="ItemsControl_ItemDT" Style="{StaticResource Style.ItemDT}" />
-                            </Expander>
+                            <suc:AllBuffConfigView DataContext="{Binding BuffVM}"/>
                         </GroupBox>
 
+                        <suc:ItemDTConfigView DataContext="{Binding ItemDTVM}"/>
                     </StackPanel>
                 </ScrollViewer>
 
             </DockPanel>
 
             <!--  主界面（右半）  -->
-
             <DockPanel Name="Grid_Main_Right" Grid.Column="5" LastChildFill="True">
 
                 <GroupBox
                     x:Name="GroupBox_DPS"
                     DockPanel.Dock="Top"
                     Header="DPS期望">
-                    <Grid x:Name="Grid_DPS">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="Auto" MinWidth="200" />
-                        </Grid.ColumnDefinitions>
+                    <suc:DPSView x:Name="DpsView" FinalDPS="{Binding Path=FinalDPS}"/>
 
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="*" />
-                        </Grid.RowDefinitions>
-
-                        <TextBox
-                            Name="FinalDPS_txb"
-                            Grid.Column="0"
-                            Margin="10,10,10,5"
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Center"
-                            FontSize="24"
-                            FontWeight="Bold"
-                            Foreground="Red"
-                            Text="{Binding Path=FinalDPStxt, Mode=OneWay}"
-                            MouseLeftButtonDown="CopyFinalDPS"
-                            Style="{StaticResource Style.TextBlockBox}"
-                            ToolTip="点击复制" />
-                        <Popup x:Name="CopyTextblock_pop" StaysOpen="False" Placement="Mouse" PopupAnimation="Slide"
-                               AllowsTransparency="True">
-                            <Border BorderBrush="Beige" BorderThickness="2" Background="White">
-                                <TextBlock Margin="5">已复制！</TextBlock>
-                            </Border>
-                        </Popup>
-
-                        <Expander Grid.Column="1" ExpandDirection="Right">
-                            <DataGrid
-                                Name="DataGrid_DPSTable"
-                                AutoGenerateColumns="False"
-                                ItemsSource="{Binding Path=DPSTable}">
-                                <DataGrid.Columns>
-                                    <DataGridTextColumn Binding="{Binding Path=DescName}" Header="时段" />
-                                    <DataGridTextColumn Binding="{Binding Path=DPS, StringFormat={}{0:F0}}"
-                                                        Header="DPS" />
-                                    <DataGridTextColumn Binding="{Binding Path=Proportion, StringFormat={}{0:P2}}"
-                                                        Header="占比" />
-                                </DataGrid.Columns>
-                            </DataGrid>
-                        </Expander>
-                        <Expander x:Name="Expander_CombatStat"
-                                  Grid.Row="1"
-                                  Grid.Column="0"
-                                  Grid.ColumnSpan="2"
-                                  Header="战斗统计"
-                                  IsExpanded="True">
-                            <suc:CombatStatDataGrid x:Name="SfDataGrid_SimpleCombatStatTable"/>
-                        </Expander>
-                    </Grid>
                 </GroupBox>
+                <Popup x:Name="CopyTextblock_pop" StaysOpen="False" Placement="Mouse" PopupAnimation="Slide"
+                       AllowsTransparency="True">
+                    <Border BorderBrush="Beige" BorderThickness="2" Background="White">
+                        <TextBlock Margin="5">已复制！</TextBlock>
+                    </Border>
+                </Popup>
 
 
                 <ScrollViewer DockPanel.Dock="Top" HorizontalScrollBarVisibility="Disabled"
                               VerticalScrollBarVisibility="Auto">
                     <StackPanel Orientation="Vertical">
-
-                        <GroupBox
-                            x:Name="GroupBox_Profit"
-                            Grid.Row="1"
-                            MinWidth="400"
-                            Header="属性收益"
-                            MouseLeftButtonDown="GroupBox_Profit_MouseDown"
-                            ToolTip="点击复制">
-
-                            <Expander IsExpanded="True">
-                                <Expander.Header>
-                                    <TextBox
-                                        FontSize="14"
-                                        FontWeight="Bold"
-                                        Foreground="Red"
-                                        Text="{Binding Path=ProfitOrderDesc, Mode=OneWay}"
-                                        Style="{StaticResource Style.TextBlockBox}" />
-                                </Expander.Header>
-                                <StackPanel Orientation="Vertical">
-
-                                    <StackPanel Orientation="Horizontal">
-                                        <Label Margin="5">依据</Label>
-                                        <ComboBox
-                                            x:Name="ProfitWeight_cbb"
-                                            Width="100"
-                                            Margin="5"
-                                            Style="{StaticResource Style.ProfitWeightCbb}" />
-                                    </StackPanel>
-
-                                    <suc:ProfitChart x:Name="ProfitChart"/>
-
-                                </StackPanel>
-
-                            </Expander>
-
-                        </GroupBox>
-
-                        <GroupBox x:Name="GroupBox_Optimization">
-                            <GroupBox.Header>
-                                <CheckBox x:Name="GroupBox_Optimization_chb"
-                                          Style="{StaticResource Style.CenterCheckBox}"
-                                          IsChecked="True">
-                                    优化分析
-                                </CheckBox>
-                            </GroupBox.Header>
-
-                            <TabControl
-                                Visibility="{Binding IsChecked,ElementName=GroupBox_Optimization_chb,Converter={StaticResource BooleanToVisibility}}"
-                                SelectionChanged="TabControl_SelectionChanged">
-                                <TabItem Header="最优初始属性">
-
-                                    <TextBlock Text="{Binding Path=OptimizationDesc}"
-                                               MouseLeftButtonDown="CopyTextBlock">
-                                    </TextBlock>
-
-                                </TabItem>
-                                <TabItem Header="多重阵眼比较" x:Name="TabItem_MultiZhen">
-                                    <suc:MultiZhenFaDataGrid x:Name="SfDataGrid_MultiZhen"/>
-                                </TabItem>
-                            </TabControl>
-                        </GroupBox>
-
+                        <suc:ProfitGroupBox />
+                        <uc:OptimizationGroupBox DataContext="{Binding Path=OptimizationVM}"/>
                     </StackPanel>
                 </ScrollViewer>
             </DockPanel>

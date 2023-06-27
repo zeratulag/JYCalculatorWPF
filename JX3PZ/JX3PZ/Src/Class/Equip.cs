@@ -41,7 +41,7 @@ namespace JX3PZ.Class
         public string EID { get; set; }
         public string ExtraMagicEntry_Str { get; set; }
         public string ExtraTag_Str { get; set; } = "";
-        public string GetType { get; set; }
+        public new string GetType { get; set; }
         public int ID { get; set; } = -1;
         public int IconID { get; set; } = -1;
         public int Level { get; set; } = -1;
@@ -322,7 +322,7 @@ namespace JX3PZ.Class
             CEquipOption = o;
             if (CEquipOption != null)
             {
-                var optionDesc = "\n" + CEquipOption.GetDesc();
+                var optionDesc = CEquipOption.GetDesc();
                 if (optionDesc != null)
                 {
                     if (SubTypeEnum == EquipSubTypeEnum.PENDANT)

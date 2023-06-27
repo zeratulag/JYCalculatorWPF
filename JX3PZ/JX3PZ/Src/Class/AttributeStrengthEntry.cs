@@ -85,9 +85,9 @@ namespace JX3PZ.Class
         public string[] GetDescs()
         {
             string[] res;
-            if (Attribute.IsValue && Attribute.CanStrength)
+            if (Attribute.IsValue)
             {
-                if (StrengthLevel > 0)
+                if (Attribute.CanStrength && StrengthLevel > 0)
                 {
                     res = Attribute.GetStrengthDescs(Value, AddValue, EntryType);
                 }

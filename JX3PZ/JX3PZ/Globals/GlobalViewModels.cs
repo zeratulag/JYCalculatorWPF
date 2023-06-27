@@ -1,7 +1,9 @@
 ﻿using System.Collections.Immutable;
+using System.IO;
 using JX3CalculatorShared.Globals;
 using JX3PZ.Globals;
 using JX3PZ.ViewModels;
+using JX3PZ.ViewModels.PzOverview;
 using JX3PZ.Views;
 using JYCalculator.ViewModels;
 using JYCalculator.Views;
@@ -13,10 +15,23 @@ namespace JYCalculator.Globals
         public MainWindowViewModels Main;
         public DebugWindowViewModel Debug;
         public PzMainWindowViewModels PzMain => PzGlobalContext.ViewModels.PzMain;
-
+        public PzOverviewWindowViewModel PzOverview => PzGlobalContext.ViewModels.PzOverview;
         public GlobalViewModels()
         {
         }
+
+        public bool IsCurrentNameEqualToPzTitle()
+        {
+            bool res = Main.CurrentFileNameWithoutExtension == PzOverview.OverviewVM.Title; // 文件名和配装标题是否同步
+            return res;
+        } 
+
+        public void SendCurrentFileNameAsPzTitle()
+        {
+            // 将当前配装文件名设为配装标题
+            PzOverview.SetPzTitle(Main.CurrentFileNameWithoutExtension);
+        }
+
     }
 
     public class GlobalViews

@@ -34,7 +34,7 @@ namespace JYCalculator.Models
 
         #endregion
 
-        public new void Calc()
+        public void Calc()
         {
             CommonCalcBefore();
             CalcNormalSkillNum();

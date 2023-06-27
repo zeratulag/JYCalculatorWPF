@@ -4,6 +4,7 @@ using System.Text.RegularExpressions;
 using JX3CalculatorShared.Utils;
 using JX3PZ.Data;
 using JX3PZ.Globals;
+using System.Data;
 
 namespace JX3CalculatorShared.Class
 {
@@ -82,6 +83,37 @@ namespace JX3CalculatorShared.Class
         }
     }
 
+    public class AttributeIDPattern
+    {
+        public static readonly Regex IntPattern = new Regex(@"\{\S*\}", RegexOptions.Compiled);
+        public static readonly Regex PctPattern = new Regex(@"\{\S*\}%", RegexOptions.Compiled);
+        public static readonly Regex ValuePattern = new Regex(@"(?<=\{)([0-9D/*-]+?)(?=\})");
+        public static readonly DataTable dt = new DataTable(); // 用于计算表达式的工具表
+
+        public static string GetValuePattern(string GeneratedMagic)
+        {
+            // 提取表达式格式
+            var m = ValuePattern.Match(GeneratedMagic);
+            if (m.Success)
+            {
+                return m.Value;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public static double GetRealValue(int value, string realValueExpression)
+        {
+            // 基于表达式格式，计算真实的值
+            var expression = realValueExpression.Replace("D0", value.ToString());
+            var res = (double) dt.Compute(expression, "");
+            return res;
+        }
+    }
+
+
     public class AttributeID : AbsAttributeID
     {
         #region 成员
@@ -104,9 +136,7 @@ namespace JX3CalculatorShared.Class
         public readonly bool CanStrength; // 是否可以被精炼
 
         public readonly bool IsPercent; // 是否为百分比
-
-        public static readonly Regex IntPattern = new Regex(@"\{\S*\}", RegexOptions.Compiled);
-        public static readonly Regex PctPattern = new Regex(@"\{\S*\}%", RegexOptions.Compiled);
+        public readonly string RealValueExpression; // 从GeneratedMagic中提取的数值模板
 
         #endregion
 
@@ -130,6 +160,8 @@ namespace JX3CalculatorShared.Class
             SimpleDesc = FullDesc.RemoveSuffix("等级");
 
             IsPercent = item.GeneratedMagic.Contains("%");
+
+            RealValueExpression = AttributeIDPattern.GetValuePattern(item.GeneratedMagic);
         }
 
         public static AttributeID Get(string fullId)
@@ -144,12 +176,12 @@ namespace JX3CalculatorShared.Class
             if (fullBaseDesc.Contains("}%"))
             {
                 replacement = "{0:P2}"; // 百分数
-                pattern = PctPattern;
+                pattern = AttributeIDPattern.PctPattern;
             }
             else
             {
                 replacement = "{0:D}"; // 整数
-                pattern = IntPattern;
+                pattern = AttributeIDPattern.IntPattern;
             }
 
             string Desc = pattern.Replace(fullBaseDesc, "");
@@ -211,29 +243,56 @@ namespace JX3CalculatorShared.Class
 
             if (IsValid())
             {
-                if (Denominator == 1)
+                switch (Denominator)
                 {
-                    res = string.Format(FullBaseDescFmt, value);
-                }
-                else
-                {
-                    double real_value = value / (double) Denominator;
-
-                    try
+                    case 1:
                     {
-                        res = string.Format(FullBaseDescFmt, real_value);
+                        res = string.Format(FullBaseDescFmt, value);
+                        break;
                     }
-                    catch
+                    case 0:
                     {
-                        var vstr = GetValueStr(value);
-                        var mid = value > 0 ? "提高" : "降低";
-                        res = $"{FullDesc}{mid}{vstr}";
+                        if (RealValueExpression != null)
+                        {
+                            double real_value = GetRealValueByFmt(value);
+                            res = string.Format(FullBaseDescFmt, (int) real_value);
+                        }
+                        break;
+                    }
+
+                    default:
+                    {
+                        double real_value = value / (double) Denominator;
+
+                        try
+                        {
+                            res = string.Format(FullBaseDescFmt, real_value);
+                        }
+                        catch
+                        {
+                            var vstr = GetValueStr(value);
+                            var mid = value > 0 ? "提高" : "降低";
+                            res = $"{FullDesc}{mid}{vstr}";
+                        }
+
+                        break;
                     }
                 }
             }
 
             return res;
         }
+
+        /// <summary>
+        /// 基于自身的属性与格式化字符串，获得真实值
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public double GetRealValueByFmt(int value)
+        {
+            return AttributeIDPattern.GetRealValue(value, RealValueExpression);
+        }
+
 
         public string GetValueStr(int value)
         {
@@ -283,7 +342,7 @@ namespace JX3CalculatorShared.Class
                 {
                     if (value != 0)
                     {
-                        double real_value = Math.Abs(value) / (double)Denominator;
+                        double real_value = Math.Abs(value) / (double) Denominator;
                         vstr = real_value.ToString("F1");
                     }
                 }

@@ -63,7 +63,14 @@ namespace JX3PZ.Models
             }
             else
             {
-                Diamonds = cEquip.Attributes.Diamond.Select(_ => _.LevelItems[0]).ToArray(); // 默认自带的孔
+                if (cEquip.HasDiamond)
+                {
+                    Diamonds = cEquip.Attributes.Diamond.Select(_ => _.LevelItems[0]).ToArray(); // 默认自带的孔
+                }
+                else
+                {
+                    Diamonds = null;
+                }
             }
 
             EquipStrengthDiamond = new EquipStrengthDiamondModel(CEquip, strengthLevel, Diamonds);

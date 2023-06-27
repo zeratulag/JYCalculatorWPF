@@ -8,7 +8,7 @@ using JYCalculator.Messages;
 
 namespace JX3PZ.ViewModels.PzOverview
 {
-    public class PzOverviewWindowViewModel: ObservableObject, IRecipient<CalcResultMessage>, IRecipient<PzPlanMessage>
+    public class PzOverviewWindowViewModel : ObservableObject, IRecipient<CalcResultMessage>, IRecipient<PzPlanMessage>
     {
         public PzOverviewViewModel OverviewVM { get; }
 
@@ -22,7 +22,7 @@ namespace JX3PZ.ViewModels.PzOverview
             PzGlobalContext.ViewModels.PzOverview = this;
         }
 
-    public void Receive(CalcResultMessage message)
+        public void Receive(CalcResultMessage message)
         {
             OverviewVM.Receive(message);
         }
@@ -32,5 +32,9 @@ namespace JX3PZ.ViewModels.PzOverview
             OverviewVM.Receive(message);
         }
 
+        public void SetPzTitle(string title)
+        {
+            OverviewVM.Title = title;
+        }
     }
 }

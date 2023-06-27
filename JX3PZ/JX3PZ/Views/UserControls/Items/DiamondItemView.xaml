@@ -53,7 +53,7 @@
                           FontWeight="Bold"
                           Foreground="{Binding Level, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource StoneLevelToColorConverter}}"
                           Margin="20 0 0 0" Height="30" Width="45" />
-        <Button Grid.Column="4" Name="Drop" Command="{Binding DropDiamondCmd}" Style="{StaticResource ButtonIcon}"
+        <Button Grid.Column="4" Name="DropDiamond_Btn" Command="{Binding DropDiamondCmd}" Style="{StaticResource ButtonIcon}"
                 hc:IconElement.Geometry="{StaticResource CloseGeometry}" HorizontalAlignment="Left" ToolTip="取下五行石" />
         <hc:SimpleText Grid.Column="5"
                        Margin="3 0 0 0"

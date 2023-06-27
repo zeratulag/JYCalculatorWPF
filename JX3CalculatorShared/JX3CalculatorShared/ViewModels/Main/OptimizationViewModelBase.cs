@@ -7,14 +7,18 @@ namespace JX3CalculatorShared.ViewModels
     {
         public string OptimizationDescSource;
         public IEnumerable<MultiZhenRes> MultiZhenResSource;
-        public bool IsChecked { get; set; } = true;
         public string OptimizationDesc { get; set; }
         public MultiZhenRes[] MultiZhenTable { set; get; }
+
+        public OptimizationViewModelBase() : base()
+        {
+            IsChecked = true;
+        }
 
         protected override void _Update()
         {
             OptimizationDesc = IsChecked ? OptimizationDescSource : "";
-            MultiZhenTable = IsChecked ? MultiZhenResSource.ToArray() : null;
+            MultiZhenTable = IsChecked ? MultiZhenResSource?.ToArray() : null;
         }
 
         protected override void _RefreshCommands()

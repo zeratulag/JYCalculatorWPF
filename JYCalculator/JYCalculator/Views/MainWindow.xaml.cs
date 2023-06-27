@@ -107,68 +107,12 @@ namespace JYCalculator.Views
         public void BindViewModels()
         {
             JYMainWindow.DataContext = _VM;
-            Author_txb.DataContext = _VM;
-            BindComboBoxes();
             BindMiJi();
-            BindDPS();
             _AboutDialog.DataContext = _AboutVM;
         }
 
-
         #region 为复选框填充数据源
 
-        public void BindComboBoxes()
-        {
-            BindEquipOption();
-            BindFightOption();
-            BindQiXue();
-
-            BindItemDT();
-            BindBigFM();
-            BindBuff();
-
-            BindInitChar();
-            BindDPS();
-            BindOptimization();
-        }
-
-        public void BindEquipOption()
-        {
-            Grid_EquipOption.DataContext = _VM.EquipOptionVM;
-
-            EquipOption_WP_cbb.DataContext = _VM.EquipOptionVM.WPViewModel;
-
-            EquipOption_YZ_cbb.DataContext = _VM.EquipOptionVM.YZViewModel;
-        }
-
-        public void BindFightOption()
-        {
-            Grid_FightOption.DataContext = _VM.FightOptionVM;
-
-            FightOption_Target_cbb.DataContext = _VM.FightOptionVM.TargetViewModel;
-            FightOption_Ability_cbb.DataContext = _VM.FightOptionVM.AbilityViewModel;
-            FightOption_ZhenFa_cbb.DataContext = _VM.FightOptionVM.ZhenFaViewModel;
-        }
-
-
-        /// <summary>
-        /// 批量绑定奇穴下拉框
-        /// </summary>
-        public void BindQiXue()
-        {
-            var vm = _VM.QiXueVM;
-            Expander_QiXue.DataContext = vm;
-        }
-
-        public void BindItemDT()
-        {
-            GroupBox_ItemDT.DataContext = _VM.ItemDTVM;
-        }
-
-        public void BindBigFM()
-        {
-            ItemsControl_BigFMConfig.DataContext = _VM.BigFMVM;
-        }
 
         public void BindMiJi()
         {
@@ -177,41 +121,9 @@ namespace JYCalculator.Views
                 var skillKey = kvp.Key;
                 var viewModel = kvp.Value;
                 var (expanderName, listViewName) = ViewNameTool.GetMiJiElementsName(skillKey);
-
                 Helper.MiJiExpanderDict[expanderName].DataContext = viewModel;
             }
         }
-
-        public void BindBuff()
-        {
-            Expander_Buff_Self.DataContext = _VM.BuffVM.Buff_Self;
-            Expander_Buff_Banquet.DataContext = _VM.BuffVM.Buff_Banquet;
-            Expander_Buff_Normal.DataContext = _VM.BuffVM.Buff_Normal;
-
-            Expander_DeBuff_Normal.DataContext = _VM.BuffVM.DeBuff_Normal;
-
-            Expander_Buff_Extra.DataContext = _VM.BuffVM.Buff_Extra;
-            Expander_Buff_ExtraStack.DataContext = _VM.BuffVM.Buff_ExtraStack;
-        }
-
-
-        public void BindInitChar()
-        {
-            Grid_InitChar.DataContext = _VM.InitInputVM;
-            InitCharPanelInput.DataContext = _VM.InitChar;
-        }
-
-        public void BindDPS()
-        {
-            ProfitChart.DataContext = _VM.ProfitChartVM;
-            ProfitWeight_cbb.DataContext = _VM.ProfitChartVM;
-        }
-
-        public void BindOptimization()
-        {
-            GroupBox_Optimization.DataContext = _VM.OptimizationVM;
-        }
-
         #endregion
 
         #region 加载初始值
@@ -225,16 +137,18 @@ namespace JYCalculator.Views
 
         #endregion
 
-        private void BtnExportMiJi_Click(object sender, RoutedEventArgs e)
+        public void ExportMiJi()
         {
             var res = _VM.SkillMiJiVM.Config;
             Trace.WriteLine(res.PrettyPrint());
         }
 
-
-        private void BtnOpenDebugWindow_Click(object sender, RoutedEventArgs e)
+        public MainWindowSav ExportAll()
         {
-            OpenDebugWindow();
+            var res = _VM.Model.Export();
+            var json = JsonConvert.SerializeObject(res, Formatting.Indented);
+            Trace.WriteLine(json);
+            return res;
         }
 
         public void OpenDebugWindow()
@@ -243,18 +157,7 @@ namespace JYCalculator.Views
             _DebugMainWindow.Owner = this;
         }
 
-        private void BtnExportAll_Click(object sender, RoutedEventArgs e)
-        {
-            ExportAll();
-        }
 
-        private MainWindowSav ExportAll()
-        {
-            var res = _VM.Model.Export();
-            var json = JsonConvert.SerializeObject(res, Formatting.Indented);
-            Trace.WriteLine(json);
-            return res;
-        }
 
 
         private void NewCmd_Executed(object sender, ExecutedRoutedEventArgs e)
@@ -303,15 +206,8 @@ namespace JYCalculator.Views
             CopyTextblock_pop.IsOpen = true;
         }
 
-        private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (TabItem_MultiZhen.IsSelected)
-            {
-                Expander_CombatStat.IsExpanded = false;
-            }
-        }
 
-        private void JYMainWindow_Drop(object sender, DragEventArgs e)
+        private void MainWindow_Drop(object sender, DragEventArgs e)
         {
             if (e.Data.GetDataPresent(DataFormats.FileDrop))
             {
@@ -336,10 +232,5 @@ namespace JYCalculator.Views
         }
 
         #endregion
-
-        private void OpenPZ_btn_Click(object sender, RoutedEventArgs e)
-        {
-            OpenPzMainWindow();
-        }
     }
 }

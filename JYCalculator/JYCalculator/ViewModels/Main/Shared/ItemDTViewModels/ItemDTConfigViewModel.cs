@@ -26,7 +26,7 @@ namespace JYCalculator.ViewModels
             ExtendInputNames(nameof(IsChecked));
             AttachDependVMsOutputChanged();
             PostConstructor();
-            PropertyChanged += OnIsCheckedChanged;
+            PropertyChanged += UpdateCheckedChanged;
             _Update();
         }
 

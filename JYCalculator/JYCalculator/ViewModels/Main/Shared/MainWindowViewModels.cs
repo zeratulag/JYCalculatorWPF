@@ -42,20 +42,18 @@ namespace JYCalculator.ViewModels
 
         private readonly MainWindow _MW;
 
-        public readonly AllSkillMiJiConfigViewModel SkillMiJiVM;
-        public readonly QiXueConfigViewModel QiXueVM;
-        public readonly FightOptionConfigViewModel FightOptionVM;
-        public readonly ItemDTConfigViewModel ItemDTVM;
-        public readonly AllBuffConfigViewModel BuffVM;
-        public readonly BigFMConfigViewModel BigFMVM;
+        public AllSkillMiJiConfigViewModel SkillMiJiVM { get; }
+        public QiXueConfigViewModel QiXueVM { get; }
+        public FightOptionConfigViewModel FightOptionVM { get; }
+        public ItemDTConfigViewModel ItemDTVM { get; }
+        public AllBuffConfigViewModel BuffVM { get; }
+        public BigFMConfigViewModel BigFMVM { get; }
 
         public readonly InitInputViewModel
             InitInputVM; // f(InitCharacter, BigFMConfigViewModel, EquipOptionConfigViewModel)
-
-        public readonly InitCharacter InitChar;
-        public readonly EquipOptionConfigViewModel EquipOptionVM;
-
-        public readonly FightTimeSummaryViewModel FightTimeSummaryVM;
+        public InitCharacter InitCharVM { get; }
+        public EquipOptionConfigViewModel EquipOptionVM { get; }
+        public FightTimeSummaryViewModel FightTimeSummaryVM { get; }
         public readonly SkillDataDFViewModel SkillDFMiJiQiXueVM; // 基于秘籍+奇穴的技能数据获取，未考虑装备带的技能修饰
 
         public readonly MainWindowModel Model;
@@ -64,8 +62,8 @@ namespace JYCalculator.ViewModels
         private PzMainWindowViewModels _PZMW => _MW._PzMainWindow._VM;
 
         // 输出界面的VM
-        public ProfitChartViewModel ProfitChartVM { get; set; }
-        public OptimizationViewModel OptimizationVM { get; set; }
+        public ProfitChartViewModel ProfitChartVM { get; private set; }
+        public OptimizationViewModel OptimizationVM { get; private set; }
 
         // DEBUG界面VM
         public readonly DebugWindowViewModel DebugVM;
@@ -75,6 +73,7 @@ namespace JYCalculator.ViewModels
         public const string NewFileName = "Untitled Project";
         public string CurrentFilePath { get; set; }
         public string CurrentFileName { get; set; } = NewFileName;
+        public string CurrentFileNameWithoutExtension => Path.GetFileNameWithoutExtension(CurrentFileName); // 不带扩展名的文件名
 
         public readonly string RawTitle = XFAppStatic.MainTitle;
 
@@ -113,7 +112,7 @@ namespace JYCalculator.ViewModels
         public RelayCommand NewCmd { get; }
         public RelayCommand CloseCmd { get; }
 
-        public RelayCommand OpenPZMWCmd { get; }
+        public RelayCommand OpenPZWindowCmd { get; }
 
         // 帮助命令
         public RelayCommand<string> OpenHelpCmd { get; }
@@ -139,10 +138,10 @@ namespace JYCalculator.ViewModels
             BuffVM = new AllBuffConfigViewModel();
             BigFMVM = new BigFMConfigViewModel();
 
-            InitChar = new InitCharacter("");
+            InitCharVM = new InitCharacter("");
             EquipOptionVM = new EquipOptionConfigViewModel();
 
-            InitInputVM = new InitInputViewModel(InitChar, EquipOptionVM, BigFMVM);
+            InitInputVM = new InitInputViewModel(InitCharVM, EquipOptionVM, BigFMVM);
 
             SkillDFMiJiQiXueVM = new SkillDataDFViewModel(SkillMiJiVM, QiXueVM);
 
@@ -175,7 +174,7 @@ namespace JYCalculator.ViewModels
             OpenFileCmd = new RelayCommand(OpenFile);
             CloseCmd = new RelayCommand(Exit);
 
-            OpenPZMWCmd = new RelayCommand(OpenPZMW);
+            OpenPZWindowCmd = new RelayCommand(OpenPZWindow);
 
             OpenHelpCmd = new RelayCommand<string>(OpenHelp);
             ShowAboutCmd = new RelayCommand(ShowAbout);
@@ -369,12 +368,12 @@ namespace JYCalculator.ViewModels
 
             if (IsNew)
             {
-                if (InitChar.Name == null || InitChar.Name.IsEmptyOrWhiteSpace())
+                if (InitCharVM.Name == null || InitCharVM.Name.IsEmptyOrWhiteSpace())
                 {
                 }
                 else
                 {
-                    CurrentFileName = StringTool.GetSafeFilename(InitChar.Name); // 若当前为新建文件，并且尚未指定文件名，则同步JB的配装方案名
+                    CurrentFileName = StringTool.GetSafeFilename(InitCharVM.Name); // 若当前为新建文件，并且尚未指定文件名，则同步JB的配装方案名
                 }
             }
 
@@ -522,7 +521,7 @@ namespace JYCalculator.ViewModels
         public void SaveAs()
         {
             var filename = InitInputVM.JBPanelTitle ?? CurrentFileName; // 如果从JB导入了不同的文件名
-
+            var isSync = GlobalContext.ViewModels.IsCurrentNameEqualToPzTitle();
             var saveFileDialog = new SaveFileDialog
             {
                 Filter = XFAppStatic.FileFilter,
@@ -533,6 +532,13 @@ namespace JYCalculator.ViewModels
             {
                 CurrentFilePath = saveFileDialog.FileName;
                 CurrentFileName = Path.GetFileName(CurrentFilePath);
+                if (isSync)
+                { 
+                    // 文件名和配装标题保持同步
+                    GlobalContext.ViewModels.SendCurrentFileNameAsPzTitle();
+                    RaisePropertyChanged(nameof(InitInputModeDesc));
+                }
+
                 SaveToFile(saveFileDialog.FileName);
                 HadSaveAs = true;
             }
@@ -583,6 +589,7 @@ namespace JYCalculator.ViewModels
                 FileName = CurrentFileName,
                 AddExtension = true,
             };
+
             if (openFileDialog.ShowDialog() == true)
             {
                 var res = ReadFileAsSav(openFileDialog.FileName);
@@ -680,8 +687,7 @@ namespace JYCalculator.ViewModels
 
 
         #region 配装器页面
-
-        public void OpenPZMW()
+        public void OpenPZWindow()
         {
             _MW.OpenPzMainWindow();
         }
@@ -691,7 +697,11 @@ namespace JYCalculator.ViewModels
         public void Receive(PzPlanMessage message)
         {
             ImportPzPlan(message.Plan);
-            CurrentFileName = message.Title;
+            if (CurrentFileName == NewFileName)
+            {
+                CurrentFileName = message.Title;
+            }
+            RaisePropertyChanged(nameof(InitInputModeDesc));
         }
 
         public void ImportPzPlan(PzPlanModel plan)
@@ -701,5 +711,14 @@ namespace JYCalculator.ViewModels
             InitInputVM.Load(adapter.InputSav);
             GlobalContext.IsPZSyncWithCalc = true;
         }
+
+        public string GetPzInitInputModeDesc()
+        {
+            // 配装器模式下的初始属性标题
+            var title = GlobalContext.ViewModels.PzOverview.OverviewVM.Title;
+            var res = $"配装器模式 - {title}";
+            return res;
+        }
+
     }
 }

@@ -6,8 +6,7 @@
              xmlns:local="clr-namespace:JYCalculator.Views.UserControls"
              xmlns:dgx="urn:tom-englert.de/DataGridExtensions"
              x:Name="skillFreqCTDataGrid"
-             mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             mc:Ignorable="d">
     <Grid>
         <DataGrid
             dgx:DataGridFilter.IsAutoFilterEnabled="True"

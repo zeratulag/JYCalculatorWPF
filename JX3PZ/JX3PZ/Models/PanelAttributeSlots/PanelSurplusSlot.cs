@@ -7,7 +7,7 @@ namespace JX3PZ.Models
     public class PanelSurplusSlot : PanelAttributeSlot
     {
         public new const string Name = "SurplusValue";
-        public new const string Suffix = "Base";
+        public const string Suffix = "Base";
         public double SurplusDamageCoef { get; protected set; }
         public double SurplusDamage { get; protected set; }
 

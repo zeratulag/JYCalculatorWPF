@@ -32,7 +32,7 @@ namespace JX3CalculatorShared.ViewModels
 
 
         /// 整体是否启用
-        public void OnIsCheckedChanged(object sender, PropertyChangedEventArgs e)
+        public void UpdateCheckedChanged(object sender, PropertyChangedEventArgs e)
         {
             foreach (var _ in ItemsSource)
             {

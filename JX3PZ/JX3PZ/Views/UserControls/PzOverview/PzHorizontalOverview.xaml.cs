@@ -43,6 +43,15 @@ namespace J3PZ.Views
             }
         }
 
+        public void CopyRenderImg()
+        {
+            // 复制到剪贴板
+            var res = RenderTool.GetBitmapFrame(this);
+            Clipboard.SetImage(res);
+        }
+
+
+
         private void CaptureRenderImg(string fileName)
         {
             RenderTool.SaveToPng(this, fileName);

@@ -1,0 +1,65 @@
+﻿<UserControl x:Class="JX3CalculatorShared.Views.UserControls.DPSView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:JX3CalculatorShared.Views.UserControls"
+             xmlns:userControls="clr-namespace:JX3CalculatorShared.Views.UserControls"
+             mc:Ignorable="d"
+             d:DesignHeight="450" d:DesignWidth="800"
+             x:Name="DPSview">
+    <Grid x:Name="DPS_Grid">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto" MinWidth="200" />
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <TextBox
+            Name="FinalDPS_txb"
+            Grid.Column="0"
+            Margin="10,10,10,5"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            FontSize="24"
+            FontWeight="Bold"
+            Foreground="Red"
+            Text="{Binding Path=FinalDPStxt, Mode=OneWay}"
+            MouseLeftButtonDown="CopyFinalDPS"
+            Style="{StaticResource Style.TextBlockBox}"
+            ToolTip="点击复制" />
+        <Popup x:Name="CopyTextblock_pop" StaysOpen="False" Placement="Mouse" PopupAnimation="Slide"
+               AllowsTransparency="True">
+            <Border BorderBrush="Beige" BorderThickness="2" Background="White">
+                <TextBlock Margin="5">已复制！</TextBlock>
+            </Border>
+        </Popup>
+
+        <Expander Grid.Column="1" ExpandDirection="Right">
+            <DataGrid
+                Name="DataGrid_DPSTable"
+                AutoGenerateColumns="False"
+                ItemsSource="{Binding Path=DPSTable}">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Binding="{Binding Path=DescName}" Header="时段" />
+                    <DataGridTextColumn Binding="{Binding Path=DPS, StringFormat={}{0:F0}}"
+                                        Header="DPS" />
+                    <DataGridTextColumn Binding="{Binding Path=Proportion, StringFormat={}{0:P2}}"
+                                        Header="占比" />
+                </DataGrid.Columns>
+            </DataGrid>
+        </Expander>
+        <Expander x:Name="Expander_CombatStat"
+                  Grid.Row="1"
+                  Grid.Column="0"
+                  Grid.ColumnSpan="2"
+                  Header="战斗统计"
+                  IsExpanded="True">
+            <userControls:CombatStatDataGrid x:Name="SfDataGrid_SimpleCombatStatTable" />
+        </Expander>
+    </Grid>
+</UserControl>

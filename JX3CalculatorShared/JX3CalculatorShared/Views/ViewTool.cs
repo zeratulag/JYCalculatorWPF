@@ -188,7 +188,7 @@ namespace JX3CalculatorShared.Views
             SaveUsingEncoder(visual, fileName, encoder);
         }
 
-        public static void SaveUsingEncoder(FrameworkElement visual, string fileName, BitmapEncoder encoder)
+        public static BitmapFrame GetBitmapFrame(FrameworkElement visual)
         {
             var realSize = GetElementPixelSize(visual);
             var wpfsize = (Vector)visual.DesiredSize;
@@ -198,6 +198,12 @@ namespace JX3CalculatorShared.Views
             RenderTargetBitmap bitmap = new RenderTargetBitmap((int)realSize.Width, (int)realSize.Height, 96 * xcoef, 96 * ycoef, PixelFormats.Pbgra32);
             bitmap.Render(visual);
             BitmapFrame frame = BitmapFrame.Create(bitmap);
+            return frame;
+        }
+
+        public static void SaveUsingEncoder(FrameworkElement visual, string fileName, BitmapEncoder encoder)
+        {
+            BitmapFrame frame = GetBitmapFrame(visual);
             encoder.Frames.Add(frame);
 
             using (var stream = File.Create(fileName))

@@ -9,7 +9,7 @@ using System.Linq;
 
 namespace JX3CalculatorShared.DB
 {
-    public class EquipOptionDBBase : IDB<string, EquipOption>, INotifyPropertyChanged
+    public class EquipOptionDBBase : IDB<string, EquipOption>
     {
         public ImmutableDictionary<string, WPOption> WPData;
         public ImmutableDictionary<string, YZOption> YZData;
@@ -110,6 +110,5 @@ namespace JX3CalculatorShared.DB
         }
 
         public EquipOption this[string name] => Get(name);
-        public event PropertyChangedEventHandler PropertyChanged;
     }
 }

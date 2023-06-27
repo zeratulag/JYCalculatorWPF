@@ -38,7 +38,7 @@
         <StackPanel Grid.Row="0" Grid.Column="0" Margin="0 10" Orientation="Vertical" VerticalAlignment="Center"
                     Visibility="{Binding HasDiamond, Converter={StaticResource BooleanToVisibility}}">
             <hc:SimpleText Text="五行石" Style="{StaticResource Style.PzEquipSimpleTextLabel}" />
-            <hc:SplitButton Style="{StaticResource SplitButtonPrimary.Small}" Content="一键" HitMode="Hover"
+            <hc:SplitButton Style="{StaticResource SplitButtonPrimary.Small}" Content="一键"
                             HorizontalAlignment="Stretch"
                             DataContext="{Binding DiamondVM}">
                 <hc:SplitButton.DropDownContent>

@@ -7,8 +7,6 @@
     xmlns:local="clr-namespace:JYCalculator.Views.UserControls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     x:Name="skillDamageDataGrid"
-    d:DesignHeight="300"
-    d:DesignWidth="400"
     mc:Ignorable="d">
     <Grid>
         <DataGrid

@@ -5,21 +5,16 @@
              xmlns:xc="http://schemas.xceed.com/wpf/xaml/toolkit"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:JYCalculator.Views.UserControls"
-             mc:Ignorable="d"
-             d:DesignHeight="200" d:DesignWidth="300">
+             mc:Ignorable="d">
     <Grid x:Name="Grid_InitCharInput" >
-
         <Grid.Resources>
-            <Style TargetType="Label" BasedOn="{StaticResource Style.CenterLabel}" >
-                <Setter Property="FontSize" Value="14"/>
-            </Style>
             <Style TargetType="CheckBox">
                 <Setter Property="HorizontalContentAlignment" Value="Left" />
                 <Setter Property="VerticalContentAlignment" Value="Center" />
                 <Setter Property="FontSize" Value="12"/>
             </Style>
             <Style TargetType="TextBlock" BasedOn="{StaticResource Style.CenterTextBlock}">
-                <Setter Property="FontSize" Value="14"/>
+                <Setter Property="FontSize" Value="13"/>
             </Style>
             <Style TargetType="xc:IntegerUpDown" BasedOn="{StaticResource Style.IntUpDown_InitInput}">
                 <Setter Property="FontSize" Value="14"/>
@@ -48,24 +43,24 @@
             <ColumnDefinition Width="*" MinWidth="60" SharedSizeGroup="InitCharSpb" />
         </Grid.ColumnDefinitions>
 
-        <Label Grid.Row="0" Grid.Column="0">基础攻击</Label>
-        <Label Grid.Row="1" Grid.Column="0">最终攻击</Label>
-        <Label Grid.Row="2" Grid.Column="0">会心</Label>
-        <Label Grid.Row="3" Grid.Column="0">会效</Label>
+        <TextBlock Grid.Row="0" Grid.Column="0">基础攻击</TextBlock>
+        <TextBlock Grid.Row="1" Grid.Column="0">最终攻击</TextBlock>
+        <TextBlock Grid.Row="2" Grid.Column="0">会心</TextBlock>
+        <TextBlock Grid.Row="3" Grid.Column="0">会效</TextBlock>
 
-        <Label Grid.Row="0" Grid.Column="3">基础力道</Label>
-        <Label Grid.Row="1" Grid.Column="3">武器伤害</Label>
-        <Label Grid.Row="2" Grid.Column="3">破招</Label>
-        <Label Grid.Row="3" Grid.Column="3">无双</Label>
+        <TextBlock Grid.Row="0" Grid.Column="3">基础力道</TextBlock>
+        <TextBlock Grid.Row="1" Grid.Column="3">武器伤害</TextBlock>
+        <TextBlock Grid.Row="2" Grid.Column="3">破招</TextBlock>
+        <TextBlock Grid.Row="3" Grid.Column="3">无双</TextBlock>
 
 
-        <Label Grid.Row="4" Grid.Column="0">破防等级</Label>
-        <Label Grid.Row="5" Grid.Column="0">加速等级</Label>
-        <Label Grid.Row="4" Grid.Column="3">破防</Label>
-        <Label Grid.Row="5" Grid.Column="3">加速</Label>
+        <TextBlock Grid.Row="4" Grid.Column="0">破防等级</TextBlock>
+        <TextBlock Grid.Row="5" Grid.Column="0">加速等级</TextBlock>
+        <TextBlock Grid.Row="4" Grid.Column="3">破防</TextBlock>
+        <TextBlock Grid.Row="5" Grid.Column="3">加速</TextBlock>
 
-        <Label Grid.Row="7" Grid.Column="0" Visibility="{Binding HasL_Percent, Converter={StaticResource BooleanToVisibility}}">力道提升</Label>
-        <Label Grid.Row="7" Grid.Column="3" Visibility="{Binding HasL_Percent, Converter={StaticResource BooleanToVisibility}}">最终力道</Label>
+        <TextBlock Grid.Row="7" Grid.Column="0" Visibility="{Binding HasL_Percent, Converter={StaticResource BooleanToVisibility}}">力道提升</TextBlock>
+        <TextBlock Grid.Row="7" Grid.Column="3" Visibility="{Binding HasL_Percent, Converter={StaticResource BooleanToVisibility}}">最终力道</TextBlock>
 
         <xc:IntegerUpDown x:Name="Base_AP_spb" Grid.Row="0" Grid.Column="1"
                           Value="{Binding Path = Base_AP}" />
@@ -111,7 +106,7 @@
 
 
         <xc:DoubleUpDown x:Name="L_Percent_spb" Grid.Row="7" Grid.Column="1" Visibility="{Binding HasL_Percent, Converter={StaticResource BooleanToVisibility}}"
-                         Value="{Binding Path = L_Percent}" Minimum="0.01" Maximum="1" Increment="0.01"/>
+                         Value="{Binding Path = L_Percent}" Minimum="0" Maximum="1" Increment="0.01"/>
 
         <TextBlock x:Name="Final_L_spb" Grid.Row="7" Grid.Column="4" Visibility="{Binding HasL_Percent, Converter={StaticResource BooleanToVisibility}}"
                    Text="{Binding Path = Final_L, StringFormat=F0}" />

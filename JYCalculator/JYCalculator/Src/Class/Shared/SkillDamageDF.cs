@@ -9,7 +9,7 @@ namespace JYCalculator.Class
 {
     public class SkillDamageDF : AbsDataFrame<string, SkillDamage>
     {
-        public Dictionary<string, SkillDamage> Data;
+        public new Dictionary<string, SkillDamage> Data;
         public FullCharacter FChar; // 人物属性
         public FullCharacter SnapFChar; // DOT快照的人物属性
         public Target CTarget;

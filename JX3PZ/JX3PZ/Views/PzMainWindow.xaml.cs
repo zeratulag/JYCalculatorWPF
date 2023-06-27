@@ -59,5 +59,20 @@ namespace JX3PZ.Views
             PzOverview.Show();
             PzOverview.Activate();
         }
+
+        private void PzMainWindow_OnDrop(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+                ReadFile(files[0]);
+                e.Handled = true;
+            }
+        }
+
+        public void ReadFile(string filepath)
+        {
+            _VM.ReadFile(filepath);
+        }
     }
 }

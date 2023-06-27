@@ -7,17 +7,8 @@ namespace JYCalculator.ViewModels
     {
         public void UpdateSource(CalculatorShell shell)
         {
-            if (IsChecked)
-            {
-                OptimizationDescSource = shell.DpsKernelOp.BestProportion.Desc;
-                MultiZhenResSource = shell.MultiZhenDPSOp.ResultArr;
-            }
-            else
-            {
-                OptimizationDescSource = "";
-                MultiZhenResSource = null;
-            }
-
+            OptimizationDescSource = shell.DpsKernelOp.BestProportion.Desc;
+            MultiZhenResSource = shell.MultiZhenDPSOp.ResultArr;
             Refresh();
         }
     }

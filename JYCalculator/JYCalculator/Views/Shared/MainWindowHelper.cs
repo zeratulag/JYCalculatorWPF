@@ -39,7 +39,7 @@ namespace JYCalculator.Views
 
         public void FindMiJis()
         {
-            MiJiExpanderDict = _MW.Grid_MiJi.FindChildrenElements<Expander>(
+            MiJiExpanderDict = _MW.CAllSkillMiJiConfigView.Grid_MiJi.FindChildrenElements<Expander>(
                 prefix: ViewGlobals.PREFIX.ExpanderMiJi).ToImmutableDictionary();
 
             var MiJilistViews = MiJiExpanderDict.Values.Select(e => (ListView)e.Content);

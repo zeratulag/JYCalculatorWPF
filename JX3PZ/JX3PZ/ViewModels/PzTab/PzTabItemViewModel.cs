@@ -39,7 +39,7 @@ namespace JX3PZ.ViewModels
         public int Position { get; set; }
 
         public readonly int NumDiamond; // 有几个镶嵌孔
-        public bool _SendMessage { get; private set; } = true; // 是否对外发消息
+        //public bool _SendMessage { get; private set; } = true; // 是否对外发消息
 
         public PzTabItemViewModel(int position)
         {

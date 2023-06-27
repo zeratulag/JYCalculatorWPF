@@ -1,0 +1,57 @@
+﻿<UserControl x:Class="JYCalculator.Views.UserControls.FullCharacterGroupDataGrid"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:JYCalculator.Views.UserControls"
+             mc:Ignorable="d">
+    <DataGrid
+        Name="DataGrid_FullCharacterGroup"
+        AutoGenerateColumns="False"
+        FrozenColumnCount="1"
+        HorizontalScrollBarVisibility="Auto"
+        ItemsSource="{Binding}">
+
+        <DataGrid.Columns>
+            <DataGridTextColumn Binding="{Binding Path=Name}" Header="Name" />
+
+            <DataGridTextColumn Binding="{Binding Path=Base_L, StringFormat={}{0:F1}}" Header="基础力道" />
+
+            <DataGridTextColumn Binding="{Binding Path=Final_L, StringFormat={}{0:F1}}" Header="最终力道" />
+
+            <DataGridTextColumn Binding="{Binding Path=Base_AP, StringFormat={}{0:F1}}" Header="基础攻击" />
+
+            <DataGridTextColumn Binding="{Binding Path=Final_AP, StringFormat={}{0:F1}}" Header="最终攻击" />
+
+            <DataGridTextColumn Binding="{Binding Path=Base_OC, StringFormat={}{0:F1}}" Header="基础破防" />
+
+            <DataGridTextColumn Binding="{Binding Path=Final_OC, StringFormat={}{0:F1}}" Header="最终破防" />
+
+            <DataGridTextColumn Binding="{Binding Path=Final_OC_Pct, StringFormat={}{0:P2}}" Header="破防值" />
+
+            <DataGridTextColumn Binding="{Binding Path=WP, StringFormat={}{0:F1}}" Header="武伤" />
+
+            <DataGridTextColumn Binding="{Binding Path=CT, StringFormat={}{0:P2}}" Header="会心" />
+
+            <DataGridTextColumn Binding="{Binding Path=CF, StringFormat={}{0:P2}}" Header="会效" />
+
+            <DataGridTextColumn Binding="{Binding Path=WS, StringFormat={}{0:P2}}" Header="无双" />
+
+            <DataGridTextColumn Binding="{Binding Path=PZ, StringFormat={}{0:F1}}" Header="破招" />
+
+            <DataGridTextColumn Binding="{Binding Path=HS, StringFormat={}{0:F1}}" Header="加速" />
+
+            <DataGridTextColumn Binding="{Binding Path=L_Percent, StringFormat={}{0:P2}}" Header="+力道" />
+
+            <DataGridTextColumn Binding="{Binding Path=AP_Percent, StringFormat={}{0:P2}}" Header="+攻击" />
+
+            <DataGridTextColumn Binding="{Binding Path=OC_Percent, StringFormat={}{0:P2}}" Header="+破防" />
+
+            <DataGridTextColumn Binding="{Binding Path=IgnoreA, StringFormat={}{0:P2}}" Header="无视防御" />
+
+            <DataGridTextColumn Binding="{Binding Path=DmgAdd, StringFormat={}{0:P2}}" Header="+伤害" />
+
+
+        </DataGrid.Columns>
+    </DataGrid>
+</UserControl>

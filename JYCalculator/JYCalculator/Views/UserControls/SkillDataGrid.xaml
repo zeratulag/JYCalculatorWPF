@@ -6,8 +6,7 @@
              xmlns:local="clr-namespace:JYCalculator.Views.UserControls"
              xmlns:dgx="urn:tom-englert.de/DataGridExtensions"
              mc:Ignorable="d"
-             x:Name="skillDataGrid"
-             d:DesignHeight="300" d:DesignWidth="300">
+             x:Name="skillDataGrid">
     <Grid>
         <DataGrid
             dgx:DataGridFilter.IsAutoFilterEnabled="True"

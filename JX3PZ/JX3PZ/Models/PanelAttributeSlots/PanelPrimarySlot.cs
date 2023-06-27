@@ -8,7 +8,7 @@ namespace JX3PZ.Models
 {
     public class PanelPrimarySlot : PanelAttributeSlot // 主属性
     {
-        public new static readonly string Suffix = "Base";
+        public static readonly string Suffix = "Base";
         public readonly PrimaryTypeEnum PrimaryType;
 
         public Dictionary<string, int> SystemPrimaryAttributeValues { get; private set; }

@@ -26,7 +26,7 @@ namespace JYCalculator.Models
             Rest = new RestNum();
         }
 
-        public new void Calc()
+        public void Calc()
         {
             CommonCalcBefore();
             CalcBigXWSkillNum();

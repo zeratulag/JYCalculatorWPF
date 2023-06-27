@@ -26,8 +26,8 @@ namespace JYCalculator.Src
         // 输入成员
         public InitInputViewModel InitInput;
 
-        public EquipOptionConfigModel Equip => InitInput.EquipOption.Model;
-        public BigFMConfigModel BigFM => InitInput.BigFM.Model;
+        public EquipOptionConfigModel Equip => InitInput.EquipOptionVM.Model;
+        public BigFMConfigModel BigFM => InitInput.BigFMVM.Model;
 
         public QiXueConfigModel QiXue;
 
@@ -220,7 +220,7 @@ namespace JYCalculator.Src
         {
             var allBuffs = AttrCollection.Sum(Buffs.Buff.Attr, Buffs.ItemDT.Attr, Equip.WP.SCharAttr,
                 InitInput.BigFMAttrsDesc.Attr);
-            FullCharGroup.UpdateInput(InitInput.InitChar, allBuffs, Zhen.AttrsDesc.Attr);
+            FullCharGroup.UpdateInput(InitInput.InitCharVM, allBuffs, Zhen.AttrsDesc.Attr);
             FullCharGroup.CalcZhenBuffed();
         }
 

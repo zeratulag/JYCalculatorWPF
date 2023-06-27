@@ -132,10 +132,16 @@
     <Compile Include="$(MSBuildThisFileDirectory)Views\Dialogs\AboutDialog.xaml.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\Dialogs\ImportJBDialog.xaml.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\InputDialog.xaml.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\UserControls\AllBuffConfigView.xaml.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\UserControls\CalcView\FightOptionSummarySmallView.xaml.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\UserControls\CalcView\FightOptionSummaryView.xaml.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\UserControls\CalcView\CalcResultView.xaml.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\UserControls\CombatStatDataGrid.xaml.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\UserControls\DPSView.xaml.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\UserControls\EquipOptionView.xaml.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\UserControls\FightOptionView.xaml.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\UserControls\InitCharCommands.xaml.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\UserControls\ItemDTConfigView.xaml.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\UserControls\Items\BigFMItemView.xaml.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\UserControls\Items\BuffItemView.xaml.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\UserControls\Items\EquipOptionItemView.xaml.cs" />
@@ -145,9 +151,11 @@
     <Compile Include="$(MSBuildThisFileDirectory)Views\UserControls\Items\QiXueSkillItemViewSmall.xaml.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\UserControls\Items\QiXueSkillItemView.xaml.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\UserControls\Items\ZhenFaItemView.xaml.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\UserControls\MainWindowMenuView.xaml.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\UserControls\MultiZhenFaDataGrid.xaml.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Views\UserControls\OutlinedTextBlock.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\UserControls\ProfitChart.xaml.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\UserControls\ProfitGroupBox.xaml.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\UserControls\QiXueConfigView.xaml.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\ViewGlobals.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\ViewTool.cs" />
   </ItemGroup>
@@ -203,6 +211,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\UserControls\AllBuffConfigView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="$(MSBuildThisFileDirectory)Views\UserControls\CalcView\FightOptionSummarySmallView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -216,6 +228,26 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="$(MSBuildThisFileDirectory)Views\UserControls\CombatStatDataGrid.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\UserControls\DPSView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\UserControls\EquipOptionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\UserControls\FightOptionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\UserControls\InitCharCommands.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\UserControls\ItemDTConfigView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -255,11 +287,23 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\UserControls\MainWindowMenuView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="$(MSBuildThisFileDirectory)Views\UserControls\MultiZhenFaDataGrid.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="$(MSBuildThisFileDirectory)Views\UserControls\ProfitChart.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\UserControls\ProfitGroupBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\UserControls\QiXueConfigView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

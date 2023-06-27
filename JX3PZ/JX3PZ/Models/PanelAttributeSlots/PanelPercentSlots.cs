@@ -8,9 +8,9 @@ namespace JX3PZ.Models
     public class PanelHasteSlot : PanelPercentAttributeSlot
     {
         public new const string Name = "Haste";
-        public new const string Suffix = "Base";
+        public const string Suffix = "Base";
 
-        public new static readonly double PointCoef = StaticConst.fGP.HS;
+        public static readonly double PointCoef = StaticConst.fGP.HS;
         public PanelHasteSlot() : base(Name, Suffix, PointCoef, PointToPercentConvertTypeEnum.Linear)
         {
             PercentKey = $"{BasePointKey}PercentAdd";
@@ -22,9 +22,9 @@ namespace JX3PZ.Models
     {
         // 无双
         public new const string Name = "Strain";
-        public new const string Suffix = "Base";
+        public const string Suffix = "Base";
 
-        public new static readonly double PointCoef = StaticConst.fGP.WS;
+        public static readonly double PointCoef = StaticConst.fGP.WS;
         public PanelStrainSlot(): base(Name, Suffix, PointCoef, PointToPercentConvertTypeEnum.Linear)
         {
             BasePointPercentAddKey = $"at{Name}Percent";
@@ -37,9 +37,9 @@ namespace JX3PZ.Models
     {
         // 外防
         public new const string Name = "PhysicsShield";
-        public new const string Suffix = "Base";
+        public const string Suffix = "Base";
 
-        public new static readonly double PointCoef = StaticConst.fGP.PDef;
+        public static readonly double PointCoef = StaticConst.fGP.PDef;
 
         public PanelPhysicsShieldSlot() : base(Name, Suffix, PointCoef, PointToPercentConvertTypeEnum.NonLinear)
         {
@@ -59,9 +59,9 @@ namespace JX3PZ.Models
     {
         // 内防
         public new const string Name = "MagicShield";
-        public new const string Suffix = "";
+        public const string Suffix = "";
 
-        public new static readonly double PointCoef = StaticConst.fGP.MDef;
+        public static readonly double PointCoef = StaticConst.fGP.MDef;
 
         public PanelMagicShieldSlot() : base(Name, Suffix, PointCoef, PointToPercentConvertTypeEnum.NonLinear)
         {
@@ -81,9 +81,9 @@ namespace JX3PZ.Models
     {
         // 化劲
         public new const string Name = "DecriticalDamagePower";
-        public new const string Suffix = "Base";
+        public const string Suffix = "Base";
 
-        public new static readonly double PointCoef = StaticConst.fGP.HJ;
+        public static readonly double PointCoef = StaticConst.fGP.HJ;
 
         public PanelDecriticalDamageSlot() : base(Name, Suffix, PointCoef, PointToPercentConvertTypeEnum.NonLinear)
         {
@@ -104,9 +104,9 @@ namespace JX3PZ.Models
     {
         // 御劲
         public new const string Name = "Toughness";
-        public new const string Suffix = "Base";
+        public const string Suffix = "Base";
 
-        public new static readonly double PointCoef = StaticConst.fGP.YJ;
+        public static readonly double PointCoef = StaticConst.fGP.YJ;
         public static readonly double CFPointCoef = StaticConst.fGP.YJCF;
         public double FinalCF => Final * PointCoef / CFPointCoef;
 

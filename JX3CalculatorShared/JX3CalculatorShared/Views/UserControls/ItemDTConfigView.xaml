@@ -1,0 +1,18 @@
+﻿<UserControl x:Class="JX3CalculatorShared.Views.UserControls.ItemDTConfigView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" >
+    <GroupBox Name="GroupBox_ItemDT">
+        <GroupBox.Header>
+            <CheckBox x:Name="GroupBox_ItemDT_chb" Style="{StaticResource Style.CenterCheckBox}">单体</CheckBox>
+        </GroupBox.Header>
+        <Expander
+            x:Name="Expander_ItemDT"
+            IsExpanded="True"
+            Style="{StaticResource Style.MultiLineHeaderedExpander}">
+            <ItemsControl x:Name="ItemsControl_ItemDT" Style="{StaticResource Style.ItemDT}" />
+        </Expander>
+    </GroupBox>
+</UserControl>

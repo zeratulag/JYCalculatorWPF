@@ -8,12 +8,13 @@ namespace JX3CalculatorShared.ViewModels
 {
     public class AllBuffConfigViewModelBase : CollectionViewModel<BuffConfigViewModel>
     {
-        public BuffConfigViewModel Buff_Self;
-        public BuffConfigViewModel Buff_Normal;
-        public BuffConfigViewModel DeBuff_Normal;
-        public BuffConfigViewModel Buff_Banquet;
-        public BuffConfigViewModel Buff_Extra;
-        public BuffConfigViewModel Buff_ExtraStack;
+        public BuffConfigViewModel Buff_Self { get; protected set; }
+        public BuffConfigViewModel Buff_Normal { get; protected set; }
+        public BuffConfigViewModel DeBuff_Normal { get; protected set; }
+        public BuffConfigViewModel Buff_Banquet { get; protected set; }
+        public BuffConfigViewModel Buff_Extra { get; protected set; }
+        public BuffConfigViewModel Buff_ExtraStack { get; protected set; }
+
         public Dictionary<BuffTypeEnum, BaseBuffGroup> EmitedBuffGroupsDict;
         public BaseBuffGroup EmitedAllBuffGroup; // 最终汇总的Buff求和
         public BaseBuffGroup EmitedDeBuffGroup; // Debuff求和

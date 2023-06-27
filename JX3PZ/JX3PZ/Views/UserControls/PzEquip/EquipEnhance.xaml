@@ -38,7 +38,7 @@
 
         <!--<hc:Divider Grid.Row="0" Grid.RowSpan="4" Grid.Column="1" LineStrokeThickness="8" Orientation="Vertical" Width="200"></hc:Divider>-->
         <hc:SimpleText Grid.Row="0" Grid.Column="0" Margin="0 10"
-                       Text="精炼等级" Style="{StaticResource Style.PzEquipSimpleTextLabel}" />
+                       Text="精炼" Style="{StaticResource Style.PzEquipSimpleTextLabel}" />
         <StackPanel Grid.Row="0" Grid.Column="2" Orientation="Horizontal" Margin="0 10">
             <hc:Rate x:Name="EquipStrength_Rate"
                      Value="{Binding Path=StrengthLevel, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"

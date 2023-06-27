@@ -1,0 +1,124 @@
+﻿<UserControl x:Class="JX3CalculatorShared.Views.UserControls.FightOptionView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+             xmlns:userControls="clr-namespace:JX3CalculatorShared.Views.UserControls"
+             mc:Ignorable="d">
+    <Grid x:Name="Grid_FightOption">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <Grid.Resources>
+            <Style BasedOn="{StaticResource Style.CenterRadioButton}" TargetType="RadioButton" />
+        </Grid.Resources>
+
+
+        <Label Grid.Row="0" Grid.Column="0">时长</Label>
+        <Grid Grid.Row="0" Grid.Column="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="15*" />
+                <ColumnDefinition Width="10*" />
+                <ColumnDefinition Width="10*" />
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Grid.Column="0" Orientation="Horizontal">
+                <xctk:IntegerUpDown
+                    x:Name="FightTime_spb"
+                    MinWidth="50"
+                    HorizontalAlignment="Left"
+                    FontSize="16"
+                    Increment="10"
+                    Minimum="180"
+                    Style="{StaticResource Style.IntUpDown_InitInput}"
+                    Text="300"
+                    Value="{Binding Path=FightTime}" />
+                <Label>秒</Label>
+            </StackPanel>
+
+            <RadioButton
+                x:Name="LongFight_rbt"
+                Grid.Column="1"
+                GroupName="FightTime"
+                IsChecked="{Binding Path=LongFight}"
+                ToolTip="模拟副本长时间战斗">
+                长时间
+            </RadioButton>
+            <RadioButton
+                x:Name="ShortFight_rbt"
+                Grid.Column="2"
+                GroupName="FightTime"
+                IsChecked="{Binding Path=ShortFight}"
+                ToolTip="模拟木桩战斗（起手有一波心无）">
+                短时间
+            </RadioButton>
+
+        </Grid>
+
+        <Label Grid.Row="1" Grid.Column="0">目标</Label>
+
+
+        <Grid Grid.Row="1" Grid.Column="1">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="15*" />
+                <ColumnDefinition Width="6*" />
+                <ColumnDefinition Width="8*" />
+            </Grid.ColumnDefinitions>
+
+            <ComboBox
+                x:Name="FightOption_Target_cbb"
+                Grid.Column="0"
+                Margin="5,5"
+                Style="{StaticResource Style.FightOptionCbb}"
+                DataContext="{Binding Path=TargetVM}">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <userControls:TargetItemView />
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+
+            <Label
+                Grid.Column="1"
+                Margin="5,5,0,5"
+                HorizontalAlignment="Right"
+                DockPanel.Dock="Right">
+                手法
+            </Label>
+            <ComboBox
+                x:Name="FightOption_Ability_cbb"
+                Grid.Column="2"
+                MinWidth="30"
+                Margin="0,5"
+                DisplayMemberPath="ItemName"
+                Style="{StaticResource Style.FightOptionCbb}"
+                DataContext="{Binding Path=AbilityVM}">
+            </ComboBox>
+
+        </Grid>
+
+
+        <Label Grid.Row="2" Grid.Column="0">阵法</Label>
+        <DockPanel
+            Grid.Row="2"
+            Grid.Column="1"
+            LastChildFill="False">
+
+            <ComboBox
+                x:Name="FightOption_ZhenFa_cbb"
+                Margin="5,5"
+                DataContext="{Binding Path=ZhenFaVM}"
+                Style="{StaticResource Style.ZhenFaCbb}" />
+        </DockPanel>
+    </Grid>
+</UserControl>

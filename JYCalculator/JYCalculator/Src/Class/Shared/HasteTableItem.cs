@@ -57,7 +57,7 @@ namespace JYCalculator.Class
         /// GCD对象
         /// </summary>
         /// <returns></returns>
-        public static HasteTableItem GetGCDItem()
+        public new static HasteTableItem GetGCDItem()
         {
             return new HasteTableItem("GCD", "公共CD", StaticConst.GCD_FPS, 1);
         }

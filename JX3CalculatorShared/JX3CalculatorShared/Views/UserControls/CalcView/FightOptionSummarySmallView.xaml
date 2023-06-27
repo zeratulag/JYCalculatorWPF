@@ -6,7 +6,6 @@
              xmlns:local="clr-namespace:JX3CalculatorShared.Views.UserControls"
              xmlns:hc="https://handyorg.github.io/handycontrol"
              mc:Ignorable="d"
-             d:DesignHeight="200" d:DesignWidth="200"
              x:Name="fightOptionSummarySmallView">
     <StackPanel Orientation="Horizontal">
         <StackPanel.Resources>

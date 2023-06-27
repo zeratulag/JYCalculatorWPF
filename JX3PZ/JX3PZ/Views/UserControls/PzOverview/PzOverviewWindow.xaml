@@ -48,29 +48,54 @@
                     hc:InfoElement.Placeholder="请输入作者名称"
                     Text="{Binding Author, UpdateSourceTrigger=PropertyChanged}" />
 
-                <Button Command="{Binding ConfirmInfoCmd}" Margin="5" Style="{StaticResource ButtonInfo}">
+                <Button Command="{Binding ConfirmAndSaveInfoCmd}" Margin="5" Style="{StaticResource ButtonInfo}">
                     <hc:SimpleStackPanel Orientation="Horizontal" >
                         <fa:IconImage Icon="Check" Height="18" Width="18" />
-                        <hc:SimpleText Margin="5 0 0 0" VerticalAlignment="Center" TextAlignment="Left" Text="确定" />
+                        <hc:SimpleText Margin="5 0 0 0" VerticalAlignment="Center" TextAlignment="Left" Text="保存" />
                     </hc:SimpleStackPanel>
                 </Button>
                 <ToggleButton IsChecked="{Binding ShowDPS}" Style="{StaticResource ToggleButtonSwitch}" Content="显示DPS"
                               Height="30" Width="100" Margin="5" />
 
-                <hc:UniformSpacingPanel HorizontalAlignment="Stretch" Margin="5">
+                <hc:UniformSpacingPanel HorizontalAlignment="Stretch" Margin="5" Orientation="Vertical" Spacing="5">
+                    <hc:UniformSpacingPanel.Resources>
+                        <Style TargetType="hc:SimpleText">
+                            <Setter Property="Margin" Value="5 0 0 0"/>
+                            <Setter Property="VerticalAlignment" Value="Center"/>
+                        </Style>
+                        <Style TargetType="fa:IconImage">
+                            <Setter Property="Height" Value="18"/>
+                            <Setter Property="Width" Value="18"/>
+                        </Style>
+                    </hc:UniformSpacingPanel.Resources>
+
                     <Button x:Name="CaptureOverviewScreenShot_Btn" Style="{StaticResource ButtonSuccess}"
-                            Click="CaptureOverviewScreenShot_Btn_OnClick" Margin="5">
+                            Click="CaptureOverviewScreenShot_Btn_OnClick">
                         <hc:SimpleStackPanel Orientation="Horizontal">
-                            <fa:IconImage Icon="Image" Height="18" Width="18" />
-                            <hc:SimpleText Margin="5 0 0 0" VerticalAlignment="Center" TextAlignment="Left" Text="保存图片" />
+                            <fa:IconImage Icon="Image"/>
+                            <hc:SimpleText Text="导出图片"/>
                         </hc:SimpleStackPanel>
                     </Button>
 
-                    <Button x:Name="CloseWindow_Btn" Content="关闭窗口" Margin="5" Style="{StaticResource ButtonDanger}"
+                    <Button x:Name="CopyOverviewScreenShot_Btn" Style="{StaticResource ButtonPrimary}" 
+                            Click="CopyOverviewScreenShot_Btn_OnClick">
+                        <hc:SimpleStackPanel Orientation="Horizontal">
+                            <fa:IconImage Icon="Copy"/>
+                            <hc:SimpleText Text="复制图片"/>
+                        </hc:SimpleStackPanel>
+                    </Button>
+
+                    <Button x:Name="CloseWindow_Btn" Style="{StaticResource ButtonDanger}"
                             Click="CloseWindow_Btn_OnClick">
+                        <hc:SimpleStackPanel Orientation="Horizontal">
+                            <fa:IconImage Icon="Close"/>
+                            <hc:SimpleText Text="关闭窗口"/>
+                        </hc:SimpleStackPanel>
                     </Button>
 
                 </hc:UniformSpacingPanel>
+
+
 
             </hc:SimpleStackPanel>
         </GroupBox>

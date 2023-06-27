@@ -1,0 +1,69 @@
+﻿<UserControl x:Class="JYCalculator.Views.UserControls.AllSkillMiJiConfigView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:JYCalculator.Views.UserControls"
+             mc:Ignorable="d"
+             x:Name="allSkillMiJiConfigView">
+    <Grid x:Name="Grid_MiJi">
+        <Grid.Resources>
+            <Style BasedOn="{StaticResource Style.ExpanderMiJi}" TargetType="Expander" />
+
+            <Style BasedOn="{StaticResource Style.CenterCheckBox}" TargetType="CheckBox">
+                <Setter Property="FontSize" Value="11" />
+                <Setter Property="Margin" Value="5,2" />
+            </Style>
+
+            <Style BasedOn="{StaticResource Style.MiJiListView}" TargetType="ListView" />
+        </Grid.Resources>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+
+        <Expander
+            x:Name="Expander_MiJi_DP"
+            Grid.Row="0"
+            Grid.Column="0">
+            <ListView x:Name="ListView_MiJi_DP" />
+        </Expander>
+
+        <Expander
+            x:Name="Expander_MiJi_CX"
+            Grid.Row="0"
+            Grid.Column="1">
+            <ListView x:Name="ListView_MiJi_CX" />
+        </Expander>
+
+        <Expander
+            x:Name="Expander_MiJi_BY"
+            Grid.Row="1"
+            Grid.Column="0">
+            <ListView x:Name="ListView_MiJi_BY" />
+        </Expander>
+
+        <Expander
+            x:Name="Expander_MiJi_ZX"
+            Grid.Row="1"
+            Grid.Column="1">
+            <ListView x:Name="ListView_MiJi_ZX" />
+        </Expander>
+
+        <Expander
+            x:Name="Expander_MiJi_ZM"
+            Grid.Row="2"
+            Grid.Column="0"
+            Grid.ColumnSpan="2">
+            <ListView x:Name="ListView_MiJi_ZM" Style="{StaticResource Style.MiJiListView_ZM}" />
+        </Expander>
+
+    </Grid>
+</UserControl>

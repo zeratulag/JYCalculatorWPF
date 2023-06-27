@@ -4,7 +4,7 @@ namespace JX3PZ.Class
 {
     public class EquipGetInfoItem
     {
-        public string GetType { get; set; }
+        public new string GetType { get; set; }
         public string[] DescList { get; set; } = null;
         public RaidInfoItem[] RaidInfo { get; set; } = null;
 

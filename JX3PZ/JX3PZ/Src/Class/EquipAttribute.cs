@@ -128,13 +128,13 @@ namespace JX3PZ.Class
 
         public ImmutableArray<AttributeStrengthEntryViewModel> GetExtraMagicStrengthAttributeVMs(int strengthLevel = 0)
         {
-            var res = GetStengthVMs(ExtraMagicEntry, strengthLevel, AttributeEntryTypeEnum.EquipExtraMagic);
+            var res = GetStrengthVMs(ExtraMagicEntry, strengthLevel, AttributeEntryTypeEnum.EquipExtraMagic);
             return res;
         }
 
         public ImmutableArray<AttributeStrengthEntryViewModel> GetBasicMagicStrengthAttributeVMs(int strengthLevel = 0)
         {
-            var res = GetStengthVMs(BasicMagicEntry, strengthLevel, AttributeEntryTypeEnum.EquipBasicMagic);
+            var res = GetStrengthVMs(BasicMagicEntry, strengthLevel, AttributeEntryTypeEnum.EquipBasicMagic);
             return res;
         }
 
@@ -145,7 +145,7 @@ namespace JX3PZ.Class
         /// <param name="strengthLevel">强化等级</param>
         /// <param name="typeEnum">类型</param>
         /// <returns></returns>
-        public static ImmutableArray<AttributeStrengthEntryViewModel> GetStengthVMs(
+        public static ImmutableArray<AttributeStrengthEntryViewModel> GetStrengthVMs(
             ImmutableArray<AttributeTabItem> data,
             int strengthLevel = 0, AttributeEntryTypeEnum typeEnum = AttributeEntryTypeEnum.Default)
         {

@@ -43,12 +43,12 @@ namespace JYCalculator.Globals
         public static readonly string MainTitle;
         public static readonly DateTime BuildDateTime; // 构建时间
         public static readonly DateTime LastPatchTime; // 最新技改时间
-        public const string LastPatchURL = @"https://jx3.xoyo.com/show-2466-5706-1.html"; // 最新技改内容
+        public const string LastPatchURL = @"https://jx3.xoyo.com/show-2466-5778-1.html"; // 最新技改内容
 
 
         static XFAppStatic()
         {
-            LastPatchTime = new DateTime(2023, 04, 27); // 最新技改时间
+            LastPatchTime = new DateTime(2023, 06, 19); // 最新技改时间
 
             AppVersion = Assembly.GetExecutingAssembly().GetName().Version;
             var version = AppVersion.ToString();
@@ -131,7 +131,7 @@ namespace JYCalculator.Globals
         public const double
             CT_PER_L = 604.0 / StaticConst.G_KILO; // 力道提高0.59会心，STRENGTH_TO_PHYSICS_CRITICAL_STRIKE_COF 604
 
-        public const double NPC_Coef = 82.0 / StaticConst.G_KILO; // DST_NPC_DAMAGE_COEFFICIENT
+        public const double NPC_Coef = 113.0 / StaticConst.G_KILO; // DST_NPC_DAMAGE_COEFFICIENT
 
         public static AttrWeight PointWeight = new AttrWeight("单点属性", "提高一点属性增加的DPS")
         { AP = 1, L = 1, WP = 1, Final_AP = 1, Final_OC = 1, Final_L = 1 };
