@@ -144,32 +144,32 @@
     <Reference Include="PropertyChanged, Version=4.1.0.0, Culture=neutral, PublicKeyToken=ee3ee20bcf148ddd, processorArchitecture=MSIL">
       <HintPath>..\..\..\NuGetPackages\PropertyChanged.Fody.4.1.0\lib\net40\PropertyChanged.dll</HintPath>
     </Reference>
-    <Reference Include="Syncfusion.Data.WPF, Version=21.2460.3.0, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
-      <HintPath>D:\Program Files (x86)\Syncfusion\Essential Studio\WPF\21.2.3\precompiledassemblies\4.6\Syncfusion.Data.WPF.dll</HintPath>
+    <Reference Include="Syncfusion.Data.WPF, Version=22.1460.34.0, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>D:\Program Files (x86)\Syncfusion\Essential Studio\WPF\22.1.34\precompiledassemblies\4.6\Syncfusion.Data.WPF.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Syncfusion.SfChart.Wpf, Version=21.2460.3.0, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
-      <HintPath>D:\Program Files (x86)\Syncfusion\Essential Studio\WPF\21.2.3\precompiledassemblies\4.6\Syncfusion.SfChart.Wpf.dll</HintPath>
+    <Reference Include="Syncfusion.SfChart.Wpf, Version=22.1460.34.0, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>D:\Program Files (x86)\Syncfusion\Essential Studio\WPF\22.1.34\precompiledassemblies\4.6\Syncfusion.SfChart.Wpf.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Syncfusion.SfGrid.WPF, Version=21.2460.3.0, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
-      <HintPath>D:\Program Files (x86)\Syncfusion\Essential Studio\WPF\21.2.3\precompiledassemblies\4.6\Syncfusion.SfGrid.WPF.dll</HintPath>
+    <Reference Include="Syncfusion.SfGrid.WPF, Version=22.1460.34.0, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>D:\Program Files (x86)\Syncfusion\Essential Studio\WPF\22.1.34\precompiledassemblies\4.6\Syncfusion.SfGrid.WPF.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Syncfusion.SfInput.WPF, Version=21.2460.3.0, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
-      <HintPath>D:\Program Files (x86)\Syncfusion\Essential Studio\WPF\21.2.3\precompiledassemblies\4.6\Syncfusion.SfInput.WPF.dll</HintPath>
+    <Reference Include="Syncfusion.SfInput.WPF, Version=22.1460.34.0, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>D:\Program Files (x86)\Syncfusion\Essential Studio\WPF\22.1.34\precompiledassemblies\4.6\Syncfusion.SfInput.WPF.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Syncfusion.SfShared.WPF, Version=21.2460.3.0, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
-      <HintPath>D:\Program Files (x86)\Syncfusion\Essential Studio\WPF\21.2.3\precompiledassemblies\4.6\Syncfusion.SfShared.WPF.dll</HintPath>
+    <Reference Include="Syncfusion.SfShared.WPF, Version=22.1460.34.0, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>D:\Program Files (x86)\Syncfusion\Essential Studio\WPF\22.1.34\precompiledassemblies\4.6\Syncfusion.SfShared.WPF.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Syncfusion.Shared.Wpf, Version=21.2460.3.0, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
-      <HintPath>D:\Program Files (x86)\Syncfusion\Essential Studio\WPF\21.2.3\precompiledassemblies\4.6\Syncfusion.Shared.Wpf.dll</HintPath>
+    <Reference Include="Syncfusion.Shared.Wpf, Version=22.1460.34.0, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>D:\Program Files (x86)\Syncfusion\Essential Studio\WPF\22.1.34\precompiledassemblies\4.6\Syncfusion.Shared.Wpf.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Syncfusion.Tools.Wpf, Version=21.2460.3.0, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
-      <HintPath>D:\Program Files (x86)\Syncfusion\Essential Studio\WPF\21.2.3\precompiledassemblies\4.6\Syncfusion.Tools.Wpf.dll</HintPath>
+    <Reference Include="Syncfusion.Tools.Wpf, Version=22.1460.34.0, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>D:\Program Files (x86)\Syncfusion\Essential Studio\WPF\22.1.34\precompiledassemblies\4.6\Syncfusion.Tools.Wpf.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -597,14 +597,25 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <Resource Include="Resource\Data\levelData.json" />
-    <Resource Include="Resource\Data\pz.xlsx" />
+    <Resource Include="Resource\Data\BuildDate.txt" />
     <Resource Include="Resource\Data\EquipMap.xlsx" />
-    <Resource Include="Resource\Data\JY_Setting.json" />
     <Resource Include="Resource\Data\JY_Data.xlsx" />
     <Resource Include="Resource\Data\JY_Output.xlsx" />
+    <Resource Include="Resource\Data\JY_Setting.json" />
     <Resource Include="Resource\Data\JY_Zhenfa.json" />
+    <Resource Include="Resource\Data\levelData.json" />
+    <Resource Include="Resource\Data\pz.xlsx" />
     <Resource Include="Resource\Data\TM_Ats.xlsx" />
+    <Resource Include="Resource\Diamond\0.png" />
+    <Resource Include="Resource\Diamond\1.png" />
+    <Resource Include="Resource\Diamond\2.png" />
+    <Resource Include="Resource\Diamond\3.png" />
+    <Resource Include="Resource\Diamond\4.png" />
+    <Resource Include="Resource\Diamond\5.png" />
+    <Resource Include="Resource\Diamond\6.png" />
+    <Resource Include="Resource\Diamond\7.png" />
+    <Resource Include="Resource\Diamond\8.png" />
+    <Resource Include="Resource\Diamond\empty-slot.png" />
     <Resource Include="Resource\Icons\-1.png" />
     <Resource Include="Resource\Icons\-100.png" />
     <Resource Include="Resource\Icons\-1000.png" />
@@ -652,6 +663,9 @@
     <Resource Include="Resource\Icons\1199.png" />
     <Resource Include="Resource\Icons\1200.png" />
     <Resource Include="Resource\Icons\1201.png" />
+    <Resource Include="Resource\Icons\1203.png" />
+    <Resource Include="Resource\Icons\1204.png" />
+    <Resource Include="Resource\Icons\1205.png" />
     <Resource Include="Resource\Icons\1206.png" />
     <Resource Include="Resource\Icons\1207.png" />
     <Resource Include="Resource\Icons\1211.png" />
@@ -669,6 +683,7 @@
     <Resource Include="Resource\Icons\12206.png" />
     <Resource Include="Resource\Icons\12207.png" />
     <Resource Include="Resource\Icons\12208.png" />
+    <Resource Include="Resource\Icons\1221.png" />
     <Resource Include="Resource\Icons\1222.png" />
     <Resource Include="Resource\Icons\1227.png" />
     <Resource Include="Resource\Icons\12273.png" />
@@ -680,6 +695,7 @@
     <Resource Include="Resource\Icons\1233.png" />
     <Resource Include="Resource\Icons\1234.png" />
     <Resource Include="Resource\Icons\1236.png" />
+    <Resource Include="Resource\Icons\1238.png" />
     <Resource Include="Resource\Icons\12490.png" />
     <Resource Include="Resource\Icons\1278.png" />
     <Resource Include="Resource\Icons\12923.png" />
@@ -712,7 +728,11 @@
     <Resource Include="Resource\Icons\16240.png" />
     <Resource Include="Resource\Icons\16481.png" />
     <Resource Include="Resource\Icons\16916.png" />
+    <Resource Include="Resource\Icons\16978.png" />
+    <Resource Include="Resource\Icons\16979.png" />
+    <Resource Include="Resource\Icons\16983.png" />
     <Resource Include="Resource\Icons\17177.png" />
+    <Resource Include="Resource\Icons\17401.png" />
     <Resource Include="Resource\Icons\17783.png" />
     <Resource Include="Resource\Icons\17813.png" />
     <Resource Include="Resource\Icons\17894.png" />
@@ -720,6 +740,12 @@
     <Resource Include="Resource\Icons\17897.png" />
     <Resource Include="Resource\Icons\17898.png" />
     <Resource Include="Resource\Icons\17899.png" />
+    <Resource Include="Resource\Icons\17930.png" />
+    <Resource Include="Resource\Icons\17931.png" />
+    <Resource Include="Resource\Icons\17932.png" />
+    <Resource Include="Resource\Icons\17933.png" />
+    <Resource Include="Resource\Icons\17934.png" />
+    <Resource Include="Resource\Icons\17935.png" />
     <Resource Include="Resource\Icons\17942.png" />
     <Resource Include="Resource\Icons\17943.png" />
     <Resource Include="Resource\Icons\17944.png" />
@@ -762,6 +788,8 @@
     <Resource Include="Resource\Icons\19231.png" />
     <Resource Include="Resource\Icons\19337.png" />
     <Resource Include="Resource\Icons\19356.png" />
+    <Resource Include="Resource\Icons\20139.png" />
+    <Resource Include="Resource\Icons\20159.png" />
     <Resource Include="Resource\Icons\2040.png" />
     <Resource Include="Resource\Icons\2315.png" />
     <Resource Include="Resource\Icons\2316.png" />
@@ -796,6 +824,7 @@
     <Resource Include="Resource\Icons\2834.png" />
     <Resource Include="Resource\Icons\2835.png" />
     <Resource Include="Resource\Icons\2836.png" />
+    <Resource Include="Resource\Icons\2837.png" />
     <Resource Include="Resource\Icons\2838.png" />
     <Resource Include="Resource\Icons\2840.png" />
     <Resource Include="Resource\Icons\2842.png" />
@@ -803,8 +832,11 @@
     <Resource Include="Resource\Icons\2846.png" />
     <Resource Include="Resource\Icons\2847.png" />
     <Resource Include="Resource\Icons\2848.png" />
+    <Resource Include="Resource\Icons\2850.png" />
     <Resource Include="Resource\Icons\2851.png" />
     <Resource Include="Resource\Icons\2853.png" />
+    <Resource Include="Resource\Icons\2854.png" />
+    <Resource Include="Resource\Icons\2855.png" />
     <Resource Include="Resource\Icons\2856.png" />
     <Resource Include="Resource\Icons\2899.png" />
     <Resource Include="Resource\Icons\2900.png" />
@@ -847,10 +879,15 @@
     <Resource Include="Resource\Icons\3798.png" />
     <Resource Include="Resource\Icons\397.png" />
     <Resource Include="Resource\Icons\403.png" />
+    <Resource Include="Resource\Icons\4245.png" />
     <Resource Include="Resource\Icons\4246.png" />
     <Resource Include="Resource\Icons\4248.png" />
     <Resource Include="Resource\Icons\4249.png" />
+    <Resource Include="Resource\Icons\4250.png" />
+    <Resource Include="Resource\Icons\4252.png" />
     <Resource Include="Resource\Icons\4254.png" />
+    <Resource Include="Resource\Icons\4255.png" />
+    <Resource Include="Resource\Icons\4257.png" />
     <Resource Include="Resource\Icons\4268.png" />
     <Resource Include="Resource\Icons\4269.png" />
     <Resource Include="Resource\Icons\4278.png" />
@@ -881,6 +918,8 @@
     <Resource Include="Resource\Icons\5881.png" />
     <Resource Include="Resource\Icons\5882.png" />
     <Resource Include="Resource\Icons\5883.png" />
+    <Resource Include="Resource\Icons\5884.png" />
+    <Resource Include="Resource\Icons\5885.png" />
     <Resource Include="Resource\Icons\5886.png" />
     <Resource Include="Resource\Icons\6347.png" />
     <Resource Include="Resource\Icons\635.png" />
@@ -893,12 +932,20 @@
     <Resource Include="Resource\Icons\6551.png" />
     <Resource Include="Resource\Icons\6552.png" />
     <Resource Include="Resource\Icons\6553.png" />
+    <Resource Include="Resource\Icons\6822.png" />
+    <Resource Include="Resource\Icons\6823.png" />
+    <Resource Include="Resource\Icons\6824.png" />
+    <Resource Include="Resource\Icons\6825.png" />
+    <Resource Include="Resource\Icons\6826.png" />
+    <Resource Include="Resource\Icons\6827.png" />
+    <Resource Include="Resource\Icons\6839.png" />
     <Resource Include="Resource\Icons\7059.png" />
     <Resource Include="Resource\Icons\7215.png" />
     <Resource Include="Resource\Icons\7370.png" />
     <Resource Include="Resource\Icons\7420.png" />
     <Resource Include="Resource\Icons\7438.png" />
     <Resource Include="Resource\Icons\7444.png" />
+    <Resource Include="Resource\Icons\7453.png" />
     <Resource Include="Resource\Icons\7487.png" />
     <Resource Include="Resource\Icons\7509.png" />
     <Resource Include="Resource\Icons\7513.png" />
@@ -925,15 +972,23 @@
     <Resource Include="Resource\Icons\7646.png" />
     <Resource Include="Resource\Icons\7667.png" />
     <Resource Include="Resource\Icons\7899.png" />
+    <Resource Include="Resource\Icons\7903.png" />
     <Resource Include="Resource\Icons\798.png" />
+    <Resource Include="Resource\Icons\7986.png" />
+    <Resource Include="Resource\Icons\7987.png" />
+    <Resource Include="Resource\Icons\7988.png" />
+    <Resource Include="Resource\Icons\7989.png" />
     <Resource Include="Resource\Icons\799.png" />
+    <Resource Include="Resource\Icons\7991.png" />
     <Resource Include="Resource\Icons\800.png" />
     <Resource Include="Resource\Icons\801.png" />
     <Resource Include="Resource\Icons\802.png" />
+    <Resource Include="Resource\Icons\803.png" />
     <Resource Include="Resource\Icons\804.png" />
     <Resource Include="Resource\Icons\805.png" />
     <Resource Include="Resource\Icons\806.png" />
     <Resource Include="Resource\Icons\808.png" />
+    <Resource Include="Resource\Icons\809.png" />
     <Resource Include="Resource\Icons\810.png" />
     <Resource Include="Resource\Icons\811.png" />
     <Resource Include="Resource\Icons\814.png" />
@@ -942,6 +997,7 @@
     <Resource Include="Resource\Icons\8425.png" />
     <Resource Include="Resource\Icons\8426.png" />
     <Resource Include="Resource\Icons\8638.png" />
+    <Resource Include="Resource\Icons\8746.png" />
     <Resource Include="Resource\Icons\88.png" />
     <Resource Include="Resource\Icons\8859.png" />
     <Resource Include="Resource\Icons\8888.png" />
@@ -977,11 +1033,31 @@
     <Resource Include="Resource\Icons\9996.png" />
     <Resource Include="Resource\Icons\9997.png" />
     <Resource Include="Resource\Icons\9999.png" />
+    <Resource Include="Resource\Images\-1.png" />
+    <Resource Include="Resource\Images\3.png" />
+    <Resource Include="Resource\Images\4-max.png" />
+    <Resource Include="Resource\Images\4.png" />
+    <Resource Include="Resource\Images\5.png" />
+    <Resource Include="Resource\Images\copy.png" />
+    <Resource Include="Resource\Images\enchant-null.png" />
+    <Resource Include="Resource\Images\enchant.png" />
+    <Resource Include="Resource\Images\enhance-null.png" />
+    <Resource Include="Resource\Images\enhance.png" />
+    <Resource Include="Resource\Images\frame.png" />
     <Resource Include="Resource\Images\Gugugu.jpg" />
     <Resource Include="Resource\Images\ImportJBTutorial.png" />
+    <Resource Include="Resource\Images\JB_Logo.png" />
+    <Resource Include="Resource\Images\MyHead.jpg" />
+    <Resource Include="Resource\Images\null.png" />
+    <Resource Include="Resource\Images\overview.jpg" />
+    <Resource Include="Resource\Images\OverviewIcon.png" />
+    <Resource Include="Resource\Images\pop-up.png" />
+    <Resource Include="Resource\Images\PzIcon.png" />
+    <Resource Include="Resource\Images\QRCodeUrl.png" />
+    <Resource Include="Resource\Images\sp.png" />
+    <Resource Include="Resource\Images\star.png" />
     <Resource Include="Resource\Images\XF_icon.ico" />
     <Resource Include="Resource\Images\XF_icon.png" />
-    <Resource Include="Resource\Images\MyHead.jpg" />
     <Resource Include="Views\JY_icon.png" />
   </ItemGroup>
   <ItemGroup>
@@ -1006,75 +1082,26 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resource\Data\BuildDate.txt" />
+    <Resource Include="Resource\Icons\20813.png" />
+    <Resource Include="Resource\Icons\20814.png" />
+    <Resource Include="Resource\Icons\20815.png" />
+    <Resource Include="Resource\Icons\20816.png" />
+    <Resource Include="Resource\Icons\20817.png" />
+    <Resource Include="Resource\Icons\20818.png" />
+    <Resource Include="Resource\Icons\20819.png" />
+    <Resource Include="Resource\Icons\20820.png" />
+    <Resource Include="Resource\Icons\20821.png" />
+    <Resource Include="Resource\Icons\20822.png" />
+    <Resource Include="Resource\Icons\20823.png" />
+    <Resource Include="Resource\Icons\20824.png" />
+    <Resource Include="Resource\Icons\20897.png" />
+    <Resource Include="Resource\Icons\20899.png" />
+    <Resource Include="Resource\Icons\20900.png" />
+    <Resource Include="Resource\Icons\20901.png" />
+    <Resource Include="Resource\Icons\20902.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resource\Images\Diamond\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resource\Diamond\0.png" />
-    <Resource Include="Resource\Diamond\1.png" />
-    <Resource Include="Resource\Diamond\2.png" />
-    <Resource Include="Resource\Diamond\3.png" />
-    <Resource Include="Resource\Diamond\4.png" />
-    <Resource Include="Resource\Diamond\5.png" />
-    <Resource Include="Resource\Diamond\6.png" />
-    <Resource Include="Resource\Diamond\7.png" />
-    <Resource Include="Resource\Diamond\8.png" />
-    <Resource Include="Resource\Diamond\empty-slot.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resource\Images\enchant.png" />
-    <Resource Include="Resource\Images\enhance-null.png" />
-    <Resource Include="Resource\Images\enhance.png" />
-    <Resource Include="Resource\Images\frame.png" />
-    <Resource Include="Resource\Images\star.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resource\Images\enchant-null.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resource\Images\null.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resource\Images\3.png" />
-    <Resource Include="Resource\Images\4-max.png" />
-    <Resource Include="Resource\Images\4.png" />
-    <Resource Include="Resource\Images\5.png" />
-    <Resource Include="Resource\Images\sp.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resource\Images\-1.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resource\Images\JB_Logo.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resource\Images\pop-up.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resource\Images\copy.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resource\Images\overview.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resource\Images\QRCodeUrl.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resource\Images\OverviewIcon.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resource\Images\PzIcon.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resource\Icons\6839.png" />
-    <Resource Include="Resource\Icons\7986.png" />
-    <Resource Include="Resource\Icons\7987.png" />
-    <Resource Include="Resource\Icons\7988.png" />
-    <Resource Include="Resource\Icons\7989.png" />
-    <Resource Include="Resource\Icons\7991.png" />
-    <Resource Include="Resource\Icons\8746.png" />
   </ItemGroup>
   <Import Project="..\..\JX3CalculatorShared\JX3CalculatorShared\JX3CalculatorShared.projitems" Label="Shared" />
   <Import Project="..\..\JX3PZ\JX3PZ\JX3PZ.projitems" Label="Shared" />

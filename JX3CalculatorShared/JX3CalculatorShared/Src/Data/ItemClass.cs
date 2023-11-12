@@ -166,12 +166,13 @@ namespace JX3CalculatorShared.Data
 
             if (AppStatic.XinFaTag == "JY")
             {
-                if (BelongKungfu == "百步穿杨" || BelongKungfu == "乾坤一掷")
+                if ((BelongKungfu == "百步穿杨" || BelongKungfu == "乾坤一掷") && Name != "BaiYuTiaoZhu")
                 {
+                    // 注意奇穴的白雨跳珠不能触发注能
                     res += 1;
                 }
 
-                if (Name == "ZX" || Name == "CXL")
+                if (Name == "CXL")
                 {
                     res += 3;
                 }

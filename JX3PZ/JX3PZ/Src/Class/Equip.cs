@@ -13,6 +13,7 @@ using System.Collections.Immutable;
 using System.Globalization;
 using System.Linq;
 using System.Windows.Documents;
+using MiniExcelLibs.Attributes;
 using static System.Net.Mime.MediaTypeNames;
 
 namespace JX3PZ.Class
@@ -41,7 +42,8 @@ namespace JX3PZ.Class
         public string EID { get; set; }
         public string ExtraMagicEntry_Str { get; set; }
         public string ExtraTag_Str { get; set; } = "";
-        public new string GetType { get; set; }
+
+        [ExcelColumnName("GetType")] public string AcquireType { get; set; } // 由于GetType是关键字，所以重命名
         public int ID { get; set; } = -1;
         public int IconID { get; set; } = -1;
         public int Level { get; set; } = -1;
@@ -84,6 +86,7 @@ namespace JX3PZ.Class
 
         public EquipOption CEquipOption { get; private set; } // 装备选项
         public string EquipOptionName => CEquipOption?.Name; // 装备选项名
+
         public EquipShowViewModel EquipShowVM
         {
             get
@@ -92,11 +95,12 @@ namespace JX3PZ.Class
                 {
                     ParseToolTip();
                 }
+
                 return _EquipShowVM;
             }
         }
 
-        public bool IsGetInfoParsed { get; private set; }  = false;
+        public bool IsGetInfoParsed { get; private set; } = false;
         public EquipGetInfo GetInfo { get; protected set; }
 
         private EquipShowViewModel _EquipShowVM = null;
@@ -111,6 +115,7 @@ namespace JX3PZ.Class
                 {
                     ParseToolTip();
                 }
+
                 return _ToolTip;
             }
         }
@@ -135,7 +140,10 @@ namespace JX3PZ.Class
         {
             var infos = JsonConvert.DeserializeObject<EquipGetInfoItem[]>(GetInfo_JSON);
             GetInfo = new EquipGetInfo(infos);
-            GetInfo.Parse();
+            if (!GetInfo_JSON.IsEmptyOrWhiteSpace())
+            {
+                GetInfo?.Parse();
+            }
             IsGetInfoParsed = true;
         }
 
@@ -339,14 +347,15 @@ namespace JX3PZ.Class
         }
 
         public PzSet GetPzSet()
-        {// 获取此装备关联的套装信息
+        {
+            // 获取此装备关联的套装信息
             PzSet res = null;
             if (SetID > 0)
             {
                 res = StaticPzData.GetPzSet(SetID);
             }
+
             return res;
         }
-
     }
 }

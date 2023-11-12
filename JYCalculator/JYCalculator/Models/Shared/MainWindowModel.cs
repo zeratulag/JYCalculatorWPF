@@ -145,7 +145,11 @@ namespace JYCalculator.Models
             FightOptionVM.Load(sav.FightOption);
 
             GlobalContext.IsPZSyncWithCalc = sav.IsSync;
-            GlobalContext.ViewModels.PzMain.Load(sav.PzSav);
+
+            if (sav.IsSync)
+            {
+                GlobalContext.ViewModels.PzMain.Load(sav.PzSav);
+            }
         }
 
         #endregion

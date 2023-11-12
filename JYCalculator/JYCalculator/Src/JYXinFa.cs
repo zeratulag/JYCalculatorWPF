@@ -76,7 +76,7 @@ namespace JYCalculator.Src
 
         #endregion
 
-        public const int DST_NPC_DAMAGE_COEFFICIENT = 113; // 非侠士增伤
+        public const int DST_NPC_DAMAGE_COEFFICIENT = 133; // 非侠士增伤
         public const int STRENGTH_TO_PHYSICS_ATTACK_POWER_COF = 1485; // 力道提高1.45外功AP
         public const int STRENGTH_TO_PHYSICS_CRITICAL_STRIKE_COF = 604; // 力道提高0.59会心
         public const int CURRENTLEVEL = 13; // 当前版本心法等级
@@ -92,6 +92,7 @@ namespace JYCalculator.Src
 
         public readonly ImmutableDictionary<string, int> LuaDictionary; // 心法LUA属性集合
         public readonly ImmutableArray<AttributeEntry> AttributeEntries; // 心法属性集合
+
 
         public JYXinFa(int level = CURRENTLEVEL)
         {

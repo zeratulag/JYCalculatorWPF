@@ -91,7 +91,7 @@ namespace JYCalculator.Models
                     }
                     else
                     {
-                        res = XFStaticConst.Genre.逐一白雨;
+                        res = XFStaticConst.Genre.白雨流_万灵当歌;
                     }
                 }
             }
@@ -127,7 +127,7 @@ namespace JYCalculator.Models
         /// <summary>
         /// 计算寒江心无实际CD
         /// </summary>
-        /// <param name="normalFreq">常规寒江触发频率（注能频率/3)</param>
+        /// <param name="normalFreq">常规寒江触发频率</param>
         /// <param name="xwFreq">常规寒江触发频率</param>
         /// <returns></returns>
         public double GetHJXWCD(double normalFreq, double xwFreq)
@@ -140,18 +140,18 @@ namespace JYCalculator.Models
             }
 
             double HJReduceCD = 2.0; // 寒江减少CD时间
-            double XW_LAG = 2.5; // 心无延迟释放
+            double XW_LAG = 4.5; // 心无延迟释放
             var rawCD = (15 * HJReduceCD * normalFreq + xWCD - 15 * HJReduceCD * xwFreq) /
                         (1 + HJReduceCD * normalFreq);
-            var res = Math.Max(rawCD + XW_LAG, 60.0); // 最低60秒
+            var res = Math.Max(rawCD + XW_LAG, 15.0); // 最低60秒
             return res;
         }
 
         /// <summary>
         /// 设置寒江流心无CD;
         /// </summary>
-        /// <param name="normalZXFreq"></param>
-        /// <param name="XWZXFreq"></param>
+        /// <param name="normalFreq">常规寒江频率</param>
+        /// <param name="xwFreq">心无寒江频率</param>
         /// <returns></returns>
         public double SetHJXWCD(double normalFreq, double xwFreq)
         {
@@ -162,18 +162,18 @@ namespace JYCalculator.Models
 
 
         /// <summary>
-        /// 基于注能频率计算百里频率
+        /// 基于寒江频率计算百里频率
         /// </summary>
-        /// <param name="freq">注能频率</param>
+        /// <param name="freq">寒江频率</param>
         /// <returns></returns>
-        public double GetBLCDByEnergyInjectionFreq(double freq)
+        public double GetBLCDByHanJiangFreq(double freq)
         {
             double raw_blcd = StaticXFData.DB.SkillInfo.Skills["BL"].CD; // 原始CD
             double real_cd = raw_blcd;
 
             if (寒江夜雨)
             {
-                real_cd = raw_blcd / (1 + freq  / 3.0 * HJYY_BBCD) + 0.5; // 初始注能频率要比考虑了百里的频率高，故乘以惩罚系数0.986
+                real_cd = raw_blcd / (1 + freq * HJYY_BBCD) + 0.5; // 初始注能频率要比考虑了百里的频率高，故乘以惩罚系数0.986
             }
             return real_cd;
         }

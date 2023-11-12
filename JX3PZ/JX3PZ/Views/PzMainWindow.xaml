@@ -184,7 +184,7 @@
                                     </StackPanel.Resources>
 
                                     <MenuItem Header="小附魔" CommandParameter="0"
-                                              ToolTip="添加所有小附魔（尚在开发中，敬请期待）" />
+                                              ToolTip="添加所有小附魔" />
                                     <MenuItem Header="大附魔" CommandParameter="1"
                                               ToolTip="添加所有大附魔" />
                                 </StackPanel>

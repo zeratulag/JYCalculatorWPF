@@ -1,6 +1,8 @@
-﻿namespace JX3CalculatorShared.Class
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+
+namespace JX3CalculatorShared.Class
 {
-    public class FightTimeSummaryItem
+    public class FightTimeSummaryItem: ObservableObject
     {
         /// <summary>
         /// 用于存储战斗时间分析的类

@@ -306,5 +306,34 @@
         "Z5_cover": 0.3,
         "BuffID": "24578_6",
         "BuffZ5ID": "24582_1"
+    },
+    "WL_Zhen": {
+        "Name": "WL_Zhen",
+        "IconID": 17401,
+        "ItemName": "苍梧引灵阵",
+        "DescName": "苍梧引灵阵",
+        "KungFu": "山海心诀",
+        "Desc": "一重粗识：阅历提高5%，声望提高5%，全会心提高3%。\n二重略懂：无双提高2%。\n三重巧熟：造成伤害提高6%。\n四重精妙：阵眼消耗一枚唤灵印时获得1%受到伤害降低效果，最多6层，持续10秒。\n五重游刃：阵眼施展“白羽流星”强化招式时，使小队成员会心效果提高15%，持续6秒。\n六重忘我：若重伤目标，则阵眼回复30%内力值。",
+        "Buff_dict": {
+            "atFormationEffect": 0,
+            "atAddExpPercent": 50,
+            "atAddReputationPercent": 50,
+            "atLunarCriticalStrikeBaseRate": 300,
+            "atSolarCriticalStrikeBaseRate": 300,
+            "atNeutralCriticalStrikeBaseRate": 300,
+            "atPoisonCriticalStrikeBaseRate": 300,
+            "atPhysicsCriticalStrikeBaseRate": 300,
+            "atStrainRate": 20,
+            "atAllDamageAddPercent": 62
+        },
+        "BuffZ5_dict": {
+            "atPhysicsCriticalDamagePowerBaseKiloNumRate": 150,
+            "atMagicCriticalDamagePowerBaseKiloNumRate": 150
+        },
+        "Z5_max_stack": 1,
+        "Z5_default_stack": 1,
+        "Z5_cover": 0.7,
+        "BuffID": "27236_6",
+        "BuffZ5ID": "27238_1"
     }
 }

@@ -1,5 +1,5 @@
 {
-  "RawEssentialQiXues": "寒江夜雨, 聚精凝神, 梨花带雨, 妙手连环, 百里追魂",
+  "RawEssentialQiXues": "寒江夜雨, 聚精凝神, 梨花带雨, 白雨跳珠, 妙手连环, 百里追魂",
   "RawBannedQiXues": "掠影穹苍, 储锋锐, 穷尽九泉, 浴血沁骨, 次极阳乌, 清夜裁云, 穿林打叶, 毫发无遗, 秋声泠羽, 凝形逐踪, 鹰扬虎视, 回肠荡气",
   "RawEssentialMiJis": "843_1, 844_1, 851_1, 852_1",
   "RawQiXueLib": {
@@ -18,8 +18,8 @@
     "3095": [ 
       "843_1",
       "844_1",
-      "850_1",
-      "849_1"
+      "846_1",
+      "850_1"
     ],
     "3096": [ 
       "851_1",
@@ -40,5 +40,6 @@
       "1664_1"
     ]
   }, 
-  "DefaultJB" : {"Vitality":34889,"Agility":41,"Spirit":41,"Spunk":41,"Strength":7318,"PhysicsAttackPowerBase":20292,"PhysicsAttackPower":30904,"PhysicsCriticalStrikeRate":0.1854205221151706,"PhysicsCriticalDamagePowerPercent":1.7993571396120123,"PhysicsOvercomePercent":0.3839613342236637,"StrainPercent":0.3225068180993744,"HastePercent":0.0074934898363714095,"SurplusValue":6413,"MaxHealth":493241,"PhysicsShieldPercent":0.061682128156294154,"LunarShieldPercent":0.05403183576484102,"ToughnessDefCriticalPercent":0,"DecriticalDamagePercent":0.1,"MeleeWeaponAttackSpeed":16,"MeleeWeaponDamage":1550,"MeleeWeaponDamageRand":1034,"EquipList":{"HAT":{"id":"7_90835","stone":"","enchant":11684,"enhance":11531,"strength":6,"embedding":[6,6]},"BELT":{"id":"7_90777","stone":"","enchant":11680,"enhance":"","strength":6,"embedding":[6,6]},"SHOES":{"id":"7_90806","stone":"","enchant":11681,"enhance":11586,"strength":6,"embedding":[6,6]},"WRIST":{"id":"7_90918","stone":"","enchant":11682,"enhance":11579,"strength":6,"embedding":[6,6]},"JACKET":{"id":"7_90864","stone":"","enchant":11683,"enhance":"","strength":6,"embedding":[6,6]},"RING_1":{"id":"8_34443","stone":"","enchant":"","enhance":11660,"strength":6,"embedding":[]},"RING_2":{"id":"8_34303","stone":"","enchant":"","enhance":11660,"strength":6,"embedding":[]},"BOTTOMS":{"id":"7_91333","stone":"","enchant":"","enhance":11524,"strength":6,"embedding":[6,6]},"PENDANT":{"id":"8_34297","stone":"","enchant":"","enhance":11654,"strength":6,"embedding":[6]},"NECKLACE":{"id":"8_34291","stone":"","enchant":"","enhance":11652,"strength":6,"embedding":[6]},"PRIMARY_WEAPON":{"id":"6_33463","stone":561,"enchant":"","enhance":11517,"strength":6,"embedding":[6,6,6]},"SECONDARY_WEAPON":{"id":"6_32774","stone":"","enchant":"","enhance":11669,"strength":6,"embedding":[6]}},"Title":""}
+  "DefaultJB" :
+    {"Vitality":47682,"Agility":41,"Spirit":41,"Spunk":41,"Strength":9524,"PhysicsAttackPowerBase":24044,"PhysicsAttackPower":37855,"PhysicsCriticalStrikeRate":0.20437184012210247,"PhysicsCriticalStrike":15282,"PhysicsCriticalDamagePowerPercent":1.8502407886965608,"PhysicsCriticalDamagePower":2758,"PhysicsOvercomePercent":0.593239848643836,"StrainPercent":0.378568578372692,"HastePercent":0.009151800173604363,"SurplusValue":20269,"MaxHealth":650530,"PhysicsShieldPercent":0.07566229264669473,"LunarShieldPercent":0.06544026434217626,"ToughnessDefCriticalPercent":0,"DecriticalDamagePercent":0.1,"MeleeWeaponAttackSpeed":16,"MeleeWeaponDamage":2163,"MeleeWeaponDamageRand":1442,"PhysicsOvercome":46642,"Strain":28699,"Haste":883,"EquipList":{"HAT":{"id":"7_96209","stone":"","enchant":12037,"enhance":11890,"strength":6,"embedding":[8,8]},"BELT":{"id":"7_96149","stone":"","enchant":12033,"enhance":12004,"strength":6,"embedding":[8,8]},"SHOES":{"id":"7_96179","stone":"","enchant":12034,"enhance":11945,"strength":6,"embedding":[8,8]},"WRIST":{"id":"7_96294","stone":"","enchant":12035,"enhance":11941,"strength":6,"embedding":[8,8]},"JACKET":{"id":"7_96239","stone":"","enchant":12036,"enhance":12003,"strength":6,"embedding":[8,8]},"RING_1":{"id":"8_38766","stone":"","enchant":"","enhance":12015,"strength":6,"embedding":[]},"RING_2":{"id":"8_38856","stone":"","enchant":"","enhance":12015,"strength":6,"embedding":[]},"BOTTOMS":{"id":"7_96312","stone":"","enchant":"","enhance":11886,"strength":6,"embedding":[8,8]},"PENDANT":{"id":"8_38790","stone":"","enchant":"","enhance":12007,"strength":4,"embedding":[8]},"NECKLACE":{"id":"8_38844","stone":"","enchant":"","enhance":12005,"strength":6,"embedding":[8]},"PRIMARY_WEAPON":{"id":"6_35764","stone":1059,"enchant":"","enhance":11873,"strength":4,"embedding":[8,8,8]},"SECONDARY_WEAPON":{"id":"6_35784","stone":"","enchant":"","enhance":12022,"strength":6,"embedding":[8]}},"Title":"","TalentCode":[{"id":33118,"name":"声若惊雷"},{"id":6473,"name":"千里无痕"},{"id":28366,"name":"寒江夜雨"},{"id":6775,"name":"摧心"},{"id":6887,"name":"狂风暴雨"},{"id":6451,"name":"聚精凝神"},{"id":14851,"name":"逐一击破"},{"id":6891,"name":"梨花带雨"},{"id":6461,"name":"秋风散影"},{"id":28599,"name":"白雨跳珠"},{"id":14850,"name":"妙手连环"},{"id":18672,"name":"百里追魂"}],"Mount":10224}
 }

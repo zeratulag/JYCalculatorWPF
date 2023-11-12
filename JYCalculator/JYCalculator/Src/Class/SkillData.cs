@@ -1,4 +1,5 @@
-﻿using System;
+﻿using JYCalculator.Globals;
+using System;
 using System.Collections.Generic;
 
 namespace JYCalculator.Class
@@ -9,6 +10,8 @@ namespace JYCalculator.Class
 
         public double IgnoreB { get; set; }
         public double APCoef { get; set; }
+
+        public double PZCoef { get; set; } = 0;
 
         #endregion
 
@@ -23,6 +26,7 @@ namespace JYCalculator.Class
             Info = old.Info;
             IgnoreB = old.IgnoreB;
             APCoef = old.APCoef;
+            PZCoef = old.PZCoef;
         }
 
 
@@ -46,7 +50,27 @@ namespace JYCalculator.Class
         {
             var ap_Coef = GetAPCoef();
             APCoef = ap_Coef;
+            UpdatePZCoef();
         }
+
+        /// <summary>
+        /// 更新破招系数
+        /// </summary>
+        public void UpdatePZCoef()
+        {
+            if (Info.IsP)
+            {
+                if (Name == "PZ_BaiYu")
+                {
+                    PZCoef = XFStaticConst.fGP.XPZ_BY;
+                }
+                else
+                {
+                    PZCoef = XFStaticConst.fGP.XPZ;
+                }
+            }
+        }
+
 
         public override bool ApplyValueEffect(string key, double value)
         {
@@ -58,18 +82,19 @@ namespace JYCalculator.Class
                 {
                     case "IgnoreB_P":
                     case "IgnoreB":
-                        {
-                            IgnoreB += value;
-                            break;
-                        }
+                    {
+                        IgnoreB += value;
+                        break;
+                    }
 
                     default:
-                        {
-                            handled = false;
-                            throw new ArgumentException($"未识别的key！ {key}");
-                        }
+                    {
+                        handled = false;
+                        throw new ArgumentException($"未识别的key！ {key}");
+                    }
                 }
             }
+
             return handled;
         }
 
@@ -82,17 +107,18 @@ namespace JYCalculator.Class
                 switch (key)
                 {
                     case "ZMWS_Add_Dmg":
-                        {
-                            break;
-                        }
+                    {
+                        break;
+                    }
 
                     default:
-                        {
-                            handled = false;
-                            throw new ArgumentException($"未识别的key！ {key}");
-                        }
+                    {
+                        handled = false;
+                        throw new ArgumentException($"未识别的key！ {key}");
+                    }
                 }
             }
+
             return handled;
         }
 

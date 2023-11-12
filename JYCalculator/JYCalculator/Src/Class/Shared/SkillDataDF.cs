@@ -10,15 +10,39 @@ namespace JYCalculator.Class
             switch (AppStatic.XinFaTag)
             {
                 case "JY":
-                    {
-                        Data["PZ_ZM"].IgnoreB = Data["ZM"].IgnoreB; // 破招也能吃到无视防御
-                        break;
-                    }
+                {
+                    SyncBaoYu();
+                    SyncBaiYu();
+                    break;
+                }
                 case "TL":
-                    {
-                        break;
-                    }
+                {
+                    break;
+                }
             }
         }
+
+        /// <summary>
+        /// 同步暴雨的秘籍给梨花暴雨
+        /// </summary>
+        public void SyncBaoYu()
+        {
+            var lhby = Data["LHBY"];
+            var by = Data["BY"];
+            lhby.IgnoreB = by.IgnoreB;
+            lhby.AddDmg = by.AddDmg;
+            lhby.AddCT = by.AddCT;
+            lhby.AddCF = by.AddCF;
+        }
+
+
+        /// <summary>
+        /// 白雨跳珠(非侠士) 吃追命的无视防御
+        /// </summary>
+        public void SyncBaiYu()
+        {
+            Data["BaiYuTiaoZhu"].IgnoreB = Data["ZM"].IgnoreB;
+        }
+
     }
 }

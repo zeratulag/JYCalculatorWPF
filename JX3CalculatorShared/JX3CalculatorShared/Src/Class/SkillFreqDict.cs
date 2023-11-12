@@ -18,12 +18,13 @@ namespace JX3CalculatorShared.Class
 
         public readonly Dictionary<string, double> Data;
 
-        public double EnergyInjectionFreq; //注能频率
-        public double PZEnergyInjectionFreq; //破招注能频率（逐星注能不触发破招）
+        public double EnergyInjectionFreq; // 注能频率
+        public double PZEnergyInjectionFreq; // 破招注能频率（逐星注能不触发破招）
+        public double HanJiangFreq; // 寒江触发频率
 
         public readonly Dictionary<string, double> GFDict = new Dictionary<string, double>()
         {
-            {"DP", 1}, {"ZM", 1}, {"BL", 1}, {"_BYCast", 1}, {"ZM_SF", 1}, {"ZX", 1.5}, {"CXL", 1},
+            {"DP", 1}, {"ZM", 1}, {"BL", 1}, {"_BYCast", 1}, {"ZM_SF", 1}, {"ZX", 1}, {"CXL", 1},
         }; // 每个技能附带的罡风数
 
         #endregion
@@ -179,14 +180,18 @@ namespace JX3CalculatorShared.Class
             return GF;
         }
 
-        public void CalcJYBaiYuDuoPo()
+        public void CalcJYBaiYuTiaoZhu()
         {
-            // 计算惊羽白雨夺魄
-            const string dp = "DP";
-            double dpfreq = 0;
-            Data.TryGetValue(dp, out dpfreq);
-            Data.SetKeyValue("DP_BaiYu", dpfreq);
-            Data[dp] = 0;
+            // 计算惊羽白雨跳珠
+            const string zmsf = "ZM_SF"; // 白雨跳珠次数=顺发追命次数
+            double byfreq = 0;
+            Data.TryGetValue(zmsf, out byfreq);
+            Data.SetKeyValue("BaiYuTiaoZhu", byfreq); // 白雨跳珠（非侠士）
+
+            double zx_org_freq = 0;
+            Data.TryGetValue("_ZX_Org", out zx_org_freq);
+            var bypzfreq = zx_org_freq * XFStaticConst.PZ_BaiYuPer_Normal_ZX;
+            Data.SetKeyValue("PZ_BaiYu", bypzfreq); // 白雨跳珠（逐星破招）
         }
 
         public double CalcJYEnergyInjection()
@@ -194,22 +199,28 @@ namespace JX3CalculatorShared.Class
             // 计算惊羽注能次数
             double pzRes = 0.0;
             var res = StaticXFData.DB.SkillInfo.GetEnergyInjection(Data);
-            const string ZXKey = "ZX";
+            Data.TryGetValue("_ZX_Org", out var zx_org); // 修正逐星充能，防止橙武连续逐星影响
+            Data.TryGetValue("ZX", out double zx);
+            res = res - zx + zx_org;
             pzRes = res;
-
-            double zxfreq = 0;
-            if (Data.TryGetValue(ZXKey, out zxfreq))
-            {
-                StaticXFData.DB.SkillInfo.Skills.TryGetValue(ZXKey, out var ZXInfo);
-                if (ZXInfo != null)
-                {
-                    pzRes -= zxfreq * ZXInfo.EnergyInjection;
-                }
-            }
             EnergyInjectionFreq = res;
             PZEnergyInjectionFreq = pzRes;
             Data.SetKeyValue("PZ", PZEnergyInjectionFreq / 3); // 3注能一次破招
             return EnergyInjectionFreq;
+        }
+
+        public double GetJYHanJiangFreq()
+        {
+            // 计算寒江触发频率
+            CalcJYBaiYuTiaoZhu();
+            CalcJYEnergyInjection();
+            double res = 0.0;
+            Data.TryGetValue("ZX", out double zx); // 常规逐星触发寒江
+            Data.TryGetValue("PZ", out double pz);
+            Data.TryGetValue("PZ_BaiYu", out double pz_by);
+            res = zx + pz + pz_by;
+            HanJiangFreq = res;
+            return res;
         }
 
 

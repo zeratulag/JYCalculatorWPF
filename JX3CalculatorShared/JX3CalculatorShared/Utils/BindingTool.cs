@@ -12,7 +12,7 @@ namespace JX3CalculatorShared.Utils
 
 {
     public static class BindingTool
-    {
+    {           
         public static string IconID2Path(int iconID, string extension = "png")
         {
             // 图标ID到路径

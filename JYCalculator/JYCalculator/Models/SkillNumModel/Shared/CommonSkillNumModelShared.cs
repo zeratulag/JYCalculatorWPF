@@ -143,6 +143,5 @@ namespace JYCalculator.Models
 
         #endregion
 
-
     }
 }

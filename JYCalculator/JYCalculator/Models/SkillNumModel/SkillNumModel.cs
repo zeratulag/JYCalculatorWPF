@@ -18,13 +18,18 @@ namespace JYCalculator.Models
             // 计算最终心无CD
             Normal.FinalSkillFreq.CalcJYEnergyInjection();
             XW.FinalSkillFreq.CalcJYEnergyInjection();
-            XWCD = QiXue.SetHJXWCD(Normal.FinalSkillFreq.EnergyInjectionFreq / 3, XW.FinalSkillFreq.EnergyInjectionFreq / 3);
+            var normal = Normal.FinalSkillFreq.GetJYHanJiangFreq();
+            var xw = XW.FinalSkillFreq.GetJYHanJiangFreq();
+            XWCD = QiXue.SetHJXWCD(normal, xw);
         }
 
         public void CalcBaiYu()
         {
-            Normal.FinalSkillFreq.CalcJYBaiYuDuoPo();
-            XW.FinalSkillFreq.CalcJYBaiYuDuoPo();
+            if (QiXue.白雨跳珠)
+            {
+                Normal.FinalSkillFreq.CalcJYBaiYuTiaoZhu();
+                XW.FinalSkillFreq.CalcJYBaiYuTiaoZhu();
+            }
         }
     }
 }

@@ -138,6 +138,7 @@ public Dictionary<string, double> ToDict()
                 {nameof(DP), DP}, {nameof(BY), BY},
                 {nameof(ZM), ZM}, {nameof(ZM_SF), ZM_SF},
                 {nameof(ZX), ZX}, {nameof(GF), GF}, {nameof(BL), BL},
+                {"_ZX_Org", ZX},
                 {nameof(CX_DOT), CX_DOT}, {nameof(CXY_DOT), CXY_DOT}, {nameof(ZX_DOT), ZX_DOT}, {nameof(CXL), CXL},
                 {nameof(_BYCast), _BYCast}, {nameof(_BYTotalHitNum), _BYTotalHitNum},
                 {nameof(_CX_DOT_Hit), _CX_DOT_Hit},
@@ -198,7 +199,7 @@ public Dictionary<string, double> ToDict()
         // 计算罡风数
         public void CalcGF()
         {
-            GF = DP + ZM + BL + _BYCast + ZM_SF * 1 + ZX * 1.5 + CXL;
+            GF = DP + ZM + BL + _BYCast + ZM_SF * 1 + ZX * 1.25 + CXL;
         }
 
         /// <summary>

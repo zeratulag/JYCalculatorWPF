@@ -297,6 +297,7 @@ namespace JYCalculator.ViewModels
 
         protected void UpdateResultTables()
         {
+            FightTimeSummaryVM.UpdateResult();
             FinalDPStxt = CalcShell.FinalDPStxt;
             var kernel = CalcShell.CDPSKernel;
 

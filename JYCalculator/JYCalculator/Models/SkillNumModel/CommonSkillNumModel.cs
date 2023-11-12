@@ -4,6 +4,7 @@ using JYCalculator.Class;
 using JYCalculator.Data;
 using System;
 using Force.DeepCloner;
+using JYCalculator.Globals;
 
 
 namespace JYCalculator.Models
@@ -19,7 +20,7 @@ namespace JYCalculator.Models
 
         public double CW_DOTPerCW = 30; // 单次橙武特效造成的伤害次数（常规10跳x3层，顶级可以多1跳2层）
         public double CW_DOTHitPerCW = 10; // 单次橙武特效在伤害统计记录的次数（顶级11）
-
+        public double PZ_BYPerZX;
 
         #endregion
 
@@ -39,6 +40,7 @@ namespace JYCalculator.Models
             AbilityRank = abilityitem.Rank;
 
             Time = IsXW ? QiXue.XWDuration : QiXue.NormalDuration;
+            PZ_BYPerZX = IsXW ? 2.0 : XFStaticConst.PZ_BaiYuPer_Normal_ZX; // 单次逐星的平均白雨破招数
             Num.ResetTime(Time);
 
             IsBigXW = IsXW && QiXue.聚精凝神;
@@ -52,7 +54,6 @@ namespace JYCalculator.Models
             CW_DOTPerCW = 10 * 3.0 - 1 + AbilityRank;
             CW_DOTHitPerCW = 10 + AbilityRank / 3.0;
         }
-
 
         #endregion
 
@@ -140,7 +141,12 @@ namespace JYCalculator.Models
             if (QiXue.寒江夜雨)
             {
                 var efreq = Num.GetEnergyInjection();
-                real_cd = QiXue.GetBLCDByEnergyInjectionFreq(efreq * 0.986);
+                var hjfreq = efreq / 3.0 + Num.ZX / Num._Time;
+                if (QiXue.白雨跳珠)
+                {
+                    hjfreq += Num.ZX * PZ_BYPerZX / Num._Time;
+                }
+                real_cd = QiXue.GetBLCDByHanJiangFreq(hjfreq);
             }
 
             var rawBLFreq = 1 / real_cd;
@@ -192,7 +198,7 @@ namespace JYCalculator.Models
         {
             // 计算橙武技能频率
             if (!WP.IsBigCW) return;
-            
+
             const string key = "CW_ZX";
             var CWInterval = SkillEvents[key].MeanTriggerInterval(BasicEventsHitFreq[key]);
             double CWTime = SkillEvents[key].Time; // 橙武特效持续时间，7秒
@@ -246,8 +252,8 @@ namespace JYCalculator.Models
             // 修正大橙武百里数
             if (!QiXue.寒江夜雨) return;
 
-            var freq = FinalSkillFreq.CalcJYEnergyInjection();
-            var rawBLFreq = 1 / QiXue.GetBLCDByEnergyInjectionFreq(freq);
+            var freq = FinalSkillFreq.GetJYHanJiangFreq();
+            var rawBLFreq = 1 / QiXue.GetBLCDByHanJiangFreq(freq);
             var abilityrankcoef = (0.85 + 0.05 * AbilityRank); // 顶级手法下无延迟，应该为1
             var realBLFreq = rawBLFreq * abilityrankcoef;
             var bltime = IsXW ? SkillHaste.BL.XWTime : SkillHaste.BL.Time;

@@ -109,6 +109,8 @@ namespace JYCalculator.Class
             {
                 AddRecipeAndApply(recipe);
             }
+
+            PostProceed();
         }
 
         public override void ApplySkillModifier(SkillModifier modifier)

@@ -14,7 +14,7 @@ namespace JX3PZ.ViewModels
         public PanelWeaponSlotViewModel(WeaponAttributeTypeEnum weaponType = WeaponAttributeTypeEnum.Melee)
         {
             WeaponType = weaponType;
-            RealTitle = PanelWeaponSlot.GetTypeDesc(WeaponType);
+            RealTitle = PanelWeaponSlot.AcquireTypeDesc(WeaponType);
         }
 
         public void UpdateFromSlot(PanelWeaponSlot slot)

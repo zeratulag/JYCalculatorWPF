@@ -106,7 +106,10 @@ namespace JYCalculator.Models
             if (AppStatic.XinFaTag == "JY")
             {
                 CalcJYEnergyInjection();
-                CalcBaiYu();
+                if (QiXue.白雨跳珠)
+                {
+                    CalcBaiYu();
+                }
             }
         }
     }

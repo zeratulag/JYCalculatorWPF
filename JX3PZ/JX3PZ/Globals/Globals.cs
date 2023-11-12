@@ -13,7 +13,7 @@ namespace JX3PZ.Globals
         public const int MAX_STRENGTH_LEVEL = 8; // 最大精炼等级
         public const int POSITIONS = 12; // 装备部位总数
         public const int MIN_EQUIP_LEVEL = 9000;
-        public const int MAX_EQUIP_LEVEL = 13000;
+        public const int MAX_EQUIP_LEVEL = 15000;
 
         public const decimal GKiloDenominator = 1024.0m;
     }

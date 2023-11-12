@@ -61,7 +61,7 @@ namespace JX3PZ.Models
             return $"{DamageMin}~{DamageMax}";
         }
 
-        public static string GetTypeDesc(WeaponAttributeTypeEnum weaponType)
+        public static string AcquireTypeDesc(WeaponAttributeTypeEnum weaponType)
         {
             var prefix = weaponType == WeaponAttributeTypeEnum.Melee ? "近身" : "远程";
             var res = prefix + "武器伤害";
@@ -73,7 +73,7 @@ namespace JX3PZ.Models
         {
             var res = new List<string>()
             {
-                $"{GetTypeDesc(WeaponType)}提高 {DamageMin} - {DamageMax}，平均伤害 {DamageAverage:F1}",
+                $"{AcquireTypeDesc(WeaponType)}提高 {DamageMin} - {DamageMax}，平均伤害 {DamageAverage:F1}",
                 $"武器速度 {Speed:F1}",
                 $"每秒伤害 {DamagePerSecond:F1}"
             };

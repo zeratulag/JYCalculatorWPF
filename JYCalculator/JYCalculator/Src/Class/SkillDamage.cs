@@ -28,7 +28,7 @@ namespace JYCalculator.Class
             OrgPhysicsDmg = Data.WPCoef * FChar.WP + Data.APCoef * FChar.Final_AP + Data.Info.Fixed_Dmg;
             if (Type == SkillDataTypeEnum.PZ)
             {
-                OrgPDmg = Math.Max(0, FChar.PZ) * XFStaticConst.fGP.XPZ;
+                OrgPDmg = Math.Max(0, FChar.PZ) * Data.PZCoef;
             }
 
             StdPhysicsDmg = OrgPhysicsDmg + OrgPDmg;
@@ -90,7 +90,7 @@ namespace JYCalculator.Class
             res.Final_AP = Data.APCoef > 0 ? Data.APCoef * ExpectPhysicsDmg / OrgPhysicsDmg : 0;
             res.WP = Data.WPCoef > 0 ? Data.WPCoef * ExpectPhysicsDmg / OrgPhysicsDmg : 0;
 
-            res.PZ = Data.Info.IsP ? XFStaticConst.fGP.XPZ * ExpectPhysicsDmg / OrgPDmg : 0;
+            res.PZ = Data.Info.IsP ? Data.PZCoef * ExpectPhysicsDmg / OrgPDmg : 0;
 
             res.Final_OC = ExpectPhysicsDmg / ParaPOC / XFStaticConst.fGP.OC;
             res.WS_Point = FinalEDamage / ParaWS / XFStaticConst.fGP.WS;

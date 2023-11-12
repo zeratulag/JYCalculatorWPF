@@ -1,10 +1,11 @@
-﻿using System.Linq;
+﻿using MiniExcelLibs.Attributes;
+using System.Linq;
 
 namespace JX3PZ.Class
 {
     public class EquipGetInfoItem
     {
-        public new string GetType { get; set; }
+        public string Get_Type { get; set; } // 防止与GetType方法重名
         public string[] DescList { get; set; } = null;
         public RaidInfoItem[] RaidInfo { get; set; } = null;
 
@@ -105,8 +106,8 @@ namespace JX3PZ.Class
             ToolTipList[0] = "装备来源";
             for (int i = 0; i < n; i++)
             {
-                DescList[i] = $"[{EquipInfo[i].GetType}] {EquipInfo[i].Desc}";
-                ToolTipList[i+1] = $"\r\n[{EquipInfo[i].GetType}]\r\n{EquipInfo[i].ToolTip}";
+                DescList[i] = $"[{EquipInfo[i].Get_Type}] {EquipInfo[i].Desc}";
+                ToolTipList[i+1] = $"\r\n[{EquipInfo[i].Get_Type}]\r\n{EquipInfo[i].ToolTip}";
             }
 
             Desc = string.Join("\n", DescList);

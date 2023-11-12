@@ -22,8 +22,8 @@ namespace JX3CalculatorShared.Class
 
         [JsonIgnore] public ImmutableDictionary<string, JBPZEquipSnapshot> Dict; // 以Dict形式存储的
 
-        [JsonIgnore] public bool Had_BigFM_hat => HAT.enchant > 0; // 是否有帽子大附魔
-        [JsonIgnore] public bool Had_BigFM_jacket => JACKET.enchant > 0; // 是否有上衣大附魔
+        [JsonIgnore] public bool Had_BigFM_hat => HAT?.enchant > 0; // 是否有帽子大附魔
+        [JsonIgnore] public bool Had_BigFM_jacket => JACKET?.enchant > 0; // 是否有上衣大附魔
 
         public void GetDict()
         {
