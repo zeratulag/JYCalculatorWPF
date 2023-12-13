@@ -36,7 +36,7 @@ namespace JX3CalculatorShared.Globals
         // 存储一些游戏常量，此类的成员将会被using static 直接访问
     {
         public const int CurrentLevel = 120; // 当前人物等级
-        public const double FPS_PER_SECOND = 16.0;
+        public const double FRAMES_PER_SECOND = 16.0; // 每秒16逻辑帧
         public const double GCD = 1.5;
         public const int GCD_FPS = 24;
         public const int NumberOfQiXue = 12;

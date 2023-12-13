@@ -10,6 +10,7 @@ using JX3CalculatorShared.Utils;
 using JX3PZ.Class;
 using JX3PZ.Globals;
 using JX3PZ.Models;
+using JYCalculator.Globals;
 using MathNet.Numerics.LinearAlgebra.Factorization;
 
 namespace JYCalculator.Src
@@ -88,7 +89,7 @@ namespace JYCalculator.Src
         public readonly int PHYSICS_OVERCOME_BASE = 0; // 外功破防
         public readonly int PHYSICS_ATTACK_POWER_BASE = 0; // 外功攻击 
         public readonly double HuaJinPct = 0.1; // 化劲率
-        public readonly double PZCoef = 0.78 - 1; // 破招系数
+        public readonly double PZCoef = XFStaticConst.XinFaPZCoef; // 破招系数
 
         public readonly ImmutableDictionary<string, int> LuaDictionary; // 心法LUA属性集合
         public readonly ImmutableArray<AttributeEntry> AttributeEntries; // 心法属性集合

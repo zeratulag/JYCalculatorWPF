@@ -20,7 +20,7 @@ namespace JX3CalculatorShared.Class
         public double AddDmg { get; set; } // 增加伤害
         public double ChannelIntervalCoef { get; set; } = 1; // 系数修改倍率
         public int Frame { get; set; } // 帧数
-        public double IntervalTime => Frame / StaticConst.FPS_PER_SECOND; // 初始时间间隔
+        public double IntervalTime => Frame / StaticConst.FRAMES_PER_SECOND; // 初始时间间隔
         public double nChannelInterval => Info.nChannelInterval * ChannelIntervalCoef;
         public double WPCoef => Info.WP_Coef; // 武伤系数
 
@@ -121,17 +121,24 @@ namespace JX3CalculatorShared.Class
         /// <summary>
         /// 计算技能系数
         /// </summary>
-        /// <param name="finalG">最终郭氏系数（分子）</param>
+        /// <param name="finalG">最终郭氏系数（nChannelInterval）</param>
         /// <returns></returns>
         public virtual double CalcAPCoef(double finalG)
         {
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// 计算DOT系数
+        /// </summary>
+        /// <param name="finalG">最终郭氏系数（nChannelInterval）</param>
+        /// <param name="count">跳数</param>
+        /// <param name="intervalframe">dot生效间隔（帧）</param>
+        /// <returns></returns>
         public double CalcDOTAPCoef(double finalG, int count, double intervalframe)
         {
             var coef1 = CalcAPCoef(finalG);
-            var coef2 = Math.Max(16, (int) (intervalframe * count / 12.0)) / StaticConst.FPS_PER_SECOND / count;
+            var coef2 = Math.Max(16, (int) (intervalframe * count / 12.0)) / StaticConst.FRAMES_PER_SECOND / count;
             return coef1 * coef2;
         }
 

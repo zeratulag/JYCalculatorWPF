@@ -59,9 +59,9 @@ namespace JX3CalculatorShared.Class
         /// <returns>加速后的读条时间（秒）</returns>
         public double SKT(double time, int HSP, int extraHSP = 0)
         {
-            int fps = (int)Math.Round(time * StaticConst.FPS_PER_SECOND);
+            int fps = (int)Math.Round(time * StaticConst.FRAMES_PER_SECOND);
             int finalFps = SKT_FPS(fps: fps, HSP: HSP, extraHSP: extraHSP);
-            double res = finalFps / StaticConst.FPS_PER_SECOND;
+            double res = finalFps / StaticConst.FRAMES_PER_SECOND;
             return res;
         }
 
@@ -79,7 +79,7 @@ namespace JX3CalculatorShared.Class
                 if (!fps2hsp.ContainsKey(final_fps))
                 {
                     fps2hsp.Add(final_fps, hsp);
-                    hsp2time.Add(hsp, final_fps / StaticConst.FPS_PER_SECOND);
+                    hsp2time.Add(hsp, final_fps / StaticConst.FRAMES_PER_SECOND);
                 }
 
                 if (gHSP(HSP: hsp, extraHSP: 0) > 256)

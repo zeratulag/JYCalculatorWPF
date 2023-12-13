@@ -44,12 +44,12 @@ namespace JYCalculator.Globals
         public static readonly string MainTitle;
         public static readonly DateTime BuildDateTime; // 构建时间
         public static readonly DateTime LastPatchTime; // 最新技改时间
-        public const string LastPatchURL = @"https://jx3.xoyo.com/show-2466-5961-1.html"; // 最新技改内容
+        public const string LastPatchURL = @"https://jx3.xoyo.com/show-2466-5999-1.html"; // 最新技改内容
 
 
         static XFAppStatic()
         {
-            LastPatchTime = new DateTime(2023, 10, 26); // 最新技改时间
+            LastPatchTime = new DateTime(2023, 12, 11); // 最新技改时间
 
             AppVersion = Assembly.GetExecutingAssembly().GetName().Version;
             var version = AppVersion.ToString();
@@ -159,7 +159,7 @@ namespace JYCalculator.Globals
     {
         public static readonly XFGlobalParams fGP;
         public const double XinFaPZCoef = (0.78 - 1); // 心法破招系数，唐门惊羽破招子技能.lua  dwSkillLevel == 1
-        public const double BaiYuPZCoef = (0.4263012 - 1); // 白雨破招系数， dwSkillLevel == 2
+        public const double BaiYuPZCoef = (0.5328765 - 1); // 白雨破招系数， dwSkillLevel == 2
         public const double PZ_BaiYuPer_Normal_ZX = 1.486; // 非心无期间，平均每个逐星附带的白雨破招数量
 
         public static readonly Haste CurrentHaste;

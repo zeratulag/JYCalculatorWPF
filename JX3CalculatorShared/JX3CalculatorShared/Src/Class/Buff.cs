@@ -64,7 +64,7 @@ namespace JX3CalculatorShared.Class
             BuffID = item.BuffID;
             DefaultStack = item.DefaultStackNum;
             DefaultCover = item.DefaultCover;
-            Time = item.Interval / StaticConst.FPS_PER_SECOND;
+            Time = item.Interval / StaticConst.FRAMES_PER_SECOND;
 
             ToolTipDesc = item.ToolTipDesc;
             Source = item.Source;
