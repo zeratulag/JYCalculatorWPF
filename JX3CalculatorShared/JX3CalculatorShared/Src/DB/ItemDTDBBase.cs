@@ -29,6 +29,7 @@ namespace JX3CalculatorShared.DB
         public ImmutableArray<ItemDT> MedEnhance { get; private set; }
         public ImmutableArray<ItemDT> HomeWine { get; private set; }
         public ImmutableArray<ItemDT> HomeCook { get; private set; }
+        public ImmutableArray<ItemDT> HomeBalm { get; private set; }
         public ImmutableArray<ItemDT> WeaponWhetstone { get; private set; }
         public ImmutableDictionary<ItemDTTypeEnum, ImmutableArray<ItemDT>> TypeData { get; private set; } // 按照不同类型分别构建单体列表的字典
 
@@ -80,6 +81,9 @@ namespace JX3CalculatorShared.DB
 
                     case ItemDTTypeEnum.HomeCook:
                         { HomeCook = valueArray; break; }
+
+                    case ItemDTTypeEnum.HomeBalm:
+                        { HomeBalm = valueArray; break; }
 
                     case ItemDTTypeEnum.WeaponWhetstone:
                         { WeaponWhetstone = valueArray; break; }

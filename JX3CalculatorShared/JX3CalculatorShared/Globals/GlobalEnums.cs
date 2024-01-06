@@ -87,6 +87,12 @@
         腕 = 10,
     }
 
+    public enum EquipOptionType
+    {
+        WP,
+        YZ
+    }
+
     public static class EquipSubTypeTool
     {
         public static string ToDescString(this EquipSubTypeEnum typeEnum)
@@ -132,6 +138,7 @@
         MedEnhance, // 药品增强
         HomeWine, // 家园酿造
         HomeCook, // 家园烹饪
+        HomeBalm, // 家园调香
         WeaponWhetstone, // 武器磨石
     }
 

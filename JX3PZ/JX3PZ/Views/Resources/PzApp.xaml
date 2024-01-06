@@ -42,7 +42,7 @@
         <Setter Property="ItemsPanel">
             <Setter.Value>
                 <ItemsPanelTemplate>
-                    <WrapPanel Orientation="Horizontal" MaxWidth="260"/>
+                    <WrapPanel Orientation="Horizontal" MaxWidth="300"/>
                 </ItemsPanelTemplate>
             </Setter.Value>
         </Setter>

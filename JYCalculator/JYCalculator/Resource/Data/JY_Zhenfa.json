@@ -332,7 +332,7 @@
         },
         "Z5_max_stack": 1,
         "Z5_default_stack": 1,
-        "Z5_cover": 0.7,
+        "Z5_cover": 0.8,
         "BuffID": "27236_6",
         "BuffZ5ID": "27238_1"
     }

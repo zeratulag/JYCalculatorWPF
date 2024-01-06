@@ -2,7 +2,6 @@
 {
     public abstract class AbsAttrItem
     {
-        public string FullID { get; set; }
         public string Type { get; set; }
         public string SID { get; set; } // SimpleID
         public string Comment { get; set; }
@@ -17,10 +16,12 @@
 
     public class SkillAttrItem : AbsAttrItem
     {
+        public string FullID { get; set; }
     }
 
     public class AttrItem : AbsAttrItem
     {
+        public string FullID { get; set; }
         public int Target { get; set; }
         public string LuaID { get; set; }
         public string ShortName { get; set; }

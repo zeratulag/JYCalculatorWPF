@@ -14,6 +14,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Common\CommonInterface.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Globals\GlobalEnums.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Globals\Globals.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Globals\KAttribute.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Src\Class\CalcResult.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Messages\StaticMessager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\BigFMConfigModelBase.cs" />

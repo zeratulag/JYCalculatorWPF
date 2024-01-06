@@ -5,6 +5,7 @@ using JX3CalculatorShared.Utils;
 using JX3PZ.Data;
 using JX3PZ.Globals;
 using System.Data;
+using JX3CalculatorShared.Globals;
 
 namespace JX3CalculatorShared.Class
 {
@@ -137,6 +138,8 @@ namespace JX3CalculatorShared.Class
 
         public readonly bool IsPercent; // 是否为百分比
         public readonly string RealValueExpression; // 从GeneratedMagic中提取的数值模板
+
+        public KAttributeTypeEnum KAttributeType;
 
         #endregion
 

@@ -98,10 +98,10 @@ namespace JX3CalculatorShared.Data
             {
                 switch (equip_option.Type)
                 {
-                    case "WP":
+                    case EquipOptionType.WP:
                         WP.Add(equip_option);
                         break;
-                    case "YZ":
+                    case EquipOptionType.YZ:
                         YZ.Add(equip_option);
                         break;
                 }

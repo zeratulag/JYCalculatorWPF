@@ -32,7 +32,7 @@ namespace JYCalculator.Models
 
         // 输出成员
 
-        public readonly Dictionary<string, NamedAttrs> AllAttrsDict;
+        public Dictionary<string, NamedAttrs> AllAttrsDict => CalcShell?.AllAttrsDict;
 
         public CalculatorShell CalcShell;
         public CalculatorShellArg CalcShellArg;
@@ -64,7 +64,7 @@ namespace JYCalculator.Models
             CalcShell = new CalculatorShell(this);
             CalcShellArg = new CalculatorShellArg();
 
-            AllAttrsDict = CalcShell.AllAttrsDict;
+            //AllAttrsDict = CalcShell.AllAttrsDict;
 
             AllAttrs = new List<NamedAttrs>(8);
         }

@@ -18,4 +18,5 @@ namespace JX3CalculatorShared.ViewModels
         public string JBUrl { get; set; }
         public string TMUrl { get; set; }
     }
+
 }

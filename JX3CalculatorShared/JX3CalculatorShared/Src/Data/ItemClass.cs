@@ -376,7 +376,7 @@ namespace JX3CalculatorShared.Data
 
     public class EquipOptionItem : AbsIconToolTipItem
     {
-        public string Type { get; set; }
+        public EquipOptionType Type { get; set; }
         public string ItemName { get; set; }
         public int Value { get; set; }
         public string Tag { get; set; }

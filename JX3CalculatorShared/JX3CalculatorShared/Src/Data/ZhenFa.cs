@@ -61,6 +61,17 @@ namespace JX3CalculatorShared.Data
                 var res2 = string.IsNullOrEmpty(BuffZ5ID) ? "" : $"\t五阵ID: {BuffZ5ID}";
                 res += res2;
             }
+
+            return res;
+        }
+
+        public string GetZ5CoverDesc()
+        {
+            if (!HasZ5)
+            {
+                return null;
+            }
+            var res = $"五重效果覆盖率{Z5_cover:P2}";
             return res;
         }
 
@@ -80,6 +91,12 @@ namespace JX3CalculatorShared.Data
 
             sb.Append(TooltipDivider);
             sb.Append(Desc);
+
+            if (HasZ5)
+            {
+                sb.Append($"\n（计算器备注：{GetZ5CoverDesc()}。）");
+            }
+
             sb.Append(GetToolTipTail());
 
             return sb.ToString();
@@ -143,7 +160,6 @@ namespace JX3CalculatorShared.Data
 
         #region 方法
 
-
         /// <summary>
         /// 根据五阵覆盖率和叠加层数，生成汇总的BUFF
         /// </summary>
@@ -158,7 +174,7 @@ namespace JX3CalculatorShared.Data
                 return result;
             }
 
-            var buffList = new List<BaseBuff>() { Buff };
+            var buffList = new List<BaseBuff>() {Buff};
 
             if (HasZ5)
             {

@@ -87,6 +87,6 @@ namespace JX3CalculatorShared.ViewModels
     public class ItemDTConfigSav
     {
         public bool IsChecked;
-        public Dictionary<ItemDTTypeEnum, string> Data;
+        public Dictionary<string, string> Data;
     }
 }

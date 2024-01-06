@@ -19,7 +19,7 @@ namespace JX3CalculatorShared.Class
         public static readonly ImmutableDictionary<DamageTypeEnum, string> AttrMap;
         public readonly string Name;
         public string ItemName { get; private set; }
-        public readonly string OptionType;
+        public readonly EquipOptionType OptionType;
         public readonly string Tag;
         public string ToolTip { get; protected set; }
         public readonly int Order;
@@ -38,6 +38,9 @@ namespace JX3CalculatorShared.Class
 
 
         public AttributeID AID;
+
+        public readonly bool IsWater; // 是否为水特效
+        public readonly bool IsWind; // 是否为风特效
 
         #endregion
 
@@ -72,6 +75,9 @@ namespace JX3CalculatorShared.Class
             Quality = quality;
 
             DamageTypeDesc = DamageType == DamageTypeEnum.Magic ? "内功" : "外功";
+
+            IsWater = Tag == "Water";
+            IsWind = Tag == "Wind";
         }
 
         public EquipOption(EquipOptionItem item)
@@ -88,7 +94,7 @@ namespace JX3CalculatorShared.Class
 
         #region 方法
 
-        protected virtual string GetS_ID()
+        protected virtual string Get_S_ID()
         {
             var res = AttrMap.GetValueOrDefault(DamageType);
             return res;
@@ -102,9 +108,9 @@ namespace JX3CalculatorShared.Class
         {
             var res = new Dictionary<string, double>();
 
-            if (Value > 0)
+            if (IsWater || IsWind)
             {
-                var key = GetS_ID();
+                var key = Get_S_ID();
                 res.Add(key, Value);
             }
 
@@ -150,7 +156,7 @@ namespace JX3CalculatorShared.Class
         public void GetAttributeID()
         {
             string res = null;
-            if (OptionType == "YZ")
+            if (OptionType == EquipOptionType.YZ)
             {
                 if (DamageType == DamageTypeEnum.Magic)
                 {
@@ -164,7 +170,7 @@ namespace JX3CalculatorShared.Class
             }
             else
             {
-                if (OptionType == "WP" && Tag == "Water")
+                if (OptionType == EquipOptionType.WP && IsWater)
                 {
                     res = $"at{DamageType.ToString()}AttackPowerBase";
                 }
@@ -184,12 +190,12 @@ namespace JX3CalculatorShared.Class
             if (AID != null)
             {
 
-                if (Tag == "Water")
+                if (IsWater)
                 {
                     res = $"（每层{Value / 10}{AID.EquipTag}）";
                 }
 
-                if (Tag == "Wind")
+                if (IsWind)
                 {
                     res = $"（{Value}{AID.EquipTag}）";
                 }
@@ -227,7 +233,7 @@ namespace JX3CalculatorShared.Class
             ParseEquipIDs();
         }
 
-        protected override string GetS_ID()
+        protected override string Get_S_ID()
         {
             var res = AttrMap.GetValueOrDefault(DamageType);
             return res;
@@ -255,7 +261,7 @@ namespace JX3CalculatorShared.Class
         // 获取新的提示
         public void GetToolTip()
         {
-            if (Value > 0 && Tag == "Water")
+            if (Value > 0 && IsWater)
             {
                 var newstr = $"特效提升{Value}{DamageTypeDesc}攻击力";
                 var res = $"{ToolTip}\n{newstr}";
@@ -289,7 +295,7 @@ namespace JX3CalculatorShared.Class
             ParseEquipIDs();
         }
 
-        protected override string GetS_ID()
+        protected override string Get_S_ID()
         {
             var res = AttrMap.GetValueOrDefault(DamageType);
             return res;
@@ -303,7 +309,7 @@ namespace JX3CalculatorShared.Class
         // 获取新的提示
         public void GetToolTip()
         {
-            if (Value > 0)
+            if (Value > 0 && IsWind)
             {
                 var newstr = $"使用：提升自身{Value}{DamageTypeDesc}破防，持续15秒，冷却时间180秒。";
                 var res = $"{ToolTip}\n{newstr}";

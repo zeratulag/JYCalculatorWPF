@@ -128,7 +128,7 @@ namespace JX3CalculatorShared.ViewModels
             var res = new ItemDTConfigSav()
             {
                 IsChecked = IsChecked,
-                Data = ItemDTSlotDict.ToDictionary(_ => _.Key, _ => _.Value.SelectedRawID),
+                Data = ItemDTSlotDict.ToDictionary(_ => _.Key.ToString(), _ => _.Value.SelectedRawID),
             };
             return res;
         }
@@ -138,9 +138,10 @@ namespace JX3CalculatorShared.ViewModels
             IsChecked = sav.IsChecked;
             foreach (var KVP in ItemDTSlotDict)
             {
-                if (sav.Data.ContainsKey(KVP.Key))
+                string key = KVP.Key.ToString();
+                if (sav.Data.TryGetValue(key, out var value))
                 {
-                    KVP.Value.Load(sav.Data[KVP.Key]);
+                    KVP.Value.Load(value);
                 }
                 else
                 {

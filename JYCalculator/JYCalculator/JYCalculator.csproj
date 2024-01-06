@@ -97,8 +97,8 @@
     <Reference Include="Costura, Version=5.7.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\NuGetPackages\Costura.Fody.5.7.0\lib\netstandard1.0\Costura.dll</HintPath>
     </Reference>
-    <Reference Include="DataGridExtensions, Version=2.5.15.0, Culture=neutral, PublicKeyToken=43de855f87de903a, processorArchitecture=MSIL">
-      <HintPath>..\..\..\NuGetPackages\DataGridExtensions.2.5.15\lib\net452\DataGridExtensions.dll</HintPath>
+    <Reference Include="DataGridExtensions, Version=2.6.0.0, Culture=neutral, PublicKeyToken=43de855f87de903a, processorArchitecture=MSIL">
+      <HintPath>..\..\..\NuGetPackages\DataGridExtensions.2.6.0\lib\net462\DataGridExtensions.dll</HintPath>
     </Reference>
     <Reference Include="DeepCloner, Version=0.10.0.0, Culture=neutral, PublicKeyToken=dc0b95cf99bf4e99, processorArchitecture=MSIL">
       <HintPath>..\..\..\NuGetPackages\DeepCloner.0.10.4\lib\net40\DeepCloner.dll</HintPath>
@@ -129,8 +129,8 @@
     <Reference Include="Microsoft.Xaml.Behaviors, Version=1.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\..\..\NuGetPackages\Microsoft.Xaml.Behaviors.Wpf.1.1.77\lib\net462\Microsoft.Xaml.Behaviors.dll</HintPath>
     </Reference>
-    <Reference Include="MiniExcel, Version=1.31.2.0, Culture=neutral, PublicKeyToken=e7310002a53eac39, processorArchitecture=MSIL">
-      <HintPath>..\..\..\NuGetPackages\MiniExcel.1.31.2\lib\net45\MiniExcel.dll</HintPath>
+    <Reference Include="MiniExcel, Version=1.31.3.0, Culture=neutral, PublicKeyToken=e7310002a53eac39, processorArchitecture=MSIL">
+      <HintPath>..\..\..\NuGetPackages\MiniExcel.1.31.3\lib\net45\MiniExcel.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\..\..\NuGetPackages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -791,6 +791,23 @@
     <Resource Include="Resource\Icons\20139.png" />
     <Resource Include="Resource\Icons\20159.png" />
     <Resource Include="Resource\Icons\2040.png" />
+    <Resource Include="Resource\Icons\20813.png" />
+    <Resource Include="Resource\Icons\20814.png" />
+    <Resource Include="Resource\Icons\20815.png" />
+    <Resource Include="Resource\Icons\20816.png" />
+    <Resource Include="Resource\Icons\20817.png" />
+    <Resource Include="Resource\Icons\20818.png" />
+    <Resource Include="Resource\Icons\20819.png" />
+    <Resource Include="Resource\Icons\20820.png" />
+    <Resource Include="Resource\Icons\20821.png" />
+    <Resource Include="Resource\Icons\20822.png" />
+    <Resource Include="Resource\Icons\20823.png" />
+    <Resource Include="Resource\Icons\20824.png" />
+    <Resource Include="Resource\Icons\20897.png" />
+    <Resource Include="Resource\Icons\20899.png" />
+    <Resource Include="Resource\Icons\20900.png" />
+    <Resource Include="Resource\Icons\20901.png" />
+    <Resource Include="Resource\Icons\20902.png" />
     <Resource Include="Resource\Icons\2315.png" />
     <Resource Include="Resource\Icons\2316.png" />
     <Resource Include="Resource\Icons\2317.png" />
@@ -1082,26 +1099,10 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resource\Icons\20813.png" />
-    <Resource Include="Resource\Icons\20814.png" />
-    <Resource Include="Resource\Icons\20815.png" />
-    <Resource Include="Resource\Icons\20816.png" />
-    <Resource Include="Resource\Icons\20817.png" />
-    <Resource Include="Resource\Icons\20818.png" />
-    <Resource Include="Resource\Icons\20819.png" />
-    <Resource Include="Resource\Icons\20820.png" />
-    <Resource Include="Resource\Icons\20821.png" />
-    <Resource Include="Resource\Icons\20822.png" />
-    <Resource Include="Resource\Icons\20823.png" />
-    <Resource Include="Resource\Icons\20824.png" />
-    <Resource Include="Resource\Icons\20897.png" />
-    <Resource Include="Resource\Icons\20899.png" />
-    <Resource Include="Resource\Icons\20900.png" />
-    <Resource Include="Resource\Icons\20901.png" />
-    <Resource Include="Resource\Icons\20902.png" />
+    <Folder Include="Resource\Images\Diamond\" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Resource\Images\Diamond\" />
+    <Resource Include="Resource\Icons\21602.png" />
   </ItemGroup>
   <Import Project="..\..\JX3CalculatorShared\JX3CalculatorShared\JX3CalculatorShared.projitems" Label="Shared" />
   <Import Project="..\..\JX3PZ\JX3PZ\JX3PZ.projitems" Label="Shared" />
