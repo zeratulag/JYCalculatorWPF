@@ -1,7 +1,9 @@
-﻿using System;
-using System.Text;
+﻿using JX3CalculatorShared.Utils;
 using JX3PZ.Globals;
 using JX3PZ.Models;
+using System.Collections.Generic;
+using System.Text;
+using System.Windows.Documents;
 
 namespace JX3PZ.ViewModels
 {
@@ -28,6 +30,21 @@ namespace JX3PZ.ViewModels
             Color1 = color1;
             Color2 = color2;
             Color3 = color3;
+        }
+
+        public Span GetSpan(object tag = null)
+        {
+            var span = new Span();
+            var runs = new List<Run>(3);
+            runs.Add(FlowDocumentTool.GetRun(Text1, Color1));
+            runs.Add(FlowDocumentTool.GetRun(Text2, Color2));
+            runs.Add(FlowDocumentTool.GetRun(Text3, Color3));
+            span.Inlines.AddRange(runs);
+            if (tag != null)
+            {
+                span.Tag = tag;
+            }
+            return span;
         }
     }
 

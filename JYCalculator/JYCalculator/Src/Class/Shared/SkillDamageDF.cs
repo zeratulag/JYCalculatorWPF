@@ -1,8 +1,7 @@
-﻿using System;
-using JX3CalculatorShared.Class;
+﻿using JX3CalculatorShared.Class;
+using JX3CalculatorShared.Globals;
 using System.Collections.Generic;
 using System.Linq;
-using JX3CalculatorShared.Globals;
 using JYCalculator.Globals;
 
 namespace JYCalculator.Class
@@ -29,16 +28,16 @@ namespace JYCalculator.Class
             switch (AppStatic.XinFaTag)
             {
                 case "JY":
-                {
-                    BaseLineSkillName = "DP";
-                    break;
-                }
+                    {
+                        BaseLineSkillName = SkillKeyConst.夺魄箭;
+                        break;
+                    }
                 case "TL":
-                {
-                    BaseLineSkillName = "LN";
-                    Data["HX_XW"].SetFChar(SnapFChar); // 修复心无化血快照的面板
-                    break;
-                }
+                    {
+                        BaseLineSkillName = "LN";
+                        Data["HX_XW"].SetFChar(SnapFChar); // 修复心无化血快照的面板
+                        break;
+                    }
             }
         }
 

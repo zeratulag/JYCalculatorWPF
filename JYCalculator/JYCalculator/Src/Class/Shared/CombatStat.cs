@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using JX3CalculatorShared.Class;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace JYCalculator.Class
@@ -9,7 +10,10 @@ namespace JYCalculator.Class
 
         public Dictionary<string, CombatStatItem> Data;
         public CombatStatItem[] Items;
+        public CombatStatGroupItem[] Groups;
+
         public double SumTotalDamage;
+
         #endregion
 
         #region 构造
@@ -32,6 +36,7 @@ namespace JYCalculator.Class
         {
             Data = old.Data.ToDictionary(_ => _.Key, _ => _.Value.Copy());
         }
+
         public CombatStat Copy()
         {
             return new CombatStat(this);
@@ -47,26 +52,13 @@ namespace JYCalculator.Class
         // 按照比重排序
         public void SortItems()
         {
-            var res = from _ in Data.Values orderby _.TotalDamage descending select _;
-            Items = res.ToArray();
+            Items = CombatStatItemBase.SortByTotalDamage(Data.Values).Select(_ => (CombatStatItem)_).ToArray();
         }
 
         // 赋以Rank
         public void SetRanksAndProportion()
         {
-            SumTotalDamage = 0;
-            int i = 1;
-            foreach (var _ in Items)
-            {
-                _.Rank = i;
-                SumTotalDamage += _.TotalDamage;
-                i++;
-            }
-
-            foreach (var _ in Items)
-            {
-                _.Proportion = _.TotalDamage / SumTotalDamage;
-            }
+            SumTotalDamage = CombatStatItemBase.SetRanksAndProportion(Items);
         }
 
         // 就地合并
@@ -93,32 +85,48 @@ namespace JYCalculator.Class
             {
                 res.Merge(stats[i]);
             }
+
             return res;
         }
 
-
-        public CombatStat ToSimple()
+        // 基于FightName进行分组
+        public void MakeGroup()
         {
-            var data = new Dictionary<string, CombatStatItem>(Data.Count);
-            foreach (var _ in Data.Values)
+            var items = Items.Select(_ => _.Copy());
+            var groups = items.GroupBy(_ => _.FightName);
+            var res = new List<CombatStatGroupItem>();
+            foreach (var g in groups)
             {
-                var newItem = _.ToSimple();
-                var newKey = newItem.Name;
-                if (!data.ContainsKey(newKey))
-                {
-                    data.Add(newKey, newItem);
-                }
-                else
-                {
-                    data[newKey].Merge(newItem);
-                }
+                var combatGroup = new CombatStatGroupItem(g.ToArray());
+                res.Add(combatGroup);
             }
 
-            var res = new CombatStat(data);
-            res.Proceed();
-            return res;
+            Groups = CombatStatItem.SortByTotalDamage(res).Select(_ => (CombatStatGroupItem)_).ToArray();
+            CombatStatItemBase.SetRanksAndProportion(Groups);
         }
 
+        //public CombatStat ToSimple()
+        //{
+        //    MakeGroup();
+        //    var data = new Dictionary<string, CombatStatItem>(Data.Count);
+        //    foreach (var _ in Data.Values)
+        //    {
+        //        var newItem = _.ToSimple();
+        //        var newKey = newItem.DisplayName;
+        //        if (!data.ContainsKey(newKey))
+        //        {
+        //            data.Add(newKey, newItem);
+        //        }
+        //        else
+        //        {
+        //            data[newKey].Merge(newItem);
+        //        }
+        //    }
+
+        //    var res = new CombatStat(data);
+        //    res.Proceed();
+        //    return res;
+        //}
 
         #endregion
 
@@ -148,8 +156,6 @@ namespace JYCalculator.Class
             {
                 SetSkillShowNumMultiplier(dotName, hitNum / dotNum);
             }
-
         }
-
     }
 }

@@ -1,8 +1,7 @@
-﻿using System;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using CommunityToolkit.Mvvm.ComponentModel;
-using PropertyChanged;
 
 namespace JX3CalculatorShared.Class
 {
@@ -31,7 +30,7 @@ namespace JX3CalculatorShared.Class
             GetKeyFromValue = getKeyFromValue;
             Data = values.ToDictionary(_ => GetKeyFromValue(_), _ => _);
         }
-        
+
         public void ApplyFunc(Action<TValue> act)
         {
             // 对每一个元素应用操作

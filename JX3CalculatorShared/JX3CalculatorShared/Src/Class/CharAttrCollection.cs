@@ -1,6 +1,6 @@
-﻿using System;
+﻿using JX3CalculatorShared.Data;
+using System;
 using System.Collections.Generic;
-using JX3CalculatorShared.Data;
 
 namespace JX3CalculatorShared.Class
 {

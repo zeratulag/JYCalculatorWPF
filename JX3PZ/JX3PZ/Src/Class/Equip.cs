@@ -7,14 +7,11 @@ using JX3PZ.Globals;
 using JX3PZ.Models;
 using JX3PZ.Src;
 using JX3PZ.ViewModels;
+using MiniExcelLibs.Attributes;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Immutable;
-using System.Globalization;
 using System.Linq;
-using System.Windows.Documents;
-using MiniExcelLibs.Attributes;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace JX3PZ.Class
 {
@@ -129,7 +126,7 @@ namespace JX3PZ.Class
             HasBasicTag = !BasicTag_Str.IsEmptyOrWhiteSpace();
             HasDiamond = !DiamondTag_Str.IsEmptyOrWhiteSpace();
             IsValid = Quality > 0;
-            SubTypeEnum = (EquipSubTypeEnum) SubType;
+            SubTypeEnum = (EquipSubTypeEnum)SubType;
             EquipType = EquipMapLib.GetEquipTypeBySubType(SubTypeEnum);
             IsWeapon = EquipType == EquipTypeEnum.weapon;
             GetScore();

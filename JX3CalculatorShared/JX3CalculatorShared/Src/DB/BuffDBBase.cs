@@ -23,6 +23,8 @@ namespace JX3CalculatorShared.DB
         public ImmutableDictionary<string, Buff> Buff_Extra;
         public ImmutableDictionary<string, Buff> Buff_ExtraStack;
         public ImmutableDictionary<string, Buff> Buff_ExtraTrigger;
+        public ImmutableDictionary<string, Buff> Buff_Special;
+
         public ImmutableDictionary<string, BuffTypeEnum> TypeMap; // 表明每种buff对应的Type类型的字典
         public ImmutableDictionary<string, string> QiXueToBuff; // 表示奇穴与Buff名称的关联
 
@@ -38,6 +40,7 @@ namespace JX3CalculatorShared.DB
             var buff_extra = new Dictionary<string, Buff>();
             var buff_extrastack = new Dictionary<string, Buff>();
             var buff_extratrigger = new Dictionary<string, Buff>();
+            var buff_special = new Dictionary<string, Buff>();
 
             foreach (var buff_dfitem in Buff_df)
             {
@@ -104,6 +107,12 @@ namespace JX3CalculatorShared.DB
                             buff_extratrigger.Add(key, value);
                             break;
                         }
+
+                    case BuffTypeEnum.Buff_Special:
+                        {
+                            buff_special.Add(key, value);
+                            break;
+                        }
                 }
             }
 
@@ -117,6 +126,7 @@ namespace JX3CalculatorShared.DB
             Buff_Extra = buff_extra.ToImmutableDictionary();
             Buff_ExtraStack = buff_extrastack.ToImmutableDictionary();
             Buff_ExtraTrigger = buff_extratrigger.ToImmutableDictionary();
+            Buff_Special = buff_special.ToImmutableDictionary();
         }
 
         private IDictionary<string, Buff> GetDB(BuffTypeEnum bufftype)

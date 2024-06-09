@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:JX3PZ.Views"
              xmlns:sf="http://schemas.syncfusion.com/wpf"
              mc:Ignorable="d"
-             d:DesignHeight="450" d:DesignWidth="400" x:Name="equipShowSimpleHead">
+             d:DesignHeight="450" d:DesignWidth="400" x:Name="equipShowRequire">
     <StackPanel Orientation="Vertical">
         <StackPanel.Resources>
             <ResourceDictionary>

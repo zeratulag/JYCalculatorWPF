@@ -1,6 +1,4 @@
-﻿using System.Dynamic;
-using JX3PZ.Globals;
-using JX3PZ.Models;
+﻿using JX3PZ.Models;
 
 namespace JX3PZ.ViewModels
 {

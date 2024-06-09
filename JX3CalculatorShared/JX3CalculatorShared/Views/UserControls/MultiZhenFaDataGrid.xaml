@@ -3,32 +3,32 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:Syncfusion="http://schemas.syncfusion.com/wpf"
+             xmlns:sf="http://schemas.syncfusion.com/wpf"
              mc:Ignorable="d">
-    <Syncfusion:SfDataGrid
+    <sf:SfDataGrid
         x:Name="multiZhenFaDataGrid"
         Width="Auto"
         Height="Auto"
-        Margin="5"
+        Margin="0 5" BorderThickness ="1 1 0 0"
         HorizontalAlignment="Stretch"
         AllowResizingColumns="True"
         AutoGenerateColumns="False"
-        ColumnSizer="AutoLastColumnFill"
+        ColumnSizer="Star"
         ItemsSource="{Binding Path=MultiZhenTable}"
         RowHeight="20">
-        <Syncfusion:SfDataGrid.Columns>
-            <Syncfusion:GridTextColumn
-                Width="30"
+        <sf:SfDataGrid.Columns>
+            <sf:GridTextColumn
+                Width="50"
                 HeaderText="#"
                 MappingName="Rank"
                 TextAlignment="Center" />
 
-            <Syncfusion:GridTextColumn
-                Width="130"
+            <sf:GridTextColumn
                 HeaderText="阵法"
+                Width="150"
                 HorizontalHeaderContentAlignment="Center"
                 MappingName="Name">
-                <Syncfusion:GridTextColumn.CellTemplate>
+                <sf:GridTextColumn.CellTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal">
                             <Image Margin="5 0 3 0"
@@ -38,21 +38,19 @@
                                        TextAlignment="Center" />
                         </StackPanel>
                     </DataTemplate>
-                </Syncfusion:GridTextColumn.CellTemplate>
+                </sf:GridTextColumn.CellTemplate>
 
-            </Syncfusion:GridTextColumn>
+            </sf:GridTextColumn>
 
-            <Syncfusion:GridNumericColumn
-                Width="90"
+            <sf:GridNumericColumn
                 HeaderText="DPS"
                 MappingName="DPS"
                 NumberDecimalDigits="0" />
-            <Syncfusion:GridNumericColumn
-                Width="130"
+            <sf:GridNumericColumn
                 HeaderText="相对"
                 MappingName="RelativePct"
                 SetCellBoundValue="True">
-                <Syncfusion:GridNumericColumn.CellTemplate>
+                <sf:GridNumericColumn.CellTemplate>
                     <DataTemplate>
                         <Grid>
                             <ProgressBar
@@ -72,8 +70,9 @@
                                 TextAlignment="Center" />
                         </Grid>
                     </DataTemplate>
-                </Syncfusion:GridNumericColumn.CellTemplate>
-            </Syncfusion:GridNumericColumn>
-        </Syncfusion:SfDataGrid.Columns>
-    </Syncfusion:SfDataGrid>
+                </sf:GridNumericColumn.CellTemplate>
+
+            </sf:GridNumericColumn>
+        </sf:SfDataGrid.Columns>
+    </sf:SfDataGrid>
 </UserControl>

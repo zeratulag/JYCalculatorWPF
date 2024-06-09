@@ -1,9 +1,8 @@
-﻿using JX3CalculatorShared.Globals;
+﻿using JX3PZ.Class;
+using JX3PZ.Data;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
-using JX3PZ.Class;
-using JX3PZ.Data;
 
 namespace JX3PZ.Globals
 {
@@ -12,8 +11,8 @@ namespace JX3PZ.Globals
         public const int MAX_DIAMOND_LEVEL = 8; // 最大五行石等级
         public const int MAX_STRENGTH_LEVEL = 8; // 最大精炼等级
         public const int POSITIONS = 12; // 装备部位总数
-        public const int MIN_EQUIP_LEVEL = 9000;
-        public const int MAX_EQUIP_LEVEL = 15000;
+        public const int MIN_EQUIP_LEVEL = 12000; // 默认情况下的最小品级
+        public const int MAX_EQUIP_LEVEL = 16500; // 默认情况最大品级
 
         public const decimal GKiloDenominator = 1024.0m;
     }
@@ -31,6 +30,7 @@ namespace JX3PZ.Globals
     public static class PzStatic
     {
         public static int DEFAULT_DIAMON_LEVEL = 0; // 默认五行石等级
+        public static bool ShowMobileAttribute = false; // 显示移动端属性
     }
 
     public static class AttributeEntryTypeEnumToColor
@@ -62,13 +62,15 @@ namespace JX3PZ.Globals
 
     public static class ColorConst
     {
-        public const string INACTIVE = "#adadad"; // 未激活的属性颜色
+        public const string Inactive = "#adadad"; // 未激活的属性颜色
         public const string Enhance = "#7e7eff"; // 附魔（蓝字）
         public const string Green = "#00c848"; // 通用绿字
         public const string White = "#ffffff"; // 通用白字
         public const string Orange = "#ff9600"; // 通用橙字（特效）
         public const string Strength = "#7ee3a3"; // 通用精炼（绿字）
         public const string Yellow = "#ff0"; // 通用黄字
+        public const string Default = "#000000"; // 默认值
+
     }
 
     public static class PzScore

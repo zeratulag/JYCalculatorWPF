@@ -1,7 +1,6 @@
 ﻿using JX3CalculatorShared.Class;
 using JYCalculator.ViewModels;
 using Newtonsoft.Json;
-using System.Diagnostics;
 
 
 namespace JYCalculator.Class

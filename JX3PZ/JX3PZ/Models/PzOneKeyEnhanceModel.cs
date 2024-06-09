@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.Immutable;
-using System.Linq;
-using JX3CalculatorShared.Common;
+﻿using JX3CalculatorShared.Common;
 using JX3CalculatorShared.Utils;
 using JX3PZ.Globals;
 using JX3PZ.ViewModels;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace JX3PZ.Models
 {
@@ -75,8 +74,8 @@ namespace JX3PZ.Models
 
             var res = loss.Where(_ => _ != null).OrderBy(_ => _.Value).ToArray().First();
             var hastSlot = res.Slot; // 需要改成加速的附魔部位
-            int hat = (int) EquipSlotEnum.HAT;
-            int shoe = (int) EquipSlotEnum.SHOES;
+            int hat = (int)EquipSlotEnum.HAT;
+            int shoe = (int)EquipSlotEnum.SHOES;
             if (hastSlot == EquipSlotEnum.HAT && loss[shoe] != null)
             {
                 if (Math.Abs(loss[hat].Value - loss[shoe].Value) < 0.01)
@@ -84,7 +83,7 @@ namespace JX3PZ.Models
                     hastSlot = EquipSlotEnum.SHOES;
             }
 
-            FinalIdx[(int) hastSlot] = HasteIdx[(int) hastSlot];
+            FinalIdx[(int)hastSlot] = HasteIdx[(int)hastSlot];
         }
     }
 }

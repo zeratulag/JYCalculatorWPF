@@ -2,9 +2,9 @@
 using JX3CalculatorShared.Utils;
 using JYCalculator.Data;
 using JYCalculator.Globals;
+using JYCalculator.Utils;
 using JYCalculator.ViewModels;
 using System.Linq;
-using JYCalculator.Utils;
 
 namespace JYCalculator.Models
 {
@@ -75,9 +75,16 @@ namespace JYCalculator.Models
             SelfBuffNames = StaticXFData.DB.Buff.GetQiXueBuffs(QiXueNamesSet);
         }
 
-        public void GetIsSupport()
+        //public void GetIsSupport()
+        //{
+        //    IsSupport = true || this.IsSupported(StaticXFData.Data.Setting);  // TODO: 临时改动
+        //}
+
+        public void GetCompatibleSkillBuild()
         {
-            IsSupport = this.IsSupported(StaticXFData.Data.Setting);
+            CompatibleSkillBuilds = StaticXFData.DB.SkillBuild.GetQiXueCompatible(QiXueNamesSet);
+            IsSupport = CompatibleSkillBuilds.Count > 0;
         }
+
     }
 }

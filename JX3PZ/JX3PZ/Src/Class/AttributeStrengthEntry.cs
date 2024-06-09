@@ -1,7 +1,6 @@
 ﻿using JX3CalculatorShared.Globals;
 using JX3PZ.Data;
 using JX3PZ.Globals;
-using System;
 using System.Collections.Immutable;
 
 namespace JX3PZ.Class
@@ -93,12 +92,12 @@ namespace JX3PZ.Class
                 }
                 else
                 {
-                    res = new[] {Attribute.GetDesc(Value, EntryType)};
+                    res = new[] { Attribute.GetDesc(Value, EntryType) };
                 }
             }
             else
             {
-                res = new[] {Desc};
+                res = new[] { Desc };
             }
 
             return res;

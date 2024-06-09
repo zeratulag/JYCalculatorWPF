@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.Immutable;
-using System.Linq;
-using System.Windows.Documents;
-using JX3CalculatorShared.Common;
+﻿using JX3CalculatorShared.Common;
 using JX3PZ.Class;
 using JX3PZ.Globals;
 using JX3PZ.ViewModels;
+using System.Collections.Generic;
+using System.Collections.Immutable;
+using System.Linq;
 
 namespace JX3PZ.Models
 {
@@ -18,6 +16,7 @@ namespace JX3PZ.Models
         public readonly int RealStrength = 0; // 有效强化等级
         public readonly bool HasEquip = false;
 
+        
         public ImmutableArray<AttributeStrengthEntry> BasicMagicStrengthEntry { get; private set; } =
             ImmutableArray<AttributeStrengthEntry>.Empty; // 强化后的基础魔法属性（白字）
 
@@ -93,18 +92,28 @@ namespace JX3PZ.Models
             AttributeStrengthEntryViewModel[] basic = null;
             AttributeStrengthEntryViewModel[] extra = null;
 
-            if (BasicMagicStrengthEntry != null && BasicMagicStrengthEntry.Any())
-            {
-                basic = BasicMagicStrengthEntry.Select(_ => new AttributeStrengthEntryViewModel(_)).ToArray();
-            }
-
-            if (ExtraMagicStrengthEntry != null && ExtraMagicStrengthEntry.Any())
-            {
-                extra = ExtraMagicStrengthEntry.Select(_ => new AttributeStrengthEntryViewModel(_)).ToArray();
-            }
+            basic = MakeViewModelForAttributeStrengthEntry(BasicMagicStrengthEntry);
+            extra = MakeViewModelForAttributeStrengthEntry(ExtraMagicStrengthEntry);
 
             return (basic, extra);
         }
+
+        protected static AttributeStrengthEntryViewModel[] MakeViewModelForAttributeStrengthEntry(IList<AttributeStrengthEntry> entries)
+        {
+            AttributeStrengthEntryViewModel[] res = null;
+            if (entries != null && entries.Any())
+            {
+                IEnumerable<AttributeStrengthEntry> selected = entries;
+                if (!PzStatic.ShowMobileAttribute)
+                {
+                    selected = entries.Where(_ => !_.IsMobile);
+                }
+
+                res = selected.Select(_ => new AttributeStrengthEntryViewModel(_)).ToArray();
+            }
+            return res;
+        }
+
 
         public List<AttributeEntry> GetAllAttributeEntries()
         {

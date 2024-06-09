@@ -3,7 +3,6 @@ using JX3CalculatorShared.Globals;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
-using System.Windows.Documents;
 
 
 namespace JX3CalculatorShared.Class

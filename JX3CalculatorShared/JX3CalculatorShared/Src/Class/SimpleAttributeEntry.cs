@@ -17,7 +17,7 @@ namespace JX3CalculatorShared.Class
             if (a.Attribute.IsValue && a.Attribute.SID.IsNotEmptyOrWhiteSpace())
             {
                 SID = a.Attribute.SID;
-                Value = a.Value / (double) a.Attribute.Denominator;
+                Value = a.Value / (double)a.Attribute.Denominator;
             }
             else
             {

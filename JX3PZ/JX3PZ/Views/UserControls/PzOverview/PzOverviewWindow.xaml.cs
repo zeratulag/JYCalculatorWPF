@@ -1,7 +1,7 @@
-﻿using System.ComponentModel;
-using System.Windows;
-using JX3PZ.Globals;
+﻿using JX3PZ.Globals;
 using JX3PZ.ViewModels.PzOverview;
+using System.ComponentModel;
+using System.Windows;
 
 namespace J3PZ.Views
 {

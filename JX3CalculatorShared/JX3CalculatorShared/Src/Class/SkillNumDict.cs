@@ -46,11 +46,11 @@ namespace JX3CalculatorShared.Class
         }
 
 
-        // 技能数到频率的转化
-        public SkillFreqDict ToFreq()
+        // 技能数到频率的转化，需要考虑是否有白雨跳珠
+        public SkillFreqDict ToFreq(bool BaiYu)
         {
             var freq = Data.ValueDictMultiply(1 / Time);
-            return new SkillFreqDict(freq);
+            return new SkillFreqDict(freq, BaiYu);
         }
     }
 }

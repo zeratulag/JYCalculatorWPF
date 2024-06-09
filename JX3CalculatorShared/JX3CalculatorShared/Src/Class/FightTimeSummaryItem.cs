@@ -2,7 +2,7 @@
 
 namespace JX3CalculatorShared.Class
 {
-    public class FightTimeSummaryItem: ObservableObject
+    public class FightTimeSummaryItem : ObservableObject
     {
         /// <summary>
         /// 用于存储战斗时间分析的类

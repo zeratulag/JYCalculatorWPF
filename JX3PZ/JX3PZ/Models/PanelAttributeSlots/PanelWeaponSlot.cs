@@ -1,10 +1,10 @@
-﻿using JX3PZ.Globals;
+﻿using JX3PZ.Class;
+using JX3PZ.Globals;
 using System.Collections.Generic;
-using JX3PZ.Class;
 
 namespace JX3PZ.Models
 {
-    public class PanelWeaponSlot: IPanelAttributeSlot
+    public class PanelWeaponSlot : IPanelAttributeSlot
     {
         public readonly WeaponAttributeTypeEnum WeaponType;
         public readonly string Name;
@@ -63,8 +63,8 @@ namespace JX3PZ.Models
 
         public static string AcquireTypeDesc(WeaponAttributeTypeEnum weaponType)
         {
-            var prefix = weaponType == WeaponAttributeTypeEnum.Melee ? "近身" : "远程";
-            var res = prefix + "武器伤害";
+            var prefix = weaponType == WeaponAttributeTypeEnum.Melee ? "武器" : "暗器";
+            var res = prefix + "伤害";
             return res;
         }
 

@@ -1,14 +1,10 @@
 ﻿using JX3CalculatorShared.Class;
 using JX3CalculatorShared.Data;
+using JX3CalculatorShared.Globals;
 using JX3CalculatorShared.ViewModels;
 using JYCalculator.Data;
 using JYCalculator.DB;
 using System.Collections.Immutable;
-using System.Linq;
-using CommunityToolkit.Mvvm.Messaging;
-using JX3CalculatorShared.Globals;
-using JX3CalculatorShared.Messages;
-using JYCalculator.Globals;
 
 
 namespace JYCalculator.ViewModels
@@ -64,15 +60,15 @@ namespace JYCalculator.ViewModels
             switch (AppStatic.XinFaTag)
             {
                 case "JY":
-                {
-                    res = 300;
-                    break;
-                }
+                    {
+                        res = 300;
+                        break;
+                    }
                 case "TL":
-                {
-                    res = 240;
-                    break;
-                }
+                    {
+                        res = 240;
+                        break;
+                    }
             }
             return res;
         }

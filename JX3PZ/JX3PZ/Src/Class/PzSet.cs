@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Collections.Immutable;
-using JX3CalculatorShared.Utils;
+﻿using JX3CalculatorShared.Utils;
 using JX3PZ.Models;
 using JX3PZ.ViewModels;
+using System.Collections.Generic;
+using System.Collections.Immutable;
 
 namespace JX3PZ.Class
 {
@@ -97,8 +97,8 @@ namespace JX3PZ.Class
             // 基于单件装备生成
             CPzSet = cEquip.GetPzSet();
             Count = 1;
-            EIDs = new List<string>() {cEquip.EID};
-            Names = new List<string>() {  cEquip.Name};
+            EIDs = new List<string>() { cEquip.EID };
+            Names = new List<string>() { cEquip.Name };
         }
 
     }

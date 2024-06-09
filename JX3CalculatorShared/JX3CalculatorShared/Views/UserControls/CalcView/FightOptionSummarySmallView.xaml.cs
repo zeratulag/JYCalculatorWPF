@@ -1,7 +1,4 @@
-﻿using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Input;
-using JX3CalculatorShared.ViewModels;
+﻿using System.Windows.Controls;
 
 namespace JX3CalculatorShared.Views.UserControls
 {

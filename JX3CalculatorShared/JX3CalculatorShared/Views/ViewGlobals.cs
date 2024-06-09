@@ -33,7 +33,6 @@ namespace JX3CalculatorShared.Views
             public const string Label = "_lab";
             public const string SpinBox = "_spb";
         }
-
     }
 
     public static class QualityColor
@@ -43,7 +42,7 @@ namespace JX3CalculatorShared.Views
             {QualityEnum.None, "#000000"},
             {QualityEnum.GREY, "#a9a9a9"},
             {QualityEnum.WHITE, "#ffffff"},
-            {QualityEnum.GREEN, "#00d24b"},
+            {QualityEnum.GREEN, "#00C848"},
             {QualityEnum.BLUE, "#007eff"},
             {QualityEnum.PURPLE, "#ff2dff"},
             {QualityEnum.ORANGE, "#ffa500"},
@@ -95,6 +94,6 @@ namespace JX3CalculatorShared.Views
             var qualityenum = quality < 0 ? QualityEnum.None : (QualityEnum)quality;
             return GetInternalBorderColor(qualityenum);
         }
-
     }
+
 }

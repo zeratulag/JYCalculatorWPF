@@ -11,6 +11,6 @@
             Description = description;
         }
 
-        public CheckItem(string name): this(name, name) { }
+        public CheckItem(string name) : this(name, name) { }
     }
 }

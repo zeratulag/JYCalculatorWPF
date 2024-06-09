@@ -1,8 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Security.Permissions;
-using System.Windows.Controls;
-using JX3CalculatorShared.Common;
+﻿using JX3CalculatorShared.Common;
 using JX3CalculatorShared.ViewModels;
 using JX3PZ.Data;
 using JX3PZ.Globals;
@@ -10,6 +6,8 @@ using JX3PZ.Models;
 using JYCalculator.Class;
 using JYCalculator.Globals;
 using JYCalculator.ViewModels;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace JYCalculator.Models
 {
@@ -64,13 +62,13 @@ namespace JYCalculator.Models
             var res = new List<BigFMSlotConfig>(order.Length);
             foreach (var _ in order)
             {
-                int pos = EquipMapLib.EquipSubType[(int) _].Position;
+                int pos = EquipMapLib.EquipSubType[(int)_].Position;
                 res.Add(full[pos]);
             }
 
             BigFM = res.ToArray();
-            InitChar.Had_BigFM_jacket = PlanModel.SnapShots[(int) EquipSlotEnum.JACKET].CBigFM != null;
-            InitChar.Had_BigFM_hat = PlanModel.SnapShots[(int) EquipSlotEnum.HAT].CBigFM != null;
+            InitChar.Had_BigFM_jacket = PlanModel.SnapShots[(int)EquipSlotEnum.JACKET].CBigFM != null;
+            InitChar.Had_BigFM_hat = PlanModel.SnapShots[(int)EquipSlotEnum.HAT].CBigFM != null;
         }
     }
 }

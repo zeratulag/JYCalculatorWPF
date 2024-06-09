@@ -1,7 +1,7 @@
 ﻿using JX3CalculatorShared.Utils;
+using JYCalculator.Globals;
 using System.Windows;
 using System.Windows.Controls;
-using JYCalculator.Globals;
 
 namespace JYCalculator.Views.UserControls
 {

@@ -1,9 +1,8 @@
 ﻿using JX3CalculatorShared.Globals;
-using JX3CalculatorShared.Utils;
+using JX3PZ.Src;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
-using JX3PZ.Src;
 using static JX3CalculatorShared.Utils.ImportTool;
 
 namespace JX3CalculatorShared.Data
@@ -55,19 +54,19 @@ namespace JX3CalculatorShared.Data
 
         protected void LoadZhenFa()
         {
-            ZhenFa_df = ReadSheetAsArray<ZhenFa_dfItem>(OutFile, "ZhenFa_df");
+            ZhenFa_df = ReadSheetAsArray<ZhenFa_dfItem>(OutFile, "ZhenFa");
             var res = ReadJSON<Dictionary<string, ZhenFa>>(ZhenFaFile);
             ZhenFa_dict = res.ToImmutableDictionary();
         }
 
         protected void LoadItemDT()
         {
-            ItemDT = ReadSheetAsArray<ItemDTItem>(OutFile, "Item_DT_df");
+            ItemDT = ReadSheetAsArray<ItemDTItem>(OutFile, "Item_DT");
         }
 
         protected void LoadBuff_df()
         {
-            Buff_df = ReadSheetAsArray<Buff_dfItem>(OutFile, "Buff_df");
+            Buff_df = ReadSheetAsArray<Buff_dfItem>(OutFile, "Buff");
         }
 
         protected void LoadQiXue()
@@ -85,7 +84,7 @@ namespace JX3CalculatorShared.Data
             {
                 BigFM = ReadSheetAsArray<Enchant>(OutFile, "Big_FM");
             }
-            
+
             BottomsFM = ReadSheetAsArray<BottomsFMItem>(OutFile, "Bottoms_FM");
         }
 
@@ -120,7 +119,7 @@ namespace JX3CalculatorShared.Data
 
         protected void LoadSkillModifier()
         {
-            SkillModifier = ReadSheetAsDict<string, SkillModifier>(DataFile, "Skill_Modifier", GetName);
+            SkillModifier = ReadSheetAsDict<string, SkillModifier>(DataFile, "SkillModifier", GetName);
             foreach (var _ in SkillModifier.Values)
             {
                 _.Parse();

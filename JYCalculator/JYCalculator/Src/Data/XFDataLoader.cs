@@ -1,7 +1,7 @@
 ﻿using JX3CalculatorShared.Data;
+using JX3CalculatorShared.Utils;
 using JYCalculator.Globals;
 using System.Collections.Immutable;
-using JX3CalculatorShared.Utils;
 using static JX3CalculatorShared.Utils.ImportTool;
 
 // ReSharper disable InconsistentNaming CheckNamespace
@@ -17,6 +17,8 @@ namespace JYCalculator.Data
         public ImmutableArray<AbilitySkillNumItem> AbilitySkillNum;
         public ImmutableDictionary<string, SkillInfoItem> SkillData;
         public ImmutableDictionary<int, DiamondValueItem> DiamondValue;
+        public ImmutableArray<SkillBuildItem> SkillBuild;
+
         public CalcSetting Setting; // _Settings.json
 
         #endregion
@@ -61,7 +63,7 @@ namespace JYCalculator.Data
             LoadEquipOption();
             LoadAbility();
             LoadAbilitySkillNum();
-            LoadSkillData();
+            LoadSkillInfo();
             LoadSkillEvent();
 
             LoadUselessAttrs();
@@ -70,6 +72,7 @@ namespace JYCalculator.Data
             LoadDiamondValue();
             LoadSetOption();
             LoadSetting();
+            LoadSkillBuild();
         }
 
         #endregion
@@ -80,17 +83,23 @@ namespace JYCalculator.Data
         {
             var rows = ReadSheetAsArray<AbilitySkillNumItem>(DataFile, "SkillNum");
             AbilitySkillNum = rows;
+            AbilitySkillNum.ForEach(_ => _.Parse());
         }
 
-        private void LoadSkillData()
+        private void LoadSkillInfo()
         {
-            SkillData = ReadSheetAsDict<string, SkillInfoItem>(DataFile, "Skill_Data", GetName);
+            SkillData = ReadSheetAsDict<string, SkillInfoItem>(DataFile, "SkillInfo", GetName);
             SkillData.Values.ForEach(_ => _.Parse());
         }
 
         private void LoadDiamondValue()
         {
             DiamondValue = ReadSheetAsDict<int, DiamondValueItem>(DataFile, "Diamond", _ => _.Level);
+        }
+
+        protected void LoadSkillBuild()
+        {
+            SkillBuild = ReadSheetAsArray<SkillBuildItem>(DataFile, "SkillBuild");
         }
 
         protected void LoadSetting()

@@ -7,7 +7,7 @@ namespace JYCalculator.Models
     {
         /*public void CalcZXXWCD()
         {
-            const string zx = "ZX";
+            const string zx = SkillKeyConst.逐星箭;
             var normalfreq = Normal.FinalSkillFreq[zx];
             var xwfreq = XW.FinalSkillFreq[zx];
             XWCD = QiXue.SetZXXWCD(normalfreq, xwfreq);

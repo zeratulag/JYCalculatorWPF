@@ -1,15 +1,9 @@
-﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Windows;
-using System.Windows.Media;
-using HandyControl.Tools;
-using JX3CalculatorShared.Globals;
-using JX3PZ.Class;
+﻿using JX3CalculatorShared.Globals;
 using JX3PZ.Data;
 using JX3PZ.Src;
 using JYCalculator.Data;
 using JYCalculator.Globals;
+using System.Linq;
 
 namespace JYCalculator.Src
 {
@@ -17,7 +11,7 @@ namespace JYCalculator.Src
     {
         public static void ConsoleMain()
         {
-            var args = new string[] {"0"};
+            var args = new string[] { "0" };
             ConsoleMain(args);
 
         }

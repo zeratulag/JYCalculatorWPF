@@ -21,17 +21,15 @@ namespace JYCalculator.Class
             GetFinalDmg();
         }
 
+        public bool IsSuperCustom => Data.Info.Type == SkillDataTypeEnum.SuperCustom;
+
 
         // 计算基准伤害
         public void GetStdDamage()
         {
-            OrgPhysicsDmg = Data.WPCoef * FChar.WP + Data.APCoef * FChar.Final_AP + Data.Info.Fixed_Dmg;
-            if (Type == SkillDataTypeEnum.PZ)
-            {
-                OrgPDmg = Math.Max(0, FChar.PZ) * Data.PZCoef;
-            }
-
-            StdPhysicsDmg = OrgPhysicsDmg + OrgPDmg;
+            OrgPhysicsDmg = Data.WPCoef * FChar.WP + Data.APCoef * FChar.Final_AP + Data.Info.Fixed_Dmg; // 攻击力部分
+            OrgPZDmg = Math.Max(0, FChar.PZ) * Data.PZCoef; // 破招部分
+            StdPhysicsDmg = OrgPhysicsDmg + OrgPZDmg;
         }
 
         #endregion
@@ -43,21 +41,30 @@ namespace JYCalculator.Class
 
             ClosingPDef = FinalPDef * Math.Max(0, 1 - FChar.IgnoreA);
 
-            BearPDef = CTarget.GetBearDef(ClosingPDef); // 最终外功承伤率
-
+            BearPDef = IsSuperCustom ? 1.0 : CTarget.GetBearDef(ClosingPDef); // 最终外功承伤率
         }
 
         // 计算各类增伤
         public void GetParams()
         {
-            ParaPOC = 1 + FChar.Final_OC_Pct;
             ParaPYS = 1 + CTarget.P_YS;
-
-            ParaPDmgAdd = 1 + FChar.DmgAdd + Data.AddDmg;
-            ParaWS = 1 + FChar.WS;
-            ParaNPC = 1 + FChar.NPC_Coef;
-
             ParaLevelCrush = DamageTool.LevelCrushCoef(CTarget.Level);
+
+            if (IsSuperCustom)
+            {
+                ParaPOC = 1.0;
+                ParaPDmgAdd = 1.0;
+                ParaWS = 1.0;
+                ParaNPC = 1.0;
+            }
+            else
+            {
+                ParaPOC = 1 + FChar.Final_OC_Pct;
+                ParaPDmgAdd = 1 + FChar.DmgAdd + Data.AddDmg;
+                ParaWS = 1 + FChar.WS;
+                ParaNPC = 1 + FChar.NPC_Coef + Data.AddNPCDmg;
+            }
+
         }
 
         // 计算实际伤害
@@ -87,16 +94,25 @@ namespace JYCalculator.Class
         public DamageDeriv CalcDeriv()
         {
             var res = new DamageDeriv(Name);
+
             res.Final_AP = Data.APCoef > 0 ? Data.APCoef * ExpectPhysicsDmg / OrgPhysicsDmg : 0;
             res.WP = Data.WPCoef > 0 ? Data.WPCoef * ExpectPhysicsDmg / OrgPhysicsDmg : 0;
+            res.PZ = Data.PZCoef > 0 ? Data.PZCoef * ExpectPhysicsDmg / OrgPZDmg : 0;
 
-            res.PZ = Data.Info.IsP ? Data.PZCoef * ExpectPhysicsDmg / OrgPDmg : 0;
-
-            res.Final_OC = ExpectPhysicsDmg / ParaPOC / XFStaticConst.fGP.OC;
-            res.WS_Point = FinalEDamage / ParaWS / XFStaticConst.fGP.WS;
-
-            res.CF_Point = CF < 3 ? FinalEDamage / Expect * CT / XFStaticConst.fGP.CF : 0;
-            res.CT_Point = CT < 1 ? FinalEDamage / Expect * (CF - 1) / XFStaticConst.fGP.CT : 0;
+            if (IsSuperCustom)
+            {
+                res.Final_OC = 0;
+                res.WS_Point = 0;
+                res.CF_Point = 0;
+                res.CT_Point = 0;
+            }
+            else
+            {
+                res.Final_OC = ExpectPhysicsDmg / ParaPOC / XFStaticConst.fGP.OC;
+                res.WS_Point = FinalEDamage / ParaWS / XFStaticConst.fGP.WS;
+                res.CF_Point = CF < 3 ? FinalEDamage / Expect * CT / XFStaticConst.fGP.CF : 0;
+                res.CT_Point = CT < 1 ? FinalEDamage / Expect * (CF - 1) / XFStaticConst.fGP.CT : 0;
+            }
 
             res.Base_OC = res.Final_OC * (1 + FChar.OC_Percent);
             res.Base_AP = res.Final_AP * (1 + FChar.AP_Percent);

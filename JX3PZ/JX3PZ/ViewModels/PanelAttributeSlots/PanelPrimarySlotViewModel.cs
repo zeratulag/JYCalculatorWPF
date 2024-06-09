@@ -2,7 +2,7 @@
 
 namespace JX3PZ.ViewModels
 {
-    public class PanelPrimarySlotViewModel: PzAttributeSlotsViewModelBase
+    public class PanelPrimarySlotViewModel : PzAttributeSlotsViewModelBase
     {
         public void UpdateFromSlot(PanelPrimarySlot slot)
         {

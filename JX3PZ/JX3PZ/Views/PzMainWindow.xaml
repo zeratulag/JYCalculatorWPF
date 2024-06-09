@@ -11,7 +11,7 @@
         SizeToContent="Width"
         mc:Ignorable="d"
         Icon="pack://application:,,,/Resource/Images/PzIcon.png"
-        Title="配装器" Height="800" Width="1350" AllowDrop="True" Drop="PzMainWindow_OnDrop">
+        Title="配装器" Height="800" Width="1350" AllowDrop="True" Drop="PzMainWindow_OnDrop" DragOver="PzMainWindow_OnDragOver">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>

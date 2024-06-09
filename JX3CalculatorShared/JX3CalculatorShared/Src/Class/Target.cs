@@ -7,7 +7,6 @@ using MiniExcelLibs.Attributes;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
-using System.Diagnostics;
 
 // ReSharper disable InconsistentNaming
 
@@ -169,117 +168,12 @@ namespace JX3CalculatorShared.Class
 
         #endregion
 
-        #region 计算属性变化_各种属性
-
-        public void Add_Final_PDef(double value)
-        {
-            Final_PDef += value;
-        }
-
-        public void Add_Base_PDef(double value)
-        {
-            Base_PDef += value;
-            Final_PDef += value * (1 + PDef_Percent);
-        }
-
-        public void Add_PDef_Percent(double value)
-        {
-            PDef_Percent += value;
-            Final_PDef += Base_PDef * value;
-        }
-
-        public void Add_Final_MDef(double value)
-        {
-            Final_MDef += value;
-        }
-
-        public void Add_Base_MDef(double value)
-        {
-            Base_MDef += value;
-            Final_MDef += value * (1 + MDef_Percent);
-        }
-
-        public void Add_MDef_Percent(double value)
-        {
-            MDef_Percent += value;
-            Final_MDef += Base_MDef * value;
-        }
-
-        public void Add_P_YS(double value)
-        {
-            P_YS += value;
-        }
-
-        public void Add_M_YS(double value)
-        {
-            M_YS += value;
-        }
-
-        /// <summary>
-        /// 属性修改分派，注意这段代码是由Python程序SwitchTool.py生成的
-        /// </summary>
-        /// <param name="key">简化后的属性名称</param>
-        /// <param name="value">属性值</param>
-        public void AddSAttr(string key, double value)
-        {
-            switch (key)
-            {
-                case "Final_PDef":
-                    {
-                        Add_Final_PDef(value);
-                        break;
-                    }
-                case "Base_PDef":
-                    {
-                        Add_Base_PDef(value);
-                        break;
-                    }
-                case "PDef_Percent":
-                    {
-                        Add_PDef_Percent(value);
-                        break;
-                    }
-                case "Final_MDef":
-                    {
-                        Add_Final_MDef(value);
-                        break;
-                    }
-                case "Base_MDef":
-                    {
-                        Add_Base_MDef(value);
-                        break;
-                    }
-                case "MDef_Percent":
-                    {
-                        Add_MDef_Percent(value);
-                        break;
-                    }
-                case "P_YS":
-                    {
-                        Add_P_YS(value);
-                        break;
-                    }
-                case "M_YS":
-                    {
-                        Add_M_YS(value);
-                        break;
-                    }
-                default:
-                    {
-                        Trace.WriteLine($"未知的属性！ {key}:{value} ");
-                        break;
-                    }
-            }
-        }
-
-        #endregion
-
         #region 属性计算
-
 
         public void AddSAtKVP(KeyValuePair<string, double> kvp)
         {
-            AddSAttr(kvp.Key, kvp.Value);
+            //AddSAttr(kvp.Key, kvp.Value);
+            this.ProcessZAttr(kvp.Key, kvp.Value);
         }
 
         public void AddSAttrDict(IDictionary<string, double> dict)

@@ -1,8 +1,7 @@
 ﻿using JX3CalculatorShared.Class;
-using JX3CalculatorShared.Data;
 using JX3CalculatorShared.Utils;
 using JX3PZ.Data;
-using JX3PZ.Globals;
+using System.Windows.Documents;
 
 namespace JX3PZ.ViewModels
 {
@@ -22,7 +21,7 @@ namespace JX3PZ.ViewModels
         {
         }
 
-        public EnhanceAttributeEntryViewModel(Enhance e) 
+        public EnhanceAttributeEntryViewModel(Enhance e)
         {
             UpdateFrom(e);
             // 从附魔构建
@@ -53,6 +52,21 @@ namespace JX3PZ.ViewModels
                 (Color, IconPath) = BigFM.GetColorImage(b);
             }
         }
+
+        #region 流文档元素
+
+        public override Span GetSpan(object tag = null)
+        {
+            var run = GetRun();
+            var span = FlowDocumentTool.GetImageSpan(IconPath, run);
+            if (tag != null)
+            {
+                span.Tag = tag;
+            }
+            return span;
+        }
+
+        #endregion
 
     }
 }

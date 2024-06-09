@@ -1,15 +1,13 @@
-﻿using System;
-using System.Windows.Media;
-using JX3PZ.Class;
+﻿using JX3PZ.Class;
 using JX3PZ.Globals;
 
 namespace JX3PZ.ViewModels
 {
-    public class AttributeStrengthEntryViewModel: FormattedEntryViewModel
+    public class AttributeStrengthEntryViewModel : FormattedEntryViewModel
     {
         // 精炼词条属性的VM
 
-        public AttributeStrengthEntryViewModel(string desc1 = "", string desc2 = "", string color = "#000000")
+        public AttributeStrengthEntryViewModel(string desc1 = "", string desc2 = "", string color = ColorConst.Default)
         {
             Text1 = desc1;
             Text2 = desc2;

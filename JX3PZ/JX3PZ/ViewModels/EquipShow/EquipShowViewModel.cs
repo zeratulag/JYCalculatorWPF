@@ -1,13 +1,10 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using CommunityToolkit.Mvvm.ComponentModel;
-using HandyControl.Tools.Extension;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using JX3CalculatorShared.Class;
 using JX3CalculatorShared.Globals;
 using JX3PZ.Class;
 using JX3PZ.Data;
 using JX3PZ.Models;
-using JX3PZ.Views;
+using System.Collections.Generic;
 
 namespace JX3PZ.ViewModels
 {
@@ -25,12 +22,16 @@ namespace JX3PZ.ViewModels
         public EquipShowExtraViewModel Extra { get; set; }
         public EquipShowSetViewModel Set { get; set; } = EquipShowSetViewModel.Empty;
 
+        public EquipShowBoxViewModel EquipShowBoxVM { get; set; }
+
         public EquipShowViewModel()
         {
             Stone = new EquipShowStoneViewModel();
             Enhance = new EquipShowEnhanceViewModel(false);
             Tail = new EquipShowTailViewModel();
             Extra = new EquipShowExtraViewModel();
+
+            EquipShowBoxVM = new EquipShowBoxViewModel(this);
         }
 
         public EquipShowViewModel(EquipShowViewModel old)
@@ -43,6 +44,7 @@ namespace JX3PZ.ViewModels
             Enhance = old.Enhance;
             Tail = old.Tail;
             Extra = old.Extra;
+            EquipShowBoxVM = old.EquipShowBoxVM;
         }
 
 
@@ -94,6 +96,7 @@ namespace JX3PZ.ViewModels
             if (!HasEquip)
             {
                 UpdateWhenNotHasEquip(model.StrengthModel.StrengthLevel, cEnhance, cBigFM);
+                EquipShowBoxVM.UpdateWhenNotHasEquip();
                 return;
             }
 
@@ -103,6 +106,13 @@ namespace JX3PZ.ViewModels
 
             UpdateStoneFrom(model.CEquip, cStone);
             UpdateEnhanceFrom(model.CEquip, cEnhance, cBigFM);
+
+            UpdateShowBox();
+        }
+
+        public void UpdateShowBox()
+        {
+            EquipShowBoxVM.Update();
         }
 
         public void UpdateWhenNotHasEquip(int strengthLevel = 0,

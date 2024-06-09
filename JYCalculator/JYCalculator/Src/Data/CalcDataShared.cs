@@ -21,8 +21,8 @@ namespace JYCalculator.Class
 
         public CalcData(CalcSetting setting)
         {
-            SkillMiJiConfig = setting.SkillMiJiConfig;
-            QiXueConfig = setting.QiXueLib[setting.DefaultQiXue];
+            //SkillMiJiConfig = setting.SkillMiJiConfig;
+            //QiXueConfig = setting.QiXueLib[setting.DefaultQiXue];
             JBPz = setting.DefaultJB;
         }
 

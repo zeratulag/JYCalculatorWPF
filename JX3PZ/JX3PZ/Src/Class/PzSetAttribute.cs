@@ -1,10 +1,9 @@
-﻿using System;
+﻿using JX3PZ.Data;
+using JX3PZ.Globals;
+using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
-using JX3PZ.Class;
-using JX3PZ.Data;
-using JX3PZ.Globals;
 
 namespace JX3PZ.Class
 {

@@ -1,11 +1,9 @@
-﻿using System.Windows.Documents;
-using JX3CalculatorShared.Class;
+﻿using JX3CalculatorShared.Class;
+using JX3CalculatorShared.Globals;
 using JX3CalculatorShared.Utils;
+using JX3PZ.Class;
 using JX3PZ.Globals;
 using JX3PZ.ViewModels;
-using System.Windows.Media;
-using JX3PZ.Class;
-using JX3CalculatorShared.Globals;
 
 namespace JX3PZ.Data
 {
@@ -76,7 +74,7 @@ namespace JX3PZ.Data
             string path;
             if (e == null)
             {
-                color = ColorConst.INACTIVE;
+                color = ColorConst.Inactive;
                 path = BindingTool.ImageName2Path("enhance-null");
             }
             else

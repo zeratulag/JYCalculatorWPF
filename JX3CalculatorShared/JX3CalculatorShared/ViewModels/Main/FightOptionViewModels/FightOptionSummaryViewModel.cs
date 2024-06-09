@@ -13,7 +13,7 @@ namespace JX3CalculatorShared.ViewModels
         public AbilityItem CAbility { get; set; }
 
         public string FightTimeDesc => GetFightTimeDesc();
-        public bool HasZhen => CZhenFa != null && ! CZhenFa.IsNone; // 是否有阵
+        public bool HasZhen => CZhenFa != null && !CZhenFa.IsNone; // 是否有阵
         public string GetFightTimeDesc()
         {
             string desc = $"{FightTime}秒";

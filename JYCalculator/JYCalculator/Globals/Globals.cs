@@ -7,7 +7,6 @@ using System;
 using System.Collections.Immutable;
 using System.Reflection;
 using System.Text;
-using System.Windows.Input;
 
 
 namespace JYCalculator.Globals
@@ -29,8 +28,9 @@ namespace JYCalculator.Globals
 
         public const string FileExtension = "jyd"; // 扩展名
         public static readonly string FileFilter; // 打开方式的Filter;
+        public static readonly string SkillBuildFileFilter; // 武学方案Filter
 
-        public const string GameVersion = "万灵当歌";
+        public const string GameVersion = "雾海寻龙";
 
         public const string JX3BOXURL = @"https://www.jx3box.com/bps/49353"; // JX3BOX主页
         public const string GitHubURL = @"https://github.com/zeratulag/JYCalculatorWPF"; // GitHub主页
@@ -44,12 +44,12 @@ namespace JYCalculator.Globals
         public static readonly string MainTitle;
         public static readonly DateTime BuildDateTime; // 构建时间
         public static readonly DateTime LastPatchTime; // 最新技改时间
-        public const string LastPatchURL = @"https://jx3.xoyo.com/show-2466-5999-1.html"; // 最新技改内容
+        public const string LastPatchURL = @"https://jx3.xoyo.com/index/#/article-details?catid=2466&id=6264"; // 最新技改内容
 
 
         static XFAppStatic()
         {
-            LastPatchTime = new DateTime(2023, 12, 11); // 最新技改时间
+            LastPatchTime = new DateTime(2024, 05, 27); // 最新技改时间
 
             AppVersion = Assembly.GetExecutingAssembly().GetName().Version;
             var version = AppVersion.ToString();
@@ -61,6 +61,7 @@ namespace JYCalculator.Globals
 
             MainTitle = $"惊羽诀配装计算器 Pro（v{version} 公测版）";
             FileFilter = $"计算方案 (*.{FileExtension})|*.{FileExtension}"; // 打开方式的Filter
+            SkillBuildFileFilter = $"武学方案 (*.jyb)|*.jyb";
 
             var urlB = ImmutableDictionary.CreateBuilder<string, string>();
             urlB.Add("JB", JX3BOXURL);
@@ -74,16 +75,16 @@ namespace JYCalculator.Globals
             {
                 // 攻击和破防统一去除前缀
                 case "JY":
-                {
-                    TypePrefix = "P_";
-                    break;
-                }
+                    {
+                        TypePrefix = "P_";
+                        break;
+                    }
 
                 case "TL":
-                {
-                    TypePrefix = "M_";
-                    break;
-                }
+                    {
+                        TypePrefix = "M_";
+                        break;
+                    }
             }
         }
 
@@ -110,8 +111,8 @@ namespace JYCalculator.Globals
     {
         // 和心法有关的常数
 
-        public const double ChannelIntervalToAPFactor = 10.0; // 内功为12，外功为10
         public const DamageTypeEnum CurrentDamnagType = DamageTypeEnum.Physics; // 当前心法伤害类型
+        public const double ChannelIntervalToAPFactor = CurrentDamnagType == DamageTypeEnum.Physics ? 10.0 : 12.0; // 内功为12，外功为10
 
         public const double AP_PER_L = 0.15; // 力道加基础攻击
         public const double OC_PER_L = 0.3; // 力道加基础破防
@@ -120,24 +121,24 @@ namespace JYCalculator.Globals
         // 唐门_内功_箭弩
 
         public const double
-            F_AP_PER_Y = 1792.0 / StaticConst.G_KILO; // 力道提高1.45外功AP，STRENGTH_TO_PHYSICS_ATTACK_POWER_COF 1485
+            F_AP_PER_Y = 1792.0 / StaticConst.G_KILO_NUM; // 力道提高1.45外功AP，STRENGTH_TO_PHYSICS_ATTACK_POWER_COF 1485
 
         public const double
-            CT_PER_Y = 584.0 / StaticConst.G_KILO; // 力道提高0.59会心，STRENGTH_TO_PHYSICS_CRITICAL_STRIKE_COF 604
+            CT_PER_Y = 584.0 / StaticConst.G_KILO_NUM; // 力道提高0.59会心，STRENGTH_TO_PHYSICS_CRITICAL_STRIKE_COF 604
 
         public const double
-            F_AP_PER_L = (double) JYXinFa.STRENGTH_TO_PHYSICS_ATTACK_POWER_COF / StaticConst.G_KILO; // 力道提高1.45外功AP，STRENGTH_TO_PHYSICS_ATTACK_POWER_COF 1485
+            F_AP_PER_L = (double)JYXinFa.STRENGTH_TO_PHYSICS_ATTACK_POWER_COF / StaticConst.G_KILO_NUM; // 力道提高1.45外功AP，STRENGTH_TO_PHYSICS_ATTACK_POWER_COF 1485
 
         public const double
-            CT_PER_L = (double) JYXinFa.STRENGTH_TO_PHYSICS_CRITICAL_STRIKE_COF / StaticConst.G_KILO; // 力道提高0.59会心，STRENGTH_TO_PHYSICS_CRITICAL_STRIKE_COF 604
+            CT_PER_L = (double)JYXinFa.STRENGTH_TO_PHYSICS_CRITICAL_STRIKE_COF / StaticConst.G_KILO_NUM; // 力道提高0.59会心，STRENGTH_TO_PHYSICS_CRITICAL_STRIKE_COF 604
 
-        public const double NPC_Coef = (double) JYXinFa.DST_NPC_DAMAGE_COEFFICIENT / StaticConst.G_KILO; // DST_NPC_DAMAGE_COEFFICIENT
+        public const double NPC_Coef = (double)JYXinFa.DST_NPC_DAMAGE_COEFFICIENT / StaticConst.G_KILO_NUM; // DST_NPC_DAMAGE_COEFFICIENT
 
         public static AttrWeight PointWeight = new AttrWeight("单点属性", "提高一点属性增加的DPS")
-            {AP = 1, L = 1, WP = 1, Final_AP = 1, Final_OC = 1, Final_L = 1};
+        { AP = 1, L = 1, WP = 1, Final_AP = 1, Final_OC = 1, Final_L = 1 };
 
         public static AttrWeight ScoreWeight = new AttrWeight("同分属性", "提高等分属性增加的DPS")
-            {AP = 1048.0 / 2340.0, L = 524.0 / 2340.0, WP = 1571.0 / 2340.0};
+        { AP = 1048.0 / 2340.0, L = 524.0 / 2340.0, WP = 1571.0 / 2340.0 };
     }
 
 
@@ -178,6 +179,10 @@ namespace JYCalculator.Globals
             public const double AP_Percent = 512.0 / 1024.0; // 天罗专用
             public const double CD = 90.0; // CD时间
             public const double Time = 15.0; // 持续时间
+
+            public const string XWBuffName = "XinWuPangWu";
+            public const string BigXWBuffName = "XinWuPangWu(JuJingNingShen)";
+
         }
 
         public static class Genre
@@ -194,5 +199,41 @@ namespace JYCalculator.Globals
             fGP = new XFGlobalParams(StaticConst.CurrentLevel);
             CurrentHaste = new Haste(StaticConst.CurrentLevel);
         }
+    }
+
+    public static class SkillKeyConst
+    {
+        public const string 掠影穹苍 = "LveYingQiongCang";
+        public const string 夺魄箭 = "DP";
+        public const string 夺魄箭_牢甲利兵 = "DP_LaoJia";
+        public const string 穿心弩 = "CXL";
+        public const string 百里追魂 = "BL";
+        public const string 逐星箭 = "ZX";
+        public const string 追命箭 = "ZM";
+        public const string 追命箭_瞬发 = "ZM_SF";
+        public const string 破 = "PZ";
+        public const string 破_白雨跳珠 = "PZ_BaiYu";
+        public const string 罡风镖法 = "GF";
+        public const string 孔雀翎 = "KongQueLing";
+        public const string 穿林打叶 = "ChuanLinDaYe";
+
+        public const string 星斗阑干 = "CW_DOT";
+
+        public const string 追命箭_蹑景3_瞬发 = "ZM_NJ3_SF";
+
+        public const string _暴雨梨花针_释放 = "_BYCast";
+        public const string _夺魄箭_释放 = "_DPCast";
+        public const string _追命箭_释放 = "_ZMCast";
+        public const string _追命箭_瞬发_释放 = "_ZM_SFCast";
+
+        public const string 暴雨梨花针 = "BY";
+        public const string 暴雨梨花针2 = "LH2";
+        public const string 暴雨梨花针3 = "LH3";
+        public const string 暴雨梨花针4 = "LH4";
+        public const string 暴雨梨花针5 = "LH5";
+        public const string 暴雨梨花针6 = "LH6";
+        public const string 暴雨梨花针7 = "LH7";
+
+        public const string 白雨跳珠 = "BaiYuTiaoZhu";
     }
 }

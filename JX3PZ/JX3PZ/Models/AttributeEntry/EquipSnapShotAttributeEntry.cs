@@ -1,7 +1,7 @@
-﻿using JX3PZ.Class;
+﻿using JX3CalculatorShared.Common;
+using JX3PZ.Class;
 using System.Collections.Generic;
 using System.Linq;
-using JX3CalculatorShared.Common;
 
 namespace JX3PZ.Models
 {

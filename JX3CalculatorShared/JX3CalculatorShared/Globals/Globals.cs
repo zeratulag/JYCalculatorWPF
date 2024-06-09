@@ -1,14 +1,14 @@
 ﻿using JX3CalculatorShared.Utils;
 using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
-using System;
 
 namespace JX3CalculatorShared.Globals
 {
     // 存储一些和心法无关的常数和常量
     public static class AppStatic
-        // 存储一些计算器设置常量（发布版本）
+    // 存储一些计算器设置常量（发布版本）
     {
         public const string URI_PREFIX = "pack://application:,,,/";
         public const string DATA_FOLDER = "Resource/Data/";
@@ -33,19 +33,20 @@ namespace JX3CalculatorShared.Globals
     }
 
     public static class StaticConst
-        // 存储一些游戏常量，此类的成员将会被using static 直接访问
+    // 存储一些游戏常量，此类的成员将会被using static 直接访问
     {
         public const int CurrentLevel = 120; // 当前人物等级
         public const double FRAMES_PER_SECOND = 16.0; // 每秒16逻辑帧
         public const double GCD = 1.5;
         public const int GCD_FPS = 24;
         public const int NumberOfQiXue = 12;
-        public const double G_KILO = 1024.0; // 郭氏千
+        public const double G_KILO_NUM = 1024.0; // 郭氏千
+        public const double G_KILO_SQUARE_NUM = 1048576.0; // 郭氏千平方
         public static readonly GlobalParams fGP;
         public const double CriticalDamageStart = 1.75; // 初始会效
         public const double CriticalDamageMax = 3.00; // 会效最大值
         public const double DefMax = 0.75; // 防御减伤最大值
-        public const double HJMax = 0.8; // 化劲减伤最大值
+        public const double HJMax = 0.85; // 化劲减伤最大值
 
 
         public static readonly string[] UsefulStoneAttrs =
@@ -85,19 +86,19 @@ namespace JX3CalculatorShared.Globals
         public static double RealRound(this double x, int nDigits = 0)
         {
             double n = Math.Pow(10, nDigits);
-            double res = (int) (x * n + 0.5) / n;
+            double res = (int)(x * n + 0.5) / n;
             return res;
         }
 
         public static int MathRound(this double x)
         {
-            int res = (int) (x + 0.5);
+            int res = (int)(x + 0.5);
             return res;
         }
 
         public static int MathRound(this decimal x)
         {
-            int res = (int) (x + 0.5m);
+            int res = (int)(x + 0.5m);
             return res;
         }
     }
@@ -277,7 +278,7 @@ namespace JX3CalculatorShared.Globals
             int i = 0;
             foreach (string key in BaseGlobalParams.Dict.Keys)
             {
-                double value = (double) this.GetField(key);
+                double value = (double)this.GetField(key);
                 paramsStrings[i] = $"{key}: {value}";
                 i++;
             }

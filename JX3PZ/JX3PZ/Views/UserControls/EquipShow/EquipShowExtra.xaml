@@ -17,10 +17,10 @@
             </ResourceDictionary>
         </StackPanel.Resources>
 
-        <TextBox Text="{Binding GetInfo, Mode=OneWay}" FontSize="13" Foreground="White" Margin="-2 0 0 15" ToolTip="{Binding GetInfoToolTip}"/>
+        <TextBox Text="{Binding GetInfo, Mode=OneWay}" FontSize="13" Foreground="White" Margin="-2 0 0 8" ToolTip="{Binding GetInfoToolTip}"/>
         <TextBlock Visibility="{Binding ShowURL, Converter={StaticResource BooleanToVisibility}}">
             <Hyperlink Command="{Binding Path=OpenWikiCmd}" FontSize="12" Foreground="#4fefff" TextDecorations="">
-                🔗查看装备百科词条
+                🔗查看装备百科
             </Hyperlink>
         </TextBlock>
     </StackPanel>

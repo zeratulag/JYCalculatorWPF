@@ -29,8 +29,7 @@ namespace JYCalculator.Class
             DamageDF = damageDf;
             FreqDF = freqDf;
             Time = time;
-            ValidSkillNames = FreqDF.GetValidNames();
-
+            ValidSkillNames = FreqDF?.GetValidNames();
         }
 
         #endregion

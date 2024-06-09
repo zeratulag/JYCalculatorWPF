@@ -1,12 +1,11 @@
-﻿using System.Linq;
-using JX3CalculatorShared.Class;
+﻿using JX3CalculatorShared.Class;
 using JX3CalculatorShared.Globals;
 using JX3PZ.Src;
 using JX3PZ.ViewModels;
-using JX3PZ.Views;
 using JYCalculator.DB;
 using JYCalculator.Globals;
 using Syncfusion.Data.Extensions;
+using System.Linq;
 
 
 namespace JYCalculator.Data
@@ -23,7 +22,7 @@ namespace JYCalculator.Data
             Data = new XFDataLoader(XFAppStatic.DATA_PATH,
                 XFAppStatic.OUTPUT_PATH,
                 XFAppStatic.ZHENFA_PATH);
-            
+
         }
 
         public static void Load()

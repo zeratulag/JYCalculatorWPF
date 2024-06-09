@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using JX3CalculatorShared.Utils;
+using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
-using JX3CalculatorShared.Utils;
 
 namespace JX3PZ.Data
 {

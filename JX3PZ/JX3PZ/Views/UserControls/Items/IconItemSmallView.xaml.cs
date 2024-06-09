@@ -14,7 +14,7 @@ namespace JX3CalculatorShared.Views.UserControls
 
         public int IconHeight
         {
-            get { return (int) GetValue(IconHeightProperty); }
+            get { return (int)GetValue(IconHeightProperty); }
             set { SetValue(IconHeightProperty, value); }
         }
 
@@ -23,7 +23,7 @@ namespace JX3CalculatorShared.Views.UserControls
 
         public int IconWidth
         {
-            get { return (int) GetValue(IconWidthProperty); }
+            get { return (int)GetValue(IconWidthProperty); }
             set { SetValue(IconWidthProperty, value); }
         }
 

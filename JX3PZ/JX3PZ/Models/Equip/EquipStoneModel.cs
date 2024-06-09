@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace JX3PZ.Models
 {
-    public class EquipStoneModel: IModel
+    public class EquipStoneModel : IModel
     {
         public Stone CStone;
         public bool HasStone;
@@ -59,7 +59,7 @@ namespace JX3PZ.Models
             ActiveAttributeEntries = new List<AttributeEntry>(5);
             if (HasStone)
             {
-                
+
                 for (int i = 0; i < IsActive.Length; i++)
                 {
                     if (IsActive[i])

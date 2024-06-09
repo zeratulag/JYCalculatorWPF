@@ -18,7 +18,7 @@
             </ResourceDictionary>
         </StackPanel.Resources>
 
-        <TextBox Grid.Row="0" Text="{Binding SkillDesc, Mode=OneWay}" Foreground="#00d24b" Visibility="{Binding HasSkillDesc, Converter={StaticResource BooleanToVisibility}}" Margin="-2 0 0 15"/>
+        <TextBox Grid.Row="0" Text="{Binding SkillDesc, Mode=OneWay}" Foreground="#00C848" Visibility="{Binding HasSkillDesc, Converter={StaticResource BooleanToVisibility}}" Margin="-2 0 0 15"/>
         <TextBox Grid.Row="0" Text="{Binding ItemDesc, Mode=OneWay}" FontSize="12" Foreground="#ff0" Visibility="{Binding HasItemDesc, Converter={StaticResource BooleanToVisibility}}" Margin="-2 0 0 5"/>
         <local:FormattedEntry Grid.Row="1" DataContext="{Binding Quality}" HorizontalAlignment="Left"/>
         <local:FormattedEntry Grid.Row="2" DataContext="{Binding Score}" HorizontalAlignment="Left"/>

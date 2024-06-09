@@ -74,4 +74,5 @@ namespace JX3CalculatorShared.Common
         }
 
     }
+
 }

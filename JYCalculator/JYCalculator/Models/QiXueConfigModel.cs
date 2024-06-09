@@ -22,15 +22,23 @@ namespace JYCalculator.Models
         public bool 寒江夜雨 { get; private set; }
         public bool 逐一击破 { get; private set; }
 
-        public int BYPerCast; // 暴雨一次释放的跳数
-        public int CX_DOT_Stack; // 穿心dot叠的最大层数;
+        // 雾海寻龙
+        public bool 穿林打叶 { get; private set; }
+        public bool 牢甲利兵 { get; private set; }
+        public bool 蹑景追风 { get; private set; }
+        public bool 掠影穹苍 { get; private set; }
+
+        public int BYPerCast { get; private set; } // 暴雨一次释放的跳数
+        public int CX_DOT_Stack { get; private set; } // 穿心dot叠的最大层数;
+        public string CX_DOT_Key { get; private set; } // 穿心DOT的技能Key
+        public string DP_Key { get; private set; } // 夺魄技能的Key
 
         public const double HJYY_BBCD = 1.0; // 寒江降低百步穿杨CD时间;
         // 流派
 
 
-        public string Genre; // 实际流派
-        public string SkillBaseNumGenre; // 基础技能数流派
+        //public string Genre; // 实际流派
+        //public string SkillBaseNumGenre; // 基础技能数流派
 
         #endregion
 
@@ -43,8 +51,11 @@ namespace JYCalculator.Models
             GetSkillEffects();
             GetSkillEvents();
             GetSelfBuffNames();
-            GetIsSupport();
+            //GetIsSupport();
+            GetCompatibleSkillBuild();
             GetGenre();
+            GetCX_DOT_Key();
+            GetDP_Key();
         }
 
         public void GetTags()
@@ -61,8 +72,26 @@ namespace JYCalculator.Models
             星落如雨 = Has(nameof(星落如雨));
             寒江夜雨 = Has(nameof(寒江夜雨));
             逐一击破 = Has(nameof(逐一击破));
+            穿林打叶 = Has(nameof(穿林打叶));
+            牢甲利兵 = Has(nameof(牢甲利兵));
+            蹑景追风 = Has(nameof(蹑景追风));
+            掠影穹苍 = Has(nameof(掠影穹苍));
         }
 
+        public void GetCX_DOT_Key()
+        {
+            string prefix;
+            prefix = 鹰扬虎视 ? "CXY" : "CX";
+            string part1 = $"{prefix}{CX_DOT_Stack}";
+            string part2 = 穿林打叶 ? "_CL_DOT" : "_DOT";
+            var res = part1 + part2;
+            CX_DOT_Key = res;
+        }
+
+        public void GetDP_Key()
+        {
+            DP_Key = 牢甲利兵 ? SkillKeyConst.夺魄箭_牢甲利兵 : SkillKeyConst.夺魄箭;
+        }
 
         public void GetNums()
         {
@@ -96,8 +125,8 @@ namespace JYCalculator.Models
                 }
             }
 
-            SkillBaseNumGenre = res;
-            Genre = res;
+            //SkillBaseNumGenre = res;
+            //Genre = res;
         }
 
 
@@ -168,13 +197,14 @@ namespace JYCalculator.Models
         /// <returns></returns>
         public double GetBLCDByHanJiangFreq(double freq)
         {
-            double raw_blcd = StaticXFData.DB.SkillInfo.Skills["BL"].CD; // 原始CD
+            double raw_blcd = StaticXFData.DB.SkillInfo.Skills[SkillKeyConst.百里追魂].CD; // 原始CD
             double real_cd = raw_blcd;
 
             if (寒江夜雨)
             {
                 real_cd = raw_blcd / (1 + freq * HJYY_BBCD) + 0.5; // 初始注能频率要比考虑了百里的频率高，故乘以惩罚系数0.986
             }
+
             return real_cd;
         }
 

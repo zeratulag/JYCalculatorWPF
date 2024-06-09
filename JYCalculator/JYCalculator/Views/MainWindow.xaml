@@ -4,19 +4,23 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:chart="clr-namespace:Syncfusion.UI.Xaml.Charts;assembly=Syncfusion.SfChart.WPF"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
+    xmlns:hc="https://handyorg.github.io/handycontrol"
+    xmlns:local="clr-namespace:JYCalculator.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:sf="http://schemas.syncfusion.com/wpf"
-    xmlns:uc="clr-namespace:JYCalculator.Views.UserControls"
-    xmlns:local="clr-namespace:JYCalculator.Views"
-    xmlns:xc="http://schemas.xceed.com/wpf/xaml/toolkit"
-    xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
     xmlns:suc="clr-namespace:JX3CalculatorShared.Views.UserControls"
+    xmlns:uc="clr-namespace:JYCalculator.Views.UserControls"
+    xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
     x:Name="JYMainWindow"
     Title="{Binding Path=Title}"
     Width="1440"
     Height="830"
+    AllowDrop="True"
+    DragOver="MainWindow_OnDragOver"
+    Drop="MainWindow_OnDrop"
     Icon="pack://application:,,,/Resource/Images/XF_icon.png"
-    mc:Ignorable="d" AllowDrop="True" Drop="MainWindow_Drop">
+    mc:Ignorable="d">
     <!--  ReSharper disable InconsistentNaming  -->
     <Window.InputBindings>
         <KeyBinding Command="{Binding Path=OpenDebugWindowCmd}" Gesture="Ctrl+Alt+D" />
@@ -27,7 +31,7 @@
     </Window.InputBindings>
 
     <DockPanel>
-        <suc:MainWindowMenuView DockPanel.Dock="Top"/>
+        <suc:MainWindowMenuView DockPanel.Dock="Top" />
         <Grid x:Name="Grid_Main">
             <!--  主界面  -->
             <Grid.ColumnDefinitions>
@@ -41,7 +45,7 @@
             <Grid.Resources>
                 <Style BasedOn="{StaticResource Style.CenterLabel}" TargetType="Label" />
                 <Style BasedOn="{StaticResource Style.CenterCheckBox}" TargetType="CheckBox" />
-                <Style BasedOn="{StaticResource Style.IntUpDown}" TargetType="xc:IntegerUpDown" />
+                <Style BasedOn="{StaticResource Style.IntUpDown}" TargetType="xctk:IntegerUpDown" />
                 <Style BasedOn="{StaticResource Style.ComboBoxItemStretch}" TargetType="ComboBoxItem" />
                 <Style BasedOn="{StaticResource Style.ReadOnlyDataGrid}" TargetType="DataGrid" />
                 <Style BasedOn="{StaticResource Style.CenterDataGridCell}" TargetType="DataGridCell" />
@@ -56,35 +60,50 @@
                 Margin="0,0,4,0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
 
                 <uc:InitInputGroupBox x:Name="GroupBox_InitInput" Grid.Row="0" />
 
-                <DockPanel Grid.Row="1">
-                    <GroupBox
-                        x:Name="GroupBox_MiJi"
-                        VerticalAlignment="Stretch"
-                        DockPanel.Dock="Left"
-                        Header="秘籍">
-                        <uc:AllSkillMiJiConfigView x:Name="CAllSkillMiJiConfigView" />
-                    </GroupBox>
+                <TabControl Grid.Row="1" Margin="0 5 0 0">
+                    <TabItem Header="旗舰版">
+                        <ScrollViewer
+                            Grid.Row="1"
+                            HorizontalScrollBarVisibility="Disabled"
+                            VerticalScrollBarVisibility="Auto">
+                            <hc:SimpleStackPanel Grid.Row="1" Orientation="Vertical">
+                                
+                                <DockPanel Grid.Row="1">
+                                    <GroupBox
+                                        x:Name="GroupBox_MiJi"
+                                        VerticalAlignment="Stretch"
+                                        DockPanel.Dock="Left"
+                                        Header="秘籍">
+                                        <uc:AllSkillMiJiConfigView x:Name="CAllSkillMiJiConfigView" />
+                                    </GroupBox>
 
-                    <uc:DebugGroupBox
-                        x:Name="GroupBox_Debug"
-                        DockPanel.Dock="Right">
-                    </uc:DebugGroupBox>
-                </DockPanel>
+                                    <uc:DebugGroupBox x:Name="GroupBox_Debug" DockPanel.Dock="Right">
+                                    </uc:DebugGroupBox>
+                                    <suc:SkillBuildManagerView x:Name="SkillBuildManager" Width="100" DataContext="{Binding SkillBuildManagerVM}"/>
+                                </DockPanel>
 
-                <GroupBox
-                    x:Name="GroupBox_QiXue"
-                    Grid.Row="2"
-                    MinWidth="180"
-                    Header="奇穴">
-                    <suc:QiXueConfigView DataContext="{Binding QiXueVM}" />
-                </GroupBox>
-
+                                <GroupBox
+                                    x:Name="GroupBox_QiXue"
+                                    Grid.Row="2"
+                                    MinWidth="180"
+                                    DockPanel.Dock="Bottom"
+                                    Header="奇穴">
+                                    <suc:QiXueConfigView DataContext="{Binding QiXueVM}" />
+                                </GroupBox>
+                            </hc:SimpleStackPanel>
+                        </ScrollViewer>
+                    </TabItem>
+                    <TabItem Header="无界端">
+                        <hc:SimpleStackPanel>
+                            <hc:SimpleText Text="敬请期待……"/>
+                        </hc:SimpleStackPanel>
+                    </TabItem>
+                </TabControl>
             </Grid>
 
             <!--  主界面（中间）  -->
@@ -101,45 +120,57 @@
                     <suc:FightOptionView x:Name="CFightOptionView" DataContext="{Binding FightOptionVM}" />
                 </GroupBox>
 
-                <ScrollViewer DockPanel.Dock="Top" HorizontalScrollBarVisibility="Disabled"
-                              VerticalScrollBarVisibility="Auto">
-                    <StackPanel Orientation="Vertical">
-                        <GroupBox
-                            x:Name="GroupBox_Buff"
-                            Header="BUFF">
-                            <suc:AllBuffConfigView DataContext="{Binding BuffVM}"/>
+                <ScrollViewer
+                    DockPanel.Dock="Top"
+                    HorizontalScrollBarVisibility="Disabled"
+                    VerticalScrollBarVisibility="Auto">
+                    <hc:SimpleStackPanel Orientation="Vertical">
+                        <GroupBox x:Name="GroupBox_Buff" Header="BUFF">
+                            <suc:AllBuffConfigView DataContext="{Binding BuffVM}" />
                         </GroupBox>
 
-                        <suc:ItemDTConfigView DataContext="{Binding ItemDTVM}"/>
-                    </StackPanel>
+                        <suc:ItemDTConfigView DataContext="{Binding ItemDTVM}" />
+                    </hc:SimpleStackPanel>
                 </ScrollViewer>
 
             </DockPanel>
 
             <!--  主界面（右半）  -->
-            <DockPanel Name="Grid_Main_Right" Grid.Column="5" LastChildFill="True">
+            <DockPanel
+                Name="Grid_Main_Right"
+                Grid.Column="5"
+                LastChildFill="True">
 
                 <GroupBox
                     x:Name="GroupBox_DPS"
                     DockPanel.Dock="Top"
                     Header="DPS期望">
-                    <suc:DPSView x:Name="DpsView" FinalDPS="{Binding Path=FinalDPS}"/>
+                    <suc:DPSView x:Name="DpsView" FinalDPS="{Binding Path=FinalDPS}" />
 
                 </GroupBox>
-                <Popup x:Name="CopyTextblock_pop" StaysOpen="False" Placement="Mouse" PopupAnimation="Slide"
-                       AllowsTransparency="True">
-                    <Border BorderBrush="Beige" BorderThickness="2" Background="White">
+                <Popup
+                    x:Name="CopyTextblock_pop"
+                    AllowsTransparency="True"
+                    Placement="Mouse"
+                    PopupAnimation="Slide"
+                    StaysOpen="False">
+                    <Border
+                        Background="White"
+                        BorderBrush="Beige"
+                        BorderThickness="2">
                         <TextBlock Margin="5">已复制！</TextBlock>
                     </Border>
                 </Popup>
 
 
-                <ScrollViewer DockPanel.Dock="Top" HorizontalScrollBarVisibility="Disabled"
-                              VerticalScrollBarVisibility="Auto">
-                    <StackPanel Orientation="Vertical">
+                <ScrollViewer
+                    DockPanel.Dock="Top"
+                    HorizontalScrollBarVisibility="Disabled"
+                    VerticalScrollBarVisibility="Auto">
+                    <hc:SimpleStackPanel Orientation="Vertical">
                         <suc:ProfitGroupBox />
-                        <uc:OptimizationGroupBox DataContext="{Binding Path=OptimizationVM}"/>
-                    </StackPanel>
+                        <uc:OptimizationGroupBox DataContext="{Binding Path=OptimizationVM}" />
+                    </hc:SimpleStackPanel>
                 </ScrollViewer>
             </DockPanel>
         </Grid>

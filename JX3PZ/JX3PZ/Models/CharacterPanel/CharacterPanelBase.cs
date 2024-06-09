@@ -2,7 +2,7 @@
 
 namespace JX3PZ.Models
 {
-    public class CharacterPanelBase<TKey, TSlot> where TSlot: IPanelAttributeSlot
+    public class CharacterPanelBase<TKey, TSlot> where TSlot : IPanelAttributeSlot
     {
         public readonly Dictionary<TKey, TSlot> Dict;
 

@@ -1,10 +1,8 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using HandyControl.Controls;
-using Newtonsoft.Json.Linq;
-using System.Windows;
 using JX3CalculatorShared.Class;
 using JYCalculator.Messages;
+using System.Windows;
 
 namespace JX3CalculatorShared.ViewModels
 {

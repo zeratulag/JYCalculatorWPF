@@ -1,7 +1,6 @@
-﻿using System.Collections.Generic;
-using System.Windows.Documents;
-using JX3CalculatorShared.Class;
+﻿using JX3CalculatorShared.Class;
 using JX3CalculatorShared.Globals;
+using System.Collections.Generic;
 
 namespace JX3PZ.Models
 {
@@ -25,7 +24,7 @@ namespace JX3PZ.Models
         public const string Suffix = "Base";
 
         public static readonly double PointCoef = StaticConst.fGP.WS;
-        public PanelStrainSlot(): base(Name, Suffix, PointCoef, PointToPercentConvertTypeEnum.Linear)
+        public PanelStrainSlot() : base(Name, Suffix, PointCoef, PointToPercentConvertTypeEnum.Linear)
         {
             BasePointPercentAddKey = $"at{Name}Percent";
             PercentKey = $"at{Name}Rate";
@@ -89,7 +88,7 @@ namespace JX3PZ.Models
         {
             BasePointPercentAddKey = $"at{Name}Percent";
             PercentKey = $"{BasePointKey}KiloNumRate";
-            PercentDenominator = 1000.0;
+            PercentDenominator = 1024.0;
         }
 
         public override List<string> GetDescTips()

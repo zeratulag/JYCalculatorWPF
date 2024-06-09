@@ -15,6 +15,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)Globals\GlobalEnums.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Globals\Globals.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Globals\KAttribute.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Globals\ZAttribute.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\SkillBuildSav.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Src\Class\CalcResult.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Messages\StaticMessager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\BigFMConfigModelBase.cs" />
@@ -30,10 +32,13 @@
     <Compile Include="$(MSBuildThisFileDirectory)Src\Class\CoverItem.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Src\Class\SimpleAttributeEntry.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Src\Class\SkillAttrCollection.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Src\Class\SkillBuild.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Src\Class\SkillCountItemBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Src\Class\TargetModifier.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Src\Data\AttributeIDLoader.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Src\Data\CalcDataBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Src\Data\CalcSettingBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Src\DB\SkillBuildDBBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Src\DPSKernelOptimizer\CharacterInfo.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Src\Class\AttrProfit.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Src\Class\AttrWeightBase.cs" />
@@ -92,6 +97,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Utils\CommandTool.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\DictTool.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\EnumTool.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utils\FlowDocumentTool.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\FuncTool.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\HashSetTool.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\IEnumerableTool.cs" />
@@ -129,10 +135,12 @@
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Main\OptimizationViewModelBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Main\QiXueViewModels\QiXueSlotViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Messages\Messages.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Main\SkillBuildManagerViewModelBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\Converter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\Dialogs\AboutDialog.xaml.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\Dialogs\ImportJBDialog.xaml.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\InputDialog.xaml.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\RichTextBoxHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\UserControls\AllBuffConfigView.xaml.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\UserControls\CalcView\FightOptionSummarySmallView.xaml.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\UserControls\CalcView\FightOptionSummaryView.xaml.cs" />
@@ -157,6 +165,10 @@
     <Compile Include="$(MSBuildThisFileDirectory)Views\UserControls\ProfitChart.xaml.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\UserControls\ProfitGroupBox.xaml.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\UserControls\QiXueConfigView.xaml.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\UserControls\RichTextBoxExt.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\UserControls\SkillBuildManagerView.xaml.cs">
+      <DependentUpon>SkillBuildManagerView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Views\ViewGlobals.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\ViewTool.cs" />
   </ItemGroup>
@@ -305,6 +317,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="$(MSBuildThisFileDirectory)Views\UserControls\QiXueConfigView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\UserControls\SkillBuildManagerView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

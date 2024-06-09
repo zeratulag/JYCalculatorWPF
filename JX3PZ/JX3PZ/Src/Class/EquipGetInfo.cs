@@ -1,7 +1,4 @@
-﻿using MiniExcelLibs.Attributes;
-using System.Linq;
-
-namespace JX3PZ.Class
+﻿namespace JX3PZ.Class
 {
     public class EquipGetInfoItem
     {
@@ -107,7 +104,7 @@ namespace JX3PZ.Class
             for (int i = 0; i < n; i++)
             {
                 DescList[i] = $"[{EquipInfo[i].Get_Type}] {EquipInfo[i].Desc}";
-                ToolTipList[i+1] = $"\r\n[{EquipInfo[i].Get_Type}]\r\n{EquipInfo[i].ToolTip}";
+                ToolTipList[i + 1] = $"\r\n[{EquipInfo[i].Get_Type}]\r\n{EquipInfo[i].ToolTip}";
             }
 
             Desc = string.Join("\n", DescList);

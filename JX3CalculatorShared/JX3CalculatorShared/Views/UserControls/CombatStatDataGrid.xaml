@@ -3,73 +3,175 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:Syncfusion="http://schemas.syncfusion.com/wpf"
+             xmlns:sf="http://schemas.syncfusion.com/wpf"
              mc:Ignorable="d">
-    <Syncfusion:SfDataGrid
-        x:Name="combatStatDataGrid"
-        Width="Auto"
-        Height="Auto"
-        Margin="5 5 5 0"
-        HorizontalAlignment="Stretch"
-        AllowResizingColumns="True"
-        AutoGenerateColumns="False"
-        ColumnSizer="AutoLastColumnFill"
-        ItemsSource="{Binding Path=SimpleCombatStatTable}"
-        RowHeight="20">
-        <Syncfusion:SfDataGrid.Columns>
-            <Syncfusion:GridTextColumn
-                Width="20"
-                HeaderText="#"
-                MappingName="Rank"
-                TextAlignment="Center" />
 
-            <Syncfusion:GridTextColumn
-                Width="100"
-                HeaderText="技能"
-                HorizontalHeaderContentAlignment="Center"
-                MappingName="Name" />
+    <TabControl>
+        <TabItem Header="简版">
+            <sf:SfDataGrid
+                x:Name="combatStatGroupDataGrid"
+                Width="Auto"
+                Height="Auto"
+                Margin="5 5" BorderThickness="1 1 0 0"
+                HorizontalAlignment="Stretch"
+                AllowResizingColumns="True"
+                AutoGenerateColumns="False"
+                ColumnSizer="Star"
+                ItemsSource="{Binding Path=CombatStatGroupTable}"
+                RowHeight="20">
+                <sf:SfDataGrid.Columns>
+                    <sf:GridTextColumn
+                        Width="20"
+                        HeaderText="#"
+                        MappingName="Rank"
+                        TextAlignment="Center" />
 
-            <Syncfusion:GridNumericColumn
-                Width="50"
-                HeaderText="次数"
-                MappingName="ShowNum"
-                NumberDecimalDigits="1" />
-            <Syncfusion:GridPercentColumn
-                Width="60"
-                HeaderText="会心"
-                MappingName="CTRatePct" />
-            <Syncfusion:GridNumericColumn
-                Width="70"
-                HeaderText="伤害"
-                MappingName="TotalDamage"
-                NumberDecimalDigits="0" />
-            <Syncfusion:GridNumericColumn
-                Width="90"
-                HeaderText="比重"
-                MappingName="ProportionPct"
-                SetCellBoundValue="True">
-                <Syncfusion:GridNumericColumn.CellTemplate>
-                    <DataTemplate>
-                        <Grid>
-                            <ProgressBar
-                                x:Name="progressBar"
-                                Height="15"
-                                Background="Transparent"
-                                BorderThickness="0"
-                                Foreground="Green"
-                                Maximum="100"
-                                Minimum="0"
-                                Visibility="Visible"
-                                Value="{Binding Path=Value}" />
-                            <TextBlock
-                                HorizontalAlignment="Right"
-                                VerticalAlignment="Center"
-                                Text="{Binding Path=Value, StringFormat='\{0\}%'}"
-                                TextAlignment="Center" />
-                        </Grid>
-                    </DataTemplate>
-                </Syncfusion:GridNumericColumn.CellTemplate>
-            </Syncfusion:GridNumericColumn>
-        </Syncfusion:SfDataGrid.Columns>
-    </Syncfusion:SfDataGrid>
+                    <sf:GridTextColumn
+                        Width="100"
+                        HeaderText="技能"
+                        HorizontalHeaderContentAlignment="Center"
+                        MappingName="DisplayName" />
+
+                    <sf:GridNumericColumn
+                        Width="50"
+                        HeaderText="次数"
+                        MappingName="ShowNum"
+                        NumberDecimalDigits="1" />
+                    <sf:GridPercentColumn
+                        Width="60"
+                        HeaderText="会心"
+                        MappingName="CTRatePct" />
+                    <sf:GridNumericColumn
+                        HeaderText="伤害"
+                        MappingName="TotalDamage"
+                        NumberDecimalDigits="0" />
+                    <sf:GridNumericColumn
+                        HeaderText="比重"
+                        MappingName="ProportionPct"
+                        SetCellBoundValue="True">
+                        <sf:GridNumericColumn.CellTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <ProgressBar
+                                        x:Name="progressBar"
+                                        Height="15"
+                                        Background="Transparent"
+                                        BorderThickness="0"
+                                        Foreground="Green"
+                                        Maximum="100"
+                                        Minimum="0"
+                                        Visibility="Visible"
+                                        Value="{Binding Path=Value}" />
+                                    <TextBlock
+                                        HorizontalAlignment="Right"
+                                        VerticalAlignment="Center"
+                                        Text="{Binding Path=Value, StringFormat='\{0\}%'}"
+                                        TextAlignment="Center" />
+                                </Grid>
+                            </DataTemplate>
+                        </sf:GridNumericColumn.CellTemplate>
+                    </sf:GridNumericColumn>
+                </sf:SfDataGrid.Columns>
+            </sf:SfDataGrid>
+        </TabItem>
+        <TabItem Header="完整">
+            <sf:SfDataGrid
+                x:Name="combatStatDataGrid"
+                Width="Auto"
+                Height="Auto"
+                Margin="5 5" BorderThickness="1 1 0 0"
+                HorizontalAlignment="Stretch"
+                AllowResizingColumns="True"
+                AutoGenerateColumns="False"
+                AllowGrouping="False"
+                ShowGroupDropArea="True"
+                ColumnSizer="Star"
+                ItemsSource="{Binding Path=CombatStatTable}"
+                RowHeight="20">
+                <sf:SfDataGrid.Columns>
+                    <sf:GridTextColumn
+                        Width="20"
+                        HeaderText="#"
+                        MappingName="Rank"
+                        TextAlignment="Center" />
+
+                    <sf:GridTextColumn
+                        Width="100"
+                        HeaderText="技能"
+                        HorizontalHeaderContentAlignment="Center"
+                        MappingName="DisplayName" />
+
+                    <sf:GridTextColumn
+                        Width="70"
+                        HeaderText="名称"
+                        AllowGrouping="True"
+                        HorizontalHeaderContentAlignment="Center"
+                        MappingName="FightName" />
+
+                    <sf:GridNumericColumn
+                        Width="40"
+                        HeaderText="次数"
+                        MappingName="ShowNum"
+                        NumberDecimalDigits="1" />
+                    <sf:GridPercentColumn
+                        Width="50"
+                        HeaderText="会心"
+                        MappingName="CTRatePct" />
+                    <sf:GridNumericColumn
+                        HeaderText="伤害"
+                        MappingName="TotalDamage"
+                        NumberDecimalDigits="0" />
+                    <sf:GridNumericColumn
+                        HeaderText="比重"
+                        MappingName="ProportionPct"
+                        SetCellBoundValue="True">
+                        <sf:GridNumericColumn.CellTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <ProgressBar
+                                        x:Name="progressBar"
+                                        Height="15"
+                                        Background="Transparent"
+                                        BorderThickness="0"
+                                        Foreground="Green"
+                                        Maximum="100"
+                                        Minimum="0"
+                                        Visibility="Visible"
+                                        Value="{Binding Path=Value}" />
+                                    <TextBlock
+                                        HorizontalAlignment="Right"
+                                        VerticalAlignment="Center"
+                                        Text="{Binding Path=Value, StringFormat='\{0\}%'}"
+                                        TextAlignment="Center" />
+                                </Grid>
+                            </DataTemplate>
+                        </sf:GridNumericColumn.CellTemplate>
+                    </sf:GridNumericColumn>
+                </sf:SfDataGrid.Columns>
+
+                <sf:SfDataGrid.GroupSummaryRows>
+                    <sf:GridSummaryRow Title="总次数:{ShowNum}  总伤害:{TotalDamage}  占比:{ProportionPct}" ShowSummaryInRow="True">
+                        <sf:GridSummaryRow.SummaryColumns>
+                            <sf:GridSummaryColumn Name="ShowNum"
+                                                  Format="'{Sum:f}'"
+                                                  MappingName="ShowNum"
+                                                  SummaryType="DoubleAggregate" />
+
+                            <sf:GridSummaryColumn Name="TotalDamage"
+                                                  Format="'{Sum:0}'"
+                                                  MappingName="TotalDamage"
+                                                  SummaryType="DoubleAggregate" />
+
+                            <sf:GridSummaryColumn Name="ProportionPct"
+                                                  Format="'{Sum:f}%'"
+                                                  MappingName="ProportionPct"
+                                                  SummaryType="DoubleAggregate" />
+
+                        </sf:GridSummaryRow.SummaryColumns>
+                    </sf:GridSummaryRow>
+                </sf:SfDataGrid.GroupSummaryRows>
+            </sf:SfDataGrid>
+        </TabItem>
+
+    </TabControl>
 </UserControl>

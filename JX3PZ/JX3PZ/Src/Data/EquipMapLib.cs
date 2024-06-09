@@ -84,7 +84,7 @@ namespace JX3PZ.Data
 
         public static EquipMapItem GetEquipMapItem(int pos)
         {
-            return Equip[(EquipSlotEnum) pos];
+            return Equip[(EquipSlotEnum)pos];
         }
 
         public static bool EquipSubTypeHasBigFMSlot(this EquipSubTypeEnum subType)
@@ -94,7 +94,7 @@ namespace JX3PZ.Data
 
         public static EquipMapItem GetEquipMapItemBySubType(EquipSubTypeEnum subType)
         {
-            return EquipSubType[(int) subType];
+            return EquipSubType[(int)subType];
         }
 
         public static string GetShortLabel(this EquipMapItem map)

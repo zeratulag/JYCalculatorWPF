@@ -1,8 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Collections.Immutable;
-using System.Linq;
-using JX3CalculatorShared.Globals;
+﻿using JX3CalculatorShared.Globals;
 using JX3PZ.Class;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace JX3PZ.Models
 {
@@ -31,36 +30,36 @@ namespace JX3PZ.Models
             switch (PrimaryType)
             {
                 case PrimaryTypeEnum.Vitality:
-                {
-                    res.Add("atMaxLifeBase", Final * SystemPrimaryAttribute.VitalityToMaxLifeBase);
-                    break;
-                }
+                    {
+                        res.Add("atMaxLifeBase", Final * SystemPrimaryAttribute.VitalityToMaxLifeBase);
+                        break;
+                    }
                 case PrimaryTypeEnum.Spirit:
-                {
-                    res.Add("atMagicCriticalStrike",
-                        (int) (Final * SystemPrimaryAttribute.SpiritToMagicCriticalStrike));
-                    break;
-                }
+                    {
+                        res.Add("atMagicCriticalStrike",
+                            (int)(Final * SystemPrimaryAttribute.SpiritToMagicCriticalStrike));
+                        break;
+                    }
                 case PrimaryTypeEnum.Strength:
-                {
-                    res.Add("atPhysicsAttackPowerBase",
-                        (int) (Final * SystemPrimaryAttribute.StrengthToPhysicsAttackPower));
-                    res.Add("atPhysicsOvercomeBase", (int) (Final * SystemPrimaryAttribute.StrengthToPhysicsOvercome));
-                    break;
-                }
+                    {
+                        res.Add("atPhysicsAttackPowerBase",
+                            (int)(Final * SystemPrimaryAttribute.StrengthToPhysicsAttackPower));
+                        res.Add("atPhysicsOvercomeBase", (int)(Final * SystemPrimaryAttribute.StrengthToPhysicsOvercome));
+                        break;
+                    }
 
                 case PrimaryTypeEnum.Agility:
-                {
-                    res.Add("atPhysicsCriticalStrike",
-                        (int) (Final * SystemPrimaryAttribute.AgilityToPhysicsCriticalStrike));
-                    break;
-                }
+                    {
+                        res.Add("atPhysicsCriticalStrike",
+                            (int)(Final * SystemPrimaryAttribute.AgilityToPhysicsCriticalStrike));
+                        break;
+                    }
                 case PrimaryTypeEnum.Spunk:
-                {
-                    res.Add("atMagicAttackPowerBase", (int) (Final * SystemPrimaryAttribute.SpunkToMagicAttackPower));
-                    res.Add("atMagicOvercome", (int) (Final * SystemPrimaryAttribute.SpunkToMagiOvercome));
-                    break;
-                }
+                    {
+                        res.Add("atMagicAttackPowerBase", (int)(Final * SystemPrimaryAttribute.SpunkToMagicAttackPower));
+                        res.Add("atMagicOvercome", (int)(Final * SystemPrimaryAttribute.SpunkToMagiOvercome));
+                        break;
+                    }
             }
 
             SystemPrimaryAttributeValues = res;

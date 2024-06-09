@@ -1,6 +1,7 @@
 ﻿using JX3CalculatorShared.Common;
 using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -51,6 +52,11 @@ namespace JX3CalculatorShared.Utils
         /// <returns></returns>
         public static string RemovePrefix(this string str, string prefix)
         {
+            if (str == null)
+            {
+                return null;
+            }
+
             if (str.StartsWith(prefix))
             {
                 str = str.Remove(0, prefix.Length);
@@ -87,6 +93,11 @@ namespace JX3CalculatorShared.Utils
         /// <returns></returns>
         public static string RemoveSuffix(this string str, string suffix)
         {
+            if (str == null)
+            {
+                return null;
+            }
+
             if (str.EndsWith(suffix))
             {
                 str = str.Remove(str.Length - suffix.Length, suffix.Length);
@@ -163,9 +174,18 @@ namespace JX3CalculatorShared.Utils
         public static IEnumerable<string> ParseStringList(string x, string sep = ",")
         {
             string y = x.RemovePrefix("[").RemoveSuffix("]");
+            if (y == null)
+            {
+                return new List<string>(0);
+            }
             var xs = y.Split(sep);
             var res = from _ in xs select _.Trim();
             return res;
+        }
+
+        public static ImmutableHashSet<string> ParseStringListAsImmutableHashSet(string x, string sep = ",")
+        {
+            return ParseStringList(x, sep).ToImmutableHashSet();
         }
 
         /// <summary>

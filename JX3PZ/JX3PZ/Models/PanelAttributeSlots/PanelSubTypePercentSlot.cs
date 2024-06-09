@@ -1,7 +1,5 @@
-﻿using System.Collections.Generic;
-using JX3CalculatorShared.Class;
+﻿using JX3CalculatorShared.Class;
 using JX3CalculatorShared.Globals;
-using JX3CalculatorShared.Utils;
 
 namespace JX3PZ.Models
 {
@@ -24,7 +22,7 @@ namespace JX3PZ.Models
         public PanelSubTypePercentSlot(DamageSubTypeEnum damageSubType, params string[] extraPointKey) : base(
             damageSubType, extraPointKey)
         {
-            
+
         }
 
         public void GetAttributes()

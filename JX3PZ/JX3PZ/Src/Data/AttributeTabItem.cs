@@ -2,7 +2,6 @@
 using JX3CalculatorShared.Data;
 using JX3PZ.Class;
 using JX3PZ.Globals;
-using MathNet.Numerics.Statistics;
 
 namespace JX3PZ.Data
 {
@@ -20,6 +19,7 @@ namespace JX3PZ.Data
         public int Param1 { get; set; } = 0;
         public int Param2 { get; set; } = 0;
         public string SpecialDesc { get; set; } = "";
+        public int IsMobile { get; set; } = 0;
 
         #endregion
 

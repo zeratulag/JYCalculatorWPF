@@ -1,13 +1,10 @@
-﻿using JX3CalculatorShared.Globals;
+﻿using JX3CalculatorShared.Class;
+using JX3CalculatorShared.Globals;
 using JX3CalculatorShared.ViewModels;
 using JX3PZ.Data;
-using JX3PZ.Models;
-using System;
-using System.ComponentModel;
-using System.Diagnostics;
-using JX3CalculatorShared.Class;
 using JX3PZ.Messages;
-using JX3PZ.Views;
+using JX3PZ.Models;
+using System.ComponentModel;
 
 namespace JX3PZ.ViewModels
 {
@@ -37,20 +34,18 @@ namespace JX3PZ.ViewModels
 
         public string Header { get; set; }
         public int Position { get; set; }
-
-        public readonly int NumDiamond; // 有几个镶嵌孔
+        public int DiamondCount { get; } // 有几个镶嵌孔
         //public bool _SendMessage { get; private set; } = true; // 是否对外发消息
 
         public PzTabItemViewModel(int position)
         {
             Position = position;
             Map = EquipMapLib.GetEquipMapItem(position);
-            Map.AfterParse();
-            NumDiamond = Map.NumDiamond;
+            DiamondCount = Map.DiamondSlotCount;
             Header = Map.Label;
             EquipSelectVM = new EquipSelectViewModel(position);
             EquipEnhanceVM = new EquipEnhanceViewModel(position);
-            EquipEmbedVM = new EquipEmbedViewModel(NumDiamond, Map.SubTypeEnum == EquipSubTypeEnum.PRIMARY_WEAPON);
+            EquipEmbedVM = new EquipEmbedViewModel(DiamondCount, Map.SubTypeEnum == EquipSubTypeEnum.PRIMARY_WEAPON);
 
             EquipSelectVM.OutputChanged += ChangeSelectedEquip;
             EquipDiamondVM.OutputChanged += EquipSnapShotInputChanged;

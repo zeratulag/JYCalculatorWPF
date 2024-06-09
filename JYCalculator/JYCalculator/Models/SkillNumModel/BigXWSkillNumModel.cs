@@ -33,11 +33,15 @@ namespace JYCalculator.Models
         }
 
 
-        // 计算大心无期间的技能数 [TODO] 天风天绝
+        // 计算大心无期间的技能数 
         public void CalcBigXWSkillNum()
         {
-            var bl = GetBLFreqTime();
-            Num.BL = bl.Freq * Num._Time;
+            // 仅有白雨暴雨流需要计算
+            if (白雨流_万灵当歌)
+            {
+                var bl = GetBLFreqTime();
+                Num.BL = bl.Freq * Num._Time;
+            }
         }
     }
 

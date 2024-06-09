@@ -1,8 +1,6 @@
-﻿using System.IO;
-using System.Windows;
-using JX3CalculatorShared.Views;
-using JYCalculator.Globals;
+﻿using JX3CalculatorShared.Views;
 using Microsoft.Win32;
+using System.Windows;
 using UserControl = System.Windows.Controls.UserControl;
 
 namespace J3PZ.Views
@@ -18,7 +16,7 @@ namespace J3PZ.Views
 
         public bool ShowDPS
         {
-            get { return (bool) GetValue(ShowDPSProperty); }
+            get { return (bool)GetValue(ShowDPSProperty); }
             set { SetValue(ShowDPSProperty, value); }
         }
 

@@ -1,6 +1,4 @@
-﻿using System.Linq;
-
-namespace JYCalculator.ViewModels
+﻿namespace JYCalculator.ViewModels
 {
     public partial class MainWindowViewModels
     {

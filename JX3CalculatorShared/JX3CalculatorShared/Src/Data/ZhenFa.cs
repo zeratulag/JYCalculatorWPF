@@ -1,5 +1,4 @@
 ﻿using JX3CalculatorShared.Class;
-using JX3CalculatorShared.Utils;
 using NForza.Memoization;
 using System;
 using System.Collections.Generic;
@@ -174,7 +173,7 @@ namespace JX3CalculatorShared.Data
                 return result;
             }
 
-            var buffList = new List<BaseBuff>() {Buff};
+            var buffList = new List<BaseBuff>() { Buff };
 
             if (HasZ5)
             {

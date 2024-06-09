@@ -1,7 +1,6 @@
 ﻿using JX3CalculatorShared.Class;
 using JX3CalculatorShared.Data;
 using JX3CalculatorShared.Globals;
-using JX3CalculatorShared.Utils;
 using PropertyChanged;
 
 namespace JX3CalculatorShared.ViewModels

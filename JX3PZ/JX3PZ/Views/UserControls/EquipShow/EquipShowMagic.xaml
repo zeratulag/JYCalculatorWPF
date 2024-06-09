@@ -24,6 +24,6 @@
         <ItemsControl Grid.Row="1" ItemsSource="{Binding ExtraMagicStrength}"
                       ItemTemplate="{StaticResource DataTemplate.EquipStrengthAttribute}" />
         <ItemsControl Grid.Row="2" ItemsSource="{Binding Diamonds}"
-                      ItemTemplate="{StaticResource DataTemplate.DiamondAttribute}" />
+                      ItemTemplate="{StaticResource DataTemplate.DiamondAttribute}" Visibility="{Binding Path=HasDiamond, Converter={StaticResource BooleanToVisibility}}"/>
     </StackPanel>
 </UserControl>

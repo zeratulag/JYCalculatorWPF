@@ -1,6 +1,5 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
-using HandyControl.Data;
 
 namespace JX3PZ.Views
 {

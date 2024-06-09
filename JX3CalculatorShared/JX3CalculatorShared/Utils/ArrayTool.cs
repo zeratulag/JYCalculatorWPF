@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace JX3CalculatorShared.Utils
+﻿namespace JX3CalculatorShared.Utils
 {
     public static class ArrayTool
     {

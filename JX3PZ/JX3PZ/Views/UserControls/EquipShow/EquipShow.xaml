@@ -19,6 +19,8 @@
         </ResourceDictionary>
     </UserControl.Resources>
 
+<!--<TabControl Style="{x:Null}" SelectedIndex="1">
+    <TabItem Header="Old">
     <Border Style="{StaticResource BorderRegion}" Background="#132221" BorderBrush="Silver" BorderThickness="1">
         <StackPanel Orientation="Vertical" >
             <hc:SimpleText Text="⚠️ 暂未选择装备" Foreground="#999" Margin="0 10 0 10" FontSize="14" Visibility="{Binding NotHasEquip, Converter={StaticResource BooleanToVisibility}}" HorizontalAlignment="Center"/>
@@ -39,5 +41,17 @@
             </StackPanel>
         </StackPanel>
     </Border>
-
+    </TabItem>
+    <TabItem Header="New">-->
+        <Border Style="{StaticResource BorderRegion}" Background="#132221" BorderBrush="Silver" BorderThickness="1">
+                <StackPanel Orientation="Vertical">
+                <hc:SimpleText Text="⚠️ 暂未选择装备" Foreground="#999" Margin="0 10 0 10" FontSize="14" Visibility="{Binding NotHasEquip, Converter={StaticResource BooleanToVisibility}}" HorizontalAlignment="Center"/>
+                <StackPanel Orientation="Vertical"
+                            Visibility="{Binding HasEquip, Converter={StaticResource BooleanToVisibility}}">
+                        <local:EquipShowBox x:Name="equipShowBox" DataContext="{Binding EquipShowBoxVM}" XamlText="{Binding XamlText}"/>
+                    </StackPanel>
+            </StackPanel>
+        </Border>
+    <!--</TabItem>
+</TabControl>-->
 </UserControl>

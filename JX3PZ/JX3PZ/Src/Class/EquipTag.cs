@@ -1,5 +1,5 @@
-﻿using System.Collections.Immutable;
-using JX3CalculatorShared.Utils;
+﻿using JX3CalculatorShared.Utils;
+using System.Collections.Immutable;
 
 namespace JX3PZ.Class
 {

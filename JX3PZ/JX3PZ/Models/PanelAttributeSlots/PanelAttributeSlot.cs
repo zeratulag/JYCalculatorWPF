@@ -1,9 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Collections.Immutable;
-using System.Linq;
-using JX3CalculatorShared.Class;
+﻿using JX3CalculatorShared.Class;
 using JX3CalculatorShared.Utils;
 using JX3PZ.Globals;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace JX3PZ.Models
 {
@@ -41,7 +40,7 @@ namespace JX3PZ.Models
         {
             decimal percentAdd = basePercentAdd / GKiloDenominator;
             decimal finalValue = baseValue * (1 + percentAdd);
-            int res = (int) finalValue;
+            int res = (int)finalValue;
             return res;
         }
 

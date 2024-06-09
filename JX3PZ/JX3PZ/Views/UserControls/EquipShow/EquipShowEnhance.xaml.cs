@@ -11,7 +11,7 @@ namespace JX3PZ.Views
 
         public bool HasBigFMSlot
         {
-            get { return (bool) GetValue(HasBigFMSlotProperty); }
+            get { return (bool)GetValue(HasBigFMSlotProperty); }
             set { SetValue(HasBigFMSlotProperty, value); }
         }
 
@@ -20,7 +20,7 @@ namespace JX3PZ.Views
 
         public bool HasBigFM
         {
-            get { return (bool) GetValue(HasBigFMProperty); }
+            get { return (bool)GetValue(HasBigFMProperty); }
             set { SetValue(HasBigFMProperty, value); }
         }
 

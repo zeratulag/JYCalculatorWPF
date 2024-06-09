@@ -20,6 +20,7 @@
                 <DataGridTextColumn Binding="{Binding Path=AddCT, StringFormat={}{0:P2}}" Header="+会心" />
                 <DataGridTextColumn Binding="{Binding Path=AddCF, StringFormat={}{0:P2}}" Header="+会效" />
                 <DataGridTextColumn Binding="{Binding Path=AddDmg, StringFormat={}{0:P2}}" Header="+伤害" />
+                <DataGridTextColumn Binding="{Binding Path=AddNPCDmg, StringFormat={}{0:P2}}" Header="+非侠" />
                 <DataGridTextColumn Binding="{Binding Path=nChannelInterval, StringFormat={}{0:F2}}" Header="nCI" />
 
                 <DataGridTextColumn Binding="{Binding Path=IntervalTime, StringFormat={}{0:F2}}" Header="时间" />
@@ -31,6 +32,8 @@
                 <DataGridTextColumn Binding="{Binding Path=IgnoreB, StringFormat={}{0:P2}}" Header="无视防御B" />
 
                 <DataGridTextColumn Binding="{Binding Path=APCoef, StringFormat={}{0:F4}}" Header="外攻系数" />
+
+                <DataGridTextColumn Binding="{Binding Path=PZCoef, StringFormat={}{0:F4}}" Header="破招系数" />
 
                 <DataGridTextColumn Binding="{Binding Path=WPCoef, StringFormat={}{0:P2}}" Header="武器伤害" />
 

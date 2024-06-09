@@ -1,9 +1,9 @@
-﻿using System;
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using JX3CalculatorShared.Class;
 using JX3PZ.Class;
 using JX3PZ.Data;
 using JX3PZ.Models;
+using System;
 using System.Linq;
 
 namespace JX3PZ.ViewModels

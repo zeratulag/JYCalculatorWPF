@@ -2,7 +2,6 @@
 using JX3PZ.Data;
 using JX3PZ.Globals;
 using JX3PZ.ViewModels;
-using Newtonsoft.Json.Linq;
 
 namespace JX3PZ.Class
 {
@@ -11,6 +10,7 @@ namespace JX3PZ.Class
         // 表示属性词条
         public int Value { get; set; } = 0;
         public int Value2 { get; set; } // 仅当特殊属性才有，数值类属性为空
+        public bool IsMobile { get; set; } // 区分手游端属性
 
         public AttributeEntryViewModel VM; // 用于显示的VM
 
@@ -36,6 +36,7 @@ namespace JX3PZ.Class
             }
 
             EntryType = entryType;
+            IsMobile = item.IsMobile > 0;
         }
 
         public AttributeEntry(DiamondLevelItem d) : this(d.ModifyType, d.Value, AttributeEntryTypeEnum.Diamond)

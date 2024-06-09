@@ -197,6 +197,7 @@
                                 <DataGridTextColumn Binding="{Binding Path=Rank}" Header="#" />
                                 <DataGridTextColumn Binding="{Binding Path=Name}" Header="Name" />
                                 <DataGridTextColumn Binding="{Binding Path=SkillName}" Header="技能" />
+                                <DataGridTextColumn Binding="{Binding Path=FightName}" Header="技能(简)" />
                                 <DataGridTextColumn Binding="{Binding Path=ShowNum, StringFormat={}{0:F1}}" Header="平均数量" />
                                 <DataGridTextColumn Binding="{Binding Path=CTRate, StringFormat={}{0:P2}}" Header="会心率" />
                                 <DataGridTextColumn Binding="{Binding Path=Proportion, StringFormat={}{0:P2}}" Header="比重" />
@@ -209,10 +210,10 @@
                         <DataGrid
                             Name="DataGrid_SimpleCombatStatTable"
                             AutoGenerateColumns="False"
-                            ItemsSource="{Binding Path=SimpleCombatStatTable}">
+                            ItemsSource="{Binding Path=CombatStatGroupTable}">
                             <DataGrid.Columns>
                                 <DataGridTextColumn Binding="{Binding Path=Rank}" Header="#" />
-                                <DataGridTextColumn Binding="{Binding Path=Name}" Header="技能" />
+                                <DataGridTextColumn Binding="{Binding Path=DisplayName}" Header="技能" />
                                 <DataGridTextColumn Binding="{Binding Path=ShowNum, StringFormat={}{0:F1}}" Header="平均数量" />
                                 <DataGridTextColumn Binding="{Binding Path=CTRate, StringFormat={}{0:P2}}" Header="会心率" />
                                 <DataGridTextColumn Binding="{Binding Path=Proportion, StringFormat={}{0:P2}}" Header="比重" />

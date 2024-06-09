@@ -1,11 +1,10 @@
 ﻿using JX3CalculatorShared.Data;
-using System;
-using System.Text.RegularExpressions;
-using JX3CalculatorShared.Utils;
-using JX3PZ.Data;
-using JX3PZ.Globals;
-using System.Data;
 using JX3CalculatorShared.Globals;
+using JX3CalculatorShared.Utils;
+using JX3PZ.Globals;
+using System;
+using System.Data;
+using System.Text.RegularExpressions;
 
 namespace JX3CalculatorShared.Class
 {
@@ -109,7 +108,7 @@ namespace JX3CalculatorShared.Class
         {
             // 基于表达式格式，计算真实的值
             var expression = realValueExpression.Replace("D0", value.ToString());
-            var res = (double) dt.Compute(expression, "");
+            var res = (double)dt.Compute(expression, "");
             return res;
         }
     }
@@ -249,37 +248,37 @@ namespace JX3CalculatorShared.Class
                 switch (Denominator)
                 {
                     case 1:
-                    {
-                        res = string.Format(FullBaseDescFmt, value);
-                        break;
-                    }
-                    case 0:
-                    {
-                        if (RealValueExpression != null)
                         {
-                            double real_value = GetRealValueByFmt(value);
-                            res = string.Format(FullBaseDescFmt, (int) real_value);
+                            res = string.Format(FullBaseDescFmt, value);
+                            break;
                         }
-                        break;
-                    }
+                    case 0:
+                        {
+                            if (RealValueExpression != null)
+                            {
+                                double real_value = GetRealValueByFmt(value);
+                                res = string.Format(FullBaseDescFmt, (int)real_value);
+                            }
+                            break;
+                        }
 
                     default:
-                    {
-                        double real_value = value / (double) Denominator;
-
-                        try
                         {
-                            res = string.Format(FullBaseDescFmt, real_value);
-                        }
-                        catch
-                        {
-                            var vstr = GetValueStr(value);
-                            var mid = value > 0 ? "提高" : "降低";
-                            res = $"{FullDesc}{mid}{vstr}";
-                        }
+                            double real_value = value / (double)Denominator;
 
-                        break;
-                    }
+                            try
+                            {
+                                res = string.Format(FullBaseDescFmt, real_value);
+                            }
+                            catch
+                            {
+                                var vstr = GetValueStr(value);
+                                var mid = value > 0 ? "提高" : "降低";
+                                res = $"{FullDesc}{mid}{vstr}";
+                            }
+
+                            break;
+                        }
                 }
             }
 
@@ -308,7 +307,7 @@ namespace JX3CalculatorShared.Class
                 }
                 else
                 {
-                    double real_value = value / (double) Denominator;
+                    double real_value = value / (double)Denominator;
                     string fmt;
                     if (IsPercent)
                     {
@@ -345,7 +344,7 @@ namespace JX3CalculatorShared.Class
                 {
                     if (value != 0)
                     {
-                        double real_value = Math.Abs(value) / (double) Denominator;
+                        double real_value = Math.Abs(value) / (double)Denominator;
                         vstr = real_value.ToString("F1");
                     }
                 }
@@ -379,20 +378,20 @@ namespace JX3CalculatorShared.Class
                 case AttributeEntryTypeEnum.Enhance:
                 case AttributeEntryTypeEnum.Stone:
                 case AttributeEntryTypeEnum.Default:
-                {
-                    res = GetFullDesc(value);
-                    break;
-                }
+                    {
+                        res = GetFullDesc(value);
+                        break;
+                    }
                 case AttributeEntryTypeEnum.EquipBasicMagic: // 体质+5581，力道+1082
-                {
-                    res = GetSimpleDesc(value);
-                    break;
-                }
+                    {
+                        res = GetSimpleDesc(value);
+                        break;
+                    }
                 default:
-                {
-                    res = GetFullDesc(value);
-                    break;
-                }
+                    {
+                        res = GetFullDesc(value);
+                        break;
+                    }
             }
 
             return res;
@@ -408,7 +407,7 @@ namespace JX3CalculatorShared.Class
         public string[] GetStrengthDescs(int value, int addValue, AttributeEntryTypeEnum attributeType)
         {
             string baseRes = GetDesc(value, attributeType);
-            var res = new[] {baseRes, $"{addValue:D}"};
+            var res = new[] { baseRes, $"{addValue:D}" };
             return res;
         }
 

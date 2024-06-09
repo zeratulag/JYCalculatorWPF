@@ -2,9 +2,6 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Windows;
-using Force.DeepCloner;
-using Newtonsoft.Json.Linq;
 
 namespace JX3CalculatorShared.Utils
 {
@@ -150,12 +147,12 @@ namespace JX3CalculatorShared.Utils
 
                 if (l[0] is int)
                 {
-                    orgValue = (from _ in l select (double) (int) _).ToList();
+                    orgValue = (from _ in l select (double)(int)_).ToList();
                     isNum = true;
                 }
                 else if (l[0] is double)
                 {
-                    orgValue = (from _ in l select (double) _).ToList();
+                    orgValue = (from _ in l select (double)_).ToList();
                     isNum = true;
                 }
 
@@ -179,7 +176,7 @@ namespace JX3CalculatorShared.Utils
                 }
 
                 if (modValue == null) continue;
-                ResValue = (from _ in modValue select (object) _).ToList();
+                ResValue = (from _ in modValue select (object)_).ToList();
                 dict[key] = ResValue;
             }
         }
@@ -283,7 +280,7 @@ namespace JX3CalculatorShared.Utils
             }
             else
             {
-                dict.Add(key, new List<TValue>() {value});
+                dict.Add(key, new List<TValue>() { value });
             }
         }
 

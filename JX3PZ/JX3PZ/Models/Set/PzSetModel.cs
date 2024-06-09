@@ -1,10 +1,10 @@
-﻿using JX3PZ.Class;
+﻿using JX3CalculatorShared.Common;
+using JX3PZ.Class;
+using JX3PZ.Data;
 using JX3PZ.Src;
+using JX3PZ.ViewModels;
 using System.Collections.Generic;
 using System.Linq;
-using JX3CalculatorShared.Common;
-using JX3PZ.ViewModels;
-using JX3PZ.Data;
 
 namespace JX3PZ.Models
 {

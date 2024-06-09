@@ -1,5 +1,4 @@
-﻿using JX3CalculatorShared.Utils;
-using PropertyChanged;
+﻿using PropertyChanged;
 
 namespace JX3CalculatorShared.ViewModels
 {

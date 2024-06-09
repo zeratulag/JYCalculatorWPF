@@ -24,13 +24,13 @@
                     <Setter Property="Foreground" Value="White" />
                     <Setter Property="VerticalAlignment" Value="Center" />
                 </Style>
-                <Style TargetType="Image">
+                <!--<Style TargetType="Image">
                     <Setter Property="ToolTip">
                         <Setter.Value>
                             <TextBlock TextWrapping="Wrap" MaxWidth="400" />
                         </Setter.Value>
                     </Setter>
-                </Style>
+                </Style>-->
                 <Style TargetType="ToolTip">
                     <Setter Property="Background" Value="White"/>
                     <Setter Property="Foreground" Value="Black"/>

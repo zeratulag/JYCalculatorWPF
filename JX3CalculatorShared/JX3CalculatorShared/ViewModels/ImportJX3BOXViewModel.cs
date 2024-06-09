@@ -1,4 +1,3 @@
-using HandyControl.Controls;
 using JX3CalculatorShared.Class;
 using JX3CalculatorShared.Views;
 using System.Windows;

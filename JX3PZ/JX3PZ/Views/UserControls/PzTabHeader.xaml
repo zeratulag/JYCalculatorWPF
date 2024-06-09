@@ -14,13 +14,13 @@
                     <ResourceDictionary Source="../Resources/PzApp.xaml" />
                 </ResourceDictionary.MergedDictionaries>
                 <Style TargetType="TextBox" BasedOn="{StaticResource Style.TextBlockBox}" />
-                <Style TargetType="Image">
+                <!--<Style TargetType="Image">
                     <Setter Property="ToolTip">
                         <Setter.Value>
                             <TextBlock TextWrapping="Wrap" MaxWidth="400" />
                         </Setter.Value>
                     </Setter>
-                </Style>
+                </Style>-->
             </ResourceDictionary>
         </Grid.Resources>
         <Grid.RowDefinitions>

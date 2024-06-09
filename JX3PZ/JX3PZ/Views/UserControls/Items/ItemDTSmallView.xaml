@@ -7,10 +7,12 @@
              mc:Ignorable="d"
              d:DesignHeight="24" d:DesignWidth="24"
              x:Name="itemDTSmallView"
-             Style="{StaticResource Style.ControlWithToolTip}" Background="Transparent">
-    <UserControl.InputBindings>
+             Style="{StaticResource Style.ControlWithToolTip}" Background="Transparent"
+             MouseRightButtonUp="ItemDTSmallView_OnMouseRightButtonUp"
+             >
+    <!--<UserControl.InputBindings>
         <MouseBinding Gesture="RightClick" Command="{Binding CancelThisCmd}" />
-    </UserControl.InputBindings>
+    </UserControl.InputBindings>-->
     <Grid>
         <Image Grid.Row="0"
                Grid.Column="0"
@@ -21,7 +23,8 @@
                Grid.Column="0"
                Width="32"
                Height="32"
-               Source="{Binding Path=Quality, Converter={StaticResource FileNameToImgConverter}}" />
+               Source="{Binding Path=Quality, Converter={StaticResource FileNameToImgConverter}}" 
+               />
     </Grid>
 
 

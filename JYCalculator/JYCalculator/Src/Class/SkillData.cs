@@ -58,16 +58,13 @@ namespace JYCalculator.Class
         /// </summary>
         public void UpdatePZCoef()
         {
-            if (Info.IsP)
+            if (Info.IsPZ)
             {
-                if (Name == "PZ_BaiYu")
-                {
-                    PZCoef = XFStaticConst.fGP.XPZ_BY;
-                }
-                else
-                {
-                    PZCoef = XFStaticConst.fGP.XPZ;
-                }
+                PZCoef = Info.SurplusCoef;
+            }
+            else
+            {
+                PZCoef = 0; // [TODO] 这里暂时认为非破招技能为0，后面无界出了要改
             }
         }
 
@@ -82,16 +79,16 @@ namespace JYCalculator.Class
                 {
                     case "IgnoreB_P":
                     case "IgnoreB":
-                    {
-                        IgnoreB += value;
-                        break;
-                    }
+                        {
+                            IgnoreB += value;
+                            break;
+                        }
 
                     default:
-                    {
-                        handled = false;
-                        throw new ArgumentException($"未识别的key！ {key}");
-                    }
+                        {
+                            handled = false;
+                            throw new ArgumentException($"未识别的key！ {key}");
+                        }
                 }
             }
 
@@ -107,15 +104,15 @@ namespace JYCalculator.Class
                 switch (key)
                 {
                     case "ZMWS_Add_Dmg":
-                    {
-                        break;
-                    }
+                        {
+                            break;
+                        }
 
                     default:
-                    {
-                        handled = false;
-                        throw new ArgumentException($"未识别的key！ {key}");
-                    }
+                        {
+                            handled = false;
+                            throw new ArgumentException($"未识别的key！ {key}");
+                        }
                 }
             }
 

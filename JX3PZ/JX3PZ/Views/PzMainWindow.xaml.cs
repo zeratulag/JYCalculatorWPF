@@ -1,10 +1,10 @@
-﻿using JX3CalculatorShared.Views;
+﻿using J3PZ.Views;
+using JX3CalculatorShared.Views;
 using JX3PZ.Globals;
 using JX3PZ.ViewModels;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
-using J3PZ.Views;
 
 namespace JX3PZ.Views
 {
@@ -74,5 +74,11 @@ namespace JX3PZ.Views
         {
             _VM.ReadFile(filepath);
         }
+
+        private void PzMainWindow_OnDragOver(object sender, DragEventArgs e)
+        {
+            HandlerTool.CommonOnDragOver(sender, e);
+        }
+
     }
 }

@@ -21,7 +21,6 @@ namespace JYCalculator.Models
         public bool IsXW => Num._XW;
         public bool IsBigXW; // 当前是否处于大心无状态
 
-        public string Genre => QiXue.Genre;
         public WPOption WP => Equip.WP;
         public int AbilityRank; // 手法等级，0~3
         public Dictionary<string, SkillEventItem> SkillEvents;
@@ -98,14 +97,21 @@ namespace JYCalculator.Models
                 // 计算大附魔次数
                 var wirstKey = "BigFM_WRIST";
                 var wristInterval = SkillEvents[wirstKey].MeanTriggerInterval(EventsHitFreq[wirstKey]);
-                FinalSkillFreq.AddByInterval("KW_XR", wristInterval);
+
+                var skillKey = "KW_XR";
+                if (BigFM.Wrist.IsSuperCustom)
+                {
+                    skillKey = $"{skillKey}_Fixed"; // 120级最后一个版本的大附魔改成固定伤害
+                }
+                FinalSkillFreq.AddByInterval(skillKey, wristInterval);
             }
 
             if (BigFM.Shoes != null && BigFM.Shoes.DLCLevel == 110) // 110级伤鞋大附魔
             {
                 var shoesKey = "BigFM_SHOES_110";
                 var shoesInterval = SkillEvents[shoesKey].MeanTriggerInterval(EventsHitFreq[shoesKey]);
-                FinalSkillFreq.AddByInterval("KW_ZF", shoesInterval);
+                var skillKey = "KW_ZF";
+                FinalSkillFreq.AddByInterval(skillKey, shoesInterval);
             }
         }
 

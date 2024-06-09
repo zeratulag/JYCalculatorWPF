@@ -2,18 +2,16 @@
 using JX3CalculatorShared.Utils;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
-using System.Windows.Markup;
-using System.Windows.Media.Imaging;
-using System.Windows.Media.Media3D;
-using System.Windows.Media;
-using System.Xml;
 using System.Windows.Interop;
+using System.Windows.Markup;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Xml;
 
 namespace JX3CalculatorShared.Views
 {
@@ -233,6 +231,23 @@ namespace JX3CalculatorShared.Views
             Horizontal // ——
         }
 
+
     }
 
+    public static class HandlerTool
+    {
+        public static void CommonOnDragOver(object sender, DragEventArgs e)
+        {
+            // 文件拖放特效
+            if (!e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                e.Effects = DragDropEffects.None;
+            }
+            else
+            {
+                e.Effects = DragDropEffects.Copy;
+            }
+            e.Handled = true;
+        }
+    }
 }

@@ -9,7 +9,7 @@ namespace JYCalculator.Views.UserControls
     /// </summary>
     public partial class DebugGroupBox : UserControl
     {
-        public  MainWindow _MV => GlobalContext.Views.Main;
+        public MainWindow _MV => GlobalContext.Views.Main;
 
         public DebugGroupBox()
         {

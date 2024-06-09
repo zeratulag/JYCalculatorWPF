@@ -4,13 +4,13 @@ using JX3CalculatorShared.Utils;
 using JX3CalculatorShared.ViewModels;
 using JX3PZ.Class;
 using JX3PZ.Data;
+using JX3PZ.Globals;
 using JX3PZ.Src;
 using System;
 using System.Collections.Immutable;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows.Data;
-using JX3PZ.Globals;
 
 namespace JX3PZ.ViewModels
 {
@@ -66,7 +66,7 @@ namespace JX3PZ.ViewModels
                 AllBigFMSource = StaticPzData.Enhance.BigFM[Map.SubTypeEnum];
                 HasBigFM = true;
                 BigFMSource = CollectionViewSource.GetDefaultView(AllBigFMSource);
-                BigFMSource.Filter = (_ => IsBigFMFit((BigFM) _));
+                BigFMSource.Filter = (_ => IsBigFMFit((BigFM)_));
             }
             else
             {
@@ -238,7 +238,7 @@ namespace JX3PZ.ViewModels
         public BestEnhanceResult(int position, int index, double value, Enhance e)
         {
             Name = e.Name;
-            Slot = (EquipSlotEnum) position;
+            Slot = (EquipSlotEnum)position;
             Index = index;
             Value = value;
         }

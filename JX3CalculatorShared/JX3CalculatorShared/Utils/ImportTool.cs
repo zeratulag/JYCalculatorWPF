@@ -8,7 +8,6 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows;
-using JX3CalculatorShared.Data;
 
 namespace JX3CalculatorShared.Utils
 {

@@ -1,5 +1,4 @@
 ﻿using JX3PZ.ViewModels;
-using JYCalculator.Messages;
 using JYCalculator.Src;
 
 namespace JX3PZ.Messages

@@ -2,6 +2,7 @@
 using JX3CalculatorShared.Globals;
 using MiniExcelLibs.Attributes;
 using System;
+using System.Net.NetworkInformation;
 
 namespace JYCalculator.Class
 {
@@ -19,7 +20,7 @@ namespace JYCalculator.Class
         public double DPS { get; private set; } = 0;
 
         public double OrgPhysicsDmg { get; set; } = 0; // 原始外功伤害（固定部分+外功攻击部分+武器部分）
-        public double OrgPDmg { get; set; } = 0; // 原始破招伤害（仅当技能是破招类才有）
+        public double OrgPZDmg { get; set; } = 0; // 原始破招伤害（仅当技能是破招类才有）
         public double StdPhysicsDmg { get; set; } // 基准外功伤害
 
         // 目标防御
@@ -74,9 +75,19 @@ namespace JYCalculator.Class
 
         public void GetETable()
         {
-            CT = Math.Min(1, Data.AddCT + FChar.CT);
-            CF = Math.Max(StaticConst.CriticalDamageStart, Math.Min(StaticConst.CriticalDamageMax, Data.AddCF + FChar.CF));
-            Expect = CT * (CF - 1) + 1;
+            if (IsSuperCustom)
+            {
+                CT = 0;
+                CF = StaticConst.CriticalDamageStart;
+                Expect = 1;
+            }
+            else
+            {
+                CT = Math.Min(1, Data.AddCT + FChar.CT);
+                CF = Math.Max(StaticConst.CriticalDamageStart, Math.Min(StaticConst.CriticalDamageMax, Data.AddCF + FChar.CF));
+                Expect = CT * (CF - 1) + 1;
+            }
+
             RealCriticalDmg = RealDmg * Expect;
         }
 

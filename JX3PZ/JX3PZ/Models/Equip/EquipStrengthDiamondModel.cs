@@ -1,9 +1,9 @@
-﻿using JX3PZ.Class;
+﻿using JX3CalculatorShared.Common;
+using JX3PZ.Class;
 using JX3PZ.Data;
+using JX3PZ.Globals;
 using System.Collections.Generic;
 using System.Linq;
-using JX3CalculatorShared.Common;
-using JX3PZ.Globals;
 
 namespace JX3PZ.Models
 {
@@ -49,7 +49,7 @@ namespace JX3PZ.Models
         {
             Diamonds = diamonds;
             DiamondLevels = diamonds?.Select(_ => _.Level).ToArray();
-            HasDiamond = DiamondLevels != null && DiamondLevels.Select(_ => _ > 0).Any();
+            HasDiamond = DiamondLevels != null && DiamondLevels.Any(_ => _ > 0);
         }
 
         public void Calc()
@@ -63,9 +63,15 @@ namespace JX3PZ.Models
         {
             if (HasDiamond)
             {
-                DiamondCount = DiamondLevels.Select(_ => _ > 0).Count();
+                DiamondCount = DiamondLevels.Count(_ => _ > 0);
                 DiamondIntensity = DiamondLevels.Sum();
                 DiamondScore = Diamonds.Sum(_ => _.GetScore());
+            }
+            else
+            {
+                DiamondCount = 0;
+                DiamondIntensity = 0;
+                DiamondScore = 0;
             }
         }
 

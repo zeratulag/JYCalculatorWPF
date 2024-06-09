@@ -4,12 +4,12 @@ using JX3CalculatorShared.Utils;
 using JX3CalculatorShared.ViewModels;
 using JYCalculator.Data;
 using JYCalculator.DB;
+using JYCalculator.Globals;
 using JYCalculator.Models;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Diagnostics;
 using System.Linq;
-using JYCalculator.Globals;
 
 
 namespace JYCalculator.ViewModels

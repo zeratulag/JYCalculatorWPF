@@ -1,6 +1,5 @@
 ﻿using JX3CalculatorShared.Globals;
 using JYCalculator.Class;
-using JYCalculator.Globals;
 
 namespace JYCalculator.Src
 {
@@ -35,14 +34,8 @@ namespace JYCalculator.Src
 
             if (AppStatic.XinFaTag == "JY")
             {
-                string CX_DOT_Name = "CX_DOT";
-                if (Arg.SkillNum.QiXue.鹰扬虎视)
-                {
-                    CX_DOT_Name = "CXY_DOT";
-                }
-
+                var CX_DOT_Name = Arg.SkillNum.QiXue.CX_DOT_Key;
                 string CX_DOT_Hit_Name = "_CX_DOT_Hit";
-
                 Fix_CombatStat_DOT_Hit(normal, xw, CX_DOT_Name, CX_DOT_Hit_Name);
                 Fix_CombatStat_DOT_Hit(normal, xw, "CW_DOT", "_CW_DOT_Hit");
             }
@@ -51,7 +44,7 @@ namespace JYCalculator.Src
             res.Proceed();
 
             FinalCombatStat = res;
-            SimpleFinalCombatStat = FinalCombatStat.ToSimple();
+            FinalCombatStat.MakeGroup();
         }
 
         #endregion

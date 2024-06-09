@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Immutable;
-using System.Linq;
-using CommunityToolkit.Mvvm.Input;
+﻿using CommunityToolkit.Mvvm.Input;
 using JX3CalculatorShared.ViewModels;
 using JX3PZ.Class;
 using JX3PZ.Data;
 using JX3PZ.Globals;
-using static JX3CalculatorShared.Globals.AppStatic;
+using System;
+using System.Collections.Immutable;
+using System.Linq;
 
 namespace JX3PZ.ViewModels
 {
@@ -69,7 +68,10 @@ namespace JX3PZ.ViewModels
         public static DiamondSlotViewModel[] GetDiamondViewModels(Equip equip)
         {
             // 从装备中一次性生成VM集合
-            if (equip == null || !equip.HasDiamond) return Array.Empty<DiamondSlotViewModel>();
+            if (equip == null || !equip.HasDiamond)
+            {
+                return Array.Empty<DiamondSlotViewModel>();
+            }
             var res = from _ in equip.Attributes.Diamond select new DiamondSlotViewModel(_);
             return res.ToArray();
         }

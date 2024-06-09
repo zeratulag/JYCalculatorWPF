@@ -1,6 +1,4 @@
-﻿using System.Windows;
-using System.Windows.Controls;
-using JX3PZ.ViewModels;
+﻿using System.Windows.Controls;
 
 namespace J3PZ.Views.UserControls
 {

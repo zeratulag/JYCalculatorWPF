@@ -1,11 +1,16 @@
-﻿using System;
-using CommunityToolkit.Mvvm.Input;
+﻿using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 using JX3CalculatorShared.Class;
+using JX3CalculatorShared.Globals;
+using JX3CalculatorShared.Messages;
 using JX3CalculatorShared.Utils;
 using JX3CalculatorShared.ViewModels;
+using JX3PZ.Models;
+using JX3PZ.ViewModels;
 using JYCalculator.Class;
 using JYCalculator.Data;
 using JYCalculator.Globals;
+using JYCalculator.Messages;
 using JYCalculator.Models;
 using JYCalculator.Src;
 using JYCalculator.Views;
@@ -16,18 +21,10 @@ using System.Collections.Immutable;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Documents;
-using CommunityToolkit.Mvvm.Messaging;
-using JX3CalculatorShared.Globals;
-using JX3CalculatorShared.Messages;
-using JX3PZ.Models;
-using JX3PZ.ViewModels;
-using JYCalculator.Messages;
-using System.Numerics;
+using JX3CalculatorShared.Models;
 
 
 namespace JYCalculator.ViewModels
@@ -48,6 +45,7 @@ namespace JYCalculator.ViewModels
         public ItemDTConfigViewModel ItemDTVM { get; }
         public AllBuffConfigViewModel BuffVM { get; }
         public BigFMConfigViewModel BigFMVM { get; }
+        public SkillBuildManagerViewModel SkillBuildManagerVM { get; }
 
         public readonly InitInputViewModel
             InitInputVM; // f(InitCharacter, BigFMConfigViewModel, EquipOptionConfigViewModel)
@@ -120,7 +118,9 @@ namespace JYCalculator.ViewModels
 
         // 输出部分
         public DPSTableItem[] DPSTable { get; set; }
-        public CombatStatItem[] SimpleCombatStatTable { get; set; }
+
+        public CombatStatItem[] CombatStatTable { get; set; }
+        public CombatStatGroupItem[] CombatStatGroupTable { get; set; }
 
         public double FinalDPS { get; private set; }
         public string FinalDPStxt { get; private set; }
@@ -144,6 +144,7 @@ namespace JYCalculator.ViewModels
             InitInputVM = new InitInputViewModel(InitCharVM, EquipOptionVM, BigFMVM);
 
             SkillDFMiJiQiXueVM = new SkillDataDFViewModel(SkillMiJiVM, QiXueVM);
+            SkillBuildManagerVM = new SkillBuildManagerViewModel(this);
 
             FightTimeSummaryVM = new FightTimeSummaryViewModel(FightOptionVM, QiXueVM);
 
@@ -217,7 +218,7 @@ namespace JYCalculator.ViewModels
         public ImmutableDictionary<string, SkillMiJiViewModel> MakeSkillMiJiViewModels()
         {
             var res = SkillMiJiViewModel.MakeViewModels();
-            return (ImmutableDictionary<string, SkillMiJiViewModel>) res;
+            return (ImmutableDictionary<string, SkillMiJiViewModel>)res;
         }
 
         protected void _Load(CalcData data)
@@ -236,9 +237,16 @@ namespace JYCalculator.ViewModels
         {
             var sample = CalcData.GetSample();
             Load(sample);
+            SkillBuildManagerVM.LoadDefault();
         }
 
         #endregion
+
+        public void DoCalc()
+        {
+            // 立即计算一次
+            _Update();
+        }
 
         protected override void _Update()
         {
@@ -301,7 +309,8 @@ namespace JYCalculator.ViewModels
             FinalDPStxt = CalcShell.FinalDPStxt;
             var kernel = CalcShell.CDPSKernel;
 
-            SimpleCombatStatTable = kernel.SimpleFinalCombatStat.Items;
+            CombatStatTable = kernel.FinalCombatStat.Items;
+            CombatStatGroupTable = kernel.FinalCombatStat.Groups;
             FinalDPS = kernel.FinalDPS;
             ProfitOrderDesc = kernel.FinalScoreProfit.OrderDesc;
             DPSTable = kernel.FinalDPSTable.Items;
@@ -342,11 +351,20 @@ namespace JYCalculator.ViewModels
             Model._Load(sav);
         }
 
+        public void _LoadSkillBuild(SkillBuildSav sav)
+        {
+            Model._LoadSkillBuild(sav);
+        }
+
         public void Load(MainWindowSav sav)
         {
             ActionUpdateOnce(_Load, sav);
         }
 
+        public void LoadSkillBuild(SkillBuildSav sav)
+        {
+            ActionUpdateOnce(_LoadSkillBuild, sav);
+        }
 
         protected override void _RefreshCommands()
         {
@@ -398,23 +416,23 @@ namespace JYCalculator.ViewModels
             switch (message.Value)
             {
                 case StaticMessager.Senders.QiXue:
-                {
-                    ConnectQiXueBuff();
-                    break;
-                }
+                    {
+                        ConnectQiXueBuff();
+                        break;
+                    }
 
                 case StaticMessager.Senders.MiJi:
                 case StaticMessager.Senders.BaoYuMiJi:
-                {
-                    ConnectSkillMiJiBuff();
-                    break;
-                }
+                    {
+                        ConnectSkillMiJiBuff();
+                        break;
+                    }
 
                 case StaticMessager.Senders.FightTime:
-                {
-                    ConnectFightTimeBuffCover();
-                    break;
-                }
+                    {
+                        ConnectFightTimeBuffCover();
+                        break;
+                    }
             }
         }
 
@@ -495,11 +513,11 @@ namespace JYCalculator.ViewModels
             CurrentFilePath = null;
         }
 
-        public void SaveToFile(string filename)
+        public void SaveToFile(string filepath)
         {
             var sav = Model.Export();
             var json = JsonConvert.SerializeObject(sav, Formatting.Indented);
-            File.WriteAllText(filename, json, Encoding.UTF8);
+            File.WriteAllText(filepath, json, Encoding.UTF8);
             IsDirty = false;
             IsNew = false;
             InitInputVM.ClearJBTitle();
@@ -534,7 +552,7 @@ namespace JYCalculator.ViewModels
                 CurrentFilePath = saveFileDialog.FileName;
                 CurrentFileName = Path.GetFileName(CurrentFilePath);
                 if (isSync)
-                { 
+                {
                     // 文件名和配装标题保持同步
                     GlobalContext.ViewModels.SendCurrentFileNameAsPzTitle();
                     RaisePropertyChanged(nameof(InitInputModeDesc));
@@ -654,21 +672,21 @@ namespace JYCalculator.ViewModels
             switch (msgResult)
             {
                 case MessageBoxResult.Yes:
-                {
-                    SaveCurrent();
-                    canExit = true; // 完成保存，正常退出
-                    break;
-                }
+                    {
+                        SaveCurrent();
+                        canExit = true; // 完成保存，正常退出
+                        break;
+                    }
                 case MessageBoxResult.No:
-                {
-                    canExit = true; // 不保存直接退出
-                    break;
-                }
+                    {
+                        canExit = true; // 不保存直接退出
+                        break;
+                    }
                 case MessageBoxResult.Cancel:
-                {
-                    canExit = false; // 不再退出
-                    break;
-                }
+                    {
+                        canExit = false; // 不再退出
+                        break;
+                    }
             }
 
             return canExit;

@@ -1,6 +1,8 @@
 ﻿using JX3CalculatorShared.Utils;
 using JX3CalculatorShared.Views;
 using JX3CalculatorShared.Views.Dialogs;
+using JX3PZ.Views;
+using JYCalculator.Globals;
 using JYCalculator.Models;
 using JYCalculator.Src;
 using JYCalculator.ViewModels;
@@ -11,10 +13,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
-using JX3PZ.Views;
-using JYCalculator.Globals;
 
 namespace JYCalculator.Views
 {
@@ -61,10 +60,10 @@ namespace JYCalculator.Views
 #endif
 
             _VM.EnableAutoUpdate();
-
             GlobalContext.Views.Main = this;
 
             StartUp(); // 处理文件打开方式
+            _VM.DoCalc();
         }
 
         // 当打开文件方式启动时，需要额外处理
@@ -207,11 +206,11 @@ namespace JYCalculator.Views
         }
 
 
-        private void MainWindow_Drop(object sender, DragEventArgs e)
+        private void MainWindow_OnDrop(object sender, DragEventArgs e)
         {
             if (e.Data.GetDataPresent(DataFormats.FileDrop))
             {
-                string[] files = (string[]) e.Data.GetData(DataFormats.FileDrop);
+                string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
                 ReadFile(files[0]);
                 e.Handled = true;
             }
@@ -232,5 +231,10 @@ namespace JYCalculator.Views
         }
 
         #endregion
+
+        private void MainWindow_OnDragOver(object sender, DragEventArgs e)
+        {
+            HandlerTool.CommonOnDragOver(sender, e);
+        }
     }
 }

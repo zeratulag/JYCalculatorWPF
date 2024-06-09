@@ -1,9 +1,9 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using JX3CalculatorShared.Class;
+﻿using JX3CalculatorShared.Class;
 using JX3CalculatorShared.Globals;
 using JX3CalculatorShared.Utils;
 using JX3PZ.Globals;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace JX3PZ.Models
 {

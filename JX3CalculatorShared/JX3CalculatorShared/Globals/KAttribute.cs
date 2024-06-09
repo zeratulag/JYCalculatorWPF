@@ -2,6 +2,7 @@
 {
     public enum KAttributeTypeEnum
     {
+        atInvalid = 0,
         atActiveThreatCoefficient,
         atAddExpPercent,
         atAddHorseSprintPowerCost,
@@ -48,7 +49,6 @@
         atHasteBase,
         atHasteBasePercentAdd,
         atHorseCanSwim,
-        atInvalid,
         atKnockedBackRate,
         atLifeReplenishExt,
         atLifeReplenishPercent,

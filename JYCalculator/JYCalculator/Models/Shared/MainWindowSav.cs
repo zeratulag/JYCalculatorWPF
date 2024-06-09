@@ -1,8 +1,8 @@
 ﻿using JX3CalculatorShared.Class;
 using JX3CalculatorShared.ViewModels;
+using JX3PZ.Models;
 using JYCalculator.ViewModels;
 using System.Collections.Generic;
-using JX3PZ.Models;
 
 namespace JYCalculator.Models
 {

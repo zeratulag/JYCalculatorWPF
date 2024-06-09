@@ -1,6 +1,6 @@
 ﻿namespace JX3PZ.ViewModels
 {
-    public class IconAttributeEntryViewModel: AttributeEntryViewModel
+    public class IconAttributeEntryViewModel : AttributeEntryViewModel
     {
         // 带有图标的VM
         public string IconPath { get; set; }

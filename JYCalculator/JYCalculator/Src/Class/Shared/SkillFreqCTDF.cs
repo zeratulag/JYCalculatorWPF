@@ -16,6 +16,19 @@ namespace JYCalculator.Class
 
         #region 构建
 
+        public SkillFreqCTDF(SkillFreqCTDF old)
+        {
+            FChar = old.FChar.Copy();
+            Data = old.Data.ToDictionary(_ => _.Key, _ => _.Value.Copy());
+            SkillDatas = old.SkillDatas.Copy();
+        }
+
+        public SkillFreqCTDF Copy()
+        {
+            return new SkillFreqCTDF(this);
+        }
+
+
         public SkillFreqCTDF(SkillDataDF df, FullCharacter fchar, SkillFreqDict freq)
         {
             Data = new Dictionary<string, SkillFreqCT>(freq.Data.Count);
@@ -57,6 +70,44 @@ namespace JYCalculator.Class
                 var newFreqCT = new SkillFreqCT(SkillDatas.Data[key], FChar, freq);
                 Data.Add(key, newFreqCT);
             }
+        }
+
+        /// <summary>
+        /// 修正特定技能频率
+        /// </summary>
+        /// <param name="key">技能key</param>
+        /// <param name="freq">技能频率</param>
+        public void SetSkillFreq(string key, double freq)
+        {
+            if (Data.TryGetValue(key, out var value))
+            {
+                value.Freq = freq;
+            }
+        }
+
+        /// <summary>
+        /// 增加特定技能频率
+        /// </summary>
+        /// <param name="key">技能key</param>
+        /// <param name="dfreq">delta技能频率，增量</param>
+        public void ModifySkillFreq(string key, double dfreq)
+        {
+            if (Data.TryGetValue(key, out var value))
+            {
+                value.Freq += dfreq;
+            }
+        }
+
+        /// <summary>
+        /// 从技能1转移频率给技能2
+        /// </summary>
+        /// <param name="srcKey">源技能key</param>
+        /// <param name="dstKey">目标技能key</param>
+        /// <param name="dfreq">频率值</param>
+        public void TransSkillFreq(string srcKey, string dstKey, double dfreq)
+        {
+            ModifySkillFreq(srcKey, -dfreq);
+            ModifySkillFreq(dstKey, dfreq);
         }
 
 

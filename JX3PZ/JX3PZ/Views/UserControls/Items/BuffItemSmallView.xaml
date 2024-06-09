@@ -9,10 +9,8 @@
              mc:Ignorable="d"
              d:DesignHeight="24" d:DesignWidth="24"
              x:Name="buffItemSmallView"
-             Style="{StaticResource Style.ControlWithToolTip}" Background="Transparent">
-    <UserControl.InputBindings>
-        <MouseBinding Gesture="RightClick" Command="{Binding CancelThisCmd}" />
-    </UserControl.InputBindings>    
+             Style="{StaticResource Style.ControlWithToolTip}" Background="Transparent"
+             MouseRightButtonUp="BuffItemSmallView_OnMouseRightButtonUp">
     <Canvas Width="32" Height="32">
             <Image
                 Width="32"

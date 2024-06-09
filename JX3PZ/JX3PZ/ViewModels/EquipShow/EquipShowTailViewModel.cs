@@ -1,8 +1,10 @@
-﻿using System.Collections.Generic;
-using CommunityToolkit.Mvvm.ComponentModel;
-using JX3PZ.Class;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using JX3CalculatorShared.Utils;
+using JX3PZ.Globals;
 using JX3PZ.Models;
-using MathNet.Numerics.Optimization;
+using System.Collections.Generic;
+using System.Windows;
+using System.Windows.Documents;
 
 namespace JX3PZ.ViewModels
 {
@@ -73,5 +75,67 @@ namespace JX3PZ.ViewModels
             res.Add(Score.Text1);
             return res;
         }
+
+        #region 流文档元素
+
+        public Section GetSection()
+        {
+            var section = new Section
+            {
+                Margin = new Thickness(0, 10, 0, 0),
+                Tag = "Tail"
+            };
+            var p1 = GetSkillDescParagraph();
+            section.AddParagraph(p1);
+            var p2 = GetDescParagraph();
+            section.AddParagraph(p2);
+            var p3 = GetQualityScoreParagraph();
+            section.AddParagraph(p3);
+            return section;
+        }
+
+        public Paragraph GetSkillDescParagraph()
+        {
+            if (!HasSkillDesc)
+            {
+                return null;
+            }
+
+            var para = FlowDocumentTool.NewParagraph(nameof(SkillDesc));
+            var span1 = FlowDocumentTool.GetSpan(SkillDesc, ColorConst.Green, nameof(SkillDesc));
+            para.Inlines.Add(span1);
+            return para;
+        }
+
+        public Paragraph GetDescParagraph()
+        {
+            if (!HasItemDesc)
+            {
+                return null;
+            }
+
+            var para = FlowDocumentTool.NewParagraph(nameof(ItemDesc));
+            para.Margin = new Thickness(0, 5, 0, 5);
+
+            var span2 = FlowDocumentTool.GetSpan(ItemDesc, ColorConst.Yellow, nameof(ItemDesc));
+            span2.FontSize = 12;
+            para.Inlines.Add(span2);
+            return para;
+        }
+
+        public Paragraph GetQualityScoreParagraph()
+        {
+            var para = FlowDocumentTool.NewParagraph(nameof(Quality) + nameof(Score));
+            var span3 = Quality?.GetSpan(nameof(Quality));
+            var span4 = Score?.GetSpan(nameof(Score));
+            var spans = new List<Span>(5);
+            spans.Add(span3);
+            spans.Add(span4);
+            para.AddLines(spans);
+            return para;
+        }
+
+
+        #endregion
     }
 }

@@ -1,8 +1,4 @@
-﻿using System.Dynamic;
-using JX3CalculatorShared.Globals;
-using JX3PZ.Globals;
-using JX3PZ.Models;
-using Syncfusion.Windows.Shared;
+﻿using JX3PZ.Models;
 
 namespace JX3PZ.ViewModels
 {
@@ -22,7 +18,7 @@ namespace JX3PZ.ViewModels
         }
     }
 
-    public class PanelPhysicsShieldViewModel : PanelPercentSlotViewModelBase
+    public class PanelPhysicsShieldSlotViewModel : PanelPercentSlotViewModelBase
     {
         public override void UpdateFrom(PzPlanModel model)
         {
@@ -30,7 +26,7 @@ namespace JX3PZ.ViewModels
         }
     }
 
-    public class PanelMagicShieldViewModel : PanelPercentSlotViewModelBase
+    public class PanelMagicShieldSlotViewModel : PanelPercentSlotViewModelBase
     {
         public override void UpdateFrom(PzPlanModel model)
         {
@@ -38,7 +34,7 @@ namespace JX3PZ.ViewModels
         }
     }
 
-    public class PanelDecriticalDamageViewModel : PanelPercentSlotViewModelBase
+    public class PanelDecriticalDamageSlotViewModel : PanelPercentSlotViewModelBase
     {
         public override void UpdateFrom(PzPlanModel model)
         {
@@ -46,7 +42,7 @@ namespace JX3PZ.ViewModels
         }
     }
 
-    public class PanelToughnessViewModel : PanelPercentSlotViewModelBase
+    public class PanelToughnessSlotViewModel : PanelPercentSlotViewModelBase
     {
         public override void UpdateFrom(PzPlanModel model)
         {

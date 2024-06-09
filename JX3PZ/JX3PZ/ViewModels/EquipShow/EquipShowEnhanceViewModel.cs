@@ -1,7 +1,9 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using JX3CalculatorShared.Class;
-using JX3CalculatorShared.Data;
+using JX3CalculatorShared.Utils;
 using JX3PZ.Data;
+using System.Windows;
+using System.Windows.Documents;
 
 namespace JX3PZ.ViewModels
 {
@@ -42,5 +44,22 @@ namespace JX3PZ.ViewModels
                 HasBigFM = true;
             }
         }
+
+        #region 流文档元素
+
+        public Section GetSection()
+        {
+            var sec = FlowDocumentTool.NewSection(nameof(Enhance));
+            var para = FlowDocumentTool.NewParagraph();
+            para.Margin = new Thickness(1, 0, 0, 0);
+            var spanEnhance = Enhance?.GetSpan(nameof(Enhance) + "Span");
+            var spanBigFM = BigFM?.GetSpan(nameof(BigFM) + "Span");
+            var spans = new Span[2] { spanEnhance, spanBigFM };
+            para.AddLines(spans);
+            sec.AddParagraph(para);
+            return sec;
+        }
+
+        #endregion
     }
 }

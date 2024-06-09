@@ -1,13 +1,10 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using CommunityToolkit.Mvvm.Input;
+﻿using CommunityToolkit.Mvvm.Input;
 using JX3CalculatorShared.Class;
 using JX3CalculatorShared.ViewModels;
 using JX3PZ.Class;
 using JX3PZ.Data;
 using JX3PZ.Globals;
-using Syncfusion.Windows.Tools.Controls;
+using System.Linq;
 
 namespace JX3PZ.ViewModels
 {
@@ -16,7 +13,7 @@ namespace JX3PZ.ViewModels
         // 描述装备上五行石组的VM
 
         public bool HasDiamond { get; private set; }
-        public int DiamondNumber; // 五行石个数
+        public int DiamondSlotCount; // 五行石个数
         public int[] Levels;
         public DiamondLevelItem[] Items;
         public RelayCommand<string> OneKeyEmbedCmd { get; private set; } // 一键镶嵌
@@ -24,21 +21,21 @@ namespace JX3PZ.ViewModels
         public EquipDiamondViewModel(Equip equip) : base(DiamondSlotViewModel.GetDiamondViewModels(equip))
         {
             HasDiamond = Data.Any();
-            DiamondNumber = Data.Length;
+            DiamondSlotCount = Data.Length;
             PostConstruct();
         }
 
         public EquipDiamondViewModel(int n) : base(DiamondSlotViewModel.GetEmptyDiamondViewModels(n))
         {
-            DiamondNumber = n;
+            DiamondSlotCount = n;
             HasDiamond = Data.Any();
             PostConstruct();
         }
 
         public void PostConstruct()
         {
-            Levels = new int[DiamondNumber];
-            Items = new DiamondLevelItem[DiamondNumber];
+            Levels = new int[DiamondSlotCount];
+            Items = new DiamondLevelItem[DiamondSlotCount];
             GetLevels();
             OneKeyEmbedCmd = new RelayCommand<string>(OneKeyEmbed);
             SetOutName("Diamond");
@@ -72,18 +69,45 @@ namespace JX3PZ.ViewModels
         // 更换装备
         private void _ChangeEquip(Equip e)
         {
-            for (int i = 0; i < DiamondNumber; i++)
+            if (e == null)
             {
-                if (e == null)
-                {
-                    Data[i].ChangeItem(DiamondTabItem.EmptyItem);
-                }
-                else
-                {
-                    Data[i].ChangeItem(e.Attributes.Diamond[i]);
-                }
+                MakeEmpty();
+                return;
             }
+
+            if (e.Attributes == null)
+            {
+                // 可能尚未解析
+                e.ParseAttrs();
+            }
+
+            if (e.Attributes == null || e.Attributes.Diamond == null)
+            {
+                MakeEmpty();
+                return;
+            }
+
+            for (int i = 0; i < DiamondSlotCount; i++)
+            {
+                Data[i].ChangeItem(e.Attributes.Diamond[i]);
+
+            }
+
+            HasDiamond = true;
         }
+
+        // 当未选择装备/装备不带空的时候，需要把所有的槽位置为空
+        private void MakeEmpty()
+        {
+            var empty = DiamondTabItem.EmptyItem;
+            for (int i = 0; i < DiamondSlotCount; i++)
+            {
+                Data[i].ChangeItem(empty);
+            }
+
+            HasDiamond = false;
+        }
+
 
         public void ChangeEquip(Equip e)
         {
@@ -97,7 +121,7 @@ namespace JX3PZ.ViewModels
 
         protected void GetLevels()
         {
-            for (int i = 0; i < DiamondNumber; i++)
+            for (int i = 0; i < DiamondSlotCount; i++)
             {
                 Levels[i] = Data[i].Level;
                 Items[i] = Data[i].ShowItem;
@@ -111,7 +135,7 @@ namespace JX3PZ.ViewModels
         public void DropDiamond()
         {
             // 取下五行石
-            for (int i = 0; i < DiamondNumber; i++)
+            for (int i = 0; i < DiamondSlotCount; i++)
             {
                 Data[i].Load(0);
             }
@@ -127,7 +151,7 @@ namespace JX3PZ.ViewModels
             }
             else
             {
-                for (int i = 0; i < DiamondNumber; i++)
+                for (int i = 0; i < DiamondSlotCount; i++)
                 {
                     Data[i].Load(levels[i]);
                 }

@@ -1,4 +1,5 @@
-﻿using JX3CalculatorShared.Globals;
+﻿using JX3CalculatorShared.Class;
+using JX3CalculatorShared.Globals;
 using JX3CalculatorShared.ViewModels;
 using JYCalculator.Class;
 using JYCalculator.Data;
@@ -7,10 +8,6 @@ using JYCalculator.Models;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
-using System.Windows.Interop;
-using CommunityToolkit.Mvvm.Messaging;
-using CommunityToolkit.Mvvm.Messaging.Messages;
-using JX3CalculatorShared.Class;
 
 namespace JYCalculator.ViewModels
 {
@@ -148,6 +145,10 @@ namespace JYCalculator.ViewModels
 
         protected void _Load(IList<int> orders)
         {
+            if (orders == null)
+            {
+                return;
+            }
             for (int i = 0; i < StaticConst.NumberOfQiXue; i++)
             {
                 Data[i].LoadOrder(orders[i]);

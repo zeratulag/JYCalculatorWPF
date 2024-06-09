@@ -1,11 +1,10 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using JX3CalculatorShared.Common;
+﻿using JX3CalculatorShared.Common;
 using JX3CalculatorShared.Globals;
 using JX3CalculatorShared.Utils;
 using JX3PZ.Globals;
-using JX3PZ.Models;
 using JX3PZ.ViewModels;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace JX3PZ.Class
 {
@@ -84,7 +83,7 @@ namespace JX3PZ.Class
 
             var str1 = $"{w}伤害提高 {WeaponDamageMin:F1} - {WeaponDamageMax:F1}";
             var str2 = $"每秒伤害 {WeaponDamagePerSecond:F1}";
-            var res = new string[] {str1, str2};
+            var res = new string[] { str1, str2 };
             return res;
         }
 

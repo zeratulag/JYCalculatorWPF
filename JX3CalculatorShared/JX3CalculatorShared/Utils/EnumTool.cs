@@ -1,7 +1,7 @@
-﻿using System;
+﻿using JX3CalculatorShared.Globals;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using JX3CalculatorShared.Globals;
 
 namespace JX3CalculatorShared.Utils
 {

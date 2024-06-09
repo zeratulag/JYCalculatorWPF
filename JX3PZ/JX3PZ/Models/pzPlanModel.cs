@@ -1,9 +1,9 @@
-﻿using JX3PZ.Globals;
+﻿using JX3CalculatorShared.Class;
+using JX3PZ.Globals;
 using JX3PZ.ViewModels;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using JX3CalculatorShared.Class;
 
 namespace JX3PZ.Models
 {
@@ -26,8 +26,8 @@ namespace JX3PZ.Models
         public CharacterPanel Panel; // 全面板属性
         public XinFaCharacterPanel XFPanel; // 当前心法面板属性
         public EquipStoneModel EquipStone;
-        public EquipSnapShotModel PrimaryWeaponModel => SnapShots[(int) EquipSlotEnum.PRIMARY_WEAPON]; // 主武器的Model
-        public EquipSnapShotModel PendantModel => SnapShots[(int) EquipSlotEnum.PENDANT]; // 腰坠的Model
+        public EquipSnapShotModel PrimaryWeaponModel => SnapShots[(int)EquipSlotEnum.PRIMARY_WEAPON]; // 主武器的Model
+        public EquipSnapShotModel PendantModel => SnapShots[(int)EquipSlotEnum.PENDANT]; // 腰坠的Model
 
         public PzPlanModel()
         {
@@ -183,7 +183,7 @@ namespace JX3PZ.Models
         {
             var equipList = ExportJBPZEquipSnapshotCollection();
             var title = XFPanel.Name;
-            var res = new PzMainSav() {EquipList = equipList, Title = title};
+            var res = new PzMainSav() { EquipList = equipList, Title = title };
             return res;
         }
 

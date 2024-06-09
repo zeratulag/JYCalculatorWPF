@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Collections.Immutable;
-using System.Linq;
-using System.Windows.Media;
-using JX3CalculatorShared.Globals;
+﻿using JX3CalculatorShared.Globals;
+using JX3CalculatorShared.Utils;
 using JX3PZ.Class;
-using static JX3CalculatorShared.Globals.AppStatic;
+using JX3PZ.Globals;
+using System.Collections.Generic;
+using System.Linq;
+using System.Windows.Documents;
 
 namespace JX3PZ.Data
 {
@@ -28,6 +26,8 @@ namespace JX3PZ.Data
 
         public readonly DiamondTabItem Item; // 父对象
         public string EquipTag { get; }
+
+        public readonly Span DiamondLevelSpan;
 
         public DiamondLevelItem(DiamondTabItem item, int level)
         {
@@ -58,13 +58,15 @@ namespace JX3PZ.Data
             }
             else
             {
-                Color = "#adadad";
+                Color = ColorConst.Inactive;
                 AttributeDesc = "未熔嵌";
                 ShortAttributeDesc = AttributeDesc;
                 ToolTip = "未熔嵌";
                 AttributeEntryDesc = $"熔嵌孔：{Item.GetDesc(Level, prefix: false)}";
                 EquipTag = "空";
             }
+
+            DiamondLevelSpan = GetSpan();
         }
 
         public static IEnumerable<DiamondLevelItem> GetLevelItems(DiamondTabItem item)
@@ -72,5 +74,22 @@ namespace JX3PZ.Data
             var res = from _ in Enumerable.Range(0, item.LevelValues.Length) select new DiamondLevelItem(item, _);
             return res;
         }
+
+
+        #region 流文档元素
+
+        public Span GetSpan()
+        {
+            var imagePath = BindingTool.Diamond2Path(Level);
+            // 创建Run控件
+            Run run = new Run(AttributeEntryDesc)
+            {
+                Foreground = SolidColorBrushLib.FromColor(Color, true),
+            };
+            var span = FlowDocumentTool.GetImageSpan(imagePath, run);
+            return span;
+        }
+
+        #endregion
     }
 }

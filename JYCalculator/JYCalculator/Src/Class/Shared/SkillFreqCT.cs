@@ -22,6 +22,15 @@ namespace JYCalculator.Class
 
         #region 构建
 
+        public SkillFreqCT(SkillFreqCT old)
+        {
+            Name = old.Name;
+            AddCT = old.AddCT;
+            CT = old.CT;
+            Freq = old.Freq;
+        }
+
+
         public SkillFreqCT(SkillData skill, FullCharacter fchar, double freq)
         {
             Name = skill.Name;
@@ -30,6 +39,11 @@ namespace JYCalculator.Class
 
             CT = Math.Min(fchar.CT + AddCT, 1);
             UpdateFChar(fchar);
+        }
+
+        public SkillFreqCT Copy()
+        {
+            return new SkillFreqCT(this);
         }
 
 

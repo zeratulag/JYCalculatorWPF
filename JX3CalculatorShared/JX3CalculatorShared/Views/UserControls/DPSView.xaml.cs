@@ -15,7 +15,7 @@ namespace JX3CalculatorShared.Views.UserControls
 
         public double FinalDPS
         {
-            get { return (double) GetValue(FinalDPSProperty); }
+            get { return (double)GetValue(FinalDPSProperty); }
             set { SetValue(FinalDPSProperty, value); }
         }
 

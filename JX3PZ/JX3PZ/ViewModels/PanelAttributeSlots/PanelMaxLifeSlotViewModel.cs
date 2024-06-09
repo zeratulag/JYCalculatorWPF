@@ -1,8 +1,4 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-using JX3PZ.Globals;
-using JX3PZ.Models;
-using System;
-using System.Collections.Generic;
+﻿using JX3PZ.Models;
 
 namespace JX3PZ.ViewModels
 {

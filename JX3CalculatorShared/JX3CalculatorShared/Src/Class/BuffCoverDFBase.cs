@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace JX3CalculatorShared.Class
+﻿namespace JX3CalculatorShared.Class
 {
     public class BuffCoverDFBase : CoverDFBase
     {

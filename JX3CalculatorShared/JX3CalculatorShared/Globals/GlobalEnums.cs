@@ -59,8 +59,8 @@
 
     public enum EquipSubTypeEnumDesc
     {
-        近身武器 = 0,
-        远程武器 = 1,
+        武器 = 0,
+        暗器 = 1,
         上衣 = 2,
         帽子 = 3,
         项链 = 4,
@@ -89,6 +89,7 @@
 
     public enum EquipOptionType
     {
+        Default = -1,
         WP,
         YZ
     }
@@ -110,6 +111,7 @@
 
     public enum BuffTypeEnum
     {
+        Default = -1,
         Buff_Self,
         Buff_Normal,
         DeBuff_Normal,
@@ -117,9 +119,11 @@
         Buff_Extra,
         Buff_ExtraStack,
         Buff_ExtraTrigger,
+        Buff_Special,
     }
     public enum SkillDataTypeEnum
     {
+        Default = -1,
         Normal, // 常规
         Channel, // 逆读条
         DOT, // DOT
@@ -127,11 +131,13 @@
         Physics, // 外功
         PZ, // 破招
         Exclude, // 排除 
+        SuperCustom, // 固定伤害，只吃吃等级压制和易伤
         NormalDOT, // 穿心弩专用
     }
 
     public enum ItemDTTypeEnum
     {
+        Default = -1,
         FoodSupport, // 食品辅助
         FoodEnhance, // 食品增强
         MedSupport, // 药品辅助
@@ -144,6 +150,7 @@
 
     public enum RecipeTypeEnum
     {
+        Default = -1,
         秘籍,
         奇穴,
         武器,

@@ -1,11 +1,9 @@
 ﻿using JX3CalculatorShared.Class;
 using JX3CalculatorShared.Globals;
+using JX3CalculatorShared.Messages;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
-using CommunityToolkit.Mvvm.Input;
-using CommunityToolkit.Mvvm.Messaging;
-using JX3CalculatorShared.Messages;
 
 namespace JX3CalculatorShared.ViewModels
 {

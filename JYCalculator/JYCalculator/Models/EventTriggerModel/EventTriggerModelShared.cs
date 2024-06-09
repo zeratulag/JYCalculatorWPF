@@ -174,12 +174,17 @@ namespace JYCalculator.Models
 
             var normalHitfreq = SkillFreqCTDFs.Normal.GetSumCTFreq(names);
             var normalInterval = shoesEvent.MeanTriggerInterval(normalHitfreq);
-            const string renling = "RenLing";
-            SkillFreqCTDFs.Normal.AddSkillFreq(renling, 1 / normalInterval);
+            string skillKey = "RenLing";
+            var isFixed = BigFM.IsFixedDamaged(Arg.BigFM_SHOES_Level_Min);
+            if (isFixed)
+            {
+                skillKey = $"{skillKey}_Fixed";
+            }
 
+            SkillFreqCTDFs.Normal.AddSkillFreq(skillKey, 1 / normalInterval);
             var xwHitfreq = SkillFreqCTDFs.XW.GetSumCTFreq(names);
             var xwInterval = shoesEvent.MeanTriggerInterval(xwHitfreq);
-            SkillFreqCTDFs.XW.AddSkillFreq(renling, 1 / xwInterval);
+            SkillFreqCTDFs.XW.AddSkillFreq(skillKey, 1 / xwInterval);
         }
 
         /// <summary>

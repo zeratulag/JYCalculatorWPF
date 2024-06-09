@@ -9,7 +9,7 @@ namespace JX3PZ.Views
     {
         public static Thickness GetPagePadding(DependencyObject obj)
         {
-            return (Thickness) obj.GetValue(PagePaddingProperty);
+            return (Thickness)obj.GetValue(PagePaddingProperty);
         }
 
         public static void SetPagePadding(DependencyObject obj, Thickness value)
@@ -26,13 +26,13 @@ namespace JX3PZ.Views
                     var dpd = DependencyPropertyDescriptor.FromProperty(FlowDocument.PagePaddingProperty,
                         typeof(FlowDocument));
                     dpd.RemoveValueChanged(fd, PaddingChanged);
-                    fd.PagePadding = (Thickness) args.NewValue;
+                    fd.PagePadding = (Thickness)args.NewValue;
                     dpd.AddValueChanged(fd, PaddingChanged);
                 }));
 
         public static void PaddingChanged(object s, EventArgs e)
         {
-            ((FlowDocument) s).PagePadding = GetPagePadding((DependencyObject) s);
+            ((FlowDocument)s).PagePadding = GetPagePadding((DependencyObject)s);
         }
     }
 }

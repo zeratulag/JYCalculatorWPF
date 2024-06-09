@@ -25,6 +25,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Models\PanelAttributeSlots\IPanelAttributeSlot.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\PanelAttributeSlots\PanelAttackSlot.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\PanelAttributeSlots\PanelMaxLifeSlot.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\PanelAttributeSlots\PanelPVXAllRoundSlot.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\PanelAttributeSlots\PanelSurplusSlot.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\PanelAttributeSlots\PanelPercentAttributeSlot.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\PanelAttributeSlots\PanelCriticalDamageSlot.cs" />
@@ -85,6 +86,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)Src\Data\Stone.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Globals\PzEnums.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Src\StaticPzData.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Equip\EquipShowBoxModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\EquipShow\EquipShowBoxViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\EquipShow\EquipShowEnhanceViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\EquipShow\EquipShowExtraViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\EquipShow\EquipShowMagicViewModel.cs" />
@@ -94,6 +97,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\EquipShow\EquipShowTailViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\EquipShow\EquipShowViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\EquipShow\IEquipShow.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\PanelAttributeSlots\PanelPVXAllRoundSlotViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\PanelAttributeSlots\PanelWeaponSlotViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\PanelAttributeSlots\PanelSurplusSlotViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\PanelAttributeSlots\PanelPercentSlotViewModelBase.cs" />
@@ -119,6 +123,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\PzTab\PzEquipSummaryViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\PzTab\PzTabItemViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\PzMainWindow.xaml.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\UserControls\EquipShow\EquipShowBox.xaml.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\UserControls\Items\ItemDTSmallView.xaml.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\UserControls\Items\QiXueItemSmallView.xaml.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\UserControls\Items\IconItemSmallView.xaml.cs" />
@@ -162,6 +167,10 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="$(MSBuildThisFileDirectory)Views\PzMainWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\UserControls\EquipShow\EquipShowBox.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

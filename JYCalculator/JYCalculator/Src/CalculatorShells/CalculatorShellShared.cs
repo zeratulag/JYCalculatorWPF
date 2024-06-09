@@ -1,16 +1,16 @@
 ﻿using JX3CalculatorShared.Class;
 using JX3CalculatorShared.Common;
 using JX3CalculatorShared.Data;
+using JX3CalculatorShared.Globals;
 using JX3CalculatorShared.Src;
 using JX3CalculatorShared.Utils;
 using JYCalculator.Class;
 using JYCalculator.Data;
-using JYCalculator.Globals;
 using JYCalculator.Models;
 using JYCalculator.ViewModels;
 using System.Collections.Generic;
 using System.Diagnostics;
-using JX3CalculatorShared.Globals;
+using System.Linq;
 
 namespace JYCalculator.Src
 {
@@ -62,13 +62,14 @@ namespace JYCalculator.Src
         public DPSKernelShell KernelShell;
         public DPSKernel CDPSKernel => KernelShell.CurrentDPSKernel;
 
-        public bool IsSupport => QiXue.IsSupport & Arg.AllSkillMiJiIsSupport;
 
         public string FinalDPStxt;
 
         public string FinalDPStxtF; // 更加精确的DPS值
 
         public int CalcStatus { get; private set; } = -1; // 表示计算结果， 0表示计算成功
+        public SkillBuild CSkillBuild { get; protected set; } = null;// 流派
+        public bool IsSupport { get; protected set; } = false; // 是否支持
 
         // 优化
         public DPSKernelOptimizer DpsKernelOp; // 
@@ -145,8 +146,7 @@ namespace JYCalculator.Src
 
             var watch = System.Diagnostics.Stopwatch.StartNew();
 
-            GetAbilityGenre();
-
+            GetSkillBuild();
             if (AppStatic.XinFaTag == "TL")
             {
                 CalcBoLiangFenXingArg();
@@ -186,14 +186,28 @@ namespace JYCalculator.Src
             {
                 CalcStatus = 0;
             }
-            
+
             return this;
         }
 
-        public void GetAbilityGenre()
+        public void GetSkillBuild()
         {
             // 获取流派
-            var genere = StaticXFData.DB.Ability.GenreData[QiXue.SkillBaseNumGenre];
+
+            var validSkillBuild = QiXue.CompatibleSkillBuilds.Intersect(Arg.RecipeCompatibleSkillBuilds).OrderByDescending(_ => _.Priority).ToArray();
+
+            if (validSkillBuild.Length > 0)
+            {
+                CSkillBuild = validSkillBuild.First();
+                IsSupport = true;
+            }
+            else
+            {
+                IsSupport = false;
+                CSkillBuild = StaticXFData.DB.SkillBuild.Default;
+            }
+
+            var genere = StaticXFData.DB.Ability.GenreData[CSkillBuild.Name];
             XfAbility = genere[AbilityItem.Rank];
         }
 
@@ -236,7 +250,7 @@ namespace JYCalculator.Src
 
         public void CalcSkillNum()
         {
-            SkillNum = new SkillNumModel(QiXue, SkillHaste, XfAbility, Equip, BigFM, Zhen.IsOwn, Arg);
+            SkillNum = new SkillNumModel(QiXue, SkillHaste, XfAbility, Equip, BigFM, Zhen.IsOwn, Arg, CSkillBuild);
             SkillNum.Calc();
         }
 
@@ -260,7 +274,7 @@ namespace JYCalculator.Src
 
         public void GetFinalDPS()
         {
-            if (QiXue.IsSupport)
+            if (CSkillBuild != null)
             {
                 FinalDPStxt = $"{CDPSKernel.FinalDPS:F0}";
                 FinalDPStxtF = $"{CDPSKernel.FinalDPS:F2}";

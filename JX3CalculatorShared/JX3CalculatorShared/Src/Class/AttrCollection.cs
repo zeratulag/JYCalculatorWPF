@@ -141,7 +141,7 @@ namespace JX3CalculatorShared.Class
         {
             Values.MultiplyEffect(k);
             Others.MultiplyEffect(k);
-        } 
+        }
 
         #endregion
 

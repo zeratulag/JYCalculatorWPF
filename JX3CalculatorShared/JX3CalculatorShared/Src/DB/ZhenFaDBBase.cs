@@ -1,9 +1,9 @@
 ﻿using JX3CalculatorShared.Common;
 using JX3CalculatorShared.Data;
+using JX3CalculatorShared.Globals;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
-using JX3CalculatorShared.Globals;
 
 namespace JX3CalculatorShared.DB
 {
@@ -19,7 +19,7 @@ namespace JX3CalculatorShared.DB
             var zf = zhenFaDf.Select(zhenFaDfItem => zhenFaDfItem.Name).Select(name => Data[name]);
             if (AppStatic.XinFaTag == "JY")
             {
-                ZhenFa = zf.Where(_ => ! _.IsOwn).ToImmutableArray(); // 惊羽暂时不考虑自己开阵，太复杂
+                ZhenFa = zf.Where(_ => !_.IsOwn).ToImmutableArray(); // 惊羽暂时不考虑自己开阵，太复杂
             }
             else
             {

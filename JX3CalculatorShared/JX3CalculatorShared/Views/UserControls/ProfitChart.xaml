@@ -3,9 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:syncfusion="http://schemas.syncfusion.com/wpf"
+             xmlns:sf="http://schemas.syncfusion.com/wpf"
              mc:Ignorable="d">
-    <syncfusion:SfChart
+    <sf:SfChart
         x:Name="profitChart"
         MaxWidth="400"
         MaxHeight="250"
@@ -15,32 +15,32 @@
         Header="{Binding Path=Header}"
         FontSize="15">
         <!--  Initialize the horizontal axis for the WPF Chart  -->
-        <syncfusion:SfChart.PrimaryAxis>
-            <syncfusion:CategoryAxis FontSize="12" ShowGridLines="False" />
-        </syncfusion:SfChart.PrimaryAxis>
+        <sf:SfChart.PrimaryAxis>
+            <sf:CategoryAxis FontSize="12" ShowGridLines="False" />
+        </sf:SfChart.PrimaryAxis>
 
         <!--  Initialize the vertical axis for the WPF Chart  -->
-        <syncfusion:SfChart.SecondaryAxis>
-            <syncfusion:NumericalAxis FontSize="14" />
-        </syncfusion:SfChart.SecondaryAxis>
+        <sf:SfChart.SecondaryAxis>
+            <sf:NumericalAxis FontSize="14" />
+        </sf:SfChart.SecondaryAxis>
 
         <!--  Adding Column Series to the WPF Chart  -->
-        <syncfusion:BarSeries
+        <sf:BarSeries
             EnableAnimation="True"
             ItemsSource="{Binding Path=Data}"
             Palette="Elite"
             ShowTooltip="True"
             XBindingPath="DescName"
             YBindingPath="Value">
-            <syncfusion:BarSeries.AdornmentsInfo>
-                <syncfusion:ChartAdornmentInfo
+            <sf:BarSeries.AdornmentsInfo>
+                <sf:ChartAdornmentInfo
                     Background="Transparent"
                     LabelPosition="Inner"
                     ShowLabel="True"
                     ShowMarker="True" />
-            </syncfusion:BarSeries.AdornmentsInfo>
+            </sf:BarSeries.AdornmentsInfo>
 
-            <syncfusion:BarSeries.TooltipTemplate>
+            <sf:BarSeries.TooltipTemplate>
                 <DataTemplate>
                     <TextBlock
                         HorizontalAlignment="Right"
@@ -48,9 +48,9 @@
                         Text="{Binding Path=Item.Value, StringFormat='{}{0:F3}'}"
                         FontSize="12" />
                 </DataTemplate>
-            </syncfusion:BarSeries.TooltipTemplate>
+            </sf:BarSeries.TooltipTemplate>
 
-        </syncfusion:BarSeries>
+        </sf:BarSeries>
 
-    </syncfusion:SfChart>
+    </sf:SfChart>
 </UserControl>

@@ -1,18 +1,16 @@
-﻿using System;
-using System.Diagnostics;
-using System.Threading.Tasks;
-using JX3CalculatorShared.Class;
+﻿using JX3CalculatorShared.Class;
 using JX3CalculatorShared.Data;
 using JX3CalculatorShared.Globals;
-using JX3PZ.Data;
-using JYCalculator.Globals;
-using System.Windows;
 using JX3CalculatorShared.Utils;
-using JX3PZ.Globals;
+using JX3PZ.Data;
 using JX3PZ.Src;
-using JYCalculator.Data;
 using JX3PZ.ViewModels;
+using JYCalculator.Data;
+using JYCalculator.Globals;
 using JYCalculator.Src;
+using System.Diagnostics;
+using System.Threading.Tasks;
+using System.Windows;
 
 namespace JYCalculator
 {
@@ -41,16 +39,19 @@ namespace JYCalculator
             EquipMapLib.Load(AppStatic.EquipMap_Path);
             //AfterLoad();
             StaticXFData.Load();
+
+            AttributeTabLib.Load(AppStatic.Pz_Path);
+            AttributeTabLib.Parse();
+            StaticPzData.SetPath(AppStatic.Pz_Path);
+            StaticPzData.Load();
+
             Task.Run(AfterLoad);
         }
 
         public void AfterLoad()
         {
             var watch = System.Diagnostics.Stopwatch.StartNew();
-            AttributeTabLib.Load(AppStatic.Pz_Path);
-            AttributeTabLib.Parse();
-            StaticPzData.SetPath(AppStatic.Pz_Path);
-            StaticPzData.Load();
+
             EquipStoneSelectSources.Load();
             StaticXFData.MakeStoneAttrFilter();
 

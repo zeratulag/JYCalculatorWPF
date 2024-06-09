@@ -2,10 +2,10 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:views="clr-namespace:JX3PZ.Views"
                     xmlns:hc="https://handyorg.github.io/handycontrol"
-                    xmlns:syncfusion="http://schemas.syncfusion.com/wpf">
+                    xmlns:sf="http://schemas.syncfusion.com/wpf">
 
     <!--  多条件筛选框（一行）  -->
-    <Style x:Key="Style.FilterCheckListBoxHorizontal" TargetType="syncfusion:CheckListBox">
+    <Style x:Key="Style.FilterCheckListBoxHorizontal" TargetType="sf:CheckListBox">
         <Style.Setters>
             <Setter Property="ItemsPanel">
                 <Setter.Value>
@@ -22,7 +22,7 @@
     </Style>
 
     <!--  多条件筛选框（流式布局）  -->
-    <Style x:Key="Style.FilterCheckListBoxHorizontalWrap" TargetType="syncfusion:CheckListBox">
+    <Style x:Key="Style.FilterCheckListBoxHorizontalWrap" TargetType="sf:CheckListBox">
         <Style.Setters>
             <Setter Property="ItemsPanel">
                 <Setter.Value>

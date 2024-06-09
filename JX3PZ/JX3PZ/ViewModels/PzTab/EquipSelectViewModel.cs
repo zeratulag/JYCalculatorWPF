@@ -1,4 +1,12 @@
-﻿using System;
+﻿using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
+using JX3CalculatorShared.Class;
+using JX3CalculatorShared.ViewModels;
+using JX3PZ.Class;
+using JX3PZ.Data;
+using JX3PZ.Globals;
+using JX3PZ.Messages;
+using JX3PZ.Src;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Collections.ObjectModel;
@@ -6,17 +14,6 @@ using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows.Data;
-using CommunityToolkit.Mvvm.Input;
-using CommunityToolkit.Mvvm.Messaging;
-using JX3CalculatorShared.Class;
-using JX3CalculatorShared.Globals;
-using JX3CalculatorShared.ViewModels;
-using JX3PZ.Class;
-using JX3PZ.Data;
-using JX3PZ.Globals;
-using JX3PZ.Messages;
-using JX3PZ.Src;
-using PropertyChanged;
 
 namespace JX3PZ.ViewModels
 {
@@ -76,7 +73,7 @@ namespace JX3PZ.ViewModels
             ItemsSourceView = CollectionViewSource.GetDefaultView(Source);
 
             GetFilterArg();
-            ItemsSourceView.Filter = (_ => CanFilter((Equip) _));
+            ItemsSourceView.Filter = (_ => CanFilter((Equip)_));
 
             DropEquipCmd = new RelayCommand(DropEquip);
             RegisterFilterEvents();
@@ -225,8 +222,8 @@ namespace JX3PZ.ViewModels
         {
             MinLevel = minLevel;
             MaxLevel = maxLevel;
-            AttrFilter = attrFilter.Select(_ => ((CheckItem) _).Name).ToArray();
-            OtherFiler = otherFilter.Select(_ => ((CheckItem) _).Name).ToArray();
+            AttrFilter = attrFilter.Select(_ => ((CheckItem)_).Name).ToArray();
+            OtherFiler = otherFilter.Select(_ => ((CheckItem)_).Name).ToArray();
         }
 
         public EquipFilterArg(EquipSelectViewModel vm) : this(vm.MinLevel, vm.MaxLevel, vm.AttrFilterSelected,

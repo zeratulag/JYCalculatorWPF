@@ -1,5 +1,4 @@
-﻿using JX3PZ.ViewModels;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 
 namespace JX3PZ.Views
@@ -14,7 +13,7 @@ namespace JX3PZ.Views
 
         public int Position
         {
-            get { return (int) GetValue(PositionProperty); }
+            get { return (int)GetValue(PositionProperty); }
             set { SetValue(PositionProperty, value); }
         }
 

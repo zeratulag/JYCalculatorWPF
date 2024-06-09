@@ -1,8 +1,8 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:views="clr-namespace:JX3CalculatorShared.Views"
-                    xmlns:xc="http://schemas.xceed.com/wpf/xaml/toolkit"
-                    xmlns:Syncfusion="http://schemas.syncfusion.com/wpf">
+                    xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+                    xmlns:sf="http://schemas.syncfusion.com/wpf">
 
     <!--  物品外部边界框  -->
     <Style x:Key="Style.ItemExternalBorder" TargetType="Border">
@@ -91,7 +91,7 @@
     </Style>
 
     <!--  自然数输入框  -->
-    <Style x:Key="Style.IntUpDown" TargetType="{x:Type xc:IntegerUpDown}">
+    <Style x:Key="Style.IntUpDown" TargetType="{x:Type xctk:IntegerUpDown}">
         <Setter Property="ShowButtonSpinner" Value="False" />
         <Setter Property="Minimum" Value="0" />
         <Setter Property="TextAlignment" Value="Center" />
@@ -101,12 +101,12 @@
     <Style
         x:Key="Style.IntUpDown_InitInput"
         BasedOn="{StaticResource Style.IntUpDown}"
-        TargetType="{x:Type xc:IntegerUpDown}">
+        TargetType="{x:Type xctk:IntegerUpDown}">
         <Setter Property="Margin" Value="5" />
     </Style>
 
     <!--  百分数输入框  -->
-    <Style x:Key="Style.PercentUpDown" TargetType="{x:Type xc:DoubleUpDown}">
+    <Style x:Key="Style.PercentUpDown" TargetType="{x:Type xctk:DoubleUpDown}">
         <Setter Property="ShowButtonSpinner" Value="False" />
         <Setter Property="Minimum" Value="0" />
         <Setter Property="TextAlignment" Value="Center" />
@@ -118,7 +118,7 @@
     <Style
         x:Key="Style.PercentUpDown_InitInput"
         BasedOn="{StaticResource Style.PercentUpDown}"
-        TargetType="{x:Type xc:DoubleUpDown}">
+        TargetType="{x:Type xctk:DoubleUpDown}">
         <Setter Property="Margin" Value="5" />
     </Style>
 
@@ -164,7 +164,7 @@
     </Style>
 
     <!--  居中的sfDataGrid标题列  -->
-    <Style x:Key="Style.CenterSfDataTextColumn" TargetType="Syncfusion:SfDataGrid">
+    <Style x:Key="Style.CenterSfDataTextColumn" TargetType="sf:SfDataGrid">
         <Setter Property="HorizontalContentAlignment" Value="Center" />
     </Style>
 
@@ -193,7 +193,7 @@
         <Setter Property="HorizontalAlignment" Value="Left"/>
     </Style>
 
-    <Style x:Key="Style.CenterSfDataGridCell" TargetType="Syncfusion:GridCell">
+    <Style x:Key="Style.CenterSfDataGridCell" TargetType="sf:GridCell">
         <Setter Property="HorizontalContentAlignment" Value="Center" />
     </Style>
 

@@ -25,8 +25,8 @@ namespace JX3PZ.Models
 
         public void Calc()
         {
-            FinalMaxLifeBase = (int) (MaxLifeBase * (1 + MaxLifePercentAdd / GKiloDenominator)) + MaxLifeAdditional;
-            FinalMaxLifeFinal = (int) (FinalMaxLifeBase * (1 + FinalMaxLifeAddPercent / GKiloDenominator));
+            FinalMaxLifeBase = (int)(MaxLifeBase * (1 + MaxLifePercentAdd / GKiloDenominator)) + MaxLifeAdditional;
+            FinalMaxLifeFinal = (int)(FinalMaxLifeBase * (1 + FinalMaxLifeAddPercent / GKiloDenominator));
         }
 
         public void UpdateFrom(int maxLifeBase = 0, int maxLifePercentAdd = 0, int maxLifeAdditional = 0,

@@ -18,6 +18,7 @@ namespace JX3CalculatorShared.Class
         public double AddCT { get; set; } // 增加会心
         public double AddCF { get; set; } // 增加会效
         public double AddDmg { get; set; } // 增加伤害
+        public double AddNPCDmg { get; set; } // 增加非侠士
         public double ChannelIntervalCoef { get; set; } = 1; // 系数修改倍率
         public int Frame { get; set; } // 帧数
         public double IntervalTime => Frame / StaticConst.FRAMES_PER_SECOND; // 初始时间间隔
@@ -52,6 +53,7 @@ namespace JX3CalculatorShared.Class
             AddCT = old.AddCT;
             AddCF = old.AddCF;
             AddDmg = old.AddDmg;
+            AddNPCDmg = old.AddNPCDmg;
 
             ChannelIntervalCoef = old.ChannelIntervalCoef;
 
@@ -72,6 +74,7 @@ namespace JX3CalculatorShared.Class
             AddCT = Info.Add_CT;
             AddCF = Info.Add_CF;
             AddDmg = Info.Add_Dmg;
+            AddNPCDmg = Info.Add_NPCDmg;
 
             ChannelIntervalCoef = 1.0;
 
@@ -86,33 +89,33 @@ namespace JX3CalculatorShared.Class
             switch (Info.Type)
             {
                 case SkillDataTypeEnum.Channel:
-                {
-                    finalG += Frame;
-                    ap_Coef = CalcAPCoef(finalG);
-                    break;
-                }
+                    {
+                        finalG += Frame;
+                        ap_Coef = CalcAPCoef(finalG);
+                        break;
+                    }
 
                 case SkillDataTypeEnum.Normal:
                 case SkillDataTypeEnum.Exclude:
-                {
-                    ap_Coef = CalcAPCoef(finalG);
-                    break;
-                }
+                    {
+                        ap_Coef = CalcAPCoef(finalG);
+                        break;
+                    }
 
                 case SkillDataTypeEnum.DOT:
-                {
-                    ap_Coef = CalcDOTAPCoef(finalG, nCount, Frame);
-                    break;
-                }
+                    {
+                        ap_Coef = CalcDOTAPCoef(finalG, nCount, Frame);
+                        break;
+                    }
 
                 case SkillDataTypeEnum.Physics:
                 case SkillDataTypeEnum.NoneAP:
                 case SkillDataTypeEnum.PZ:
                 case SkillDataTypeEnum.NormalDOT:
-                {
-                    ap_Coef = 0;
-                    break;
-                }
+                    {
+                        ap_Coef = 0;
+                        break;
+                    }
             }
 
             return ap_Coef;
@@ -138,7 +141,7 @@ namespace JX3CalculatorShared.Class
         public double CalcDOTAPCoef(double finalG, int count, double intervalframe)
         {
             var coef1 = CalcAPCoef(finalG);
-            var coef2 = Math.Max(16, (int) (intervalframe * count / 12.0)) / StaticConst.FRAMES_PER_SECOND / count;
+            var coef2 = Math.Max(16, (int)(intervalframe * count / 12.0)) / StaticConst.FRAMES_PER_SECOND / count;
             return coef1 * coef2;
         }
 
@@ -153,58 +156,61 @@ namespace JX3CalculatorShared.Class
             switch (key)
             {
                 case "Add_CT":
-                {
-                    AddCT += value;
-                    break;
-                }
+                    {
+                        AddCT += value;
+                        break;
+                    }
 
                 case "Add_Dmg":
-                {
-                    AddDmg += value;
-                    break;
-                }
+                    {
+                        AddDmg += value;
+                        break;
+                    }
 
                 case "Add_CF":
-                {
-                    AddCF += value;
-                    break;
-                }
+                    {
+                        AddCF += value;
+                        break;
+                    }
 
                 case "Frame":
-                {
-                    Frame += (int) value;
-                    break;
-                }
+                    {
+                        Frame += (int)value;
+                        break;
+                    }
 
                 case "CD":
-                {
-                    CD += value;
-                    break;
-                }
+                    {
+                        CD += value;
+                        break;
+                    }
 
                 case "Add_nCount":
-                {
-                    nCount += (int) value;
-                    break;
-                }
+                    {
+                        if (Info.Fight_Name != "穿心(DOT)" || !SkillName.Contains("穿林"))
+                        {
+                            nCount += (int)value; // 穿林穿心DOT不吃跳数加成
+                        }
+                        break;
+                    }
 
                 case "Add_CostEnergy":
-                {
-                    CostEnergy += value;
-                    break;
-                }
+                    {
+                        CostEnergy += value;
+                        break;
+                    }
 
                 case "Range":
                 case "Target":
                 case "Add_Energy":
-                {
-                    break;
-                }
+                    {
+                        break;
+                    }
                 default:
-                {
-                    handled = false;
-                    break;
-                }
+                    {
+                        handled = false;
+                        break;
+                    }
             }
 
             return handled;
@@ -217,26 +223,26 @@ namespace JX3CalculatorShared.Class
             switch (key)
             {
                 case "Coef":
-                {
-                    foreach (var v in value)
                     {
-                        var realv = (double) v;
-                        ChannelIntervalCoef *= realv;
+                        foreach (var v in value)
+                        {
+                            var realv = (double)v;
+                            ChannelIntervalCoef *= realv;
+                        }
+
+                        break;
                     }
 
-                    break;
-                }
-
                 case "QiPo":
-                {
-                    break;
-                }
+                    {
+                        break;
+                    }
 
                 default:
-                {
-                    handled = false;
-                    break;
-                }
+                    {
+                        handled = false;
+                        break;
+                    }
             }
 
             return handled;

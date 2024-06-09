@@ -1,17 +1,11 @@
-﻿using System.Collections.Generic;
-using System.Collections.Immutable;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Windows.Documents;
-using HandyControl.Tools.Extension;
-using JX3CalculatorShared.Data;
+﻿using JX3CalculatorShared.Data;
 using JX3CalculatorShared.Globals;
-using JX3CalculatorShared.Utils;
 using JX3PZ.Class;
 using JX3PZ.Globals;
 using JX3PZ.Models;
 using JYCalculator.Globals;
-using MathNet.Numerics.LinearAlgebra.Factorization;
+using System.Collections.Generic;
+using System.Collections.Immutable;
 
 namespace JYCalculator.Src
 {
@@ -71,7 +65,7 @@ namespace JYCalculator.Src
             }.ToImmutableArray();
 
             HuaJinData =
-                new int[] {18, 32, 51, 69, 87, 106, 124, 143, 161, 356, 782, 1725}
+                new int[] { 18, 32, 51, 69, 87, 106, 124, 143, 161, 356, 782, 1725 }
                     .ToImmutableArray(); // atDecriticalDamagePowerBase
         }
 

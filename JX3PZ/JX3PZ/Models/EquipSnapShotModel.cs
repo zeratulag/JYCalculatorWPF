@@ -1,16 +1,13 @@
 ﻿using JX3CalculatorShared.Class;
 using JX3CalculatorShared.Common;
+using JX3CalculatorShared.Globals;
+using JX3CalculatorShared.ViewModels;
 using JX3PZ.Class;
 using JX3PZ.Data;
 using JX3PZ.Globals;
-using System;
+using JX3PZ.ViewModels;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.ExceptionServices;
-using System.Windows.Media.Animation;
-using JX3CalculatorShared.Globals;
-using JX3CalculatorShared.ViewModels;
-using JX3PZ.ViewModels;
 
 namespace JX3PZ.Models
 {
@@ -26,7 +23,7 @@ namespace JX3PZ.Models
         public int[] DiamondLevels { get; set; } // 五行石镶嵌
         public Stone CStone { get; set; } // 五彩石
         public int Position { get; private set; }
-        public EquipSlotEnum EquipSlot => (EquipSlotEnum) Position;
+        public EquipSlotEnum EquipSlot => (EquipSlotEnum)Position;
 
         #region 通过计算得到的属性
 
@@ -137,6 +134,7 @@ namespace JX3PZ.Models
         {
             var equipShow = new EquipShowViewModel { };
             equipShow.UpdateFrom(this);
+            equipShow.UpdateShowBox();
             equipShow.DisableExtra();
             return equipShow;
         }

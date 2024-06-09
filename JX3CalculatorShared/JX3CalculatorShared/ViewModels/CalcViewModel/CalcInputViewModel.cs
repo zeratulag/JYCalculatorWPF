@@ -1,16 +1,13 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using CommunityToolkit.Mvvm.ComponentModel;
-using JX3CalculatorShared.Data;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using JX3CalculatorShared.Globals;
 using JX3CalculatorShared.Utils;
 using JX3CalculatorShared.ViewModels;
 using JYCalculator.Messages;
-using Syncfusion.UI.Xaml.Charts;
+using System.Collections.Generic;
 
 namespace JX3CalculatorShared.Class
 {
-    public class CalcInputViewModel: ObservableObject
+    public class CalcInputViewModel : ObservableObject
     {
         public QiXueSkill[] QiXues { get; private set; }
         public ItemDT[] ItemDTs { get; private set; }
@@ -39,7 +36,7 @@ namespace JX3CalculatorShared.Class
         public void UpdateFrom(CalcInputViewModel old)
         {
             QiXues = old.QiXues;
-            ItemDTs= old.ItemDTs;
+            ItemDTs = old.ItemDTs;
             FightOption = old.FightOption;
             BuffDict = old.BuffDict;
             Calc();

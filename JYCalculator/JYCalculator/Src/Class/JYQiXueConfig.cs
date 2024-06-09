@@ -2,8 +2,6 @@
 using JX3CalculatorShared.Utils;
 using JYCalculator.DB;
 using System.Collections.Generic;
-using System.Collections.Immutable;
-using System.Linq;
 
 namespace JYCalculator.Class
 {

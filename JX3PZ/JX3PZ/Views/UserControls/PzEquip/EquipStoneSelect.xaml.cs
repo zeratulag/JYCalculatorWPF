@@ -1,8 +1,7 @@
-﻿using System.ComponentModel;
+﻿using JX3PZ.ViewModels;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using JX3PZ.ViewModels;
 
 namespace JX3PZ.Views
 {
@@ -16,7 +15,7 @@ namespace JX3PZ.Views
 
         public string FilterName
         {
-            get { return (string) GetValue(FilterNameProperty); }
+            get { return (string)GetValue(FilterNameProperty); }
             set { SetValue(FilterNameProperty, value); }
         }
 

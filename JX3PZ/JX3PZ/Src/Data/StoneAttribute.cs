@@ -1,9 +1,8 @@
-﻿using JX3CalculatorShared.Class;
-using JX3PZ.Class;
+﻿using JX3PZ.Class;
 using JX3PZ.Globals;
+using JX3PZ.ViewModels;
 using System.Collections.Immutable;
 using System.Linq;
-using JX3PZ.ViewModels;
 
 namespace JX3PZ.Data
 {
@@ -19,10 +18,10 @@ namespace JX3PZ.Data
         public StoneAttribute(Stone s)
         {
             IsValid = s.Quality > 0;
-            var attrs = new string[] {s.Attribute1ID, s.Attribute2ID, s.Attribute3ID};
+            var attrs = new string[] { s.Attribute1ID, s.Attribute2ID, s.Attribute3ID };
             AttributeIDs = attrs.Where(_ => _.IsNotEmptyOrWhiteSpace()).ToImmutableArray();
             ValidAttributesCount = AttributeIDs.Length;
-            var values = new int[] {s.Attribute1Value, s.Attribute2Value, s.Attribute3Value};
+            var values = new int[] { s.Attribute1Value, s.Attribute2Value, s.Attribute3Value };
 
             var validValues = ImmutableArray.CreateBuilder<int>();
 

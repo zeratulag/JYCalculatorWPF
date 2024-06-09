@@ -1,5 +1,4 @@
-﻿using JX3CalculatorShared.Class;
-using JX3CalculatorShared.Common;
+﻿using JX3CalculatorShared.Common;
 using JX3CalculatorShared.Data;
 using System.Collections.Generic;
 using System.Collections.Immutable;

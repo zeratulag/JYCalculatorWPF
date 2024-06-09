@@ -1,11 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Collections.Immutable;
-using System.Linq;
-using HandyControl.Expression.Shapes;
-using JX3CalculatorShared.Utils;
+﻿using JX3CalculatorShared.Utils;
 using JX3PZ.Class;
-using JX3PZ.Globals;
 using JX3PZ.ViewModels;
+using System.Collections.Immutable;
 
 namespace JX3PZ.Data
 {

@@ -1,6 +1,4 @@
-﻿using JX3PZ.Data;
-
-namespace JX3PZ.Models
+﻿namespace JX3PZ.Models
 {
     public class XinFaCharacterPanel
     {
@@ -13,6 +11,7 @@ namespace JX3PZ.Models
         public PanelHasteSlot Haste { get; } // 加速
         public PanelStrainSlot Strain { get; } // 无双
         public PanelSurplusSlot Surplus { get; } // 破招
+        public PanelPVXAllRoundSlot PVXAllRoundSlot { get; } // 全能
         public PanelPhysicsShieldSlot PhysicsShield { get; } // 外防
         public PanelMagicShieldSlot MagicShield { get; } // 内防
         public PanelDecriticalDamageSlot DecriticalDamage { get; } // 化劲
@@ -26,13 +25,13 @@ namespace JX3PZ.Models
 
         public string Name { get; set; } = "";
 
-        public XinFaCharacterPanel(){}
+        public XinFaCharacterPanel() { }
 
         public XinFaCharacterPanel(CharacterPanel cPanel)
         {
             CurrentXinFa = CharacterPanel.CurrentXinFa;
 
-            Primary = cPanel.Primary[CurrentXinFa.Primary]; 
+            Primary = cPanel.Primary[CurrentXinFa.Primary];
             Vitality = cPanel.Primary.Vitality;
             Attack = cPanel.Attack[CurrentXinFa.Attack];
             CriticalStrike = cPanel.CriticalStrike[CurrentXinFa.Critical];
@@ -41,6 +40,7 @@ namespace JX3PZ.Models
             Haste = cPanel.Haste;
             Strain = cPanel.Strain;
             Surplus = cPanel.Surplus;
+            PVXAllRoundSlot = cPanel.PVXAllRoundSlot;
             PhysicsShield = cPanel.PhysicsShield;
             MagicShield = cPanel.MagicShield;
             DecriticalDamage = cPanel.DecriticalDamage;

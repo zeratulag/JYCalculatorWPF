@@ -1,6 +1,5 @@
 ﻿using JX3CalculatorShared.Globals;
 using JX3PZ.Globals;
-using JX3PZ.Src;
 
 namespace JX3PZ.Data
 {
@@ -14,6 +13,7 @@ namespace JX3PZ.Data
         public int SubType { get; set; } = -1;
         public int TabType { get; set; } = -1;
         public string ShortDesc { get; set; }
+        public int DiamondSlotCount { get; set; } = 0; // 镶嵌孔计数
 
         #endregion
 
@@ -24,7 +24,6 @@ namespace JX3PZ.Data
         public bool Enhance { get; set; }
         public bool Enchant { get; set; }
 
-        public int NumDiamond { get; private set; }
         public int IconID { get; private set; } // 装备栏的图标
         public int MaxStrengthLevel { get; private set; } // 装备栏最大精炼等级
 
@@ -36,7 +35,7 @@ namespace JX3PZ.Data
 
         public void Parse()
         {
-            SubTypeEnum = (EquipSubTypeEnum) SubType;
+            SubTypeEnum = (EquipSubTypeEnum)SubType;
             IconID = -(100 + SubType);
 
             MaxStrengthLevel = 6;
@@ -46,11 +45,6 @@ namespace JX3PZ.Data
             }
         }
 
-        public void AfterParse()
-        {
-            // 在其他属性加载完毕之后才能做的解析
-            NumDiamond = StaticPzData.Equip.EquipDiamonds[SubType];
-        }
     }
 
     public class WeaponMapItem
@@ -60,7 +54,7 @@ namespace JX3PZ.Data
         public double Speed { get; set; }
     }
 
-    public class PlayerLevelData 
+    public class PlayerLevelData
     {
         // 人物初始属性
         public int atStrengthBase { get; set; }

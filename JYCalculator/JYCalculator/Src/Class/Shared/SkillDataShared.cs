@@ -1,7 +1,7 @@
-﻿using System;
-using JX3CalculatorShared.Class;
+﻿using JX3CalculatorShared.Class;
 using JYCalculator.Data;
 using JYCalculator.Globals;
+using System;
 
 namespace JYCalculator.Class
 {
@@ -46,7 +46,7 @@ namespace JYCalculator.Class
         /// <returns></returns>
         public override double CalcAPCoef(double finalG)
         {
-            var res = Math.Max(16, (int) finalG) / (16.0 * XFConsts.ChannelIntervalToAPFactor);
+            var res = Math.Max(16, (int)finalG) / (16.0 * XFConsts.ChannelIntervalToAPFactor);
             return res;
         }
 

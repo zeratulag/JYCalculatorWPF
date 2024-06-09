@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace JX3PZ.Models
 {
-    public class CharacterPanelAttack: CharacterPanelBase<DamageSubTypeEnum, PanelAttackSlot>
+    public class CharacterPanelAttack : CharacterPanelBase<DamageSubTypeEnum, PanelAttackSlot>
     {
         public PanelAttackSlot Physics { get; } // 外功
         public PanelAttackSlot Lunar { get; } // 阴性

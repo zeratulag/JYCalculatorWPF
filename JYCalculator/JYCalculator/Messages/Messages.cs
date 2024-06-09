@@ -1,7 +1,4 @@
 ﻿using JX3CalculatorShared.Class;
-using JX3PZ.Models;
-using JYCalculator.Models;
-using JYCalculator.Src;
 
 namespace JYCalculator.Messages
 {

@@ -4,7 +4,6 @@ using JX3CalculatorShared.Utils;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
-using Xceed.Wpf.Toolkit.PropertyGrid.Attributes;
 
 
 namespace JX3CalculatorShared.Class

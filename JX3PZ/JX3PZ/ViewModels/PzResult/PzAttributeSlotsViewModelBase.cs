@@ -1,7 +1,6 @@
-﻿using System.Collections.Generic;
-using CommunityToolkit.Mvvm.ComponentModel;
-using JX3CalculatorShared.Utils;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using JX3PZ.Models;
+using System.Collections.Generic;
 
 namespace JX3PZ.ViewModels
 {

@@ -1,12 +1,10 @@
-﻿using System.Collections.Generic;
-using System.Collections.Immutable;
-using HandyControl.Tools.Extension;
-using JX3CalculatorShared.Globals;
+﻿using JX3CalculatorShared.Globals;
 using JX3CalculatorShared.Utils;
+using System.Collections.Generic;
 
 namespace JX3PZ.Models
 {
-    public class CharacterPanelCriticalStrike: CharacterPanelBase<DamageSubTypeEnum, PanelCriticalStrikeSlot>
+    public class CharacterPanelCriticalStrike : CharacterPanelBase<DamageSubTypeEnum, PanelCriticalStrikeSlot>
     {
         public PanelCriticalStrikeSlot Physics { get; } // 外功
         public PanelCriticalStrikeSlot Lunar { get; } // 阴性

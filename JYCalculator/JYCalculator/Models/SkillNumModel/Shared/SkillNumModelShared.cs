@@ -5,6 +5,7 @@ using JX3CalculatorShared.Src;
 using JYCalculator.Class;
 using JYCalculator.Data;
 using System.Collections.Generic;
+using JX3CalculatorShared.Class;
 
 namespace JYCalculator.Models
 {
@@ -24,11 +25,12 @@ namespace JYCalculator.Models
         public readonly NormalSkillNumModel Normal; // 常规技能数模型
         public readonly BigXWSkillNumModel XW; // 心无技能数
         public double XWCD; // 逐星流下心无的CD时间；
+        public readonly SkillBuild CSkillBuild; // 技能流派
 
         public SkillNumModel(QiXueConfigModel qixue, SkillHasteTable skillhaste, XFAbility xfAbility,
             EquipOptionConfigModel equip,
             BigFMConfigModel bigfm,
-            bool hasZhen, CalculatorShellArg calcShellArg)
+            bool hasZhen, CalculatorShellArg calcShellArg, SkillBuild cSkillBuild)
         {
             QiXue = qixue;
             SkillHaste = skillhaste;
@@ -38,6 +40,7 @@ namespace JYCalculator.Models
             BigFM = bigfm;
             HasZhen = hasZhen;
             CalcShellArg = calcShellArg;
+            CSkillBuild = cSkillBuild;
 
 
             HitSkillEvents = new Dictionary<string, SkillEventItem>(10);
@@ -50,10 +53,11 @@ namespace JYCalculator.Models
             DispatchSkillEvents(QiXue.SkillEvents);
 
             var skillNumModelArg =
-                new SkillNumModelArg(HasZhen, CalcShellArg.BuffSpecial.PiaoHuangCover, CalcShellArg.HS);
+                new SkillNumModelArg(HasZhen, CalcShellArg.BuffSpecial.PiaoHuangCover, CalcShellArg.HS, CSkillBuild);
 
             XW = new BigXWSkillNumModel(qixue, skillhaste, xfAbility.BigXW, Equip, BigFM, skillNumModelArg)
             { SkillEvents = HitSkillEvents };
+            
             Normal = new NormalSkillNumModel(qixue, skillhaste, xfAbility.Normal, Equip, BigFM, skillNumModelArg)
             { SkillEvents = HitSkillEvents };
 

@@ -4,6 +4,7 @@ using JX3CalculatorShared.Class;
 using JX3CalculatorShared.Data;
 using JX3CalculatorShared.Globals;
 using JX3CalculatorShared.Utils;
+using JYCalculator.Data;
 using JYCalculator.Globals;
 using MiniExcelLibs.Attributes;
 using PropertyChanged;
@@ -18,27 +19,27 @@ namespace JYCalculator.Class
         #region 成员
 
         // 基础攻击，最终攻击，基础破防，最终破防，
-        public double Base_AP { get; private set; }
-        public double Final_AP { get; private set; }
-        public double Base_OC { get; private set; }
-        public double Final_OC { get; private set; }
+        public double Base_AP { get; set; }
+        public double Final_AP { get; set; }
+        public double Base_OC { get; set; }
+        public double Final_OC { get; set; }
 
         // 武器伤害，会心，会效，无双，破招，加速
-        public double WP { get; private set; }
-        public double CT { get; private set; }
-        public double CF { get; private set; }
-        public double WS { get; private set; }
-        public double PZ { get; private set; }
-        public double HS { get; private set; }
+        public double WP { get; set; }
+        public double CT { get; set; }
+        public double CF { get; set; }
+        public double WS { get; set; }
+        public double PZ { get; set; }
+        public double HS { get; set; }
 
         // 攻击提升，破防提升
-        public double AP_Percent { get; private set; }
-        public double OC_Percent { get; private set; }
+        public double AP_Percent { get; set; }
+        public double OC_Percent { get; set; }
 
         // 无视防御A
-        public double IgnoreA { get; private set; }
+        public double IgnoreA { get; set; }
 
-        public double ExtraSP { get; private set; } = 0; // 额外加速率（仅在大心无期间有）
+        public double ExtraSP { get; set; } = 0; // 额外加速率（仅在大心无期间有）
         public bool Is_XW { get; private set; } = false; // 是否处于心无状态，
         public bool Has_Special_Buff { get; set; } = false; // 是否已经计算了自身神力弩心催寒buff
         public bool Had_BigFM_hat { get; set; } = false; // 是否已经包括帽子大附魔
@@ -133,13 +134,13 @@ namespace JYCalculator.Class
         /// <param name="value"></param>
         public void AddSAttr(string key, double value)
         {
-            string key1 = key;
-            if (!key1.EndsWith("_DmgAdd"))
-            {
-                key1 = key.RemovePrefix(XFAppStatic.TypePrefix);
-            }
-
-            _AddSAttr(key1, value);
+            //string key1 = key;
+            //if (!key1.EndsWith("_DmgAdd"))
+            //{
+            //    key1 = key.RemovePrefix(XFAppStatic.TypePrefix);
+            //}
+            //_AddSAttr(key1, value);
+            this.ProcessZAttr(key, value);
         }
 
         public void AddSAtKVP(KeyValuePair<string, double> kvp)
@@ -177,18 +178,19 @@ namespace JYCalculator.Class
                 throw new ArgumentException("Cannot add CT！");
             }
 
-            FullCharacter other = this.DeepClone();
+            var XWBuff = bigXW ? StaticXFData.DB.Buff.BigXW : StaticXFData.DB.Buff.XW;
 
-            other.Add_CT(XFStaticConst.XW.CT);
-            other.Add_CF(XFStaticConst.XW.CF);
+            FullCharacter other = this.DeepClone();
+            other.AddBaseBuff(XWBuff);
+            //other.ProcessCT(XFStaticConst.XW.CT);
+            //other.ProcessCF(XFStaticConst.XW.CF);
+            //other.ExtraSP += XFStaticConst.XW.ExtraSP * bigXW.ToInt();
+            other.AddSAttrDict(attrDict);
 
             if (AppStatic.XinFaTag == "TL")
             {
-                other.Add_AP_Percent(XFStaticConst.XW.AP_Percent);
+                other.ProcessAP_Percent(XFStaticConst.XW.AP_Percent);
             }
-
-            other.ExtraSP += XFStaticConst.XW.ExtraSP * bigXW.ToInt();
-            other.AddSAttrDict(attrDict);
 
             other.Is_XW = true;
             other.Name = Name + "_爆发状态";
@@ -306,45 +308,6 @@ namespace JYCalculator.Class
 
         [DoNotNotify] public double WSPZ_Point => WS_Point + PZ; // 无双破招点数之和
 
-        /// <summary>
-        /// 在会破属性之和保持不变的情况下，转移部分会心点数到破防
-        /// </summary>
-        /// <param name="value">点数</param>
-        public void TransCTToOC(double value)
-        {
-            Add_CT_Point(-value);
-            Add_Base_OC(value);
-        }
-
-        /// <summary>
-        /// 在无招属性之和保持不变的情况下，转移部分无双点数到破招
-        /// </summary>
-        /// <param name="value">点数</param>
-        public void TransWSToPZ(double value)
-        {
-            Add_WS_Point(-value);
-            Add_PZ(value);
-        }
-
-        /// <summary>
-        /// 在会破属性之和保持不变的情况下，重新设置面板会心百分比
-        /// </summary>
-        /// <param name="ct">目标会心百分比</param>
-        public void Reset_CT(double ct)
-        {
-            var delta = CT_Point - ct * XFStaticConst.fGP.CT;
-            TransCTToOC(delta);
-        }
-
-        /// <summary>
-        /// 在无招属性之和保持不变的情况下，重新设置面板无双百分比
-        /// </summary>
-        /// <param name="ws">目标无双百分比</param>
-        public void Reset_WS(double ws)
-        {
-            var delta = WS_Point - ws * XFStaticConst.fGP.WS;
-            TransWSToPZ(delta);
-        }
 
         #endregion
     }

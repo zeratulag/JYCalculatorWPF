@@ -1,5 +1,4 @@
 ﻿using CommunityToolkit.Mvvm.Messaging;
-using JX3CalculatorShared.Messages;
 using System.Collections.Generic;
 
 namespace JX3PZ.Messages

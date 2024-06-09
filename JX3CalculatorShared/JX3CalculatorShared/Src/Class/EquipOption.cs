@@ -200,7 +200,7 @@ namespace JX3CalculatorShared.Class
                     res = $"（{Value}{AID.EquipTag}）";
                 }
             }
-            return res ;
+            return res;
         }
     }
 

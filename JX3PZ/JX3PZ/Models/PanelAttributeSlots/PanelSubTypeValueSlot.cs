@@ -33,7 +33,7 @@ namespace JX3PZ.Models
         {
             decimal percentAdd = basePercentAdd / GKiloDenominator;
             decimal finalValue = baseValue * (1 + percentAdd);
-            int res = (int) finalValue;
+            int res = (int)finalValue;
             return res;
         }
 

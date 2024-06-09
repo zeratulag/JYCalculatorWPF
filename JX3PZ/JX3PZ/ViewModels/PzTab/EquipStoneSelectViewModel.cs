@@ -1,20 +1,20 @@
-﻿using System;
+﻿using CommunityToolkit.Mvvm.Input;
+using JX3CalculatorShared.Class;
+using JX3CalculatorShared.Data;
+using JX3CalculatorShared.Globals;
 using JX3CalculatorShared.ViewModels;
 using JX3PZ.Data;
 using JX3PZ.Src;
+using JX3PZ.Views;
+using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Data;
-using JX3CalculatorShared.Data;
-using System.Collections.Specialized;
-using CommunityToolkit.Mvvm.Input;
-using JX3CalculatorShared.Globals;
-using JX3PZ.Views;
-using JX3CalculatorShared.Class;
 
 namespace JX3PZ.ViewModels
 {
@@ -183,7 +183,7 @@ namespace JX3PZ.ViewModels
                 ItemsSourceView = EquipStoneSelectSources.StoneView[RealLevel];
             }
 
-            ItemsSourceView.Filter = (_ => CanFilter((Stone) _));
+            ItemsSourceView.Filter = (_ => CanFilter((Stone)_));
         }
 
         public void OnUsefulChanged()
@@ -290,7 +290,7 @@ namespace JX3PZ.ViewModels
         public StoneFilterArg(string name, IEnumerable<object> attrFilter)
         {
             Name = name;
-            AttrFilter = attrFilter.Select(_ => ((CheckItem) _).Name).ToArray();
+            AttrFilter = attrFilter.Select(_ => ((CheckItem)_).Name).ToArray();
         }
 
         public StoneFilterArg(EquipStoneSelectViewModel vm) : this(vm.FilterName, vm.AttrFilterSelected)

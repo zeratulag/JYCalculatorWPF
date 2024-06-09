@@ -2,7 +2,7 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:xc="http://schemas.xceed.com/wpf/xaml/toolkit"
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:JYCalculator.Views.UserControls"
              mc:Ignorable="d">
@@ -16,10 +16,10 @@
             <Style TargetType="TextBlock" BasedOn="{StaticResource Style.CenterTextBlock}">
                 <Setter Property="FontSize" Value="13"/>
             </Style>
-            <Style TargetType="xc:IntegerUpDown" BasedOn="{StaticResource Style.IntUpDown_InitInput}">
+            <Style TargetType="xctk:IntegerUpDown" BasedOn="{StaticResource Style.IntUpDown_InitInput}">
                 <Setter Property="FontSize" Value="14"/>
             </Style>
-            <Style TargetType="xc:DoubleUpDown" BasedOn="{StaticResource Style.PercentUpDown_InitInput}">
+            <Style TargetType="xctk:DoubleUpDown" BasedOn="{StaticResource Style.PercentUpDown_InitInput}">
                 <Setter Property="FontSize" Value="14"/>
             </Style>
         </Grid.Resources>
@@ -62,34 +62,34 @@
         <TextBlock Grid.Row="7" Grid.Column="0" Visibility="{Binding HasL_Percent, Converter={StaticResource BooleanToVisibility}}">力道提升</TextBlock>
         <TextBlock Grid.Row="7" Grid.Column="3" Visibility="{Binding HasL_Percent, Converter={StaticResource BooleanToVisibility}}">最终力道</TextBlock>
 
-        <xc:IntegerUpDown x:Name="Base_AP_spb" Grid.Row="0" Grid.Column="1"
+        <xctk:IntegerUpDown x:Name="Base_AP_spb" Grid.Row="0" Grid.Column="1"
                           Value="{Binding Path = Base_AP}" />
 
-        <xc:IntegerUpDown x:Name="L_spb" Grid.Row="0" Grid.Column="4"
+        <xctk:IntegerUpDown x:Name="L_spb" Grid.Row="0" Grid.Column="4"
                           Value="{Binding Path = Base_L}" />
 
-        <xc:IntegerUpDown x:Name="Final_AP_spb" Grid.Row="1" Grid.Column="1"
+        <xctk:IntegerUpDown x:Name="Final_AP_spb" Grid.Row="1" Grid.Column="1"
                           Value="{Binding Path = Final_AP}" />
 
-        <xc:DoubleUpDown x:Name="WP_spb" Grid.Row="1" Grid.Column="4"
+        <xctk:DoubleUpDown x:Name="WP_spb" Grid.Row="1" Grid.Column="4"
                           Value="{Binding Path = WP}" Increment="0.5" FormatString="F1"/>
 
-        <xc:IntegerUpDown x:Name="PZ_spb" Grid.Row="2" Grid.Column="4"
+        <xctk:IntegerUpDown x:Name="PZ_spb" Grid.Row="2" Grid.Column="4"
                           Value="{Binding Path = PZ}" />
 
-        <xc:IntegerUpDown x:Name="OC_spb" Grid.Row="4" Grid.Column="1"
+        <xctk:IntegerUpDown x:Name="OC_spb" Grid.Row="4" Grid.Column="1"
                           Value="{Binding Path = OC}" />
 
-        <xc:IntegerUpDown x:Name="HS_spb" Grid.Row="5" Grid.Column="1"
+        <xctk:IntegerUpDown x:Name="HS_spb" Grid.Row="5" Grid.Column="1"
                           Value="{Binding Path = HS}" />
 
-        <xc:DoubleUpDown x:Name="CT_spb" Grid.Row="2" Grid.Column="1"
+        <xctk:DoubleUpDown x:Name="CT_spb" Grid.Row="2" Grid.Column="1"
                          Value="{Binding Path = CT}" Minimum="0.01" Maximum="1" Increment="0.01"/>
 
-        <xc:DoubleUpDown x:Name="CF_spb" Grid.Row="3" Grid.Column="1"
+        <xctk:DoubleUpDown x:Name="CF_spb" Grid.Row="3" Grid.Column="1"
                          Value="{Binding Path = CF}" Minimum="1.75" Maximum="3" Increment="0.01"/>
 
-        <xc:DoubleUpDown x:Name="WS_spb" Grid.Row="3" Grid.Column="4"
+        <xctk:DoubleUpDown x:Name="WS_spb" Grid.Row="3" Grid.Column="4"
                          Value="{Binding Path = WS}" Increment="0.01"/>
 
         <TextBlock x:Name="OC_Pct_spb" Grid.Row="4" Grid.Column="4"
@@ -105,7 +105,7 @@
                   ToolTip="如果填写的属性已经带了上衣大附魔，请勾选此项，避免重复计算大附魔收益">属性包括伤·衣</CheckBox>
 
 
-        <xc:DoubleUpDown x:Name="L_Percent_spb" Grid.Row="7" Grid.Column="1" Visibility="{Binding HasL_Percent, Converter={StaticResource BooleanToVisibility}}"
+        <xctk:DoubleUpDown x:Name="L_Percent_spb" Grid.Row="7" Grid.Column="1" Visibility="{Binding HasL_Percent, Converter={StaticResource BooleanToVisibility}}"
                          Value="{Binding Path = L_Percent}" Minimum="0" Maximum="1" Increment="0.01"/>
 
         <TextBlock x:Name="Final_L_spb" Grid.Row="7" Grid.Column="4" Visibility="{Binding HasL_Percent, Converter={StaticResource BooleanToVisibility}}"

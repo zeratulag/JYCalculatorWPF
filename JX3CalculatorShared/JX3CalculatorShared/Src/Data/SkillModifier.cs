@@ -24,7 +24,7 @@ namespace JX3CalculatorShared.Data
         public ImmutableHashSet<string> SkillNames { get; private set; } // 可以被此Mod修饰的技能Name
         public Dictionary<string, double> SAttrs { get; private set; } // 数值属性
 
-        public SkillModifier(): base()
+        public SkillModifier() : base()
         {
 
         }

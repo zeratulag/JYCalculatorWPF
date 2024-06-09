@@ -13,7 +13,7 @@ namespace JX3PZ.Views
 
         public int MinLevel
         {
-            get { return (int) GetValue(MinLevelProperty); }
+            get { return (int)GetValue(MinLevelProperty); }
             set { SetValue(MinLevelProperty, value); }
         }
 
@@ -22,7 +22,7 @@ namespace JX3PZ.Views
 
         public int MaxLevel
         {
-            get { return (int) GetValue(MaxLevelProperty); }
+            get { return (int)GetValue(MaxLevelProperty); }
             set { SetValue(MaxLevelProperty, value); }
         }
 

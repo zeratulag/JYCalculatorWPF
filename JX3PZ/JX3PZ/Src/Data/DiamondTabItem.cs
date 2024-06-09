@@ -1,8 +1,7 @@
-﻿using System.Collections.Immutable;
-using JX3CalculatorShared.Data;
+﻿using JX3CalculatorShared.Data;
 using JX3PZ.Class;
-using JX3PZ.Data;
 using JX3PZ.Globals;
+using System.Collections.Immutable;
 
 namespace JX3PZ.Data
 {
@@ -16,7 +15,7 @@ namespace JX3PZ.Data
         public readonly ImmutableArray<DiamondLevelItem> LevelItems; // 不同等级的镶嵌描述
 
         public readonly bool IsEmpty = false;
-        
+
         public static readonly DiamondTabItem EmptyItem = new DiamondTabItem();
 
         public DiamondTabItem(AttributeTabItem at)
@@ -145,7 +144,7 @@ namespace JX3PZ.Data
         public int GetValue(int level)
         {
             var v = GetCoef(level);
-            var res = (int) (Value * v);
+            var res = (int)(Value * v);
             return res;
         }
 
@@ -171,8 +170,8 @@ namespace JX3PZ.Data
         /// <returns></returns>
         public static int GetQuality(int level)
         {
-            var res = 1 + ((double) level + 1) / 2;
-            return (int) res;
+            var res = 1 + ((double)level + 1) / 2;
+            return (int)res;
         }
 
         /// <summary>

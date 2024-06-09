@@ -2,11 +2,11 @@
 using JX3CalculatorShared.Common;
 using JX3CalculatorShared.Src;
 using JYCalculator.Class;
+using JYCalculator.Globals;
 using JYCalculator.Src;
 using JYCalculator.ViewModels;
 using System.Collections.Generic;
-using JYCalculator.Globals;
-using JX3PZ.Models;
+using JX3CalculatorShared.Models;
 
 namespace JYCalculator.Models
 {
@@ -83,7 +83,7 @@ namespace JYCalculator.Models
         {
             Shellbuffs = new BuffShellInput(BuffVM.BuffAttrsDesc, BuffVM.DebuffAttrsDesc, ItemDTVM.AttrsDesc,
                 BuffVM.Arg);
-            CalcShellArg = new CalculatorShellArg(_VMs.SkillMiJiVM.IsSupport, (int) InitChar.HS,
+            CalcShellArg = new CalculatorShellArg(_VMs.SkillMiJiVM.CompatibleSkillBuilds, (int)InitChar.HS,
                 _VMs.OptimizationVM.IsChecked, InitInputVM.BigFMVM.Arg, BuffVM.Arg);
             var calcShell = new CalculatorShell(this);
             calcShell.UpdateInput(this);
@@ -150,6 +150,12 @@ namespace JYCalculator.Models
             {
                 GlobalContext.ViewModels.PzMain.Load(sav.PzSav);
             }
+        }
+
+        public void _LoadSkillBuild(SkillBuildSav sav)
+        {
+            SkillMiJiVM.Load(sav.SkillMiJi);
+            QiXueVM.Load(sav.QiXue);
         }
 
         #endregion

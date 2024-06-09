@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using JX3PZ.Data;
+﻿using JX3PZ.Data;
 using JX3PZ.Globals;
 using JX3PZ.Src;
+using System.Collections.Generic;
 
 namespace JX3PZ.Models
 {
@@ -16,6 +15,7 @@ namespace JX3PZ.Models
         public PanelHasteSlot Haste { get; } // 加速
         public PanelStrainSlot Strain { get; } // 无双
         public PanelSurplusSlot Surplus { get; } // 破招
+        public PanelPVXAllRoundSlot PVXAllRoundSlot { get; } // 全能
         public PanelPhysicsShieldSlot PhysicsShield { get; } // 外防
         public PanelMagicShieldSlot MagicShield { get; } // 内防
         public PanelDecriticalDamageSlot DecriticalDamage { get; } // 化劲
@@ -42,6 +42,7 @@ namespace JX3PZ.Models
             Haste = new PanelHasteSlot();
             Strain = new PanelStrainSlot();
             Surplus = new PanelSurplusSlot();
+            PVXAllRoundSlot = new PanelPVXAllRoundSlot();
             PhysicsShield = new PanelPhysicsShieldSlot();
             MagicShield = new PanelMagicShieldSlot();
             DecriticalDamage = new PanelDecriticalDamageSlot();
@@ -94,6 +95,7 @@ namespace JX3PZ.Models
             RangeWeapon.UpdateFrom(valueDict);
             MaxLife.UpdateFrom(valueDict);
             Toughness.UpdateFrom(valueDict);
+            PVXAllRoundSlot.UpdateFrom(valueDict);
         }
 
         public void CalcSystemPrimary()
@@ -111,6 +113,15 @@ namespace JX3PZ.Models
             CalcFirst(valueDict);
             CalcSystemPrimary();
             CalcXFPrimaryAttributeValues();
+            CalcAllRound();
+        }
+
+        public void CalcAllRound()
+        {
+            var dict = PVXAllRoundSlot.ConvertDict;
+            Surplus.UpdateFrom(dict);
+            Strain.UpdateFrom(dict);
+            DecriticalDamage.UpdateFrom(dict);
         }
 
         public Dictionary<string, int> GetSystemPrimaryAttributeValues()

@@ -40,7 +40,6 @@ namespace JYCalculator.Class
                     }
                 }
             }
-
         }
     }
 }

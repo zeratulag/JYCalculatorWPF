@@ -1,19 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using JX3CalculatorShared.Class;
-using JX3CalculatorShared.Data;
 using JX3CalculatorShared.Globals;
 using JX3CalculatorShared.Messages;
-using JX3CalculatorShared.ViewModels;
-using JX3CalculatorShared.Views;
 using JX3PZ.Globals;
 using JX3PZ.Messages;
 using JYCalculator.Globals;
 using JYCalculator.Messages;
-using Syncfusion.Windows.Shared;
 
 namespace JX3PZ.ViewModels.PzOverview
 {

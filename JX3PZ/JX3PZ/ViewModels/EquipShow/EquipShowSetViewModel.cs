@@ -1,10 +1,12 @@
-﻿using System.Collections.Immutable;
-using CommunityToolkit.Mvvm.ComponentModel;
-using JX3PZ.Globals;
-using System.Security.Policy;
-using System.Windows.Data;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using JX3CalculatorShared.Utils;
 using JX3PZ.Class;
-using JX3PZ.Data;
+using JX3PZ.Globals;
+using System.Collections.Generic;
+using System.Collections.Immutable;
+using System.Linq;
+using System.Windows.Data;
+using System.Windows.Documents;
 
 namespace JX3PZ.ViewModels
 {
@@ -112,6 +114,45 @@ namespace JX3PZ.ViewModels
                 _.IsActive = false;
             }
         }
+
+        #region 流文档元素
+
+        public Section GetSection()
+        {
+            if (!HasSet)
+            {
+                return null;
+            }
+
+            var sec = FlowDocumentTool.NewSection(tag: "Set");
+            var p1 = GetSetEquipsParagraph();
+            var p2 = GetSetEffectsParagraph();
+            sec.AddParagraph(p1);
+            sec.AddParagraph(p2);
+            return sec;
+        }
+
+        public Paragraph GetSetEquipsParagraph()
+        {
+            var para = new Paragraph() { Tag = nameof(SetEquips) };
+            var spans = new List<Span>(9);
+            var setNameHeaderSpan = FlowDocumentTool.GetSpan(SetNameHeader, ColorConst.Yellow, nameof(SetNameHeader));
+            var setEquipSpans = SetEquips.Select(_ => _.GetSpan());
+            spans.Add(setNameHeaderSpan);
+            spans.AddRange(setEquipSpans);
+            para.AddLines(spans);
+            return para;
+        }
+
+        public Paragraph GetSetEffectsParagraph()
+        {
+            var para = new Paragraph() { Tag = nameof(SetEffects) };
+            var setSetEffectSpans = SetEffects.Select(_ => _.GetSpan());
+            para.AddLines(setSetEffectSpans);
+            return para;
+        }
+
+        #endregion
     }
 
     public class EquipShowSetEquipViewModel : ObservableObject
@@ -119,13 +160,23 @@ namespace JX3PZ.ViewModels
         public string EID { get; }
         public string Name { get; }
         public bool Has { get; set; }
-        public string Color => Has ? ColorConst.Yellow : ColorConst.INACTIVE;
+        public string Color => Has ? ColorConst.Yellow : ColorConst.Inactive;
 
         public EquipShowSetEquipViewModel(string eID, string name)
         {
             EID = eID;
             Name = name;
         }
+
+        #region 流文档元素
+
+        public Span GetSpan()
+        {
+            var span = FlowDocumentTool.GetSpan(Name, Color);
+            return span;
+        }
+
+        #endregion
     }
 
     public class EquipShowSetEffectViewModel : ObservableObject
@@ -134,7 +185,7 @@ namespace JX3PZ.ViewModels
         public string Desc { get; } // 描述
         public string CountDesc { get; } // [2] XXX
         public bool IsActive { get; set; } // 是否激活
-        public string Color => IsActive ? ColorConst.Green : ColorConst.INACTIVE;
+        public string Color => IsActive ? ColorConst.Green : ColorConst.Inactive;
 
         public EquipShowSetEffectViewModel(int count, string desc)
         {
@@ -142,5 +193,15 @@ namespace JX3PZ.ViewModels
             Desc = desc;
             CountDesc = $"[{Count}]{Desc}";
         }
+
+        #region 流文档元素
+
+        public Span GetSpan()
+        {
+            var span = FlowDocumentTool.GetSpan(CountDesc, Color);
+            return span;
+        }
+
+        #endregion
     }
 }

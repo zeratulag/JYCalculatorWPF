@@ -14,7 +14,8 @@ namespace JYCalculator.Class
 
         public readonly HasteTableItem LHBY; // 梨花暴雨
 
-        public readonly HasteTableItem CX_DOT; // 穿心DOT
+        public readonly HasteTableItem CX3_DOT; // 穿心DOT
+        public readonly HasteTableItem CX2_CL_DOT; // 穿林穿心DOT
         public readonly HasteTableItem ZX_DOT; // 逐星DOT
 
         #endregion
@@ -30,20 +31,24 @@ namespace JYCalculator.Class
             BY = new HasteTableItem(df.Data[nameof(BY)]);
             BL = new HasteTableItem(df.Data[nameof(BL)]);
 
-            CX_DOT = new HasteTableItem(df.Data[nameof(CX_DOT)]);
+            CX3_DOT = new HasteTableItem(df.Data[nameof(CX3_DOT)]);
+            CX2_CL_DOT = new HasteTableItem(df.Data[nameof(CX2_CL_DOT)]);
             ZX_DOT = new HasteTableItem(df.Data[nameof(ZX_DOT)]);
             LHBY = new HasteTableItem(df.Data[nameof(LHBY)]);
 
             var dict = new Dictionary<string, HasteTableItem>()
             {
                 {nameof(GCD), GCD},
-                {nameof(DP), DP}, {nameof(BY), BY}, {nameof(BL), BL},
-                {nameof(CX_DOT), CX_DOT}, {nameof(ZX_DOT), ZX_DOT},
+                {nameof(DP), DP},
+                {nameof(BY), BY},
+                {nameof(BL), BL},
+                {nameof(CX3_DOT), CX3_DOT},
+                {nameof(CX2_CL_DOT), CX2_CL_DOT},
+                {nameof(ZX_DOT), ZX_DOT},
                 {nameof(LHBY), LHBY},
             };
             Dict = dict.ToImmutableDictionary();
         }
-
         #endregion
     }
 }

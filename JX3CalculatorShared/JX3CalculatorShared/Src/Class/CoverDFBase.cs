@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using JX3CalculatorShared.Utils;
+﻿using JX3CalculatorShared.Utils;
+using System.Collections.Generic;
 
 namespace JX3CalculatorShared.Class
 {

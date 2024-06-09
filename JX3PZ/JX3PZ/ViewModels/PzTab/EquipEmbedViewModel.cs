@@ -1,7 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.Input;
 using JX3CalculatorShared.ViewModels;
 using JX3PZ.Data;
-using JX3PZ.Src;
 using JX3PZ.Views;
 
 namespace JX3PZ.ViewModels
@@ -30,7 +29,7 @@ namespace JX3PZ.ViewModels
         /// </summary>
         /// <param name="n">五行石孔个数</param>
         /// <param name="hasStoneSlot">是否有五彩石</param>
-        public EquipEmbedViewModel(int n, bool hasStoneSlot) : base(new[] {nameof(SelectedStone)})
+        public EquipEmbedViewModel(int n, bool hasStoneSlot) : base(new[] { nameof(SelectedStone) })
         {
             DiamondVM = new EquipDiamondViewModel(n);
             StoneSelectVM = new EquipStoneSelectViewModel(hasStoneSlot)

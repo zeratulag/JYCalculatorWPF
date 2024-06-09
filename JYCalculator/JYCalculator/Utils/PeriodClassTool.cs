@@ -25,5 +25,10 @@ namespace JYCalculator.Utils
             skillDfs.Normal.ApplySkillModifier(normal);
             skillDfs.XW.ApplySkillModifier(xw);
         }
+
+        public static Period<SkillFreqCTDF> Copy(this Period<SkillFreqCTDF> old)
+        {
+            return new Period<SkillFreqCTDF>(old.Normal?.Copy(), old.XW?.Copy());
+        }
     }
 }

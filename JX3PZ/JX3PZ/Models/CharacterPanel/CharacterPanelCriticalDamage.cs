@@ -1,10 +1,10 @@
-﻿using System.Collections.Generic;
-using JX3CalculatorShared.Globals;
+﻿using JX3CalculatorShared.Globals;
 using JX3CalculatorShared.Utils;
+using System.Collections.Generic;
 
 namespace JX3PZ.Models
 {
-    public class CharacterPanelCriticalDamage: CharacterPanelBase<DamageSubTypeEnum, PanelCriticalDamageSlot>
+    public class CharacterPanelCriticalDamage : CharacterPanelBase<DamageSubTypeEnum, PanelCriticalDamageSlot>
     {
         public PanelCriticalDamageSlot Physics { get; } // 外功
         public PanelCriticalDamageSlot Lunar { get; } // 阴性

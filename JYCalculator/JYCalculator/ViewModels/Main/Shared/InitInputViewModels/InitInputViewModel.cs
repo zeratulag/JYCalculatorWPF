@@ -1,13 +1,8 @@
 ﻿using CommunityToolkit.Mvvm.Input;
-using CommunityToolkit.Mvvm.Messaging;
 using JX3CalculatorShared.Class;
 using JX3CalculatorShared.Globals;
 using JX3CalculatorShared.ViewModels;
-using JX3CalculatorShared.Views;
 using JYCalculator.Class;
-using System.Windows;
-using System.Windows.Interop;
-using JX3CalculatorShared.Messages;
 using JYCalculator.Globals;
 
 

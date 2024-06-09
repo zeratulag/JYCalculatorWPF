@@ -1,11 +1,12 @@
 ﻿using Force.DeepCloner;
 using JX3CalculatorShared.Class;
 using JX3CalculatorShared.Common;
+using JX3CalculatorShared.Globals;
 using JYCalculator.Class;
+using JYCalculator.Globals;
 using JYCalculator.Models;
 using JYCalculator.Utils;
 using System.Linq;
-using JX3CalculatorShared.Globals;
 
 namespace JYCalculator.Src
 {
@@ -28,6 +29,9 @@ namespace JYCalculator.Src
 
         public Period<FullCharacter> BuffedFChars; // 存储计算了特殊BUFF，但是未考虑腰坠后的面板（腰坠的属性需要结合时间计算）
         public Period<SkillFreqCTDF> SkillFreqCTDFs; // 技能频率
+        public Period<SkillFreqCTDF> LongSkillFreqCTDFs; // 长时间技能频率
+        public Period<SkillFreqCTDF> ShortSkillFreqCTDFs; // 短时间技能频率
+
         public Period<SkillDataDF> SkillDfs;
 
         public BuffCoverDF BuffCover;
@@ -215,12 +219,45 @@ namespace JYCalculator.Src
         public void GetDPSKernel()
         {
             var kernelarg = new DPSKernelArg(SkillNum);
-            LongDPSKernel = new DPSKernel(LongFChars, CTarget, SkillDfs, SkillFreqCTDFs, FightTime.LongItem,
+            ShortSkillFreqCTDFs = SkillFreqCTDFs.Copy();
+            LongSkillFreqCTDFs = SkillFreqCTDFs.Copy();
+            FixTimeSkillFreqCTDFs();
+            LongDPSKernel = new DPSKernel(LongFChars, CTarget, SkillDfs, LongSkillFreqCTDFs, FightTime.LongItem,
                 kernelarg);
-            ShortDPSKernel = new DPSKernel(ShortFChars, CTarget, SkillDfs, SkillFreqCTDFs, FightTime.ShortItem,
+            ShortDPSKernel = new DPSKernel(ShortFChars, CTarget, SkillDfs, ShortSkillFreqCTDFs, FightTime.ShortItem,
                 kernelarg);
         }
 
+        // 修正因为有限时长导致的频率有误
+        public void FixTimeSkillFreqCTDFs()
+        {
+            FixLveYingQiongCangFreq();
+            FixNieJingZhuiMing();
+        }
+
+        public void FixLveYingQiongCangFreq()
+        {
+            if (!SkillNum.QiXue.掠影穹苍) return;
+
+            const double num = -4.0;
+            var LongDeFreq = num / FightTime.LongItem.NormalTime;
+            var ShortDeFreq = num / FightTime.ShortItem.NormalTime;
+
+            LongSkillFreqCTDFs.Normal.ModifySkillFreq(SkillKeyConst.掠影穹苍, LongDeFreq);
+            ShortSkillFreqCTDFs.Normal.ModifySkillFreq(SkillKeyConst.掠影穹苍, ShortDeFreq);
+        }
+
+        public void FixNieJingZhuiMing()
+        {
+            if (!SkillNum.QiXue.蹑景追风) return;
+
+            const double num = 1;
+            var LongDeFreq = num / FightTime.LongItem.XWTime;
+            var ShortDeFreq = num / FightTime.ShortItem.XWTime;
+
+            LongSkillFreqCTDFs.XW.TransSkillFreq(SkillKeyConst.追命箭_蹑景3_瞬发, SkillKeyConst.追命箭_瞬发, LongDeFreq);
+            ShortSkillFreqCTDFs.XW.TransSkillFreq(SkillKeyConst.追命箭_蹑景3_瞬发, SkillKeyConst.追命箭_瞬发, ShortDeFreq);
+        }
 
         // 计算属性收益
         public void CalcProfit()
@@ -240,7 +277,7 @@ namespace JYCalculator.Src
         {
             var dCTShell = Copy();
             var dCTPoint = 10; // 会心增量
-            dCTShell.InputChar.Add_CT_Point(dCTPoint);
+            dCTShell.InputChar.ProcessCT_Point(dCTPoint);
             //dCTShell.PostProceed();
             dCTShell.CalcAll();
 

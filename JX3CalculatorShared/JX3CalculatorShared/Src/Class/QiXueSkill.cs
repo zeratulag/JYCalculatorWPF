@@ -1,6 +1,5 @@
 ﻿using JX3CalculatorShared.Data;
 using JX3CalculatorShared.Globals;
-using JX3CalculatorShared.Utils;
 
 namespace JX3CalculatorShared.Class
 {

@@ -1,12 +1,11 @@
-﻿using System.Collections.Immutable;
-using System.IO;
-using JX3CalculatorShared.Globals;
+﻿using JX3CalculatorShared.Globals;
 using JX3PZ.Globals;
 using JX3PZ.ViewModels;
 using JX3PZ.ViewModels.PzOverview;
 using JX3PZ.Views;
 using JYCalculator.ViewModels;
 using JYCalculator.Views;
+using System.Collections.Immutable;
 
 namespace JYCalculator.Globals
 {
@@ -24,7 +23,7 @@ namespace JYCalculator.Globals
         {
             bool res = Main.CurrentFileNameWithoutExtension == PzOverview.OverviewVM.Title; // 文件名和配装标题是否同步
             return res;
-        } 
+        }
 
         public void SendCurrentFileNameAsPzTitle()
         {

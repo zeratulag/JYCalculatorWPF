@@ -23,6 +23,8 @@ namespace JX3CalculatorShared.Models
         public double XWDuration { get; protected set; }
         public int XWExtraSP { get; protected set; } // 心无额外加速，204
         public double NormalDuration { get; protected set; } // 常规时间
+        public HashSet<SkillBuild> CompatibleSkillBuilds { get; protected set; } // 支持的技能构建
+
         public bool IsSupport; // 是否是支持的奇穴
 
         public QiXueConfigModelBase()

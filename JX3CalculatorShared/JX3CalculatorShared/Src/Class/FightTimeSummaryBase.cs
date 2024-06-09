@@ -1,10 +1,10 @@
-﻿using System;
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using JYCalculator.Globals;
+using System;
 
 namespace JX3CalculatorShared.Class
 {
-    public class FightTimeSummaryBase: ObservableObject
+    public class FightTimeSummaryBase : ObservableObject
     {
         public static readonly double YZDuration = 15.0; // 腰坠持续时间
         public static readonly double RawYZCD = 180.0; // 腰坠初始CD
@@ -15,7 +15,7 @@ namespace JX3CalculatorShared.Class
         public FightTimeSummaryItem LongItem; // 长时间总结
         public FightTimeSummaryItem ShortItem; // 短时间总结
         public bool IsShort; // 是否为短时间战斗
-        
+
         public FightTimeSummaryItem[] Data { get; protected set; }
 
 
@@ -53,8 +53,8 @@ namespace JX3CalculatorShared.Class
         public void UpdateXWCD(double xwCD)
         {
             var n = RawYZCD / xwCD; // 腰坠期间能开几次心无
-            double real_n = (double) (int) n;
-            if (n - (int) n < 0.05)
+            double real_n = (double)(int)n;
+            if (n - (int)n < 0.05)
             {
                 XWCD = RawYZCD / n;
                 YZCD = RawYZCD; // 此时心无等腰坠
@@ -70,7 +70,7 @@ namespace JX3CalculatorShared.Class
             ShortItem = GetTimeSummary("短时间", shorttime);
             ShortItem.IsShort = true;
             LongItem = GetTimeSummary("长时间", longtime);
-            Data = new FightTimeSummaryItem[] {ShortItem, LongItem};
+            Data = new FightTimeSummaryItem[] { ShortItem, LongItem };
         }
 
         /// <summary>

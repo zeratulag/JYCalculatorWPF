@@ -3,7 +3,6 @@ using JX3CalculatorShared.Common;
 using JX3CalculatorShared.Data;
 using JX3CalculatorShared.Globals;
 using JX3CalculatorShared.Utils;
-using JX3CalculatorShared.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;

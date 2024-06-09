@@ -8,12 +8,9 @@ using JX3PZ.Messages;
 using JX3PZ.Models;
 using JYCalculator.Globals;
 using JYCalculator.Messages;
-using JYCalculator.Utils;
 using System;
-using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
-using System.Windows;
 using CalcResultViewModel = JX3CalculatorShared.ViewModels.CalcResultViewModel;
 
 namespace JX3PZ.ViewModels
@@ -214,6 +211,7 @@ namespace JX3PZ.ViewModels
             Model.UpdateFrom(Data);
             Model.Calc();
             UpdateStoneActive();
+            UpdateShowBoxs();
         }
 
         public void UpdatePzResult()
@@ -237,6 +235,7 @@ namespace JX3PZ.ViewModels
         {
             Model.CalcSet();
             UpdateSetVMs();
+            UpdateShowBoxs();
         }
 
         public void UpdateSetVMs()
@@ -258,6 +257,10 @@ namespace JX3PZ.ViewModels
             }
         }
 
+        public void UpdateShowBoxs()
+        {
+            Dict.Values.ForEach(_ => _.EquipShowVM.UpdateShowBox());
+        }
 
         private void _Load(JBPZEquipSnapshotCollection equipList)
         {
@@ -270,7 +273,7 @@ namespace JX3PZ.ViewModels
 
             foreach (var kvp in Dict)
             {
-                var slot = (EquipSlotEnum) kvp.Key;
+                var slot = (EquipSlotEnum)kvp.Key;
                 var slotStr = slot.ToString();
                 var snap = jc.Dict[slotStr];
                 kvp.Value.Load(snap);

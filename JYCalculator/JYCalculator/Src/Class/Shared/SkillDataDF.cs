@@ -1,5 +1,4 @@
 ﻿using JX3CalculatorShared.Globals;
-using JYCalculator.Globals;
 
 namespace JYCalculator.Class
 {
@@ -10,15 +9,15 @@ namespace JYCalculator.Class
             switch (AppStatic.XinFaTag)
             {
                 case "JY":
-                {
-                    SyncBaoYu();
-                    SyncBaiYu();
-                    break;
-                }
+                    {
+                        SyncBaoYu();
+                        SyncBaiYu();
+                        break;
+                    }
                 case "TL":
-                {
-                    break;
-                }
+                    {
+                        break;
+                    }
             }
         }
 

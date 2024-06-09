@@ -1,10 +1,14 @@
 ﻿using JX3CalculatorShared.Class;
 using JYCalculator.Data;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace JYCalculator.Class
 {
     public class CombatStatItem : CombatStatItemBase
     {
+
+        public string FightName { get; protected set; }
 
         public CombatStatItem(string name, string skillName) : base(name, skillName)
         {
@@ -12,6 +16,7 @@ namespace JYCalculator.Class
 
         public CombatStatItem(SkillDamage data) : this(data.Name, data.SkillName)
         {
+            QueryFightName();
         }
 
         public CombatStatItem(SkillDamage data, double time) : this(data)
@@ -33,11 +38,17 @@ namespace JYCalculator.Class
             Rank = old.Rank;
             ShowNumMultiplier = old.ShowNumMultiplier;
             ShowNum = old.ShowNum;
+            FightName = old.FightName;
         }
 
         public CombatStatItem Copy()
         {
             return new CombatStatItem(this);
+        }
+
+        public void QueryFightName()
+        {
+            FightName = StaticXFData.DB.SkillInfo.Name2CombatName[Name];
         }
 
 
@@ -65,12 +76,13 @@ namespace JYCalculator.Class
         /// 获得化简形式的战斗统计（合并同名技能）
         /// </summary>
         /// <returns></returns>
-        public CombatStatItem ToSimple()
-        {
-            var combatName = StaticXFData.DB.SkillInfo.Name2CombatName[Name];
-            var res = this.Copy();
-            res.Name = combatName;
-            return res;
-        }
+        //public CombatStatItem ToSimple()
+        //{
+        //    var res = this.Copy();
+        //    res.DisplayName = res.FightName;
+        //    return res;
+        //}
+
+        // 对于一组数据，基于总伤害降序排序
     }
 }

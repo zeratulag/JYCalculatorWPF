@@ -1,6 +1,4 @@
-﻿using System.Collections.Immutable;
-
-namespace JX3PZ.Class
+﻿namespace JX3PZ.Class
 {
     public class Weapon : Equip
     {

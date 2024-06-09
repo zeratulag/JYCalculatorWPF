@@ -79,7 +79,7 @@
                                   Value="{Binding MaxLevel, UpdateSourceTrigger=PropertyChanged}" />
                 <hc:SimpleText FontSize="12" Text="品" VerticalAlignment="Center" Margin="5 0" />
             </StackPanel>
-            <hc:RangeSlider x:Name="LevelRangeSlider" Minimum="7000" Maximum="15000"
+            <hc:RangeSlider x:Name="LevelRangeSlider" Minimum="7000" Maximum="16500"
                             hc:TipElement.Visibility="Visible" hc:TipElement.Placement="Bottom"
                             ValueStart="{Binding Path=MinLevel}" ValueEnd="{Binding Path=MaxLevel}" Width="280"
                             IsSnapToTickEnabled="True" TickFrequency="100" TickPlacement="BottomRight"

@@ -1,12 +1,11 @@
-﻿using JX3CalculatorShared.Common;
+﻿using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
+using JX3CalculatorShared.Common;
 using JX3CalculatorShared.Data;
 using JX3CalculatorShared.Globals;
-using JX3CalculatorShared.Utils;
+using JX3CalculatorShared.Messages;
 using System.Collections.Generic;
 using System.Linq;
-using CommunityToolkit.Mvvm.Input;
-using CommunityToolkit.Mvvm.Messaging;
-using JX3CalculatorShared.Messages;
 
 namespace JX3CalculatorShared.Class
 {

@@ -72,7 +72,7 @@ namespace JX3CalculatorShared.ViewModels
         public int EnabledRank => EnabledItem?.Rank ?? -1;
 
         public int DefaultIndex; // 默认选项
-        
+
         /// <summary>
         /// 构建VM
         /// </summary>

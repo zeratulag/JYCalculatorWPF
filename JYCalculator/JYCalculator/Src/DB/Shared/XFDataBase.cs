@@ -1,5 +1,6 @@
 ﻿using JYCalculator.Data;
 using System.Collections.Immutable;
+using JX3CalculatorShared.DB;
 
 namespace JYCalculator.DB
 {
@@ -20,7 +21,6 @@ namespace JYCalculator.DB
         public readonly QiXueDB QiXue;
         public readonly RecipeDB Recipe;
 
-
         public static readonly ImmutableHashSet<string> UselessAttrs = StaticXFData.Data.UselessAttrs;
 
         public readonly SkillModifierDB SkillModifier;
@@ -29,6 +29,8 @@ namespace JYCalculator.DB
 
         public readonly SetOptionDB SetOption;
 
+        public readonly SkillBuildDB SkillBuild;
+
         public XFDataBase(TargetDB target, AbilityDB ability,
             ZhenFaDB zhenFa,
             EquipOptionDB equipOption, BigFMDB bigFM,
@@ -36,7 +38,7 @@ namespace JYCalculator.DB
             SkillInfoDB skillInfo,
             QiXueDB qiXue, RecipeDB recipe,
             SkillModifierDB skillModifier, AttrWeightDB attrWeight,
-            SetOptionDB setOption)
+            SetOptionDB setOption, SkillBuildDB skillBuild)
         {
             Target = target;
             Ability = ability;
@@ -62,6 +64,8 @@ namespace JYCalculator.DB
 
             AttrWeight = attrWeight;
             SetOption = setOption;
+
+            SkillBuild = skillBuild;
         }
 
         #endregion
@@ -77,7 +81,8 @@ namespace JYCalculator.DB
             new QiXueDB(), new RecipeDB(),
             new SkillModifierDB(),
             new AttrWeightDB(),
-            new SetOptionDB())
+            new SetOptionDB(),
+            new SkillBuildDB())
         {
         }
 

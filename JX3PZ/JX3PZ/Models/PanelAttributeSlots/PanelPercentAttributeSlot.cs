@@ -3,7 +3,6 @@ using JX3CalculatorShared.Utils;
 using JX3PZ.Globals;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Mime;
 
 namespace JX3PZ.Models
 {
@@ -72,8 +71,8 @@ namespace JX3PZ.Models
         public double GetFinalPoint()
         {
             // 计算最终点数
-            var fPoint = BasePoint * (1 + (double) BasePointPercentAdd / PercentAddDenominator) + AdditionalPoint;
-            FinalPoint = (int) fPoint;
+            var fPoint = BasePoint * (1 + (double)BasePointPercentAdd / PercentAddDenominator) + AdditionalPoint;
+            FinalPoint = (int)fPoint;
             return fPoint;
         }
 
@@ -91,7 +90,7 @@ namespace JX3PZ.Models
             PercentPct = Percent / PercentDenominator;
 
             Final = FinalPointPct + PercentPct;
-            GFinal = (int) (FinalPoint * PercentAddDenominator / FinalPointDenominator) + Percent;
+            GFinal = (int)(FinalPoint * PercentAddDenominator / FinalPointDenominator) + Percent;
         }
 
         public void Calc()

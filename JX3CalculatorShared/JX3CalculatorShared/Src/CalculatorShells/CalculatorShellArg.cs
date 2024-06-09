@@ -1,4 +1,7 @@
-﻿using JX3CalculatorShared.ViewModels;
+﻿using System.Collections.Generic;
+using System.Linq;
+using JX3CalculatorShared.Class;
+using JX3CalculatorShared.ViewModels;
 
 namespace JX3CalculatorShared.Src
 {
@@ -10,19 +13,21 @@ namespace JX3CalculatorShared.Src
         public BigFMConfigArg BigFM;
         public int HS; // 当前加速值
         public BuffSpecialArg BuffSpecial;
-        public bool AllSkillMiJiIsSupport; // 秘籍是否支持
+        public bool AllSkillMiJiIsSupport => RecipeCompatibleSkillBuilds.Length > 0; // 秘籍是否支持
+        public SkillBuild[] RecipeCompatibleSkillBuilds;
 
         public bool EnableOptimization; // 是否启用优化建议
         public double ShortTimeBonus; // 短时间战斗红利系数
 
-        public CalculatorShellArg(bool allSkillMiJiIsSupport, int hs, bool opt, BigFMConfigArg bigFM,
+        public CalculatorShellArg(IEnumerable<SkillBuild> recipeCompatibleSkillBuilds, int hs,
+            bool opt, BigFMConfigArg bigFM,
             BuffSpecialArg buffSpecial, double shortTimeBonus = 0.0)
         {
+            RecipeCompatibleSkillBuilds = recipeCompatibleSkillBuilds.ToArray();
             BigFM = bigFM;
             HS = hs;
             EnableOptimization = opt;
             BuffSpecial = buffSpecial;
-            AllSkillMiJiIsSupport = allSkillMiJiIsSupport;
             ShortTimeBonus = shortTimeBonus;
         }
 
@@ -32,11 +37,11 @@ namespace JX3CalculatorShared.Src
 
         public CalculatorShellArg(CalculatorShellArg old)
         {
+            RecipeCompatibleSkillBuilds = old.RecipeCompatibleSkillBuilds.ToArray();
             BigFM = old.BigFM;
             HS = old.HS;
             EnableOptimization = old.EnableOptimization;
             BuffSpecial = old.BuffSpecial;
-            AllSkillMiJiIsSupport = old.AllSkillMiJiIsSupport;
             ShortTimeBonus = old.ShortTimeBonus;
         }
 

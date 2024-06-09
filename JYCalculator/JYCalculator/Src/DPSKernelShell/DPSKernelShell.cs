@@ -1,6 +1,4 @@
-﻿using JYCalculator.Models;
-
-namespace JYCalculator.Src
+﻿namespace JYCalculator.Src
 {
     public partial class DPSKernelShell
     {

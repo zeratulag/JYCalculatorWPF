@@ -37,7 +37,7 @@ namespace JX3PZ.Data
         {
             Path = path;
         }
-        public PzData(){}
+        public PzData() { }
 
         public void LoadBefore()
         {
@@ -129,7 +129,7 @@ namespace JX3PZ.Data
             return Set[setID];
         }
 
-        
+
         // 为装备表添加EquipOption对象
         public void AttachEquipOption(EquipOption option)
         {

@@ -1,8 +1,14 @@
-﻿using System.Collections.Immutable;
-using CommunityToolkit.Mvvm.ComponentModel;
-using JX3CalculatorShared.ViewModels;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using JX3CalculatorShared.Utils;
 using JX3PZ.Data;
 using JX3PZ.Models;
+using System;
+using System.Collections.Immutable;
+using System.Linq;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Documents;
+using System.Windows.Media.Imaging;
 
 namespace JX3PZ.ViewModels
 {
@@ -46,6 +52,7 @@ namespace JX3PZ.ViewModels
                 Entries = EmptyEntries;
                 IconID = -1000;
             }
+
             CheckActivate();
         }
 
@@ -54,10 +61,11 @@ namespace JX3PZ.ViewModels
             if (HasStone)
             {
                 IsActive = CStone.Attributes.IsActive(DiamondCount, DiamondIntensity);
-                for (int i = 0; i < IsActive.Length; i++)
-                {
-                    Entries[i].IsActive = IsActive[i];
-                }
+                UpdateActive(IsActive);
+            }
+            else
+            {
+                MakeInActive();
             }
         }
 
@@ -70,6 +78,15 @@ namespace JX3PZ.ViewModels
                 {
                     Entries[i].IsActive = IsActive[i];
                 }
+            }
+        }
+
+        // 设置为未激活
+        public void MakeInActive()
+        {
+            foreach (var e in Entries)
+            {
+                e.IsActive = false;
             }
         }
 
@@ -89,5 +106,91 @@ namespace JX3PZ.ViewModels
             DiamondIntensity = diamondIntensity;
             CheckActivate();
         }
+
+        #region FlowDocument元素生成
+
+        public Table GetStoneTable()
+        {
+            if (!HasStoneSlot)
+            {
+                return null;
+            }
+
+            var spans = Entries.Select(_ => _.GetSpan()).ToList();
+            int nrow = spans.Count;
+
+            // 创建Table对象
+            Table table = new Table() { Margin = new Thickness(0, 0, 0, 0) };
+
+            // 定义列
+            TableColumn column1 = new TableColumn() { Width = new GridLength(18) };
+            TableColumn column2 = new TableColumn();
+            table.Columns.Add(column1);
+            table.Columns.Add(column2);
+
+            // 创建图片所在的行
+            TableRow imageRow = new TableRow();
+            var trg_img = new TableRowGroup();
+            trg_img.Rows.Add(imageRow);
+            table.RowGroups.Add(trg_img);
+
+            var path = BindingTool.IconID2Path(IconID);
+            // 创建Image控件
+            Image image = new Image
+            {
+                Source = new BitmapImage(new Uri(path, UriKind.RelativeOrAbsolute)),
+                Width = 18,
+                Height = 18
+            };
+
+            // 创建包含图片的单元格，设置其跨越所有行
+            TableCell imageCell = new TableCell(new BlockUIContainer(image))
+            {
+                RowSpan = nrow,
+                TextAlignment = TextAlignment.Center
+            };
+            var firstEntryCell = new TableCell(new Paragraph(spans[0]));
+
+            imageRow.Cells.Add(imageCell);
+            imageRow.Cells.Add(firstEntryCell);
+
+            spans.RemoveAt(0);
+
+            // 添加描述文本的行
+            foreach (var span in spans)
+            {
+                // 创建TableRow
+                TableRow row = new TableRow();
+
+                // 创建第一列的单元格（空）
+                TableCell cell1 = new TableCell();
+                row.Cells.Add(cell1);
+
+                // 创建第二列的单元格并添加描述
+                TableCell cell2 = new TableCell(new Paragraph(span));
+                row.Cells.Add(cell2);
+                var trg = new TableRowGroup();
+                trg.Rows.Add(row);
+                table.RowGroups.Add(trg);
+            }
+
+            // 返回包含Table的FlowDocument
+            return table;
+        }
+
+        public Section GetSection()
+        {
+            var res = FlowDocumentTool.NewSection(tag: "Stone");
+            res.Margin = new Thickness(0, 0, 0, 0);
+            var tab = GetStoneTable();
+            if (tab != null)
+            {
+                res.Blocks.Add(tab);
+            }
+
+            return res;
+        }
+
+        #endregion
     }
 }

@@ -1,5 +1,5 @@
-﻿using System;
-using JX3PZ.Models;
+﻿using JX3PZ.Models;
+using System;
 
 namespace JX3PZ.ViewModels
 {

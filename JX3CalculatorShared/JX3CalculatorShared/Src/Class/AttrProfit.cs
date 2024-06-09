@@ -1,9 +1,8 @@
 ﻿using JX3PZ.Data;
+using JYCalculator.Globals;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using JX3CalculatorShared.Globals;
-using JYCalculator.Globals;
 
 namespace JX3CalculatorShared.Class
 {

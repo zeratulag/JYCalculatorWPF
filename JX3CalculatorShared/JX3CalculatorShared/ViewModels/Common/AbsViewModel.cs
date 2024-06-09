@@ -1,13 +1,13 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using JX3CalculatorShared.Annotations;
 using JX3CalculatorShared.Utils;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using Newtonsoft.Json;
 
 
 namespace JX3CalculatorShared.ViewModels
@@ -85,7 +85,7 @@ namespace JX3CalculatorShared.ViewModels
             SetOutName();
         }
 
-        protected AbsViewModel(params string[] inputNames): this(inputPropertyNames: inputNames)
+        protected AbsViewModel(params string[] inputNames) : this(inputPropertyNames: inputNames)
         {
         }
 
@@ -167,7 +167,7 @@ namespace JX3CalculatorShared.ViewModels
             }
             foreach (var d in OutputChanged.GetInvocationList())
             {
-                OutputChanged -= (PropertyChangedEventHandler) d;
+                OutputChanged -= (PropertyChangedEventHandler)d;
             }
         }
 

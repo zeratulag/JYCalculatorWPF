@@ -110,8 +110,8 @@ namespace JYCalculator.Class
         /// <param name="value"></param>
         public void AddSAttr(string key, double value)
         {
-            string key1 = key.RemovePrefix(XFAppStatic.TypePrefix);
-            _AddSAttr(key1, value);
+            //string key1 = key.RemovePrefix(XFAppStatic.TypePrefix);
+            _AddSAttr(key, value);
         }
 
         /// <summary>

@@ -3,12 +3,12 @@ using JX3CalculatorShared.Common;
 using JX3CalculatorShared.Data;
 using JX3CalculatorShared.Globals;
 using JX3CalculatorShared.Utils;
-using JX3PZ.Class;
 using JYCalculator.Data;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
+using JYCalculator.Globals;
 
 namespace JYCalculator.DB
 {
@@ -221,7 +221,7 @@ namespace JYCalculator.DB
             double res = 0;
             foreach (var kvp in skillFreq)
             {
-                if (kvp.Value > 0)
+                if (kvp.Value > 0 && !BaoYuKeys.Contains(kvp.Key))
                 {
                     if (Skills.TryGetValue(kvp.Key, out var info))
                     {
@@ -230,8 +230,25 @@ namespace JYCalculator.DB
                     }
                 }
             }
+
+            if (skillFreq.TryGetValue(SkillKeyConst._暴雨梨花针_释放, out double byfreq))
+            {
+                var info = Skills[SkillKeyConst.暴雨梨花针];
+                var cfreq = byfreq * info.EnergyInjection;
+                res += cfreq;
+            }
             return res;
         }
+
+        public static readonly string[] BaoYuKeys = new string[] {
+            SkillKeyConst.暴雨梨花针,
+            SkillKeyConst.暴雨梨花针2,
+            SkillKeyConst.暴雨梨花针3,
+            SkillKeyConst.暴雨梨花针4,
+            SkillKeyConst.暴雨梨花针5,
+            SkillKeyConst.暴雨梨花针6,
+            SkillKeyConst.暴雨梨花针7};
+
 
     }
 }

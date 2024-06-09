@@ -163,7 +163,7 @@
         "ItemName": "降龙伏虎阵",
         "DescName": "降龙伏虎阵",
         "KungFu": "笑尘诀",
-        "Desc": "一重粗识：阅历提高5%，声望提高5%，外功基础攻击提高5%。\n二重略懂：外功破防提高10%。\n三重巧熟：移动速度提高5%。\n四重精妙：招式会心则阵眼外功破防值提高30%。\n五重游刃：阵眼施展“龙战于野”，则外功破防值提高770点，最多叠5层，持续20秒。\n六重忘我：小队成员被会心攻击则可使阵眼外功攻击提高20%。",
+        "Desc": "一重粗识：阅历提高5%，声望提高5%，外功基础攻击提高5%。\n二重略懂：外功破防提高10%。\n三重巧熟：移动速度提高5%。\n四重精妙：招式会心则阵眼外功破防值提高30%。\n五重游刃：阵眼施展“龙战于野”，则外功破防值提高770点，最多叠5层，持续30秒。\n六重忘我：小队成员被会心攻击则可使阵眼外功攻击提高20%。",
         "Buff_dict": {
             "atFormationEffect": 0,
             "atAddExpPercent": 50,
@@ -239,10 +239,10 @@
         "ItemName": "墟海引归阵",
         "DescName": "墟海引归阵",
         "KungFu": "凌海诀",
-        "Desc": "一重粗识：阅历提高5%，声望提高5%，外功会心几率提高3%。\n二重略懂：外功基础攻击力提高10%。\n三重巧熟：招式释放距离增加1尺，外功破防等级提高10%。\n四重精妙：小队成员外功招式会心则使阵眼外功基础攻击力提高10%，持续4秒。\n五重游刃：施展“九霄踏云步”套路下招式，则小队移动速度提高20%，持续5秒。\n六重忘我：小队成员被会心攻击则阵眼外功会心效果提高20%，持续5秒。",
+        "Desc": "一重粗识：阅历提高5%，声望提高5%，外功会心几率提高3%。\n二重略懂：外功基础攻击力提高13%。\n三重巧熟：招式释放距离增加1尺，外功破防等级提高10%。\n四重精妙：小队成员外功招式会心则使阵眼外功基础攻击力提高7%，持续4秒。\n五重游刃：施展“九霄踏云步”套路下招式，则小队移动速度提高20%，持续5秒。\n六重忘我：小队成员被会心攻击则阵眼外功会心效果提高20%，持续5秒。",
         "Buff_dict": {
             "atFormationEffect": 0,
-            "atPhysicsAttackPowerPercent": 102,
+            "atPhysicsAttackPowerPercent": 133,
             "atAddExpPercent": 50,
             "atAddReputationPercent": 50,
             "atPhysicsCriticalStrikeBaseRate": 300,
@@ -332,7 +332,36 @@
         },
         "Z5_max_stack": 1,
         "Z5_default_stack": 1,
-        "Z5_cover": 0.8,
+        "Z5_cover": 0.7,
+        "BuffID": "27236_6",
+        "BuffZ5ID": "27238_1"
+    },
+    "WL_Zhen(ZhuYan)": {
+        "Name": "WL_Zhen(ZhuYan)",
+        "IconID": 17401,
+        "ItemName": "苍梧引灵阵(丛云朱厌)",
+        "DescName": "苍梧引灵阵",
+        "KungFu": "山海心诀",
+        "Desc": "一重粗识：阅历提高5%，声望提高5%，全会心提高3%。\n二重略懂：无双提高2%。\n三重巧熟：造成伤害提高6%。\n四重精妙：阵眼消耗一枚唤灵印时获得1%受到伤害降低效果，最多6层，持续10秒。\n五重游刃：阵眼施展“白羽流星”强化招式时，使小队成员会心效果提高15%，持续6秒。\n六重忘我：若重伤目标，则阵眼回复30%内力值。",
+        "Buff_dict": {
+            "atFormationEffect": 0,
+            "atAddExpPercent": 50,
+            "atAddReputationPercent": 50,
+            "atLunarCriticalStrikeBaseRate": 300,
+            "atSolarCriticalStrikeBaseRate": 300,
+            "atNeutralCriticalStrikeBaseRate": 300,
+            "atPoisonCriticalStrikeBaseRate": 300,
+            "atPhysicsCriticalStrikeBaseRate": 300,
+            "atStrainRate": 20,
+            "atAllDamageAddPercent": 62
+        },
+        "BuffZ5_dict": {
+            "atPhysicsCriticalDamagePowerBaseKiloNumRate": 150,
+            "atMagicCriticalDamagePowerBaseKiloNumRate": 150
+        },
+        "Z5_max_stack": 1,
+        "Z5_default_stack": 1,
+        "Z5_cover": 1.0,
         "BuffID": "27236_6",
         "BuffZ5ID": "27238_1"
     }

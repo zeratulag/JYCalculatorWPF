@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Collections.Immutable;
-using JX3CalculatorShared.Globals;
+﻿using JX3CalculatorShared.Globals;
 using JX3PZ.Class;
+using System.Collections.Generic;
+using System.Collections.Immutable;
 
 namespace JX3PZ.Models
 {

@@ -1,15 +1,13 @@
 ﻿using JX3CalculatorShared.Class;
+using JX3CalculatorShared.Globals;
 using JX3CalculatorShared.Utils;
 using JX3CalculatorShared.ViewModels;
 using JYCalculator.Data;
 using JYCalculator.DB;
-using JYCalculator.Globals;
 using PropertyChanged;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
-using CommunityToolkit.Mvvm.Messaging;
-using JX3CalculatorShared.Globals;
 
 namespace JYCalculator.ViewModels
 {
@@ -26,7 +24,7 @@ namespace JYCalculator.ViewModels
 
         public readonly Dictionary<int, string[]> Config; // 存储了当前秘籍选项
 
-        public readonly HashSet<string> ActivedRecipeIDs; // 存储了当前激活的秘籍ID
+        public readonly HashSet<string> ActiveRecipeIDs; // 存储了当前激活的秘籍ID
 
         public readonly Dictionary<string, SkillRecipeGroup> SkillRecipeGroups; // 各个技能的秘籍汇总
 
@@ -34,6 +32,10 @@ namespace JYCalculator.ViewModels
 
         public readonly List<Recipe> OtherRecipes; // 衍生的秘籍
 
+        [DoNotNotify]
+        public HashSet<SkillBuild> CompatibleSkillBuilds { get; protected set; } // 支持的技能构建
+
+        [DoNotNotify]
         public bool IsSupport; // 是否是支持的秘籍
 
         #endregion
@@ -55,7 +57,7 @@ namespace JYCalculator.ViewModels
             SkillRecipeGroups = new Dictionary<string, SkillRecipeGroup>(6);
 
             OtherRecipes = new List<Recipe>();
-            ActivedRecipeIDs = new HashSet<string>(Config.Count * 5);
+            ActiveRecipeIDs = new HashSet<string>(Config.Count * 5);
 
             AttachDependVMsOutputChanged();
             PostConstructor();
@@ -73,18 +75,19 @@ namespace JYCalculator.ViewModels
 
         protected void GetConfig()
         {
-            ActivedRecipeIDs.Clear();
+            ActiveRecipeIDs.Clear();
             foreach (var KVP in SkillMiJi)
             {
                 var RecipeIDs = KVP.Value.CheckedRecipeIDs.ToArray();
                 Config[KVP.Value.SkillID] = RecipeIDs;
-                ActivedRecipeIDs.AddRange(RecipeIDs);
+                ActiveRecipeIDs.AddRange(RecipeIDs);
             }
         }
 
-        public void GetIsSupport()
+        public void GetCompatibleSkillBuild()
         {
-            IsSupport = ActivedRecipeIDs.IsSupersetOf(StaticXFData.Data.Setting.EssentialMiJis);
+            CompatibleSkillBuilds = StaticXFData.DB.SkillBuild.GetRecipeCompatible(ActiveRecipeIDs);
+            IsSupport = CompatibleSkillBuilds.Count > 0;
         }
 
         protected void GetRecipeGroups()
@@ -119,7 +122,7 @@ namespace JYCalculator.ViewModels
         protected override void _Update()
         {
             GetConfig();
-            GetIsSupport();
+            GetCompatibleSkillBuild();
             GetRecipeGroups();
             GetOtherRecipes();
             //SendMessage();
@@ -131,6 +134,11 @@ namespace JYCalculator.ViewModels
 
         protected void _Load(IDictionary<int, string[]> sav)
         {
+            if (sav == null)
+            {
+                return;
+            }
+
             foreach (var KVP in sav)
             {
                 if (SkillID2VM.ContainsKey(KVP.Key))

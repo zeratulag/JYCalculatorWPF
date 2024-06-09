@@ -1,5 +1,4 @@
 ﻿using JX3CalculatorShared.Globals;
-using JX3PZ.Globals;
 using System.Collections.Generic;
 
 namespace JX3PZ.Models

@@ -14,10 +14,10 @@ namespace JYCalculator.Data
 
         public void Parse()
         {
-            EssentialQiXues = StringTool.ParseStringList(RawEssentialQiXues).ToImmutableHashSet();
-            BannedQiXues = StringTool.ParseStringList(RawBannedQiXues).ToImmutableHashSet();
-            EssentialMiJis = StringTool.ParseStringList(RawEssentialMiJis).ToImmutableHashSet();
-            QiXueLib = RawQiXueLib.ToImmutableDictionary(_ => _.Key, _ => StringTool.ParseIntList(_.Value).ToArray());
+            //EssentialQiXues = StringTool.ParseStringListAsImmutableHashSet(RawEssentialQiXues);
+            //BannedQiXues = StringTool.ParseStringListAsImmutableHashSet(RawBannedQiXues);
+            //EssentialMiJis = StringTool.ParseStringListAsImmutableHashSet(RawEssentialMiJis);
+            //QiXueLib = RawQiXueLib.ToImmutableDictionary(_ => _.Key, _ => StringTool.ParseIntList(_.Value).ToArray());
         }
     }
 }

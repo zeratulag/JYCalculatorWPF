@@ -1,10 +1,9 @@
-﻿using System.Collections.Generic;
-using JX3CalculatorShared.Class;
-using System.Collections.Immutable;
-using System.Linq;
+﻿using JX3CalculatorShared.Class;
 using JX3PZ.Class;
 using JX3PZ.Globals;
-using Xceed.Wpf.Toolkit.PropertyGrid.Editors;
+using System.Collections.Generic;
+using System.Collections.Immutable;
+using System.Linq;
 using static JX3CalculatorShared.Utils.ImportTool;
 
 
@@ -20,7 +19,7 @@ namespace JX3CalculatorShared.Data
         public static ImmutableDictionary<string, AttrItem> Attr;
         public static ImmutableDictionary<string, AttributeID> AttributeIDLib { get; private set; }
 
-        public static IImmutableDictionary<string, string> LuaID2FullID { get; private set; } // LuaID到普通ID的映射
+        public static ImmutableDictionary<string, string> LuaID2FullID { get; private set; } // LuaID到普通ID的映射
         public static AttributeID EmptyAttributeID { get; private set; } // 空
 
         public static void Load(string path)

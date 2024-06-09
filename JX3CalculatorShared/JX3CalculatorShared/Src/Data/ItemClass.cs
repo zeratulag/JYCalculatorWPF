@@ -1,11 +1,11 @@
-﻿using JX3CalculatorShared.Class;
+﻿using System;
+using JX3CalculatorShared.Class;
 using JX3CalculatorShared.Common;
 using JX3CalculatorShared.Globals;
-using JX3CalculatorShared.Utils;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
-using JX3PZ.ViewModels;
+using JYCalculator.Globals;
 
 
 namespace JX3CalculatorShared.Data
@@ -45,7 +45,7 @@ namespace JX3CalculatorShared.Data
         public string ToolTip { get; set; }
     }
 
-    public class AbsSkillDataItem: AbsGeneralItem
+    public class AbsSkillDataItem : AbsGeneralItem
     {
         public string Skill_Name { get; set; }
     }
@@ -61,9 +61,12 @@ namespace JX3CalculatorShared.Data
         public double Fixed_Min { get; set; } = 0;
         public double Fixed_Max { get; set; } = 0;
         public double Fixed_Dmg { get; set; } = 0;
+        public double SurplusFactor { get; set; } = Double.NaN;
         public double nChannelInterval { get; set; }
         public double WP_Coef { get; set; } = 0;
         public double Add_Dmg { get; set; } = 0;
+
+        public double Add_NPCDmg { get; set; } = 0;
         public double Add_CT { get; set; } = 0;
         public double Add_CF { get; set; } = 0;
         public int IconID { get; set; }
@@ -77,7 +80,8 @@ namespace JX3CalculatorShared.Data
         public ulong Cast_SkillEventMask2 { get; set; }
         public string BelongKungfu { get; set; }
         public SkillDataTypeEnum Type { get; set; }
-        public bool IsP => Type == SkillDataTypeEnum.PZ; // 是否为类破招技能
+        public bool IsPZ => Type == SkillDataTypeEnum.PZ; // 是否为类破招技能
+        public double SurplusCoef { get; private set; } = 0;
         public int EnergyInjection { get; private set; } // 注能次数
 
         /// <summary>
@@ -166,13 +170,13 @@ namespace JX3CalculatorShared.Data
 
             if (AppStatic.XinFaTag == "JY")
             {
-                if ((BelongKungfu == "百步穿杨" || BelongKungfu == "乾坤一掷") && Name != "BaiYuTiaoZhu")
+                if ((BelongKungfu == "百步穿杨" || BelongKungfu == "乾坤一掷") && Name != "BaiYuTiaoZhu" && Name != "KongQueLing")
                 {
                     // 注意奇穴的白雨跳珠不能触发注能
                     res += 1;
                 }
 
-                if (Name == "CXL")
+                if (Name == SkillKeyConst.穿心弩)
                 {
                     res += 3;
                 }
@@ -184,8 +188,19 @@ namespace JX3CalculatorShared.Data
         public void Parse()
         {
             EnergyInjection = GetEnergyInjectionNum();
+            GetSurplusCoef();
         }
 
+        // 计算破招系数
+        public void GetSurplusCoef()
+        {
+            if (IsPZ)
+            {
+                int nFactor = (int) SurplusFactor;
+                var factor = (double) nFactor / StaticConst.G_KILO_SQUARE_NUM;
+                SurplusCoef = XFStaticConst.fGP.PZ * (1 + factor);
+            }
+        }
     }
 
 
@@ -450,6 +465,15 @@ namespace JX3CalculatorShared.Data
         public int PZ { get; set; }
         public int WS { get; set; }
     }
-
-
+    public class SkillBuildItem : AbsGeneralItem
+    {
+        public string Build { get; set; }
+        public string GameVersion { get; set; }
+        public int IsDefault { get; set; } = 0;
+        public int Priority { get; set; } = 0;
+        public string RawEssentialQiXues { get; set; }
+        public string RawBannedQiXues { get; set; }
+        public string RawEssentialMiJis { get; set; }
+        public string RawSav { get; set; }
+    }
 }

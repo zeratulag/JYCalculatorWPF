@@ -1,5 +1,4 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using JX3PZ.Class;
 using JX3PZ.Globals;
 using JX3PZ.Models;
 
@@ -21,10 +20,11 @@ namespace JX3PZ.ViewModels
         public PanelSurplusSlotViewModel Surplus { get; }
         public PanelWeaponSlotViewModel MeleeWeapon { get; }
 
-        public PanelPhysicsShieldViewModel PhysicsShield { get; }
-        public PanelMagicShieldViewModel MagicShield { get; }
-        public PanelDecriticalDamageViewModel DecriticalDamage { get; }
-        public PanelToughnessViewModel Toughness { get; }
+        public PanelPhysicsShieldSlotViewModel PhysicsShield { get; }
+        public PanelMagicShieldSlotViewModel MagicShield { get; }
+        public PanelDecriticalDamageSlotViewModel DecriticalDamage { get; }
+        public PanelToughnessSlotViewModel Toughness { get; }
+        public PanelPVXAllRoundSlotViewModel PVXAllRoundSlot { get; }
 
         public PzResultViewModel()
         {
@@ -40,10 +40,12 @@ namespace JX3PZ.ViewModels
             Surplus = new PanelSurplusSlotViewModel();
             Haste = new PanelHasteSlotViewModel();
             MeleeWeapon = new PanelWeaponSlotViewModel(WeaponAttributeTypeEnum.Melee);
-            PhysicsShield = new PanelPhysicsShieldViewModel();
-            MagicShield = new PanelMagicShieldViewModel();
-            DecriticalDamage = new PanelDecriticalDamageViewModel();
-            Toughness = new PanelToughnessViewModel();
+            PhysicsShield = new PanelPhysicsShieldSlotViewModel();
+            MagicShield = new PanelMagicShieldSlotViewModel();
+            DecriticalDamage = new PanelDecriticalDamageSlotViewModel();
+            Toughness = new PanelToughnessSlotViewModel();
+
+            PVXAllRoundSlot = new PanelPVXAllRoundSlotViewModel();
         }
 
         public PzResultViewModel(PzPlanModel model)
@@ -69,6 +71,8 @@ namespace JX3PZ.ViewModels
             MagicShield.UpdateFrom(model);
             DecriticalDamage.UpdateFrom(model);
             Toughness.UpdateFrom(model);
+
+            PVXAllRoundSlot.UpdateFrom(model);
         }
 
         public PzAttributeSlotsViewModelBase[] GetAttributeSlots()

@@ -1,13 +1,11 @@
-﻿using System.Collections.Generic;
-using System.Collections.Immutable;
-using HandyControl.Tools.Extension;
-using JX3CalculatorShared.Globals;
+﻿using JX3CalculatorShared.Globals;
 using JX3CalculatorShared.Utils;
 using JX3PZ.Data;
+using System.Collections.Generic;
 
 namespace JX3PZ.Models
 {
-    public class CharacterPanelPrimary: CharacterPanelBase<PrimaryTypeEnum, PanelPrimarySlot>
+    public class CharacterPanelPrimary : CharacterPanelBase<PrimaryTypeEnum, PanelPrimarySlot>
     {
         public PanelPrimarySlot Vitality { get; } // 体质
         public PanelPrimarySlot Spirit { get; } // 根骨

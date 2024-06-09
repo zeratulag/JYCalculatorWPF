@@ -1,12 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using JX3CalculatorShared.Globals;
 using JX3CalculatorShared.Utils;
 using JX3PZ.Data;
-using System.Collections.Immutable;
-using JX3CalculatorShared.Globals;
-using System.Data;
-using System.Linq;
 using JX3PZ.Globals;
 using JX3PZ.ViewModels;
+using System.Collections.Generic;
+using System.Collections.Immutable;
+using System.Data;
+using System.Linq;
 
 namespace JX3PZ.Class
 {

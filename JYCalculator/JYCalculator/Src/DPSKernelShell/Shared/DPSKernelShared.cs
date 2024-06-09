@@ -23,7 +23,6 @@ namespace JYCalculator.Src
         public Period<SkillDamageFreqDF> DamageFreqDFs;
         public Period<CombatStat> CombatStats;
         public CombatStat FinalCombatStat;
-        public CombatStat SimpleFinalCombatStat; // 简化的，模拟游戏中的同名技能合并
         public bool HasCalculated = false; // 是否已经计算过
         public DPSTable FinalDPSTable;
         public double FinalDPS;

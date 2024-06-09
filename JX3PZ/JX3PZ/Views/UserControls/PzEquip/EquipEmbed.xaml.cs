@@ -1,6 +1,6 @@
-﻿using System.Windows;
+﻿using JX3PZ.ViewModels;
+using System.Windows;
 using System.Windows.Controls;
-using JX3PZ.ViewModels;
 
 namespace JX3PZ.Views
 {
@@ -16,7 +16,7 @@ namespace JX3PZ.Views
         // 当前装备是否有五彩石槽
         public bool HasStone
         {
-            get { return (bool) GetValue(HasStoneProperty); }
+            get { return (bool)GetValue(HasStoneProperty); }
             set { SetValue(HasStoneProperty, value); }
         }
 
@@ -26,7 +26,7 @@ namespace JX3PZ.Views
         // 是否显示五彩石
         public bool ShowStone
         {
-            get { return (bool) GetValue(ShowStoneProperty); }
+            get { return (bool)GetValue(ShowStoneProperty); }
             set { SetValue(ShowStoneProperty, value); }
         }
 

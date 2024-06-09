@@ -2,14 +2,13 @@
 using JX3CalculatorShared.Data;
 using JX3CalculatorShared.Globals;
 using JX3CalculatorShared.Utils;
-using JX3PZ.Data;
+using JX3PZ.Class;
+using JX3PZ.Globals;
+using JX3PZ.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
-using JX3PZ.Class;
-using JX3PZ.ViewModels;
-using JX3PZ.Globals;
 
 
 namespace JX3CalculatorShared.Class
@@ -51,6 +50,9 @@ namespace JX3CalculatorShared.Class
         public string Desc { get; }
 
         public readonly EnhanceAttributeEntryViewModel VM;
+
+        public bool IsSuperCustom => IsFixedDamaged(LevelMin); // 是否为固定伤害
+
 
         #endregion
 
@@ -292,7 +294,7 @@ namespace JX3CalculatorShared.Class
             string path;
             if (b == null)
             {
-                color = ColorConst.INACTIVE;
+                color = ColorConst.Inactive;
                 path = BindingTool.ImageName2Path("enchant-null");
             }
             else
@@ -303,5 +305,11 @@ namespace JX3CalculatorShared.Class
 
             return (color, path);
         }
+
+        public static bool IsFixedDamaged(int levelMin)
+        {
+            return levelMin >= 14300;
+        }
+
     }
 }
