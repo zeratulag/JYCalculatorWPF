@@ -19,7 +19,7 @@
     AllowDrop="True"
     DragOver="MainWindow_OnDragOver"
     Drop="MainWindow_OnDrop"
-    Icon="pack://application:,,,/Resource/Images/XF_icon.png"
+    Icon="pack://application:,,,/Resource/Images/App_icon.png"
     mc:Ignorable="d">
     <!--  ReSharper disable InconsistentNaming  -->
     <Window.InputBindings>

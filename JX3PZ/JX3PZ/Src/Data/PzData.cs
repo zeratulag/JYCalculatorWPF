@@ -6,6 +6,7 @@ using JX3CalculatorShared.Utils;
 using JX3PZ.Class;
 using System.Collections.Generic;
 using System.Collections.Immutable;
+using System.Threading.Tasks;
 using static JX3CalculatorShared.Utils.ImportTool;
 
 namespace JX3PZ.Data
@@ -113,6 +114,15 @@ namespace JX3PZ.Data
 
             Equip = eq.ToImmutable();
 
+        }
+
+        // 生成装备默认的界面，注意完整解析会比较慢，需要放在Task里操作
+        public void GetEquipDefaultShow()
+        {
+            foreach (var e in Equip.Values)
+            {
+                e.GetDefaultShow();
+            }
         }
 
         public void LoadSet()

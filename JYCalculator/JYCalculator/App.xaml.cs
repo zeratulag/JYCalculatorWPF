@@ -54,7 +54,7 @@ namespace JYCalculator
 
             EquipStoneSelectSources.Load();
             StaticXFData.MakeStoneAttrFilter();
-
+            //StaticPzData.GetEquipDefaultShow();
             StaticPzData.Data.AttachEquipOptions(StaticXFData.DB.EquipOption);
 
             watch.Stop();

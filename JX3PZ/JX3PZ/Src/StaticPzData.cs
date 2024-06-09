@@ -38,5 +38,11 @@ namespace JX3PZ.Src
         {
             return Data.GetPzSet(setID);
         }
+
+        public static void GetEquipDefaultShow()
+        {
+            Data.GetEquipDefaultShow();
+        }
+
     }
 }

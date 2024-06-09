@@ -56,7 +56,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>JY_Icon.ico</ApplicationIcon>
+    <ApplicationIcon>AppIcon.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
     <ManifestCertificateThumbprint>CBC2EF86874CA4742B8A7586D419E073943719B4</ManifestCertificateThumbprint>
@@ -1090,7 +1090,6 @@
     <Resource Include="Resource\Images\QRCodeUrl.png" />
     <Resource Include="Resource\Images\sp.png" />
     <Resource Include="Resource\Images\star.png" />
-    <Resource Include="Resource\Images\XF_icon.ico" />
     <Resource Include="Resource\Images\XF_icon.png" />
     <Resource Include="Views\JY_icon.png" />
   </ItemGroup>
@@ -1122,7 +1121,7 @@
     <Resource Include="Resource\Images\commonpanel8_58.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="JY_Icon.ico" />
+    <Resource Include="AppIcon.ico" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resource\Icons\1208.png" />
@@ -1322,6 +1321,9 @@
     <Resource Include="Resource\Icons\8858.png" />
     <Resource Include="Resource\Icons\949.png" />
     <Resource Include="Resource\Icons\954.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resource\Images\App_icon.png" />
   </ItemGroup>
   <Import Project="..\..\JX3CalculatorShared\JX3CalculatorShared\JX3CalculatorShared.projitems" Label="Shared" />
   <Import Project="..\..\JX3PZ\JX3PZ\JX3PZ.projitems" Label="Shared" />

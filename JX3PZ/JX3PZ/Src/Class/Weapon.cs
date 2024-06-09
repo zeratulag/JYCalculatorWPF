@@ -8,7 +8,7 @@
         {
             ParseAttrs();
             WeaponBase = new WeaponBaseAttrs(this);
-            GetDefaultShow();
+            //GetDefaultShow();
         }
     }
 }
