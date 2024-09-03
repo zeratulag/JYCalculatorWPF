@@ -127,10 +127,10 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Xaml.Behaviors, Version=1.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\..\..\NuGetPackages\Microsoft.Xaml.Behaviors.Wpf.1.1.77\lib\net462\Microsoft.Xaml.Behaviors.dll</HintPath>
+      <HintPath>..\..\..\NuGetPackages\Microsoft.Xaml.Behaviors.Wpf.1.1.122\lib\net462\Microsoft.Xaml.Behaviors.dll</HintPath>
     </Reference>
-    <Reference Include="MiniExcel, Version=1.32.1.0, Culture=neutral, PublicKeyToken=e7310002a53eac39, processorArchitecture=MSIL">
-      <HintPath>..\..\..\NuGetPackages\MiniExcel.1.32.1\lib\net45\MiniExcel.dll</HintPath>
+    <Reference Include="MiniExcel, Version=1.33.0.0, Culture=neutral, PublicKeyToken=e7310002a53eac39, processorArchitecture=MSIL">
+      <HintPath>..\..\..\NuGetPackages\MiniExcel.1.33.0\lib\net45\MiniExcel.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\..\..\NuGetPackages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -144,32 +144,36 @@
     <Reference Include="PropertyChanged, Version=4.1.0.0, Culture=neutral, PublicKeyToken=ee3ee20bcf148ddd, processorArchitecture=MSIL">
       <HintPath>..\..\..\NuGetPackages\PropertyChanged.Fody.4.1.0\lib\net40\PropertyChanged.dll</HintPath>
     </Reference>
-    <Reference Include="Syncfusion.Data.WPF, Version=25.2462.3.0, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
-      <HintPath>D:\Program Files (x86)\Syncfusion\Essential Studio\WPF\25.2.3\precompiledassemblies\4.6.2\Syncfusion.Data.WPF.dll</HintPath>
+    <Reference Include="Syncfusion.Data.WPF, Version=26.1462.35.0, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>D:\Program Files (x86)\Syncfusion\Essential Studio\WPF\26.1.35\precompiledassemblies\4.6.2\Syncfusion.Data.WPF.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Syncfusion.SfChart.Wpf, Version=25.2462.3.0, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
-      <HintPath>D:\Program Files (x86)\Syncfusion\Essential Studio\WPF\25.2.3\precompiledassemblies\4.6.2\Syncfusion.SfChart.Wpf.dll</HintPath>
+    <Reference Include="Syncfusion.Grid.WPF, Version=26.1462.35.0, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>D:\Program Files (x86)\Syncfusion\Essential Studio\WPF\26.1.35\precompiledassemblies\4.6.2\Syncfusion.Grid.WPF.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Syncfusion.SfGrid.WPF, Version=25.2462.3.0, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
-      <HintPath>D:\Program Files (x86)\Syncfusion\Essential Studio\WPF\25.2.3\precompiledassemblies\4.6.2\Syncfusion.SfGrid.WPF.dll</HintPath>
+    <Reference Include="Syncfusion.GridCommon.WPF, Version=26.1462.35.0, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>D:\Program Files (x86)\Syncfusion\Essential Studio\WPF\26.1.35\precompiledassemblies\4.6.2\Syncfusion.GridCommon.WPF.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Syncfusion.SfInput.WPF, Version=25.2462.3.0, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
-      <HintPath>D:\Program Files (x86)\Syncfusion\Essential Studio\WPF\25.2.3\precompiledassemblies\4.6.2\Syncfusion.SfInput.WPF.dll</HintPath>
+    <Reference Include="Syncfusion.Linq.Base, Version=26.1462.35.0, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>D:\Program Files (x86)\Syncfusion\Essential Studio\WPF\26.1.35\precompiledassemblies\4.6.2\Syncfusion.Linq.Base.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Syncfusion.SfShared.WPF, Version=25.2462.3.0, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
-      <HintPath>D:\Program Files (x86)\Syncfusion\Essential Studio\WPF\25.2.3\precompiledassemblies\4.6.2\Syncfusion.SfShared.WPF.dll</HintPath>
+    <Reference Include="Syncfusion.SfChart.WPF, Version=26.1462.35.0, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>D:\Program Files (x86)\Syncfusion\Essential Studio\WPF\26.1.35\precompiledassemblies\4.6.2\Syncfusion.SfChart.WPF.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Syncfusion.Shared.Wpf, Version=25.2462.3.0, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
-      <HintPath>D:\Program Files (x86)\Syncfusion\Essential Studio\WPF\25.2.3\precompiledassemblies\4.6.2\Syncfusion.Shared.Wpf.dll</HintPath>
+    <Reference Include="Syncfusion.SfGrid.WPF, Version=26.1462.35.0, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>D:\Program Files (x86)\Syncfusion\Essential Studio\WPF\26.1.35\precompiledassemblies\4.6.2\Syncfusion.SfGrid.WPF.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Syncfusion.Tools.Wpf, Version=25.2462.3.0, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
-      <HintPath>D:\Program Files (x86)\Syncfusion\Essential Studio\WPF\25.2.3\precompiledassemblies\4.6.2\Syncfusion.Tools.Wpf.dll</HintPath>
+    <Reference Include="Syncfusion.Shared.WPF, Version=26.1462.35.0, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>D:\Program Files (x86)\Syncfusion\Essential Studio\WPF\26.1.35\precompiledassemblies\4.6.2\Syncfusion.Shared.WPF.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Syncfusion.Tools.WPF, Version=26.1462.35.0, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>D:\Program Files (x86)\Syncfusion\Essential Studio\WPF\26.1.35\precompiledassemblies\4.6.2\Syncfusion.Tools.WPF.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -344,19 +348,19 @@
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="Xceed.Wpf.AvalonDock, Version=4.6.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
-      <HintPath>..\..\..\NuGetPackages\Extended.Wpf.Toolkit.4.6.0\lib\net40\Xceed.Wpf.AvalonDock.dll</HintPath>
+      <HintPath>..\..\..\NuGetPackages\Extended.Wpf.Toolkit.4.6.1\lib\net40\Xceed.Wpf.AvalonDock.dll</HintPath>
     </Reference>
     <Reference Include="Xceed.Wpf.AvalonDock.Themes.Aero, Version=4.6.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
-      <HintPath>..\..\..\NuGetPackages\Extended.Wpf.Toolkit.4.6.0\lib\net40\Xceed.Wpf.AvalonDock.Themes.Aero.dll</HintPath>
+      <HintPath>..\..\..\NuGetPackages\Extended.Wpf.Toolkit.4.6.1\lib\net40\Xceed.Wpf.AvalonDock.Themes.Aero.dll</HintPath>
     </Reference>
     <Reference Include="Xceed.Wpf.AvalonDock.Themes.Metro, Version=4.6.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
-      <HintPath>..\..\..\NuGetPackages\Extended.Wpf.Toolkit.4.6.0\lib\net40\Xceed.Wpf.AvalonDock.Themes.Metro.dll</HintPath>
+      <HintPath>..\..\..\NuGetPackages\Extended.Wpf.Toolkit.4.6.1\lib\net40\Xceed.Wpf.AvalonDock.Themes.Metro.dll</HintPath>
     </Reference>
     <Reference Include="Xceed.Wpf.AvalonDock.Themes.VS2010, Version=4.6.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
-      <HintPath>..\..\..\NuGetPackages\Extended.Wpf.Toolkit.4.6.0\lib\net40\Xceed.Wpf.AvalonDock.Themes.VS2010.dll</HintPath>
+      <HintPath>..\..\..\NuGetPackages\Extended.Wpf.Toolkit.4.6.1\lib\net40\Xceed.Wpf.AvalonDock.Themes.VS2010.dll</HintPath>
     </Reference>
     <Reference Include="Xceed.Wpf.Toolkit, Version=4.6.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
-      <HintPath>..\..\..\NuGetPackages\Extended.Wpf.Toolkit.4.6.0\lib\net40\Xceed.Wpf.Toolkit.dll</HintPath>
+      <HintPath>..\..\..\NuGetPackages\Extended.Wpf.Toolkit.4.6.1\lib\net40\Xceed.Wpf.Toolkit.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -605,7 +609,7 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <Resource Include="Resource\Data\BuildDate.txt" />
+    <Resource Include="Resource\Data\BuildDateTime.txt" />
     <Resource Include="Resource\Data\EquipMap.xlsx" />
     <Resource Include="Resource\Data\JY_Data.xlsx" />
     <Resource Include="Resource\Data\JY_Output.xlsx" />
@@ -1325,6 +1329,10 @@
   <ItemGroup>
     <Resource Include="Resource\Images\App_icon.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resource\Icons\20426.png" />
+    <Resource Include="Resource\Icons\22210.png" />
+  </ItemGroup>
   <Import Project="..\..\JX3CalculatorShared\JX3CalculatorShared\JX3CalculatorShared.projitems" Label="Shared" />
   <Import Project="..\..\JX3PZ\JX3PZ\JX3PZ.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
@@ -1343,7 +1351,7 @@
   <Import Project="..\..\..\NuGetPackages\Costura.Fody.5.7.0\build\Costura.Fody.targets" Condition="Exists('..\..\..\NuGetPackages\Costura.Fody.5.7.0\build\Costura.Fody.targets')" />
   <Import Project="..\..\..\NuGetPackages\NETStandard.Library.2.0.3\build\netstandard2.0\NETStandard.Library.targets" Condition="Exists('..\..\..\NuGetPackages\NETStandard.Library.2.0.3\build\netstandard2.0\NETStandard.Library.targets')" />
   <PropertyGroup>
-    <PreBuildEvent>echo %25date%25 %25time%25 &gt; "$(ProjectDir)\Resource\Data\BuildDate.txt"</PreBuildEvent>
+    <PreBuildEvent>powershell -Command "(Get-Date).ToString('yyyy-MM-dd HH:mm:ss') | Out-File '$(ProjectDir)\Resource\Data\BuildDateTime.txt'"</PreBuildEvent>
   </PropertyGroup>
   <Import Project="..\..\..\NuGetPackages\CommunityToolkit.Mvvm.8.2.2\build\netstandard2.0\CommunityToolkit.Mvvm.targets" Condition="Exists('..\..\..\NuGetPackages\CommunityToolkit.Mvvm.8.2.2\build\netstandard2.0\CommunityToolkit.Mvvm.targets')" />
   <Import Project="..\..\..\NuGetPackages\Fody.6.8.1\build\Fody.targets" Condition="Exists('..\..\..\NuGetPackages\Fody.6.8.1\build\Fody.targets')" />

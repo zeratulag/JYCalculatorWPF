@@ -71,7 +71,7 @@
         <Setter Property="ItemTemplate">
             <Setter.Value>
                 <DataTemplate>
-                    <userControls:ItemDTSmallView Background="Transparent" Margin="2" RightClickCommand="{Binding CancelThisCmd}"/>
+                    <userControls:ItemDTSmallView Background="Transparent" Margin="1" RightClickCommand="{Binding CancelThisCmd}"/>
                 </DataTemplate>
             </Setter.Value>
         </Setter>

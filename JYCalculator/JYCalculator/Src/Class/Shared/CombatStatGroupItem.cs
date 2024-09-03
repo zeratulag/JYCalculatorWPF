@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices.ComTypes;
-using JX3CalculatorShared.Class;
-using JX3CalculatorShared.Utils;
-using Syncfusion.Windows.Controls.Input;
 
 namespace JYCalculator.Class
 {

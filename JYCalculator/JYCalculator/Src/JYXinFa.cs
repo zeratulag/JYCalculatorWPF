@@ -123,8 +123,8 @@ namespace JYCalculator.Src
             var res = new List<AttributeEntry>(LuaDictionary.Count + 5);
             res.AddRange(AttributeIDLoader.GetAttributeEntriesFromLuaDict(LuaDictionary, AttributeEntryTypeEnum.XinFa));
             res.Add(new AttributeEntry("atPhysicsCriticalStrikeBaseRate", 100, AttributeEntryTypeEnum.Buff)); // 弩箭1%会心
-            res.Add(new AttributeEntry("atDecriticalDamagePowerBaseKiloNumRate", 100,
-                AttributeEntryTypeEnum.XinFa)); // 10%化劲
+            res.Add(new AttributeEntry("atDecriticalDamagePowerBaseKiloNumRate", 102,
+                AttributeEntryTypeEnum.XinFa)); // 心法自带10%化劲
             return res;
         }
 

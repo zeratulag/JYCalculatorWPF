@@ -5,6 +5,7 @@ using JYCalculator.Class;
 using JYCalculator.Src;
 using System;
 using System.Collections.Immutable;
+using System.Globalization;
 using System.Reflection;
 using System.Text;
 
@@ -32,9 +33,10 @@ namespace JYCalculator.Globals
 
         public const string GameVersion = "雾海寻龙";
 
+
+
         public const string JX3BOXURL = @"https://www.jx3box.com/bps/49353"; // JX3BOX主页
         public const string GitHubURL = @"https://github.com/zeratulag/JYCalculatorWPF"; // GitHub主页
-        public const string XFTutorialURL = @"https://www.jx3box.com/bps/68616"; // 当前版本惊羽攻略
         public const string TMTutorialURL = @"https://www.jx3box.com/bps/21041"; // 个人作品合集
 
         public static readonly ImmutableDictionary<string, string> URLDict; // URL 字典，方便Cmd调用
@@ -44,17 +46,25 @@ namespace JYCalculator.Globals
         public static readonly string MainTitle;
         public static readonly DateTime BuildDateTime; // 构建时间
         public static readonly DateTime LastPatchTime; // 最新技改时间
-        public const string LastPatchURL = @"https://jx3.xoyo.com/index/#/article-details?catid=2466&id=6264"; // 最新技改内容
 
+        #region 技改后需要修改
+        public const string XFTutorialURL = @"https://www.jx3box.com/bps/78665"; // 当前版本惊羽攻略
+        public const string LastPatchURL = @"https://jx3.xoyo.com/index/#/article-details?kid=1333872"; // 最新技改内容
+        #endregion
 
         static XFAppStatic()
         {
-            LastPatchTime = new DateTime(2024, 05, 27); // 最新技改时间
+            LastPatchTime = new DateTime(2024, 07, 08); // 最新技改时间
 
             AppVersion = Assembly.GetExecutingAssembly().GetName().Version;
             var version = AppVersion.ToString();
-            var dateTimestr = ImportTool.ReadAllTextFromResource(AppStatic.BUILD_PATH, Encoding.Default);
-            BuildDateTime = DateTime.Parse(dateTimestr);
+            var dateTimeStr = ImportTool.ReadAllTextFromResource(AppStatic.BUILD_PATH, Encoding.Default).Trim();
+            bool parseSuccess = DateTime.TryParseExact(dateTimeStr, "yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture,
+                DateTimeStyles.None, out BuildDateTime);
+            if (!parseSuccess)
+            {
+                BuildDateTime = LastPatchTime; // 或者其他默认值
+            }
 
             CurrentAppMeta =
                 new AppMetaInfo(AppVersion, XinFa, GameVersion, StaticConst.CurrentLevel, LastPatchTime);
@@ -75,16 +85,16 @@ namespace JYCalculator.Globals
             {
                 // 攻击和破防统一去除前缀
                 case "JY":
-                    {
-                        TypePrefix = "P_";
-                        break;
-                    }
+                {
+                    TypePrefix = "P_";
+                    break;
+                }
 
                 case "TL":
-                    {
-                        TypePrefix = "M_";
-                        break;
-                    }
+                {
+                    TypePrefix = "M_";
+                    break;
+                }
             }
         }
 
@@ -112,7 +122,9 @@ namespace JYCalculator.Globals
         // 和心法有关的常数
 
         public const DamageTypeEnum CurrentDamnagType = DamageTypeEnum.Physics; // 当前心法伤害类型
-        public const double ChannelIntervalToAPFactor = CurrentDamnagType == DamageTypeEnum.Physics ? 10.0 : 12.0; // 内功为12，外功为10
+
+        public const double
+            ChannelIntervalToAPFactor = CurrentDamnagType == DamageTypeEnum.Physics ? 10.0 : 12.0; // 内功为12，外功为10
 
         public const double AP_PER_L = 0.15; // 力道加基础攻击
         public const double OC_PER_L = 0.3; // 力道加基础破防
@@ -127,18 +139,23 @@ namespace JYCalculator.Globals
             CT_PER_Y = 584.0 / StaticConst.G_KILO_NUM; // 力道提高0.59会心，STRENGTH_TO_PHYSICS_CRITICAL_STRIKE_COF 604
 
         public const double
-            F_AP_PER_L = (double)JYXinFa.STRENGTH_TO_PHYSICS_ATTACK_POWER_COF / StaticConst.G_KILO_NUM; // 力道提高1.45外功AP，STRENGTH_TO_PHYSICS_ATTACK_POWER_COF 1485
+            F_AP_PER_L =
+                (double) JYXinFa.STRENGTH_TO_PHYSICS_ATTACK_POWER_COF /
+                StaticConst.G_KILO_NUM; // 力道提高1.45外功AP，STRENGTH_TO_PHYSICS_ATTACK_POWER_COF 1485
 
         public const double
-            CT_PER_L = (double)JYXinFa.STRENGTH_TO_PHYSICS_CRITICAL_STRIKE_COF / StaticConst.G_KILO_NUM; // 力道提高0.59会心，STRENGTH_TO_PHYSICS_CRITICAL_STRIKE_COF 604
+            CT_PER_L = (double) JYXinFa.STRENGTH_TO_PHYSICS_CRITICAL_STRIKE_COF /
+                       StaticConst.G_KILO_NUM; // 力道提高0.59会心，STRENGTH_TO_PHYSICS_CRITICAL_STRIKE_COF 604
 
-        public const double NPC_Coef = (double)JYXinFa.DST_NPC_DAMAGE_COEFFICIENT / StaticConst.G_KILO_NUM; // DST_NPC_DAMAGE_COEFFICIENT
+        public const double
+            NPC_Coef = (double) JYXinFa.DST_NPC_DAMAGE_COEFFICIENT /
+                       StaticConst.G_KILO_NUM; // DST_NPC_DAMAGE_COEFFICIENT
 
         public static AttrWeight PointWeight = new AttrWeight("单点属性", "提高一点属性增加的DPS")
-        { AP = 1, L = 1, WP = 1, Final_AP = 1, Final_OC = 1, Final_L = 1 };
+            {AP = 1, L = 1, WP = 1, Final_AP = 1, Final_OC = 1, Final_L = 1};
 
         public static AttrWeight ScoreWeight = new AttrWeight("同分属性", "提高等分属性增加的DPS")
-        { AP = 1048.0 / 2340.0, L = 524.0 / 2340.0, WP = 1571.0 / 2340.0 };
+            {AP = 1048.0 / 2340.0, L = 524.0 / 2340.0, WP = 1571.0 / 2340.0};
     }
 
 
@@ -182,7 +199,6 @@ namespace JYCalculator.Globals
 
             public const string XWBuffName = "XinWuPangWu";
             public const string BigXWBuffName = "XinWuPangWu(JuJingNingShen)";
-
         }
 
         public static class Genre

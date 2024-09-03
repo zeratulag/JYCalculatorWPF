@@ -20,7 +20,7 @@ namespace JX3CalculatorShared.Globals
         public const string SinaWBURL = @"https://weibo.com/u/1841842934"; // 个人主页
 
         public const string AT_PATH = DATA_FOLDER + "TM_Ats.xlsx";
-        public const string BUILD_PATH = DATA_FOLDER + "BuildDate.txt";
+        public const string BUILD_PATH = DATA_FOLDER + "BuildDateTime.txt";
         public const string EquipMap_Path = DATA_FOLDER + "EquipMap.xlsx";
         public const string Pz_Path = DATA_FOLDER + "pz.xlsx";
         public const string LevelData_Path = DATA_FOLDER + "levelData.json";

@@ -55,7 +55,7 @@
                     </hc:SimpleStackPanel>
                 </Button>
                 <ToggleButton IsChecked="{Binding ShowDPS}" Style="{StaticResource ToggleButtonSwitch}" Content="显示DPS"
-                              Height="30" Width="100" Margin="5" />
+                              Height="30" Width="120" Margin="0 5" />
 
                 <hc:UniformSpacingPanel HorizontalAlignment="Stretch" Margin="5" Orientation="Vertical" Spacing="5">
                     <hc:UniformSpacingPanel.Resources>

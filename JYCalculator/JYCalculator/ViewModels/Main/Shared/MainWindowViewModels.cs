@@ -612,7 +612,11 @@ namespace JYCalculator.ViewModels
             if (openFileDialog.ShowDialog() == true)
             {
                 var res = ReadFileAsSav(openFileDialog.FileName);
-                if (syncCurrentFilePath) CurrentFilePath = openFileDialog.FileName;
+                if (syncCurrentFilePath)
+                {
+                    CurrentFilePath = openFileDialog.FileName;
+                    CurrentFileName = Path.GetFileName(CurrentFilePath);
+                }
                 return res;
             }
 
