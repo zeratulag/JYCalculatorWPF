@@ -2,7 +2,8 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:views="clr-namespace:JX3CalculatorShared.Views"
                     xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
-                    xmlns:sf="http://schemas.syncfusion.com/wpf">
+                    xmlns:sf="http://schemas.syncfusion.com/wpf"
+                    xmlns:sfgrid="clr-namespace:Syncfusion.UI.Xaml.Grid;assembly=Syncfusion.SfGrid.WPF">
 
     <!--  物品外部边界框  -->
     <Style x:Key="Style.ItemExternalBorder" TargetType="Border">
@@ -193,7 +194,7 @@
         <Setter Property="HorizontalAlignment" Value="Left"/>
     </Style>
 
-    <Style x:Key="Style.CenterSfDataGridCell" TargetType="sf:GridCell">
+    <Style x:Key="Style.CenterSfDataGridCell" TargetType="sfgrid:GridCell">
         <Setter Property="HorizontalContentAlignment" Value="Center" />
     </Style>
 
