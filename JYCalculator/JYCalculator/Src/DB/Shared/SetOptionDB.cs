@@ -9,7 +9,7 @@ namespace JYCalculator.DB
     {
 
         #region 构造
-        public SetOptionDB(IEnumerable<SetOptionItem> itemdata) : base(itemdata)
+        public SetOptionDB(IEnumerable<SetOptionItem> itemData) : base(itemData)
         {
         }
 

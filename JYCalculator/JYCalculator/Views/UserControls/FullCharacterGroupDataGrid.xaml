@@ -15,41 +15,49 @@
         <DataGrid.Columns>
             <DataGridTextColumn Binding="{Binding Path=Name}" Header="Name" />
 
-            <DataGridTextColumn Binding="{Binding Path=Base_L, StringFormat={}{0:F1}}" Header="基础力道" />
+            <DataGridTextColumn Binding="{Binding Path=BaseStrength, StringFormat=F1}" Header="基础力道" />
 
-            <DataGridTextColumn Binding="{Binding Path=Final_L, StringFormat={}{0:F1}}" Header="最终力道" />
+            <DataGridTextColumn Binding="{Binding Path=FinalStrength, StringFormat=F1}" Header="最终力道" />
 
-            <DataGridTextColumn Binding="{Binding Path=Base_AP, StringFormat={}{0:F1}}" Header="基础攻击" />
+            <DataGridTextColumn Binding="{Binding Path=PhysicsBaseAttackPower, StringFormat=F1}" Header="基础攻击" />
 
-            <DataGridTextColumn Binding="{Binding Path=Final_AP, StringFormat={}{0:F1}}" Header="最终攻击" />
+            <DataGridTextColumn Binding="{Binding Path=PhysicsFinalAttackPower, StringFormat=F1}" Header="最终攻击" />
 
-            <DataGridTextColumn Binding="{Binding Path=Base_OC, StringFormat={}{0:F1}}" Header="基础破防" />
+            <DataGridTextColumn Binding="{Binding Path=PhysicsBaseOvercome, StringFormat=F1}" Header="基础破防" />
 
-            <DataGridTextColumn Binding="{Binding Path=Final_OC, StringFormat={}{0:F1}}" Header="最终破防" />
+            <DataGridTextColumn Binding="{Binding Path=PhysicsFinalOvercome, StringFormat=F1}" Header="最终破防" />
 
-            <DataGridTextColumn Binding="{Binding Path=Final_OC_Pct, StringFormat={}{0:P2}}" Header="破防值" />
+            <DataGridTextColumn Binding="{Binding Path=PhysicsFinalOvercomeValue, StringFormat=P2}" Header="破防值" />
 
-            <DataGridTextColumn Binding="{Binding Path=WP, StringFormat={}{0:F1}}" Header="武伤" />
+            <DataGridTextColumn Binding="{Binding Path=BaseWeaponDamage, StringFormat=F1}" Header="武伤" />
 
-            <DataGridTextColumn Binding="{Binding Path=CT, StringFormat={}{0:P2}}" Header="会心" />
+            <DataGridTextColumn Binding="{Binding Path=PhysicsCriticalStrikeRate, StringFormat=P2}" Header="会心率" />
+            <DataGridTextColumn Binding="{Binding Path=PhysicsCriticalStrike, StringFormat=F1}" Header="会心等级" />
+            <DataGridTextColumn Binding="{Binding Path=PhysicsCriticalStrikeValue, StringFormat=P2}" Header="会心值" />
 
-            <DataGridTextColumn Binding="{Binding Path=CF, StringFormat={}{0:P2}}" Header="会效" />
+            <DataGridTextColumn Binding="{Binding Path=PhysicsCriticalPowerValue, StringFormat=P2}" Header="会效" />
 
-            <DataGridTextColumn Binding="{Binding Path=WS, StringFormat={}{0:P2}}" Header="无双" />
+            <DataGridTextColumn Binding="{Binding Path=StrainRate, StringFormat=P2}" Header="无双率" />
+            <DataGridTextColumn Binding="{Binding Path=BaseStrain, StringFormat=F1}" Header="基础无双" />
+            <DataGridTextColumn Binding="{Binding Path=FinalStrain, StringFormat=F1}" Header="最终无双" />
+            <DataGridTextColumn Binding="{Binding Path=FinalStrainValue, StringFormat=P2}" Header="无双值" />
 
-            <DataGridTextColumn Binding="{Binding Path=PZ, StringFormat={}{0:F1}}" Header="破招" />
+            <DataGridTextColumn Binding="{Binding Path=BaseSurplus, StringFormat=F1}" Header="破招" />
 
-            <DataGridTextColumn Binding="{Binding Path=HS, StringFormat={}{0:F1}}" Header="加速" />
+            <DataGridTextColumn Binding="{Binding Path=Haste, StringFormat=F1}" Header="加速" />
 
-            <DataGridTextColumn Binding="{Binding Path=L_Percent, StringFormat={}{0:P2}}" Header="+力道" />
+            <DataGridTextColumn Binding="{Binding Path=StrengthPercent, StringFormat=P2}" Header="+力道" />
 
-            <DataGridTextColumn Binding="{Binding Path=AP_Percent, StringFormat={}{0:P2}}" Header="+攻击" />
+            <DataGridTextColumn Binding="{Binding Path=PhysicsAttackPowerPercent, StringFormat=P2}" Header="+攻击" />
 
-            <DataGridTextColumn Binding="{Binding Path=OC_Percent, StringFormat={}{0:P2}}" Header="+破防" />
+            <DataGridTextColumn Binding="{Binding Path=PhysicsOvercomePercent, StringFormat=P2}" Header="+破防" />
 
-            <DataGridTextColumn Binding="{Binding Path=IgnoreA, StringFormat={}{0:P2}}" Header="无视防御" />
+            <DataGridTextColumn Binding="{Binding Path=StrainPercent, StringFormat=P2}" Header="+无双" />
 
-            <DataGridTextColumn Binding="{Binding Path=DmgAdd, StringFormat={}{0:P2}}" Header="+伤害" />
+            <DataGridTextColumn Binding="{Binding Path=AllShieldIgnore, StringFormat=P2}" Header="无视防御" />
+
+            <DataGridTextColumn Binding="{Binding Path=PhysicsDamageAdd, StringFormat=P2}" Header="+伤害" />
+            <DataGridTextColumn Binding="{Binding Path=EquipScore, StringFormat=F0}" Header="装分" />
 
 
         </DataGrid.Columns>

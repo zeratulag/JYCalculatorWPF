@@ -93,7 +93,7 @@ namespace JYCalculator.Src
             if (deep)
             {
                 CTarget = old.CTarget.Copy();
-                SkillDfs = new Period<SkillDataDF>(SkillDfs.Normal.Copy(), SkillDfs.XW.Copy());
+                SkillDfs = new Period<SkillDataDF>(SkillDfs.Normal.Copy(), SkillDfs.XinWu.Copy());
                 SkillNum = old.SkillNum.DeepClone();
                 FightTime = old.FightTime.DeepClone();
                 Arg = old.Arg.DeepClone();
@@ -186,9 +186,9 @@ namespace JYCalculator.Src
             }
             else
             {
-                var LongXWFChar = GetXWChar(BuffedFChars.XW, FightTime.LongItem);
+                var LongXWFChar = GetXWChar(BuffedFChars.XinWu, FightTime.LongItem);
                 LongXWFChar.Name = "长时间心无最终";
-                var ShortXWFChar = GetXWChar(BuffedFChars.XW, FightTime.ShortItem);
+                var ShortXWFChar = GetXWChar(BuffedFChars.XinWu, FightTime.ShortItem);
                 ShortXWFChar.Name = "短时间心无最终";
 
                 LongFChars = new Period<FullCharacter>(BuffedFChars.Normal, LongXWFChar);
@@ -233,30 +233,52 @@ namespace JYCalculator.Src
         {
             FixLveYingQiongCangFreq();
             FixNieJingZhuiMing();
+            FixNingXingZhuiMing();
+        }
+        
+        // 修正凝形起手的那个追命
+        private void FixNingXingZhuiMing()
+        {
+            if (SkillNum.Normal.百步凝形_丝路风语)
+            {
+                const double num = 1.0;
+                var longFreq = num / FightTime.LongItem.NormalTime;
+                var shortFreq = num / FightTime.ShortItem.NormalTime;
+
+                LongSkillFreqCTDFs.Normal.ModifySkillFreq(SkillKeyConst.追命箭, longFreq);
+                ShortSkillFreqCTDFs.Normal.ModifySkillFreq(SkillKeyConst.追命箭, shortFreq);
+                LongSkillFreqCTDFs.Normal.ModifySkillFreq(SkillKeyConst.追命箭_百步穿杨, longFreq);
+                ShortSkillFreqCTDFs.Normal.ModifySkillFreq(SkillKeyConst.追命箭_百步穿杨, shortFreq);
+            }
         }
 
         public void FixLveYingQiongCangFreq()
         {
             if (!SkillNum.QiXue.掠影穹苍) return;
+            if (SkillNum.Normal.追夺流_雾海寻龙)
+            {
+                const double num = -4.0;
+                var longDeFreq = num / FightTime.LongItem.NormalTime;
+                var shortDeFreq = num / FightTime.ShortItem.NormalTime;
 
-            const double num = -4.0;
-            var LongDeFreq = num / FightTime.LongItem.NormalTime;
-            var ShortDeFreq = num / FightTime.ShortItem.NormalTime;
-
-            LongSkillFreqCTDFs.Normal.ModifySkillFreq(SkillKeyConst.掠影穹苍, LongDeFreq);
-            ShortSkillFreqCTDFs.Normal.ModifySkillFreq(SkillKeyConst.掠影穹苍, ShortDeFreq);
+                LongSkillFreqCTDFs.Normal.ModifySkillFreq(SkillKeyConst.掠影穹苍, longDeFreq);
+                ShortSkillFreqCTDFs.Normal.ModifySkillFreq(SkillKeyConst.掠影穹苍, shortDeFreq);
+            }
         }
 
         public void FixNieJingZhuiMing()
         {
+            // 修正凝形追命
             if (!SkillNum.QiXue.蹑景追风) return;
+            if (SkillNum.Normal.追夺流_雾海寻龙)
+            {
+                const double num = 1;
+                var LongDeFreq = num / FightTime.LongItem.XWTime;
+                var ShortDeFreq = num / FightTime.ShortItem.XWTime;
 
-            const double num = 1;
-            var LongDeFreq = num / FightTime.LongItem.XWTime;
-            var ShortDeFreq = num / FightTime.ShortItem.XWTime;
-
-            LongSkillFreqCTDFs.XW.TransSkillFreq(SkillKeyConst.追命箭_蹑景3_瞬发, SkillKeyConst.追命箭_瞬发, LongDeFreq);
-            ShortSkillFreqCTDFs.XW.TransSkillFreq(SkillKeyConst.追命箭_蹑景3_瞬发, SkillKeyConst.追命箭_瞬发, ShortDeFreq);
+                LongSkillFreqCTDFs.XinWu.TransSkillFreq(SkillKeyConst.追命箭_蹑景3_瞬发, SkillKeyConst.追命箭_瞬发, LongDeFreq);
+                ShortSkillFreqCTDFs.XinWu.TransSkillFreq(SkillKeyConst.追命箭_蹑景3_瞬发, SkillKeyConst.追命箭_瞬发, ShortDeFreq);
+            }
         }
 
         // 计算属性收益
@@ -277,7 +299,7 @@ namespace JYCalculator.Src
         {
             var dCTShell = Copy();
             var dCTPoint = 10; // 会心增量
-            dCTShell.InputChar.ProcessCT_Point(dCTPoint);
+            dCTShell.InputChar.ProcessPhysicsCriticalStrike(dCTPoint);
             //dCTShell.PostProceed();
             dCTShell.CalcAll();
 

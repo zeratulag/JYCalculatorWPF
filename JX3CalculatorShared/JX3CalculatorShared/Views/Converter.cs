@@ -2,6 +2,7 @@
 using JX3CalculatorShared.Utils;
 using JX3PZ.Data;
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Windows;
@@ -287,4 +288,25 @@ namespace JX3CalculatorShared.Views
             throw new NotImplementedException();
         }
     }
+
+
+    [ValueConversion(typeof(List<string>), typeof(string))]
+    // 自定义转换器：将 List<string> 转换为字符串
+    public class ListToStringConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value is List<string> list)
+            {
+                return string.Join(", ", list); // 用逗号分隔显示
+            }
+            return string.Empty;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
 }

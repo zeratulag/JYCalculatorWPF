@@ -23,6 +23,7 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
             <Grid.ColumnDefinitions>
@@ -51,16 +52,20 @@
                               Style="{StaticResource Style.BigFMConfig}" DataContext="{Binding BigFMVM}" />
             </GroupBox>
 
+            <GroupBox x:Name="GroupBox_EquipSpecialEffects"
+                      Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Header="特效精简">
+                <userControls:EquipSpecialEffectConfigView DataContext="{Binding EquipSpecialEffectVM}"></userControls:EquipSpecialEffectConfigView>
+            </GroupBox>
 
             <GroupBox
                 x:Name="GroupBox_EquipOption"
-                Grid.Row="2"
+                Grid.Row="3"
                 Grid.Column="0"
                 Header="装备效果">
                 <userControls:EquipOptionView x:Name="CEquipOptionView" DataContext="{Binding EquipOptionVM}" />
             </GroupBox>
 
-            <userControls:InitCharCommands Grid.Row="2" Grid.Column="2" />
+            <userControls:InitCharCommands Grid.Row="3" Grid.Column="2" />
 
         </Grid>
 

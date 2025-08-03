@@ -17,15 +17,15 @@ namespace JX3CalculatorShared.Data
         public static ImmutableDictionary<string, SkillAttributeId> SkillAttributeIdLib { get; private set; }
 
         public static ImmutableDictionary<string, AttrItem> Attr;
-        public static ImmutableDictionary<string, AttributeID> AttributeIDLib { get; private set; }
+        public static ImmutableDictionary<string, KAttributeID> AttributeIDLib { get; private set; }
 
         public static ImmutableDictionary<string, string> LuaID2FullID { get; private set; } // LuaID到普通ID的映射
-        public static AttributeID EmptyAttributeID { get; private set; } // 空
+        public static KAttributeID EmptyAttributeID { get; private set; } // 空
 
         public static void Load(string path)
         {
             Path = path;
-            LoadAttr();
+            LoadAttribute();
             LoadSkillAttr();
         }
 
@@ -35,16 +35,16 @@ namespace JX3CalculatorShared.Data
             SkillAttributeIdLib = SkillAttr.ToImmutableDictionary(_ => _.Key, _ => new SkillAttributeId(_.Value));
         }
 
-        public static void LoadAttr()
+        public static void LoadAttribute()
         {
-            Attr = ReadSheetAsDict<string, AttrItem>(Path, "Attr", _ => _.FullID);
-            AttributeIDLib = Attr.ToImmutableDictionary(_ => _.Key, _ => new AttributeID(_.Value));
-            EmptyAttributeID = AttributeID.Get("Empty");
+            Attr = ReadSheetAsDict<string, AttrItem>(Path, "Attribute", _ => _.FullID);
+            AttributeIDLib = Attr.ToImmutableDictionary(_ => _.Key, _ => new KAttributeID(_.Value));
+            EmptyAttributeID = KAttributeID.Get("Empty");
             LuaID2FullID = Attr.Values.Where(_ => _.LuaID.IsNotEmptyOrWhiteSpace())
                 .ToDictionary(_ => _.LuaID, _ => _.FullID).ToImmutableDictionary();
         }
 
-        public static AttributeID GetAttributeID(string fullId)
+        public static KAttributeID GetAttributeID(string fullId)
         {
             return AttributeIDLib[fullId];
         }

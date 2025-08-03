@@ -17,7 +17,7 @@
                 <TextBox x:Name="ProfitOrderDesc_txb"
                     FontSize="14"
                     FontWeight="Bold"
-                    Foreground="Red"
+                    Foreground="#DCA53E"
                     Text="{Binding Path=ProfitOrderDesc, Mode=OneWay}"
                     Style="{StaticResource Style.TextBlockBox}" />
             </Expander.Header>

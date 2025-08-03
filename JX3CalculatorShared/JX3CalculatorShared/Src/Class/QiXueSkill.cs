@@ -39,7 +39,7 @@ namespace JX3CalculatorShared.Class
 
         public string GetToolTipTail()
         {
-            var id = Funcs.MergeIDLevel(SkillID, Level);
+            var id = GlobalFunctions.MergeIDLevel(SkillID, Level);
             var res = $"\n\nID: {id}";
             return res;
         }

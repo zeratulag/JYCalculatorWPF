@@ -23,6 +23,7 @@ namespace JX3PZ.Data
         public int Quality { get; set; } = -1;
         public int IconID { get; set; } = -1;
         public string ItemName { get; set; }
+        public int ExpansionPackLevel { get; set; }
         public int Useful { get; set; } = -1;
         public string Desc { get; set; } = "";
         public string ShortDesc { get; set; } = "";
@@ -46,7 +47,7 @@ namespace JX3PZ.Data
 
         public string GetToolTipTail()
         {
-            var res = $"\n\nUIID: {UIID}\t附魔ID: {ID}";
+            var res = $"\n\nUIID: {UIID}\t附魔ID: {ID}\t[{ExpansionPackLevel}级]";
             return res;
         }
 

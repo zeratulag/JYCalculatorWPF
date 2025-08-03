@@ -6,52 +6,52 @@ namespace JYCalculator.Class
 {
     public partial class DamageDeriv
     {
-        public double Base_L { get; set; } // 基础力道
-        public double Final_L { get; set; } // 最终力道
+        public double BaseStrength { get; set; } // 基础力道
+        public double FinalStrength { get; set; } // 最终力道
 
         #region 构造
 
         // 复制构造
         public DamageDeriv(DamageDeriv old) : base(old)
         {
-            Final_L = old.Final_L;
-            Base_L = old.Base_L;
+            FinalStrength = old.FinalStrength;
+            BaseStrength = old.BaseStrength;
         }
 
         // 计算最终力道收益
-        public static double GetFinal_L(double base_ap, double final_ap, double ct, double base_oc)
+        public static double GetFinalStrength(double base_ap, double final_ap, double ct, double base_oc)
         {
             double res = 0;
-            res += base_ap * XFConsts.AP_PER_L;
-            res += base_oc * XFConsts.OC_PER_L;
-            res += final_ap * XFConsts.F_AP_PER_L;
-            res += ct * XFConsts.CT_PER_L;
+            res += base_ap * XFConsts.FinalStrengthToPhysicsBaseAttackPower;
+            res += base_oc * XFConsts.FinalStrengthToPhysicsBaseOvercome;
+            res += final_ap * XFConsts.JY_FinalStrengthToPhysicsFinalAttackPower;
+            res += ct * XFConsts.JY_FinalStrengthToPhysicsCriticalStrike;
             return res;
         }
 
-        public void GetFinal_L()
+        public void GetFinalStrength()
         {
-            Final_L = GetFinal_L(Base_AP, Final_AP, CT_Point, Base_OC);
+            FinalStrength = GetFinalStrength(PhysicsBaseAttackPower, PhysicsFinalAttackPower, PhysicsCriticalStrike, PhysicsBaseOvercome);
         }
 
-        public void GetBase_L(double y_Percent)
+        public void GetBaseStrength(double y_Percent)
         {
-            Base_L = Final_L * (1 + y_Percent);
+            BaseStrength = FinalStrength * (1 + y_Percent);
         }
 
         // 从伤害数据中计算出导数
 
         // 修复会心收益
-        public void FixCT(double ct)
+        public void FixCriticalStrike(double ct)
         {
-            CT_Point = ct;
-            GetFinal_L();
+            PhysicsCriticalStrike = ct;
+            GetFinalStrength();
         }
 
-        public void FixCT(double ct, double l_Percent)
+        public void FixCriticalStrike(double ct, double l_Percent)
         {
-            FixCT(ct);
-            GetBase_L(l_Percent);
+            FixCriticalStrike(ct);
+            GetBaseStrength(l_Percent);
         }
 
         #endregion
@@ -66,8 +66,8 @@ namespace JYCalculator.Class
         public void WeightedAdd(DamageDeriv other, double w = 1.0)
         {
             base.WeightedAdd(other, w);
-            Final_L += other.Final_L * w;
-            Base_L += other.Base_L * w;
+            FinalStrength += other.FinalStrength * w;
+            BaseStrength += other.BaseStrength * w;
         }
 
         public void ApplyAttrWeight(AttrWeight aw)
@@ -75,16 +75,16 @@ namespace JYCalculator.Class
             // 根据属性加权求收益
             base.ApplyAttrWeight(aw);
             Weight = aw;
-            Base_L *= aw.L;
-            Final_L *= aw.Final_L;
+            BaseStrength *= aw.BaseStrength;
+            FinalStrength *= aw.FinalStrength;
         }
 
         public AttrProfitList GetPointAttrDerivList()
         {
             // 单点收益
             var l = GetPointAttrDerivListBase();
-            l.Add(new AttrProfitItem(nameof(Base_L), "基础力道", Base_L));
-            l.Add(new AttrProfitItem(nameof(Final_L), "最终力道", Final_L));
+            l.Add(new AttrProfitItem(nameof(BaseStrength), "基础力道", BaseStrength));
+            l.Add(new AttrProfitItem(nameof(FinalStrength), "最终力道", FinalStrength));
 
             var res = new AttrProfitList(l);
             res.Proceed();
@@ -97,7 +97,7 @@ namespace JYCalculator.Class
         public AttrProfitList GetScoreAttrDerivList()
         {
             var l = GetScoreAttrDerivListBase();
-            l.Add(new AttrProfitItem(nameof(Base_L), "力道", Base_L));
+            l.Add(new AttrProfitItem(nameof(BaseStrength), "力道", BaseStrength));
 
             var res = new AttrProfitList(l);
             res.Proceed();
@@ -108,7 +108,7 @@ namespace JYCalculator.Class
         public override List<double> GetValueArr()
         {
             var res = base.GetValueArr();
-            res.Insert(2, Base_L);
+            res.Insert(2, BaseStrength);
             return res;
         }
 

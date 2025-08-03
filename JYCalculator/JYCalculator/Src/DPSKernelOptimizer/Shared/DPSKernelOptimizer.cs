@@ -39,7 +39,7 @@ namespace JYCalculator.Src
             OriginalIChar = OriginalShell.Arg.NoneBigFMInitCharacter;
             OriginalFChar = OriginalShell.InputChar;
 
-            FIncrement = (OriginalFChar.CT - OriginalIChar.CT, OriginalFChar.WS - OriginalIChar.WS);
+            FIncrement = (OriginalFChar.PhysicsCriticalStrikeValue - OriginalIChar.PhysicsCriticalStrikeValue, OriginalFChar.FinalStrainValue - OriginalIChar.FinalStrainValue);
             OriginalPointSum = (OriginalIChar.CTOC_PointSum, OriginalIChar.WSPZ_PointSum);
 
             CTFCharSeq = new FullCharInfo[101];
@@ -59,8 +59,8 @@ namespace JYCalculator.Src
         /// <returns></returns>
         protected CharacterInfo _GetCharInfo(double ict, double iws)
         {
-            var ioc = OriginalPointSum.CTOC - ict * fGP.CT;
-            var ipz = OriginalPointSum.WSPZ - iws * fGP.WS;
+            var ioc = OriginalPointSum.CTOC - ict * CurrentLevelParams.CriticalStrike;
+            var ipz = OriginalPointSum.WSPZ - iws * CurrentLevelParams.Strain;
             var res = new CharacterInfo(ict, iws, ioc, ipz, ict + FIncrement.CT, iws + FIncrement.WS);
             return res;
         }
@@ -72,17 +72,17 @@ namespace JYCalculator.Src
         /// <param name="wsProportion">无双占比（0~1），-1表示不变</param>
         public CharacterInfo GetCharInfo(double ctProportion = -1, double wsProportion = -1)
         {
-            double iCT = OriginalIChar.CT;
-            double iWS = OriginalIChar.WS;
+            double iCT = OriginalIChar.PhysicsCriticalStrikeValue;
+            double iWS = OriginalIChar.FinalStrainValue;
 
             if (ctProportion >= 0 && ctProportion <= 1)
             {
-                iCT = OriginalPointSum.CTOC * ctProportion / fGP.CT;
+                iCT = OriginalPointSum.CTOC * ctProportion / CurrentLevelParams.CriticalStrike;
             }
 
             if (wsProportion >= 0 && wsProportion <= 1)
             {
-                iWS = OriginalPointSum.WSPZ * wsProportion / fGP.WS;
+                iWS = OriginalPointSum.WSPZ * wsProportion / CurrentLevelParams.Strain;
             }
 
             return _GetCharInfo(iCT, iWS);

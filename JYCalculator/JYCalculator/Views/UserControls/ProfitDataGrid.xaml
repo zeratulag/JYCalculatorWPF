@@ -13,17 +13,18 @@
         ItemsSource="{Binding}">
         <DataGrid.Columns>
             <DataGridTextColumn Binding="{Binding Path=Name}" Header="类型" />
-            <DataGridTextColumn Binding="{Binding Path=Base_AP, StringFormat={}{0:F2}}" Header="基础攻击" />
-            <DataGridTextColumn Binding="{Binding Path=Base_OC, StringFormat={}{0:F2}}" Header="基础破防" />
-            <DataGridTextColumn Binding="{Binding Path=Base_L, StringFormat={}{0:F2}}" Header="基础力道" />
-            <DataGridTextColumn Binding="{Binding Path=PZ, StringFormat={}{0:F2}}" Header="破招" />
-            <DataGridTextColumn Binding="{Binding Path=WS_Point, StringFormat={}{0:F2}}" Header="无双" />
-            <DataGridTextColumn Binding="{Binding Path=CT_Point, StringFormat={}{0:F2}}" Header="会心" />
-            <DataGridTextColumn Binding="{Binding Path=CF_Point, StringFormat={}{0:F2}}" Header="会效" />
-            <DataGridTextColumn Binding="{Binding Path=WP, StringFormat={}{0:F2}}" Header="武器伤害" />
-            <DataGridTextColumn Binding="{Binding Path=Final_AP, StringFormat={}{0:F2}}" Header="最终攻击" />
-            <DataGridTextColumn Binding="{Binding Path=Final_OC, StringFormat={}{0:F2}}" Header="最终破防" />
-            <DataGridTextColumn Binding="{Binding Path=Final_L, StringFormat={}{0:F2}}" Header="最终力道" />
+            <DataGridTextColumn Binding="{Binding Path=PhysicsBaseAttackPower, StringFormat=F2}" Header="基础攻击" />
+            <DataGridTextColumn Binding="{Binding Path=PhysicsBaseOvercome, StringFormat=F2}" Header="基础破防" />
+            <DataGridTextColumn Binding="{Binding Path=BaseStrength, StringFormat=F2}" Header="基础力道" />
+            <DataGridTextColumn Binding="{Binding Path=BaseSurplus, StringFormat=F2}" Header="破招" />
+            <DataGridTextColumn Binding="{Binding Path=BaseStrain, StringFormat=F2}" Header="基础无双" />
+            <DataGridTextColumn Binding="{Binding Path=PhysicsCriticalStrike, StringFormat=F2}" Header="会心" />
+            <DataGridTextColumn Binding="{Binding Path=PhysicsCriticalPower, StringFormat=F2}" Header="会效" />
+            <DataGridTextColumn Binding="{Binding Path=BaseWeaponDamage, StringFormat=F2}" Header="武器伤害" />
+            <DataGridTextColumn Binding="{Binding Path=PhysicsFinalAttackPower, StringFormat=F2}" Header="最终攻击" />
+            <DataGridTextColumn Binding="{Binding Path=PhysicsFinalOvercome, StringFormat=F2}" Header="最终破防" />
+            <DataGridTextColumn Binding="{Binding Path=FinalStrength, StringFormat=F2}" Header="最终力道" />
+            <DataGridTextColumn Binding="{Binding Path=FinalStrain, StringFormat=F2}" Header="最终无双" />
         </DataGrid.Columns>
     </DataGrid>
 </UserControl>

@@ -22,8 +22,9 @@ namespace JYCalculator.Models
         public readonly CalculatorShellArg CalcShellArg; // 从CalculatorShell传进来的额外参数
         public double NormalTime;
         public double XWTime;
-        public readonly NormalSkillNumModel Normal; // 常规技能数模型
-        public readonly BigXWSkillNumModel XW; // 心无技能数
+        public NormalSkillNumModel Normal { get; } // 常规技能数模型
+        public BigXWSkillNumModel XW { get; } // 心无技能数
+
         public double XWCD; // 逐星流下心无的CD时间；
         public readonly SkillBuild CSkillBuild; // 技能流派
 
@@ -46,20 +47,22 @@ namespace JYCalculator.Models
             HitSkillEvents = new Dictionary<string, SkillEventItem>(10);
             CTSkillEvents = new Dictionary<string, SkillEventItem>(10);
             const string piaohuang = "PiaoHuang"; // 飘黄事件
-            HitSkillEvents.Add(piaohuang, StaticXFData.DB.SkillInfo.Events[piaohuang]);
+            HitSkillEvents.Add(piaohuang, StaticXFData.DB.BaseSkillInfo.Events[piaohuang]);
 
             DispatchSkillEvents(Equip.SkillEvents);
             DispatchSkillEvents(BigFM.SkillEvents);
             DispatchSkillEvents(QiXue.SkillEvents);
 
             var skillNumModelArg =
-                new SkillNumModelArg(HasZhen, CalcShellArg.BuffSpecial.PiaoHuangCover, CalcShellArg.HS, CSkillBuild);
+                new SkillNumModelArg(HasZhen, CalcShellArg.BuffSpecial.PiaoHuangCover,
+                    CalcShellArg.BuffSpecial.PiaoHuangStack, CalcShellArg.HS, CSkillBuild,
+                    CalcShellArg.TargetAllWaysFullHP);
 
             XW = new BigXWSkillNumModel(qixue, skillhaste, xfAbility.BigXW, Equip, BigFM, skillNumModelArg)
-            { SkillEvents = HitSkillEvents };
-            
+                {SkillEvents = HitSkillEvents};
+
             Normal = new NormalSkillNumModel(qixue, skillhaste, xfAbility.Normal, Equip, BigFM, skillNumModelArg)
-            { SkillEvents = HitSkillEvents };
+                {SkillEvents = HitSkillEvents};
 
             NormalTime = QiXue.NormalDuration;
             XWTime = QiXue.XWDuration;
@@ -80,7 +83,7 @@ namespace JYCalculator.Models
         {
             foreach (var _ in items)
             {
-                if (_.EventType == "CriticalStrike")
+                if (_.EventType == SkillEventTypeEnum.CriticalStrike)
                 {
                     CTSkillEvents.Add(_.Name, _);
                 }
@@ -115,6 +118,19 @@ namespace JYCalculator.Models
                     CalcBaiYu();
                 }
             }
+        }
+
+        public void AddSkillByIntervalToFinalSkillFreq(string skillName, double normalInterval, double XWInterval)
+        {
+            Normal.AddSkillByIntervalToFinalSkillFreq(skillName, normalInterval);
+            XW.AddSkillByIntervalToFinalSkillFreq(skillName, XWInterval);
+        }
+
+        public (double normalCover, double xwCover) CalcCDBuffCoverRate(SkillEventItem item)
+        {
+            var normalCover = Normal.FinalSkillFreq.CalcCDBuffCoverRate(item);
+            var xwCover = XW.FinalSkillFreq.CalcCDBuffCoverRate(item);
+            return (normalCover, xwCover);
         }
     }
 }

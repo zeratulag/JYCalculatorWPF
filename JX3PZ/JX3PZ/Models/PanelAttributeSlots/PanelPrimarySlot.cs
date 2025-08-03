@@ -43,8 +43,8 @@ namespace JX3PZ.Models
                 case PrimaryTypeEnum.Strength:
                     {
                         res.Add("atPhysicsAttackPowerBase",
-                            (int)(Final * SystemPrimaryAttribute.StrengthToPhysicsAttackPower));
-                        res.Add("atPhysicsOvercomeBase", (int)(Final * SystemPrimaryAttribute.StrengthToPhysicsOvercome));
+                            (int)(Final * SystemPrimaryAttribute.StrengthToPhysicsBaseAttackPower));
+                        res.Add("atPhysicsOvercomeBase", (int)(Final * SystemPrimaryAttribute.StrengthToPhysicsBaseOvercome));
                         break;
                     }
 
@@ -56,8 +56,8 @@ namespace JX3PZ.Models
                     }
                 case PrimaryTypeEnum.Spunk:
                     {
-                        res.Add("atMagicAttackPowerBase", (int)(Final * SystemPrimaryAttribute.SpunkToMagicAttackPower));
-                        res.Add("atMagicOvercome", (int)(Final * SystemPrimaryAttribute.SpunkToMagiOvercome));
+                        res.Add("atMagicAttackPowerBase", (int)(Final * SystemPrimaryAttribute.SpunkToMagicBaseAttackPower));
+                        res.Add("atMagicOvercome", (int)(Final * SystemPrimaryAttribute.SpunkToMagicBaseOvercome));
                         break;
                     }
             }

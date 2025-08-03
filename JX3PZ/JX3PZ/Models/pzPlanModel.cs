@@ -4,6 +4,8 @@ using JX3PZ.ViewModels;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using JX3CalculatorShared.Data;
+using Serilog;
 
 namespace JX3PZ.Models
 {
@@ -26,8 +28,8 @@ namespace JX3PZ.Models
         public CharacterPanel Panel; // 全面板属性
         public XinFaCharacterPanel XFPanel; // 当前心法面板属性
         public EquipStoneModel EquipStone;
-        public EquipSnapShotModel PrimaryWeaponModel => SnapShots[(int)EquipSlotEnum.PRIMARY_WEAPON]; // 主武器的Model
-        public EquipSnapShotModel PendantModel => SnapShots[(int)EquipSlotEnum.PENDANT]; // 腰坠的Model
+        public EquipSnapShotModel PrimaryWeaponModel => SnapShots[(int) EquipSlotEnum.PRIMARY_WEAPON]; // 主武器的Model
+        public EquipSnapShotModel PendantModel => SnapShots[(int) EquipSlotEnum.PENDANT]; // 腰坠的Model
 
         public PzPlanModel()
         {
@@ -59,7 +61,7 @@ namespace JX3PZ.Models
             GetXinFaEntries();
             GetStoneEntries();
 #if DEBUG
-            Trace.WriteLine("已完成配装计算！");
+            Log.Information("已完成配装计算！");
 #endif
         }
 
@@ -149,7 +151,7 @@ namespace JX3PZ.Models
             GetSetViewModels();
 
 #if DEBUG
-            Trace.WriteLine("已完成套装计算！");
+            Log.Information("已完成套装计算！");
 #endif
         }
 
@@ -167,6 +169,7 @@ namespace JX3PZ.Models
         public void GetCharacterPanel()
         {
             Panel = new CharacterPanel();
+            Panel.EquipScore = CEquipScore.TotalScore;
             Panel.Calc(EntryCollection.ValueDict);
             XFPanel = new XinFaCharacterPanel(Panel);
         }
@@ -183,9 +186,23 @@ namespace JX3PZ.Models
         {
             var equipList = ExportJBPZEquipSnapshotCollection();
             var title = XFPanel.Name;
-            var res = new PzMainSav() { EquipList = equipList, Title = title };
+            var res = new PzMainSav() {EquipList = equipList, Title = title};
             return res;
         }
 
+        // 每个部位的EquipID字典
+        public Dictionary<string, string> GetEquipDict()
+        {
+            var res = SnapShots.ToDictionary(e => e.EquipSlot.ToString(), e => e.CEquipID);
+            return res;
+        }
+
+        // 获取有效的精简装备特效列表
+        public EquipSpecialEffectItem[] GetValidEquipSpecialEffectItems()
+        {
+            var allEffectItems = SnapShots.Select(e => e.CEquipSpecialEffect);
+            var res = allEffectItems.Where(EquipSpecialEffectItem.IsValidItem).ToArray();
+            return res;
+        }
     }
 }

@@ -27,18 +27,10 @@ namespace JX3CalculatorShared.DB
 
         public ImmutableDictionary<int, int> ID2UIID; // 大附魔ID到物品ID的映射关系
 
-        public BigFMDBBase(IEnumerable<Enchant> itemdata, IEnumerable<BottomsFMItem> bottomsdata)
+        public BigFMDBBase(IEnumerable<Enchant> itemdata)
         {
             var data1 = itemdata.ToDictionary(_ => _.Name,
                 _ => new BigFM(_));
-            var data2 = bottomsdata.ToDictionary(_ => _.Name,
-                _ => new BigFM(_));
-
-            foreach (var kvp in data2)
-            {
-                if (kvp.Value.Rank <= 0) continue;
-                data1.Add(kvp.Key, kvp.Value);
-            }
 
             Data = data1.ToImmutableDictionary();
             DispatchBigFM();
@@ -59,7 +51,7 @@ namespace JX3CalculatorShared.DB
         public ImmutableArray<BigFM> Belt { get; private set; }
         public ImmutableArray<BigFM> Shoes { get; private set; }
         public ImmutableArray<BigFM> Wrist { get; private set; }
-        public ImmutableArray<BigFM> Bottoms { get; private set; }
+        //public ImmutableArray<BigFM> Bottoms { get; private set; }
         public ImmutableDictionary<EquipSubTypeEnum, ImmutableArray<BigFM>> TypeData { get; private set; } // 按照不同类型分别构建大附魔列表的字典
         public static IDictionary<EquipSubTypeEnum, BigFM[]> GroupBigFM(IEnumerable<BigFM> BigFMs)
         {
@@ -67,7 +59,7 @@ namespace JX3CalculatorShared.DB
                 ToDictionary(
                     g => g.Key,
                     g => g.
-                        OrderBy(_ => _.DLCLevel).
+                        OrderBy(_ => _.ExpansionPackLevel).
                         ThenBy(_ => _.Rank).
                         ThenBy(_ => _.LevelMax).
                         ThenBy(_ => _.ID).

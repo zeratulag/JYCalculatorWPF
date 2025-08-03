@@ -1,4 +1,5 @@
 ﻿using JX3CalculatorShared.Globals;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
@@ -10,48 +11,48 @@ namespace JX3CalculatorShared.Class
     {
         #region 属性计算部分
 
-        public static void ProcessFinal_PDef(this Target target, double value)
+        public static void ProcessPhysicsFinalShield(this Target target, double value)
         {
-            target.Final_PDef += value;
+            target.PhysicsFinalShield += value;
         }
 
-        public static void ProcessBase_PDef(this Target target, double value)
+        public static void ProcessPhysicsBaseShield(this Target target, double value)
         {
-            target.Base_PDef += value;
-            target.Final_PDef += value * (1 + target.PDef_Percent);
+            target.PhysicsBaseShield += value;
+            target.PhysicsFinalShield += value * (1 + target.PhysicsShieldPercent);
         }
 
-        public static void ProcessPDef_Percent(this Target target, double value)
+        public static void ProcessPhysicsShieldPercent(this Target target, double value)
         {
-            target.PDef_Percent += value;
-            target.Final_PDef += target.Base_PDef * value;
+            target.PhysicsShieldPercent += value;
+            target.PhysicsFinalShield += target.PhysicsBaseShield * value;
         }
 
-        public static void ProcessFinal_MDef(this Target target, double value)
+        public static void ProcessMagicFinalShield(this Target target, double value)
         {
-            target.Final_MDef += value;
+            target.MagicFinalShield += value;
         }
 
-        public static void ProcessBase_MDef(this Target target, double value)
+        public static void ProcessMagicBaseShield(this Target target, double value)
         {
-            target.Base_MDef += value;
-            target.Final_MDef += value * (1 + target.MDef_Percent);
+            target.MagicBaseShield += value;
+            target.MagicFinalShield += value * (1 + target.MagicShieldPercent);
         }
 
-        public static void ProcessMDef_Percent(this Target target, double value)
+        public static void ProcessMagicShieldPercent(this Target target, double value)
         {
-            target.MDef_Percent += value;
-            target.Final_MDef += target.Base_MDef * value;
+            target.MagicShieldPercent += value;
+            target.MagicFinalShield += target.MagicBaseShield * value;
         }
 
-        public static void ProcessP_YS(this Target target, double value)
+        public static void ProcessPhysicsDamageCoefficient(this Target target, double value)
         {
-            target.P_YS += value;
+            target.PhysicsDamageCoefficient += value;
         }
 
-        public static void ProcessM_YS(this Target target, double value)
+        public static void ProcessMagicDamageCoefficient(this Target target, double value)
         {
-            target.M_YS += value;
+            target.MagicDamageCoefficient += value;
         }
 
         #endregion
@@ -67,14 +68,14 @@ namespace JX3CalculatorShared.Class
         {
             var dict = new Dictionary<ZAttributeType, TargetModifierDelegate>()
             {
-                {ZAttributeType.Final_PDef, TargetModifier.ProcessFinal_PDef},
-                {ZAttributeType.Base_PDef, TargetModifier.ProcessBase_PDef},
-                {ZAttributeType.PDef_Percent, TargetModifier.ProcessPDef_Percent},
-                {ZAttributeType.Final_MDef, TargetModifier.ProcessFinal_MDef},
-                {ZAttributeType.Base_MDef, TargetModifier.ProcessBase_MDef},
-                {ZAttributeType.MDef_Percent, TargetModifier.ProcessMDef_Percent},
-                {ZAttributeType.P_YS, TargetModifier.ProcessP_YS},
-                {ZAttributeType.M_YS, TargetModifier.ProcessM_YS}
+                {ZAttributeType.PhysicsFinalShield, TargetModifier.ProcessPhysicsFinalShield},
+                {ZAttributeType.PhysicsBaseShield, TargetModifier.ProcessPhysicsBaseShield},
+                {ZAttributeType.PhysicsShieldPercent, TargetModifier.ProcessPhysicsShieldPercent},
+                {ZAttributeType.MagicFinalShield, TargetModifier.ProcessMagicFinalShield},
+                {ZAttributeType.MagicBaseShield, TargetModifier.ProcessMagicBaseShield},
+                {ZAttributeType.MagicShieldPercent, TargetModifier.ProcessMagicShieldPercent},
+                {ZAttributeType.PhysicsDamageCoefficient, TargetModifier.ProcessPhysicsDamageCoefficient},
+                {ZAttributeType.MagicDamageCoefficient, TargetModifier.ProcessMagicDamageCoefficient}
             };
             ModifierDict = dict.ToImmutableDictionary();
         }
@@ -88,7 +89,7 @@ namespace JX3CalculatorShared.Class
             }
             else
             {
-                Trace.WriteLine($"无效的属性！ {key}:{value} ");
+                Log.Information($"无效的属性！ {key}:{value} ");
             }
         }
 
@@ -102,7 +103,7 @@ namespace JX3CalculatorShared.Class
             }
             else
             {
-                Trace.WriteLine($"未知的属性！ {key}:{value} ");
+                //Log.Information($"未知的属性！ {key}:{value} ");
             }
         }
     }

@@ -1,5 +1,6 @@
 ﻿using JX3CalculatorShared.Data;
 using JX3CalculatorShared.Globals;
+using JYCalculator.Data;
 
 namespace JX3CalculatorShared.Class
 {
@@ -12,12 +13,15 @@ namespace JX3CalculatorShared.Class
         public double RawIntervalTime => RawFrame / StaticConst.FRAMES_PER_SECOND; // 初始单跳时间
         public int RawFrame { get; protected set; } // 初始帧数
         public double RawTime => nCount * RawIntervalTime; // 初始总时间
-        public int Frame { get; protected set; } // 加速后帧数
+        public double Frame { get; protected set; } // 加速后帧数
         public double IntervalTime => Frame / StaticConst.FRAMES_PER_SECOND; // 加速后单跳时间
         public double Time => nCount * IntervalTime; // 加速后总时间
-        public int XWFrame { get; protected set; } // 心无期间加速后帧数
+        public double XWFrame { get; protected set; } // 心无期间加速后帧数
         public double XWIntervalTime => XWFrame / StaticConst.FRAMES_PER_SECOND; // 心无期间加速后单跳时间
         public double XWTime => nCount * XWIntervalTime; // 心无期间加速后总时间
+
+
+        public bool IsMultiChannel;
 
         #endregion
 
@@ -25,21 +29,23 @@ namespace JX3CalculatorShared.Class
         {
         }
 
-        public HasteTableItemBase(string name, string skillname, int rawFrame, int ncount)
+        public HasteTableItemBase(string name, string skillname, int rawFrame, int ncount, bool isMultiChannel = false)
         {
             // 输入数据
             Name = name;
             SkillName = skillname;
             RawFrame = rawFrame;
             nCount = ncount;
+            IsMultiChannel = isMultiChannel;
         }
 
 
         public HasteTableItemBase(SkillInfoItemBase info)
         {
             Name = info.Name;
-            SkillName = info.Skill_Name;
+            SkillName = info.SkillName;
             RawFrame = info.Frame;
+            IsMultiChannel = info.IsMultiChannel;
         }
 
         /// <summary>
@@ -52,6 +58,7 @@ namespace JX3CalculatorShared.Class
             SkillName = old.SkillName;
             RawFrame = old.RawFrame;
             nCount = old.nCount;
+            IsMultiChannel = old.IsMultiChannel;
         }
 
 

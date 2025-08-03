@@ -6,9 +6,9 @@ namespace JX3PZ.Models
     {
         public new const string Name = "PVXAllRound";
         public const string Suffix = "";
-        public const double ConvertToStrainCoef = 1.0;
-        public const double ConvertToSurplusValueCoef = 1.0;
-        public const double ConvertToDecriticalDamageCoef = 1.0;
+        public const double ConvertToStrainCoef = 1.5; // 全能转无双
+        public const double ConvertToSurplusValueCoef = 0.5; // 全能转破招
+        public const double ConvertToDecriticalDamageCoef = 1.0; // 全能转化劲
 
         public const string StrainKey = "atStrainBase";
         public const string SurplusValueKey = "atSurplusValueBase";

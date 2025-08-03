@@ -35,5 +35,15 @@ namespace JX3PZ.Views
         {
             _VM.ConfirmSelection();
         }
+
+        private void LevelSlider_LostMouseCapture(object sender, MouseEventArgs e)
+        {
+            // 获取 Slider
+            var slider = sender as Slider;
+
+            // 获取绑定表达式并手动更新绑定源
+            var bindingExpression = slider.GetBindingExpression(Slider.ValueProperty);
+            bindingExpression?.UpdateSource();
+        }
     }
 }

@@ -25,7 +25,7 @@ namespace JX3PZ.Models
         {
             BaseKey = $"at{Name}{keySuffix}";
             BasePercentAddKey = $"{BaseKey}PercentAdd";
-            PointAttribute = AttributeID.Get(BaseKey);
+            PointAttribute = KAttributeID.Get(BaseKey);
             DescName = PointAttribute.SimpleDesc;
         }
 

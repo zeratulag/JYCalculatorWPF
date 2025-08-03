@@ -69,7 +69,7 @@ namespace JX3PZ.ViewModels
         public ScoreEntryViewModel(EquipLevelScore e)
         {
             Text1 = $"装备分数 {e.BaseScore}";
-            Color1 = "#ff9600";
+            Color1 = ColorConst.Orange;
             bool hasP2 = false;
             var t2b = new StringBuilder();
             if (e.StrengthScore > 0)

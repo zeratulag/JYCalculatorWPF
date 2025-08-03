@@ -77,7 +77,7 @@ namespace JYCalculator.DB
                 {
                     var i = abilityItem.Rank;
                     var normal = periodAbilitySkillNum.Normal[i];
-                    var bigxw = periodAbilitySkillNum.XW[i];
+                    var bigxw = periodAbilitySkillNum.XinWu[i];
                     var value = new XFAbility(abilityItem, normal, bigxw);
                     res.Add(i, value);
 

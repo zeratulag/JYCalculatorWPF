@@ -14,8 +14,8 @@ namespace JX3PZ.Models
         public readonly DamageTypeEnum DamageType;
         public readonly string Name;
         public readonly HashSet<string> ExtraKey; // 额外的属性名称
-        public AttributeID PointAttribute { get; protected set; }
-        public AttributeID RateAttribute { get; protected set; }
+        public KAttributeID PointAttribute { get; protected set; }
+        public KAttributeID RateAttribute { get; protected set; }
 
         public static readonly string Suffix = "";
 

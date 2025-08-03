@@ -121,8 +121,8 @@
 
                     <hc:SimpleStackPanel Orientation="Vertical" VerticalAlignment="Center">
                         <hc:SimpleStackPanel Orientation="Horizontal" VerticalAlignment="Center" >
-                            <hc:SimpleStackPanel VerticalAlignment="Center" Margin="0 0 0 0">
-                                <hc:OutlineText Text="{Binding FinalDPS, StringFormat={}{0:F0}}" Stroke="Black"
+                            <hc:SimpleStackPanel VerticalAlignment="Center" Margin="0 0 0 0" Width="190">
+                                <hc:OutlineText Text="{Binding FinalDPS, StringFormat=F0}" Stroke="Black"
                                                 Fill="White"
                                                 StrokeThickness="2"
                                                 HorizontalAlignment="Center"

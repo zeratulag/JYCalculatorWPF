@@ -18,7 +18,7 @@ namespace JX3CalculatorShared.Class
             SetName = item.SetName;
             Effect2 = item.Effect2;
             Effect4 = item.Effect4;
-            EquipIDs = StringTool.ParseStringList(item.EIDs_Str).ToImmutableArray();
+            EquipIDs = StringTool.ParseStringList(item.EID_Str).ToImmutableArray();
         }
 
     }

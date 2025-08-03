@@ -18,6 +18,7 @@ namespace JX3PZ.Data
         public ImmutableDictionary<int, Stone> Stone;
         public ImmutableDictionary<int, Enhance> Enhance;
         public ImmutableDictionary<int, PzSet> Set;
+        public ImmutableDictionary<string, PzSubSet> SubSet;
         public ImmutableDictionary<int, Enchant> Enchant;
 
         public ImmutableDictionary<int, Armor> Armor;
@@ -31,14 +32,17 @@ namespace JX3PZ.Data
 
         public void LoadTime(string path)
         {
-            FuncTool.RunTime(Load);
+            FuncTool.RunTime(Load, "LoadPZData");
         }
 
         public PzData(string path)
         {
             Path = path;
         }
-        public PzData() { }
+
+        public PzData()
+        {
+        }
 
         public void LoadBefore()
         {
@@ -49,6 +53,8 @@ namespace JX3PZ.Data
         {
             LoadStone();
             LoadSet();
+            LoadSubSet();
+            ProcessSets();
             LoadEnhance();
             LoadEquip();
             LoadLevelData();
@@ -79,7 +85,7 @@ namespace JX3PZ.Data
 
         public void LoadEnchant()
         {
-            Enchant = ReadSheetAsDict<int, Enchant>(Path, "enchant", _ => _.ID);  // 大附魔
+            Enchant = ReadSheetAsDict<int, Enchant>(Path, "enchant", _ => _.ID); // 大附魔
             //foreach (var _ in Enchant.Values)
             //{
             //    _.Parse();
@@ -113,7 +119,6 @@ namespace JX3PZ.Data
             }
 
             Equip = eq.ToImmutable();
-
         }
 
         // 生成装备默认的界面，注意完整解析会比较慢，需要放在Task里操作
@@ -132,6 +137,31 @@ namespace JX3PZ.Data
             {
                 _.Parse();
             }
+        }
+
+        public void LoadSubSet()
+        {
+            SubSet = ReadSheetAsDict<string, PzSubSet>(Path, "subset", _ => _.SubSetID);
+            foreach (var s in SubSet.Values)
+            {
+                s.Parse();
+                AttachSubSetToSet(s);
+            }
+        }
+
+        public void ProcessSets()
+        {
+            foreach (var s in Set.Values)
+            {
+                s.MakeViewModel();
+            }
+        }
+
+        // 关联子套装
+        public void AttachSubSetToSet(PzSubSet s)
+        {
+            var set = GetPzSet(s.SetID);
+            set.AttachSubSet(s);
         }
 
         public PzSet GetPzSet(int setID)

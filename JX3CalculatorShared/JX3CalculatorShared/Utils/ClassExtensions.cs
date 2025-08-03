@@ -1,10 +1,10 @@
-﻿using Minimod.PrettyPrint;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
+using Serilog;
 
 
 namespace JX3CalculatorShared.Utils
@@ -35,9 +35,8 @@ namespace JX3CalculatorShared.Utils
         /// 控制台打印
         public static void TraceCat(this object o)
         {
-            Trace.WriteLine(o.PrettyPrint());
+            Trace.WriteLine(o.ToString());
         }
-
 
     }
 

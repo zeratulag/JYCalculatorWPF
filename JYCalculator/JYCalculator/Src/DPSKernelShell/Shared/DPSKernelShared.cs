@@ -46,7 +46,7 @@ namespace JYCalculator.Src
             FightTime = fightTime;
 
             Arg = arg;
-            SnapFChar = FinalFChars.Normal.GetBurstSnapShot(FinalFChars.XW);
+            SnapFChar = FinalFChars.Normal.GetBurstSnapShot(FinalFChars.XinWu);
         }
 
         #endregion
@@ -65,9 +65,10 @@ namespace JYCalculator.Src
 
         public void CalcDamage()
         {
-            var normal = new SkillDamageDF(DataDfs.Normal, FinalFChars.Normal, SnapFChar, CTarget);
+            var piaoHuangStack = Arg.SkillNum.Normal.Arg.PiaoHuangStack;
+            var normal = new SkillDamageDF(DataDfs.Normal, FinalFChars.Normal, SnapFChar, CTarget, piaoHuangStack);
             normal.GetDamage();
-            var xw = new SkillDamageDF(DataDfs.XW, FinalFChars.XW, FinalFChars.XW, CTarget);
+            var xw = new SkillDamageDF(DataDfs.XinWu, FinalFChars.XinWu, FinalFChars.XinWu, CTarget, piaoHuangStack);
             xw.GetDamage();
             DamageDFs = new Period<SkillDamageDF>(normal, xw);
         }
@@ -76,7 +77,7 @@ namespace JYCalculator.Src
         {
             var normal = new SkillDamageFreqDF(DamageDFs.Normal, FreqCTDFs.Normal, FightTime.NormalTime);
             normal.Calc();
-            var xw = new SkillDamageFreqDF(DamageDFs.XW, FreqCTDFs.XW, FightTime.XWTime);
+            var xw = new SkillDamageFreqDF(DamageDFs.XinWu, FreqCTDFs.XinWu, FightTime.XWTime);
             xw.Calc();
             DamageFreqDFs = new Period<SkillDamageFreqDF>(normal, xw);
         }
@@ -84,7 +85,7 @@ namespace JYCalculator.Src
         public double CalcDPS()
         {
             var normal = DamageFreqDFs.Normal.GetDPSTableItem("Normal", "常规状态", FightTime.NormalCover);
-            var xw = DamageFreqDFs.XW.GetDPSTableItem("XW", "爆发状态", FightTime.XWCover);
+            var xw = DamageFreqDFs.XinWu.GetDPSTableItem("XW", "爆发状态", FightTime.XWCover);
             FinalDPSTable = new DPSTable(normal, xw);
             FinalDPSTable.Proceed();
             FinalDPS = FinalDPSTable.DPS;
@@ -116,7 +117,7 @@ namespace JYCalculator.Src
         {
             // 计算收益导数
             var normal = DamageFreqDFs.Normal.CalcDeriv();
-            var xw = DamageFreqDFs.XW.CalcDeriv();
+            var xw = DamageFreqDFs.XinWu.CalcDeriv();
             DamageDerivs = new Period<DamageDeriv>(normal, xw);
 
             var derivs = new[] { normal, xw };

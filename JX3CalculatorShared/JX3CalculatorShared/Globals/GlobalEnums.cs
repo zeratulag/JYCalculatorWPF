@@ -25,7 +25,7 @@
         Spirit, // 根骨
         Strength, // 力道
         Agility, // 身法
-        Spunk,  // 元气
+        Spunk, // 元气
     }
 
     // 物品品级
@@ -98,13 +98,13 @@
     {
         public static string ToDescString(this EquipSubTypeEnum typeEnum)
         {
-            var res = (EquipSubTypeEnumDesc)typeEnum;
+            var res = (EquipSubTypeEnumDesc) typeEnum;
             return res.ToString();
         }
 
         public static string ToShortDescString(this EquipSubTypeEnum typeEnum)
         {
-            var res = (EquipSubTypeEnumShortDesc)typeEnum;
+            var res = (EquipSubTypeEnumShortDesc) typeEnum;
             return res.ToString();
         }
     }
@@ -120,12 +120,18 @@
         Buff_ExtraStack,
         Buff_ExtraTrigger,
         Buff_Special,
+        Buff_Skill,
+        Buff_Equip,
+        Buff_EquipSpecialEffect,
     }
+
     public enum SkillDataTypeEnum
     {
         Default = -1,
         Normal, // 常规
         Channel, // 逆读条
+        NormalChannel, // 表示计算技能攻击系数的时候需要加上考虑读条时间（夺魄）
+        MultiChannel, // 多段逆读条（130修改了加速算法）
         DOT, // DOT
         NoneAP, // 不吃AP加成
         Physics, // 外功
@@ -166,4 +172,50 @@
         YuJian = 2, // 玉简
     }
 
+    public enum EquipSpecialEffectTypeEnum
+    {
+        None = 0,
+        SECONDARY_WEAPON__SuperCustomDamage,
+        WRIST__SuperCustomDamage,
+
+        RING__Overcome,
+        RING__CriticalStrike,
+        RING__Surplus,
+        BELT__Attribute,
+        BELT__Random_Attribute,
+        PENDANT__Overcome,
+        PENDANT__CriticalPower,
+        SHOES__CriticalStrike,
+        SHOES__Overcome,
+        BOTTOMS__Strain,
+
+        HAT__AdaptivePower = 110,
+        NECKLACE__CriticalStrike_To_CriticalPower = 120,
+        NECKLACE__Overcome_To_AttackPower = 121,
+
+        BOTTOMS__AdaptivePower = 200,
+
+        // 计算顺序：
+        // 1. 帽子：（快照）基于会心破防破招，修改会心破防破招
+        // 2. 项链：（快照）基于会心破防修改会效攻击
+        // 3. 下装：（实时）判断无双，修改会心破防
+    }
+
+    public enum EquipSpecialEffectBaseTypeEnum
+    {
+        None = 0,
+        SuperCustomDamage,
+        AdaptiveBuff,
+        AddBuff,
+        RandomBuff
+    }
+
+    // 事件触发类型
+    public enum SkillEventTypeEnum
+    {
+        Default = 0,
+        Cast,
+        Hit,
+        CriticalStrike
+    }
 }

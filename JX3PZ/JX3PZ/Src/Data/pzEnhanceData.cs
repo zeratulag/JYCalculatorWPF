@@ -28,7 +28,7 @@ namespace JX3PZ.Data
             {
                 var l = _.OrderBy(e => e.Score).ThenBy(e => e.ID).ToImmutableArray();
                 Enhances[_.Key] = l;
-                UseFulEnhances[_.Key] = l.Where(e => e.Useful.ToBool() && e.Quality > 0).ToImmutableArray();
+                UseFulEnhances[_.Key] = l.Where(e => e.Useful.ToBool() && e.Quality > 0 && e.ExpansionPackLevel >= 130).ToImmutableArray();
             }
         }
 

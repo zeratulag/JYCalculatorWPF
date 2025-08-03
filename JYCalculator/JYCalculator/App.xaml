@@ -28,6 +28,8 @@
                 <ResourceDictionary Source="/Views/Resources/ItemDT.xaml" />
                 <!-- 大附魔 -->
                 <ResourceDictionary Source="/Views/Resources/BigFM.xaml" />
+                <!-- 装备特效 -->
+                <ResourceDictionary Source="/Views/Resources/EquipSpecialEffect.xaml" />
                 <!-- Buff -->
                 <ResourceDictionary Source="/Views/Resources/Buff.xaml" />
 

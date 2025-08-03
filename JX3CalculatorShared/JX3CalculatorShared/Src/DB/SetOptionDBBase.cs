@@ -9,12 +9,12 @@ namespace JX3CalculatorShared.DB
 {
     public class SetOptionDBBase : IDB<int, SetOption>
     {
-        public ImmutableDictionary<int, SetOption> Data;
-        public ImmutableDictionary<string, int> EquipID2SetID; // 装备ID到套装ID的映射
+        public ImmutableDictionary<int, SetOption> Data { get; }
+        public ImmutableDictionary<string, int> EquipID2SetID { get; } // 装备ID到套装ID的映射
 
-        public SetOptionDBBase(IEnumerable<SetOptionItem> itemdata)
+        public SetOptionDBBase(IEnumerable<SetOptionItem> itemData)
         {
-            Data = itemdata.ToImmutableDictionary(_ => _.SetID, _ => new SetOption(_));
+            Data = itemData.ToImmutableDictionary(_ => _.SetID, _ => new SetOption(_));
 
             var equipID2SetID = new Dictionary<string, int>(Data.Count * 6);
             foreach (var _ in Data.Values)
@@ -65,8 +65,8 @@ namespace JX3CalculatorShared.DB
         public HashSet<string> GetSetEffects(IEnumerable<string> equipIDs)
         {
             var res = new HashSet<string>();
-            var setcounts = GetSetCounts(equipIDs);
-            foreach (var KVP in setcounts)
+            var setCounts = GetSetCounts(equipIDs);
+            foreach (var KVP in setCounts)
             {
                 var setOption = Get(KVP.Key);
                 if (KVP.Value >= 2)

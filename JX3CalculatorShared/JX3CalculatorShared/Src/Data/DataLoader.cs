@@ -3,6 +3,7 @@ using JX3PZ.Src;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
+using JX3CalculatorShared.Src.Class;
 using static JX3CalculatorShared.Utils.ImportTool;
 
 namespace JX3CalculatorShared.Data
@@ -14,25 +15,28 @@ namespace JX3CalculatorShared.Data
         protected string ZhenFaFile; // TL_zhenfa.json
         protected string SettingFile; // TL_zhenfa.json
 
-        public ImmutableArray<TargetItem> Target;
-        public ImmutableArray<RecipeItem> RecipeMJ;
-        public ImmutableArray<RecipeItem> RecipeOther;
-        public ImmutableArray<ZhenFa_dfItem> ZhenFa_df;
-        public ImmutableDictionary<string, ZhenFa> ZhenFa_dict;
-        public ImmutableArray<ItemDTItem> ItemDT;
-        public ImmutableArray<Buff_dfItem> Buff_df;
-        public ImmutableDictionary<string, QiXueItem> QiXue;
-        public ImmutableArray<Enchant> BigFM;
-        public ImmutableArray<BottomsFMItem> BottomsFM;
-        public ImmutableArray<EquipOptionItem> EquipOptionWP;
-        public ImmutableArray<EquipOptionItem> EquipOptionYZ;
-        public ImmutableArray<UselessAttr> UselessAttrItems;
-        public ImmutableHashSet<string> UselessAttrs;
-        public ImmutableDictionary<string, SkillModifier> SkillModifier;
-        public ImmutableDictionary<int, SetOptionItem> SetOption;
-        public ImmutableArray<AbilityItem> Ability;
-        public ImmutableDictionary<string, SkillEventItem> SkillEvent;
+        public ImmutableArray<TargetItem> Target { get; protected set; }
+        public ImmutableArray<RecipeItem> RecipeMJ { get; protected set; }
+        public ImmutableArray<RecipeItem> RecipeOther { get; protected set; }
+        public ImmutableArray<ZhenFa_dfItem> ZhenFa_df { get; protected set; }
+        public ImmutableDictionary<string, ZhenFa> ZhenFa_dict { get; protected set; }
+        public ImmutableArray<ItemDTItem> ItemDT { get; protected set; }
+        public ImmutableArray<Buff_dfItem> Buff_df { get; protected set; }
+        public ImmutableDictionary<string, QiXueItem> QiXue { get; protected set; }
 
+        public ImmutableArray<Enchant> BigFM { get; protected set; }
+
+        //public ImmutableArray<BottomsFMItem> BottomsFM;
+        public ImmutableArray<EquipOptionItem> EquipOptionWP { get; protected set; }
+        public ImmutableArray<EquipOptionItem> EquipOptionYZ { get; protected set; }
+        public ImmutableArray<UselessAttr> UselessAttrItems { get; protected set; }
+        public ImmutableHashSet<string> UselessAttrs { get; protected set; }
+        public ImmutableDictionary<string, SkillModifier> SkillModifier { get; protected set; }
+        public ImmutableDictionary<int, SetOptionItem> SetOption { get; protected set; }
+        public ImmutableArray<AbilityItem> Ability { get; protected set; }
+        public ImmutableDictionary<string, SkillEventItem> SkillEvent { get; protected set; }
+        public ImmutableArray<EquipSpecialEffectItem> EquipSpecialEffectItems { get; protected set; }
+        public ImmutableArray<EquipSpecialEffectEntry> EquipSpecialEffectEntries { get; protected set; }
         public static string GetName(AbsGeneralItem item) => item.Name;
 
         protected void LoadTarget()
@@ -67,6 +71,7 @@ namespace JX3CalculatorShared.Data
         protected void LoadBuff_df()
         {
             Buff_df = ReadSheetAsArray<Buff_dfItem>(OutFile, "Buff");
+            Buff_df.ForEach(e => e.ParseIDLevel());
         }
 
         protected void LoadQiXue()
@@ -85,7 +90,7 @@ namespace JX3CalculatorShared.Data
                 BigFM = ReadSheetAsArray<Enchant>(OutFile, "Big_FM");
             }
 
-            BottomsFM = ReadSheetAsArray<BottomsFMItem>(OutFile, "Bottoms_FM");
+            //BottomsFM = ReadSheetAsArray<BottomsFMItem>(OutFile, "Bottoms_FM");
         }
 
         protected void LoadEquipOption()
@@ -143,6 +148,19 @@ namespace JX3CalculatorShared.Data
             {
                 _.Parse();
             }
+        }
+
+        public void LoadEquipSpecialEffectTable()
+        {
+            EquipSpecialEffectItems =
+                ReadSheetAsArray<EquipSpecialEffectItem>(OutFile, "EquipSpecialEffectTable");
+            EquipSpecialEffectItems.ForEach(e => e.Parse());
+        }
+
+        public void LoadEquipSpecialEffectEntries()
+        {
+            EquipSpecialEffectEntries = ReadSheetAsArray<EquipSpecialEffectEntry>(OutFile, "EquipSpecialEffectEntry");
+            EquipSpecialEffectEntries.ForEach(e => e.Parse());
         }
     }
 }

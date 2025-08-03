@@ -6,7 +6,6 @@ namespace JYCalculator.Models
 {
     public class BigFMConfigModel : BigFMConfigModelBase
     {
-
         #region 构建
 
         public void UpdateInput(BigFMConfigViewModel vm)
@@ -33,21 +32,21 @@ namespace JYCalculator.Models
             SkillEvents.Clear();
             if (Belt != null)
             {
-                SkillEvents.Add(StaticXFData.DB.SkillInfo.Events["BigFM_BELT"]);
+                SkillEvents.Add(StaticXFData.DB.BaseSkillInfo.Events["BigFM_BELT"]);
             }
 
             if (Wrist != null)
             {
-                SkillEvents.Add(StaticXFData.DB.SkillInfo.Events["BigFM_WRIST"]);
+                SkillEvents.Add(Wrist.ExpansionPackLevel == 130
+                    ? StaticXFData.DB.BaseSkillInfo.Events["BigFM_WRIST_130"]
+                    : StaticXFData.DB.BaseSkillInfo.Events["BigFM_WRIST"]);
             }
 
             if (Shoes != null)
             {
-                string key = $"BigFM_SHOES_{Shoes.DLCLevel}";
-                SkillEvents.Add(StaticXFData.DB.SkillInfo.Events[key]);
+                string key = $"BigFM_SHOES_{Shoes.ExpansionPackLevel}";
+                SkillEvents.Add(StaticXFData.DB.BaseSkillInfo.Events[key]);
             }
-
         }
-
     }
 }

@@ -72,6 +72,12 @@ namespace JX3PZ.Data
             return _.SubType;
         }
 
+        public static EquipSubTypeEnum PositionToSubTypeEnum(int pos)
+        {
+            var _ = GetEquipMapItem(pos);
+            return _.SubTypeEnum;
+        }
+
         /// <summary>
         /// SubType到EquipType转换
         /// </summary>

@@ -27,7 +27,7 @@ namespace JX3PZ.Models
 
         public void GetAttributes()
         {
-            PointAttribute = AttributeID.Get(PointKey);
+            PointAttribute = KAttributeID.Get(PointKey);
         }
 
     }

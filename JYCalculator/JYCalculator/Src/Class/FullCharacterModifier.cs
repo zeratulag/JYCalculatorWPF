@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Diagnostics;
+using Serilog;
 using static JYCalculator.Globals.XFStaticConst;
 
 
@@ -15,12 +16,12 @@ namespace JYCalculator.Class
     {
         #region 属性计算部分
 
-        public static void ProcessWP(this FullCharacter fChar, double value)
+        public static void ProcessBaseWeaponDamage(this FullCharacter fChar, double value)
         {
-            fChar.WP += value;
+            fChar.BaseWeaponDamage += value;
         }
 
-        public static void ProcessCT(this FullCharacter fChar, double value)
+        public static void ProcessPhysicsCriticalStrikeRate(this FullCharacter fChar, double value)
         {
             if (fChar.Has_Special_Buff)
             {
@@ -28,130 +29,137 @@ namespace JYCalculator.Class
             }
             else
             {
-                fChar.CT += value;
+                fChar.PhysicsCriticalStrikeRate += value;
             }
         }
 
-        public static void ProcessCT_Point(this FullCharacter fChar, double value)
+        public static void ProcessPhysicsCriticalStrike(this FullCharacter fChar, double value)
         {
-            ProcessCT(fChar, value / fGP.CT);
+            fChar.PhysicsCriticalStrike += value;
         }
 
-        public static void ProcessCF(this FullCharacter fChar, double value)
+        public static void ProcessPhysicsCriticalPowerRate(this FullCharacter fChar, double value)
         {
-            fChar.CF += value;
+            fChar.PhysicsCriticalPowerValue += value;
         }
 
-        public static void ProcessCF_Point(this FullCharacter fChar, double value)
+        public static void ProcessPhysicsCriticalPower(this FullCharacter fChar, double value)
         {
-            ProcessCF(fChar, value / fGP.CF);
+            ProcessPhysicsCriticalPowerRate(fChar, value / CurrentLevelParams.CriticalPower);
         }
 
-        public static void ProcessWS(this FullCharacter fChar, double value)
+        public static void ProcessStrainRate(this FullCharacter fChar, double value)
         {
-            fChar.WS += value;
+            fChar.StrainRate += value;
         }
 
-        public static void ProcessWS_Point(this FullCharacter fChar, double value)
+        public static void ProcessBaseStrain(this FullCharacter fChar, double value)
         {
-            ProcessWS(fChar, value / fGP.WS);
+            fChar.BaseStrain += value;
+            ProcessFinalStrain(fChar, value * (1 + fChar.StrainPercent));
         }
 
-        public static void ProcessHSP(this FullCharacter fChar, double value)
+        public static void ProcessFinalStrain(this FullCharacter fChar, double value)
         {
-            fChar.HS += value; // 注意此处加速改变
+            fChar.FinalStrain += value;
         }
 
-        public static void ProcessExtraSP(this FullCharacter fChar, double value)
+        public static void ProcessStrainPercent(this FullCharacter fChar, double value)
         {
-            fChar.ExtraSP += value; // 注意此处加速改变
+            fChar.StrainPercent += value;
+            ProcessFinalStrain(fChar, value * fChar.BaseStrain);
         }
 
-        public static void ProcessPZ(this FullCharacter fChar, double value)
+        public static void ProcessHaste(this FullCharacter fChar, double value)
         {
-            fChar.PZ += value;
+            fChar.Haste += value; // 注意此处加速改变
         }
 
-        public static void ProcessFinal_AP(this FullCharacter fChar, double value)
+        public static void ProcessExtraHaste(this FullCharacter fChar, double value)
         {
-            fChar.Final_AP += value;
+            fChar.ExtraHaste += value; // 注意此处加速改变
         }
 
-        public static void ProcessBase_AP(this FullCharacter fChar, double value)
+        public static void ProcessBaseSurplus(this FullCharacter fChar, double value)
         {
-            fChar.Base_AP += value;
-            ProcessFinal_AP(fChar, value * (1 + fChar.AP_Percent));
+            fChar.BaseSurplus += value;
         }
 
-        public static void ProcessAP_Percent(this FullCharacter fChar, double value)
+        public static void ProcessPhysicsFinalAttackPower(this FullCharacter fChar, double value)
         {
-            fChar.AP_Percent += value;
-            ProcessFinal_AP(fChar, value * fChar.Base_AP);
+            fChar.PhysicsFinalAttackPower += value;
         }
 
-        public static void ProcessFinal_OC(this FullCharacter fChar, double value)
+        public static void ProcessPhysicsBaseAttackPower(this FullCharacter fChar, double value)
         {
-            fChar.Final_OC += value;
+            fChar.PhysicsBaseAttackPower += value;
+            ProcessPhysicsFinalAttackPower(fChar, value * (1 + fChar.PhysicsAttackPowerPercent));
         }
 
-        public static void ProcessBase_OC(this FullCharacter fChar, double value)
+        public static void ProcessPhysicsAttackPowerPercent(this FullCharacter fChar, double value)
         {
-            fChar.Base_OC += value;
-            ProcessFinal_OC(fChar, value * (1 + fChar.OC_Percent));
+            fChar.PhysicsAttackPowerPercent += value;
+            ProcessPhysicsFinalAttackPower(fChar, value * fChar.PhysicsBaseAttackPower);
         }
 
-        public static void ProcessOC_Percent(this FullCharacter fChar, double value)
+        public static void ProcessPhysicsFinalOvercome(this FullCharacter fChar, double value)
         {
-            fChar.OC_Percent += value;
-            ProcessFinal_OC(fChar, value * fChar.Base_OC);
+            fChar.PhysicsFinalOvercome += value;
         }
 
-        public static void ProcessS(this FullCharacter fChar, double value) //身法
+        public static void ProcessPhysicsBaseOvercome(this FullCharacter fChar, double value)
         {
-            ProcessCT_Point(fChar, value * XFConsts.CT_PER_S);
+            fChar.PhysicsBaseOvercome += value;
+            ProcessPhysicsFinalOvercome(fChar, value * (1 + fChar.PhysicsOvercomePercent));
         }
 
-
-        public static void ProcessIgnoreA(this FullCharacter fChar, double value)
+        public static void ProcessPhysicsOvercomePercent(this FullCharacter fChar, double value)
         {
-            fChar.IgnoreA += value;
+            fChar.PhysicsOvercomePercent += value;
+            ProcessPhysicsFinalOvercome(fChar, value * fChar.PhysicsBaseOvercome);
         }
 
-        public static void ProcessDmgAdd(this FullCharacter fChar, double value)
+        public static void ProcessBaseAgility(this FullCharacter fChar, double value) //身法
         {
-            fChar.DmgAdd += value;
-        }
-
-        public static void ProcessP_DmgAdd(this FullCharacter fChar, double value)
-        {
-            ProcessDmgAdd(fChar, value);
-        }
-
-        public static void ProcessAll_DmgAdd(this FullCharacter fChar, double value)
-        {
-            ProcessP_DmgAdd(fChar, value);
+            ProcessPhysicsCriticalStrike(fChar, value * XFConsts.AgilityToPhysicsCriticalStrike);
         }
 
 
-        public static void ProcessFinal_L(this FullCharacter fChar, double value) // 增加力道
+        public static void ProcessAllShieldIgnorePercent(this FullCharacter fChar, double value)
         {
-            fChar.Final_L += value;
-            ProcessBase_AP(fChar, value * XFConsts.AP_PER_L);
-            ProcessBase_OC(fChar, value * XFConsts.OC_PER_L);
-            ProcessFinal_AP(fChar, value * XFConsts.F_AP_PER_L);
-            ProcessCT_Point(fChar, value * XFConsts.CT_PER_L);
+            fChar.AllShieldIgnore += value;
         }
 
-        public static void ProcessBase_L(this FullCharacter fChar, double value)
+        public static void ProcessPhysicsDamageAdd(this FullCharacter fChar, double value)
         {
-            fChar.Base_L += value;
-            ProcessFinal_L(fChar, value * (1 + fChar.L_Percent));
+            fChar.PhysicsDamageAdd += value;
         }
 
-        public static void ProcessL_Percent(this FullCharacter fChar, double value)
+        public static void ProcessAllDamageAdd(this FullCharacter fChar, double value)
         {
-            fChar.L_Percent += value;
-            ProcessFinal_L(fChar, value * fChar.Base_L);
+            ProcessPhysicsDamageAdd(fChar, value);
+        }
+
+
+        public static void ProcessFinalStrength(this FullCharacter fChar, double value) // 增加力道
+        {
+            fChar.FinalStrength += value;
+            ProcessPhysicsBaseAttackPower(fChar, value * XFConsts.FinalStrengthToPhysicsBaseAttackPower);
+            ProcessPhysicsBaseOvercome(fChar, value * XFConsts.FinalStrengthToPhysicsBaseOvercome);
+            ProcessPhysicsFinalAttackPower(fChar, value * XFConsts.JY_FinalStrengthToPhysicsFinalAttackPower);
+            ProcessPhysicsCriticalStrike(fChar, value * XFConsts.JY_FinalStrengthToPhysicsCriticalStrike);
+        }
+
+        public static void ProcessBaseStrength(this FullCharacter fChar, double value)
+        {
+            fChar.BaseStrength += value;
+            ProcessFinalStrength(fChar, value * (1 + fChar.StrengthPercent));
+        }
+
+        public static void ProcessBaseStrengthPercent(this FullCharacter fChar, double value)
+        {
+            fChar.StrengthPercent += value;
+            ProcessFinalStrength(fChar, value * fChar.BaseStrength);
         }
 
 
@@ -159,10 +167,10 @@ namespace JYCalculator.Class
         /// 增加全属性
         /// </summary>
         /// <param name="value"></param>
-        public static void ProcessAll_BasePotent(this FullCharacter fChar, double value)
+        public static void ProcessAllBasePotent(this FullCharacter fChar, double value)
         {
-            ProcessBase_L(fChar, value);
-            ProcessS(fChar, value);
+            ProcessBaseStrength(fChar, value);
+            ProcessBaseAgility(fChar, value);
         }
 
         #endregion
@@ -175,8 +183,8 @@ namespace JYCalculator.Class
         /// <param name="value">点数</param>
         public static void TransCTToOC(this FullCharacter fChar, double value)
         {
-            ProcessCT_Point(fChar, -value);
-            ProcessBase_OC(fChar, value);
+            ProcessPhysicsCriticalStrike(fChar, -value);
+            ProcessPhysicsBaseOvercome(fChar, value);
         }
 
         /// <summary>
@@ -185,8 +193,8 @@ namespace JYCalculator.Class
         /// <param name="value">点数</param>
         public static void TransWSToPZ(this FullCharacter fChar, double value)
         {
-            ProcessWS_Point(fChar, -value);
-            ProcessPZ(fChar, value);
+            ProcessBaseStrain(fChar, -value);
+            ProcessBaseSurplus(fChar, value);
         }
 
         /// <summary>
@@ -195,7 +203,7 @@ namespace JYCalculator.Class
         /// <param name="ct">目标会心百分比</param>
         public static void Reset_CT(this FullCharacter fChar, double ct)
         {
-            var delta = fChar.CT_Point - ct * XFStaticConst.fGP.CT;
+            var delta = fChar.CT_Point - ct * XFStaticConst.CurrentLevelParams.CriticalStrike;
             TransCTToOC(fChar, delta);
         }
 
@@ -205,15 +213,15 @@ namespace JYCalculator.Class
         /// <param name="ws">目标无双百分比</param>
         public static void Reset_WS(this FullCharacter fChar, double ws)
         {
-            var delta = fChar.WS_Point - ws * XFStaticConst.fGP.WS;
+            var delta = fChar.WS_Point - ws * XFStaticConst.CurrentLevelParams.Strain;
             TransWSToPZ(fChar, delta);
         }
 
         #endregion
-
     }
 
     public delegate void FullCharacterModifierDelegate(FullCharacter fChar, double value);
+
     public static class FullCharacterModifierManager
     {
         public static readonly ImmutableDictionary<ZAttributeType, FullCharacterModifierDelegate> ModifierDict;
@@ -222,36 +230,41 @@ namespace JYCalculator.Class
         {
             var dict = new Dictionary<ZAttributeType, FullCharacterModifierDelegate>()
             {
-                {ZAttributeType.WP, FullCharacterModifier.ProcessWP},
-                {ZAttributeType.CT, FullCharacterModifier.ProcessCT},
-                {ZAttributeType.CT_Point, FullCharacterModifier.ProcessCT_Point},
-                {ZAttributeType.CF, FullCharacterModifier.ProcessCF},
-                {ZAttributeType.CF_Point, FullCharacterModifier.ProcessCF_Point},
-                {ZAttributeType.WS, FullCharacterModifier.ProcessWS},
-                {ZAttributeType.WS_Point, FullCharacterModifier.ProcessWS_Point},
-                {ZAttributeType.HSP, FullCharacterModifier.ProcessHSP},
-                {ZAttributeType.ExtraSP, FullCharacterModifier.ProcessExtraSP},
-                {ZAttributeType.PZ, FullCharacterModifier.ProcessPZ},
-                {ZAttributeType.Final_AP, FullCharacterModifier.ProcessFinal_AP},
-                {ZAttributeType.Base_AP, FullCharacterModifier.ProcessBase_AP},
-                {ZAttributeType.AP_Percent, FullCharacterModifier.ProcessAP_Percent},
-                {ZAttributeType.Final_OC, FullCharacterModifier.ProcessFinal_OC},
-                {ZAttributeType.Base_OC, FullCharacterModifier.ProcessBase_OC},
-                {ZAttributeType.OC_Percent, FullCharacterModifier.ProcessOC_Percent},
-                {ZAttributeType.S, FullCharacterModifier.ProcessS},
-                {ZAttributeType.IgnoreA, FullCharacterModifier.ProcessIgnoreA},
-                {ZAttributeType.DmgAdd, FullCharacterModifier.ProcessDmgAdd},
-                {ZAttributeType.Final_L, FullCharacterModifier.ProcessFinal_L},
-                {ZAttributeType.Base_L, FullCharacterModifier.ProcessBase_L},
-                {ZAttributeType.L_Percent, FullCharacterModifier.ProcessL_Percent},
-                {ZAttributeType.All_BasePotent, FullCharacterModifier.ProcessAll_BasePotent},
-                {ZAttributeType.P_DmgAdd, FullCharacterModifier.ProcessP_DmgAdd},
-                {ZAttributeType.All_DmgAdd, FullCharacterModifier.ProcessAll_DmgAdd},
+                {ZAttributeType.BaseWeaponDamage, FullCharacterModifier.ProcessBaseWeaponDamage},
+                {ZAttributeType.PhysicsCriticalStrike, FullCharacterModifier.ProcessPhysicsCriticalStrike},
+                {ZAttributeType.PhysicsCriticalStrikeRate, FullCharacterModifier.ProcessPhysicsCriticalStrikeRate},
 
-                {ZAttributeType.P_Base_AP, FullCharacterModifier.ProcessBase_AP},
-                {ZAttributeType.P_AP_Percent, FullCharacterModifier.ProcessAP_Percent},
-                {ZAttributeType.P_Base_OC, FullCharacterModifier.ProcessBase_OC},
-                {ZAttributeType.P_OC_Percent, FullCharacterModifier.ProcessOC_Percent},
+                {ZAttributeType.PhysicsCriticalPowerRate, FullCharacterModifier.ProcessPhysicsCriticalPowerRate},
+                {ZAttributeType.PhysicsCriticalPower, FullCharacterModifier.ProcessPhysicsCriticalPower},
+
+                {ZAttributeType.Haste, FullCharacterModifier.ProcessHaste},
+                {ZAttributeType.ExtraHaste, FullCharacterModifier.ProcessExtraHaste},
+                {ZAttributeType.BaseSurplus, FullCharacterModifier.ProcessBaseSurplus},
+
+                {ZAttributeType.AllShieldIgnore, FullCharacterModifier.ProcessAllShieldIgnorePercent},
+
+                {ZAttributeType.FinalStrength, FullCharacterModifier.ProcessFinalStrength},
+                {ZAttributeType.BaseStrength, FullCharacterModifier.ProcessBaseStrength},
+                {ZAttributeType.StrengthPercent, FullCharacterModifier.ProcessBaseStrengthPercent},
+
+                {ZAttributeType.BaseAgility, FullCharacterModifier.ProcessBaseAgility},
+
+                {ZAttributeType.AllBasePotent, FullCharacterModifier.ProcessAllBasePotent},
+
+                {ZAttributeType.PhysicsDamageAdd, FullCharacterModifier.ProcessPhysicsDamageAdd},
+                {ZAttributeType.AllDamageAdd, FullCharacterModifier.ProcessAllDamageAdd},
+
+                {ZAttributeType.PhysicsBaseAttackPower, FullCharacterModifier.ProcessPhysicsBaseAttackPower},
+                {ZAttributeType.PhysicsAttackPowerPercent, FullCharacterModifier.ProcessPhysicsAttackPowerPercent},
+                {ZAttributeType.PhysicsFinalAttackPower, FullCharacterModifier.ProcessPhysicsFinalAttackPower},
+
+                {ZAttributeType.PhysicsBaseOvercome, FullCharacterModifier.ProcessPhysicsBaseOvercome},
+                {ZAttributeType.PhysicsOvercomePercent, FullCharacterModifier.ProcessPhysicsOvercomePercent},
+
+                {ZAttributeType.StrainRate, FullCharacterModifier.ProcessStrainRate},
+                {ZAttributeType.FinalStrain, FullCharacterModifier.ProcessFinalStrain},
+                {ZAttributeType.BaseStrain, FullCharacterModifier.ProcessBaseStrain},
+                {ZAttributeType.StrainPercent, FullCharacterModifier.ProcessStrainPercent},
             };
             ModifierDict = dict.ToImmutableDictionary();
         }
@@ -265,7 +278,7 @@ namespace JYCalculator.Class
             }
             else
             {
-                Trace.WriteLine($"无效的属性！ {key}:{value} ");
+                //Log.Information($"无效的属性！ {key}:{value} ");
             }
         }
 
@@ -279,7 +292,7 @@ namespace JYCalculator.Class
             }
             else
             {
-                Trace.WriteLine($"未知的属性！ {key}:{value} ");
+                //Log.Information($"未知的属性！ {key}:{value}");
             }
         }
     }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using Serilog;
 
 namespace JX3CalculatorShared.Utils
 {
@@ -9,13 +10,14 @@ namespace JX3CalculatorShared.Utils
         /// 运行委托，并且计算运行时间
         /// </summary>
         /// <param name="act"></param>
-        public static void RunTime(Action act)
+        /// <param name="funcName"></param>
+        public static void RunTime(Action act, string funcName = "")
         {
             var watch = System.Diagnostics.Stopwatch.StartNew();
             act();
             watch.Stop();
             var elapsedMs = watch.ElapsedMilliseconds;
-            Trace.WriteLine($"运行耗时：{elapsedMs}ms");
+            Log.Information($"{funcName}运行耗时：{elapsedMs}ms");
         }
 
     }

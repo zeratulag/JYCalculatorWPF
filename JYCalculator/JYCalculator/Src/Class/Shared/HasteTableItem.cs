@@ -1,6 +1,7 @@
 ﻿using JX3CalculatorShared.Class;
 using JX3CalculatorShared.Data;
 using JX3CalculatorShared.Globals;
+using JYCalculator.Data;
 using JYCalculator.Globals;
 
 namespace JYCalculator.Class
@@ -10,7 +11,7 @@ namespace JYCalculator.Class
 
         #region 构造函数
 
-        public HasteTableItem(string name, string skillname, int rawFrame, int ncount) : base(name, skillname, rawFrame, ncount)
+        public HasteTableItem(string name, string skillname, int rawFrame, int ncount, bool isMultiChannel = false) : base(name, skillname, rawFrame, ncount, isMultiChannel)
         {
         }
 
@@ -22,6 +23,7 @@ namespace JYCalculator.Class
             SkillName = data.SkillName;
             RawFrame = data.Frame;
             nCount = data.nCount;
+            IsMultiChannel = data.Info.IsMultiChannel;
         }
 
         // 基于静态数据构建
@@ -47,10 +49,10 @@ namespace JYCalculator.Class
         /// </summary>
         /// <param name="HSP">加速等级</param>
         /// <param name="XWExtraHSP">心无额外加速</param>
-        public void CalcHaste(int HSP, int XWExtraHSP = XFStaticConst.XW.ExtraSP)
+        public void CalcHaste(int HSP, int XWExtraHSP = XFStaticConst.XinWuConsts.ExtraHaste)
         {
-            Frame = XFStaticConst.CurrentHaste.SKT_FPS(RawFrame, HSP, 0);
-            XWFrame = XFStaticConst.CurrentHaste.SKT_FPS(RawFrame, HSP, XWExtraHSP);
+            Frame = XFStaticConst.CurrentHaste.CalcHasteFrame(RawFrame, nCount, HSP, 0, IsMultiChannel);
+            XWFrame = XFStaticConst.CurrentHaste.CalcHasteFrame(RawFrame, nCount, HSP, XWExtraHSP, IsMultiChannel);
         }
 
         /// <summary>

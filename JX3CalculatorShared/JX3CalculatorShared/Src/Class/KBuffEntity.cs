@@ -1,4 +1,4 @@
-﻿using JYCalculator.JX3CalculatorShared.Src;
+﻿using JX3CalculatorShared.Src;
 
 namespace JX3CalculatorShared.Class
 {
@@ -10,6 +10,5 @@ namespace JX3CalculatorShared.Class
         public double BuffCover;
         public double Stack;
         public KAttributeEntry[] KAttributeEntries;
-
     }
 }

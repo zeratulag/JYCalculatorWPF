@@ -24,16 +24,16 @@ namespace JYCalculator.Class
         {
             int t1hsp = GetT1GCD_HSP(); // 一段加速阈值
             double BY = 0.5, CX = 3, BLp = 0.5;
-            var GCD_time = SKT(GCD, t1hsp, 0);
-            var BY_time = SKT(BY, t1hsp, 0);
-            var CX_time = SKT(CX, t1hsp, 0);
+            var GCD_time = CalcHasteTime(GCD, t1hsp, 0);
+            var BY_time = CalcHasteTime(BY, t1hsp, 0);
+            var CX_time = CalcHasteTime(CX, t1hsp, 0);
 
-            var BL_time = SKT(BLp, t1hsp, 0) * 4;
+            var BL_time = CalcHasteTime(BLp, t1hsp, 0) * 4;
 
-            var BigXW_GCD_time = SKT(GCD, t1hsp, XFStaticConst.XW.ExtraSP);
-            var BigXW_BY_time = SKT(BY, t1hsp, XFStaticConst.XW.ExtraSP);
-            var BigXW_HX_time = SKT(CX, t1hsp, XFStaticConst.XW.ExtraSP);
-            var BigXW_BL_time = SKT(BLp, t1hsp, XFStaticConst.XW.ExtraSP) * 4;
+            var BigXW_GCD_time = CalcHasteTime(GCD, t1hsp, XFStaticConst.XinWuConsts.ExtraHaste);
+            var BigXW_BY_time = CalcHasteTime(BY, t1hsp, XFStaticConst.XinWuConsts.ExtraHaste);
+            var BigXW_HX_time = CalcHasteTime(CX, t1hsp, XFStaticConst.XinWuConsts.ExtraHaste);
+            var BigXW_BL_time = CalcHasteTime(BLp, t1hsp, XFStaticConst.XinWuConsts.ExtraHaste) * 4;
 
             var Normal = new JYSkillStandardTime() { GCD = GCD_time, BY = BY_time, CX = CX_time, BL = BL_time };
             var BigXW = new JYSkillStandardTime()

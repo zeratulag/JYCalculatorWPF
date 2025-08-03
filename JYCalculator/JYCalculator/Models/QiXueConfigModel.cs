@@ -20,13 +20,17 @@ namespace JYCalculator.Models
         public bool 鹰扬虎视 { get; private set; }
         public bool 星落如雨 { get; private set; }
         public bool 寒江夜雨 { get; private set; }
-        public bool 逐一击破 { get; private set; }
+        public bool 空山独立 { get; private set; }
 
         // 雾海寻龙
         public bool 穿林打叶 { get; private set; }
         public bool 牢甲利兵 { get; private set; }
         public bool 蹑景追风 { get; private set; }
         public bool 掠影穹苍 { get; private set; }
+        
+        // 丝路风语
+        public bool 凝形逐踪 { get; private set; }
+        public bool 百步穿杨 { get; private set; }
 
         public int BYPerCast { get; private set; } // 暴雨一次释放的跳数
         public int CX_DOT_Stack { get; private set; } // 穿心dot叠的最大层数;
@@ -71,11 +75,13 @@ namespace JYCalculator.Models
             摧心 = Has(nameof(摧心));
             星落如雨 = Has(nameof(星落如雨));
             寒江夜雨 = Has(nameof(寒江夜雨));
-            逐一击破 = Has(nameof(逐一击破));
+            空山独立 = Has(nameof(空山独立));
             穿林打叶 = Has(nameof(穿林打叶));
             牢甲利兵 = Has(nameof(牢甲利兵));
             蹑景追风 = Has(nameof(蹑景追风));
             掠影穹苍 = Has(nameof(掠影穹苍));
+            凝形逐踪 = Has(nameof(凝形逐踪));
+            百步穿杨 = Has(nameof(百步穿杨));
         }
 
         public void GetCX_DOT_Key()
@@ -161,7 +167,7 @@ namespace JYCalculator.Models
         /// <returns></returns>
         public double GetHJXWCD(double normalFreq, double xwFreq)
         {
-            double xWCD = XFStaticConst.XW.CD;
+            double xWCD = XFStaticConst.XinWuConsts.CD;
 
             if (!寒江夜雨)
             {
@@ -197,7 +203,7 @@ namespace JYCalculator.Models
         /// <returns></returns>
         public double GetBLCDByHanJiangFreq(double freq)
         {
-            double raw_blcd = StaticXFData.DB.SkillInfo.Skills[SkillKeyConst.百里追魂].CD; // 原始CD
+            double raw_blcd = StaticXFData.DB.BaseSkillInfo.Skills[SkillKeyConst.百里追魂].CD; // 原始CD
             double real_cd = raw_blcd;
 
             if (寒江夜雨)

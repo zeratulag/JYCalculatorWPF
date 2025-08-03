@@ -9,9 +9,9 @@ namespace JX3CalculatorShared.Class
         public static readonly double YZDuration = 15.0; // 腰坠持续时间
         public static readonly double RawYZCD = 180.0; // 腰坠初始CD
         public double TotalTime = 240.0;
-        public double XWCD = XFStaticConst.XW.CD;
+        public double XWCD = XFStaticConst.XinWuConsts.CD;
         public double YZCD;
-        public double XWDuration = XFStaticConst.XW.Time;
+        public double XWDuration = XFStaticConst.XinWuConsts.Time;
         public FightTimeSummaryItem LongItem; // 长时间总结
         public FightTimeSummaryItem ShortItem; // 短时间总结
         public bool IsShort; // 是否为短时间战斗
@@ -32,12 +32,12 @@ namespace JX3CalculatorShared.Class
         /// <param name="totalTime">总战斗时间（s）</param>
         /// <param name="xwCD">心无CD</param>
         /// <param name="xwDuration">心无持续时间</param>
-        public FightTimeSummaryBase(double totalTime, double xwCD = XFStaticConst.XW.CD, double xwDuration = XFStaticConst.XW.Time) : this()
+        public FightTimeSummaryBase(double totalTime, double xwCD = XFStaticConst.XinWuConsts.CD, double xwDuration = XFStaticConst.XinWuConsts.Time) : this()
         {
             Update(totalTime, xwCD, xwDuration);
         }
 
-        public void Update(double totalTime, double xwCD = XFStaticConst.XW.CD, double xwDuration = XFStaticConst.XW.Time, bool isShort = false)
+        public void Update(double totalTime, double xwCD = XFStaticConst.XinWuConsts.CD, double xwDuration = XFStaticConst.XinWuConsts.Time, bool isShort = false)
         {
             TotalTime = totalTime;
             XWCD = xwCD;

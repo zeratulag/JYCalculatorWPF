@@ -37,7 +37,7 @@ namespace JYCalculator.Class
         public InitInputSav GetInitInput()
         {
             var initChar = new InitCharacter(this);
-            InitInput = new InitInputSav(initChar, Plan.EquipOptionSav, Plan.BigFMConfig);
+            InitInput = new InitInputSav(initChar, Plan.EquipOptionSav, Plan.BigFMConfig, Plan.EquipDict);
             return InitInput;
         }
 

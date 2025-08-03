@@ -9,11 +9,11 @@ namespace JX3PZ.Models
         public new const string Name = "Haste";
         public const string Suffix = "Base";
 
-        public static readonly double PointCoef = StaticConst.fGP.HS;
+        public static readonly double PointCoef = StaticConst.CurrentLevelGlobalParams.Haste;
         public PanelHasteSlot() : base(Name, Suffix, PointCoef, PointToPercentConvertTypeEnum.Linear)
         {
             PercentKey = $"{BasePointKey}PercentAdd";
-            PercentAttribute = AttributeID.Get(PercentKey);
+            PercentAttribute = KAttributeID.Get(PercentKey);
         }
     }
 
@@ -23,12 +23,12 @@ namespace JX3PZ.Models
         public new const string Name = "Strain";
         public const string Suffix = "Base";
 
-        public static readonly double PointCoef = StaticConst.fGP.WS;
+        public static readonly double PointCoef = StaticConst.CurrentLevelGlobalParams.Strain;
         public PanelStrainSlot() : base(Name, Suffix, PointCoef, PointToPercentConvertTypeEnum.Linear)
         {
             BasePointPercentAddKey = $"at{Name}Percent";
             PercentKey = $"at{Name}Rate";
-            PercentAttribute = AttributeID.Get(PercentKey);
+            PercentAttribute = KAttributeID.Get(PercentKey);
         }
     }
 
@@ -38,7 +38,7 @@ namespace JX3PZ.Models
         public new const string Name = "PhysicsShield";
         public const string Suffix = "Base";
 
-        public static readonly double PointCoef = StaticConst.fGP.PDef;
+        public static readonly double PointCoef = StaticConst.CurrentLevelGlobalParams.PhysicsShield;
 
         public PanelPhysicsShieldSlot() : base(Name, Suffix, PointCoef, PointToPercentConvertTypeEnum.NonLinear)
         {
@@ -60,7 +60,7 @@ namespace JX3PZ.Models
         public new const string Name = "MagicShield";
         public const string Suffix = "";
 
-        public static readonly double PointCoef = StaticConst.fGP.MDef;
+        public static readonly double PointCoef = StaticConst.CurrentLevelGlobalParams.MagicShield;
 
         public PanelMagicShieldSlot() : base(Name, Suffix, PointCoef, PointToPercentConvertTypeEnum.NonLinear)
         {
@@ -82,7 +82,7 @@ namespace JX3PZ.Models
         public new const string Name = "DecriticalDamagePower";
         public const string Suffix = "Base";
 
-        public static readonly double PointCoef = StaticConst.fGP.HJ;
+        public static readonly double PointCoef = StaticConst.CurrentLevelGlobalParams.DefPlayerDamage;
 
         public PanelDecriticalDamageSlot() : base(Name, Suffix, PointCoef, PointToPercentConvertTypeEnum.NonLinear)
         {
@@ -105,8 +105,8 @@ namespace JX3PZ.Models
         public new const string Name = "Toughness";
         public const string Suffix = "Base";
 
-        public static readonly double PointCoef = StaticConst.fGP.YJ;
-        public static readonly double CFPointCoef = StaticConst.fGP.YJCF;
+        public static readonly double PointCoef = StaticConst.CurrentLevelGlobalParams.DefCriticalStrike;
+        public static readonly double CFPointCoef = StaticConst.CurrentLevelGlobalParams.DefCriticalPower;
         public double FinalCF => Final * PointCoef / CFPointCoef;
 
         public PanelToughnessSlot() : base(Name, Suffix, PointCoef, PointToPercentConvertTypeEnum.Linear)

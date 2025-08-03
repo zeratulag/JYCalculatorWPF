@@ -11,6 +11,8 @@ using JYCalculator.ViewModels;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using MethodTimer;
+using JYCalculator.Globals;
 
 namespace JYCalculator.Src
 {
@@ -25,7 +27,6 @@ namespace JYCalculator.Src
 
         // 输入成员
         public InitInputViewModel InitInput;
-
         public EquipOptionConfigModel Equip => InitInput.EquipOptionVM.Model;
         public BigFMConfigModel BigFM => InitInput.BigFMVM.Model;
 
@@ -54,8 +55,8 @@ namespace JYCalculator.Src
 
         public readonly FullCharacterGroup FullCharGroup; // 收集计算过程中所有的面板
 
-        public int HS => (int)FullCharGroup.ZhenBuffed.HS; // 加速
-        public int XWExtraSP => QiXue.XWExtraSP; // 心无额外加速
+        public int Haste => (int)FullCharGroup.ZhenBuffed.Haste; // 加速
+        public int XWExtraHaste => QiXue.XWExtraHaste; // 心无额外加速
 
         public SkillNumModel SkillNum;
 
@@ -141,10 +142,9 @@ namespace JYCalculator.Src
                 model.Shellbuffs, model.SkillDataDFMiJiQiXueVM.Model, model.CalcShellArg);
         }
 
+        [Time]
         public CalculatorShell Calc() // 全流程计算
         {
-
-            var watch = System.Diagnostics.Stopwatch.StartNew();
 
             GetSkillBuild();
             if (AppStatic.XinFaTag == "TL")
@@ -170,12 +170,6 @@ namespace JYCalculator.Src
             {
                 GetOptimizer();
             }
-
-            watch.Stop();
-            var elapsedMs = watch.ElapsedMilliseconds;
-#if DEBUG
-            Trace.WriteLine($"计算DPS耗时：{elapsedMs}ms");
-#endif
 
             if (!IsSupport)
             {
@@ -207,13 +201,22 @@ namespace JYCalculator.Src
                 CSkillBuild = StaticXFData.DB.SkillBuild.Default;
             }
 
-            var genere = StaticXFData.DB.Ability.GenreData[CSkillBuild.Name];
-            XfAbility = genere[AbilityItem.Rank];
+            var skillNumGenre = CSkillBuild.Name;
+            if (CSkillBuild.Name == GenreTypeEnum.百步凝形_丝路风语.ToString())
+            {
+                if (Equip.WP.IsBigCW)
+                {
+                    skillNumGenre = GenreTypeEnum.百步凝形_丝路风语_橙武.ToString();
+                }
+            }
+
+            var abilityGenre = StaticXFData.DB.Ability.GenreData[skillNumGenre];
+            XfAbility = abilityGenre[AbilityItem.Rank];
         }
 
         public void GetSkillDataDF()
         {
-            SkillDF.AddRecipesAndApply(Equip.OtherRecipes); // TODO: 天罗需要在这一步计算分星和杀机断魂的效果
+            SkillDF.AddRecipesAndApply(Equip.OtherRecipes);
             SkillDFs = new Period<SkillDataDF>(SkillDF, SkillDF.Copy());
             if (AppStatic.XinFaTag == "TL")
             {
@@ -225,7 +228,7 @@ namespace JYCalculator.Src
         {
             AllAttrsDict.Clear();
             AllAttrsDict.Add("ZhenFa", Zhen.AttrsDesc);
-            AllAttrsDict.Add("WP", Equip.WP.AttrsDesc);
+            AllAttrsDict.Add("Weapon", Equip.WP.AttrsDesc);
             AllAttrsDict.Add("BigFM", InitInput.BigFMAttrsDesc);
             AllAttrsDict.Merge(Buffs.AllAttrsDict);
         }
@@ -265,9 +268,9 @@ namespace JYCalculator.Src
         {
             // 收集展示各种面板
             FullCharGroup.NormalFinal = KernelShell.BuffedFChars.Normal;
-            FullCharGroup.BigXWFinal = KernelShell.BuffedFChars.XW;
-            FullCharGroup.LongXWFinal = KernelShell.LongFChars.XW;
-            FullCharGroup.ShortXWFinal = KernelShell.ShortFChars.XW;
+            FullCharGroup.BigXWFinal = KernelShell.BuffedFChars.XinWu;
+            FullCharGroup.LongXWFinal = KernelShell.LongFChars.XinWu;
+            FullCharGroup.ShortXWFinal = KernelShell.ShortFChars.XinWu;
             FullCharGroup.MakeFinalDict();
         }
 
@@ -305,9 +308,11 @@ namespace JYCalculator.Src
 
         public void GetOptimizer()
         {
-            DpsKernelOp = new DPSKernelOptimizer(KernelShell);
-            DpsKernelOp.Calc();
-
+            if (false) // 暂时不需要计算最优属性分配
+            {
+                DpsKernelOp = new DPSKernelOptimizer(KernelShell);
+                DpsKernelOp.Calc();
+            }
             MultiZhenDPSOp = new MultiZhenFaOptimizer(KernelShell, Zhen);
             MultiZhenDPSOp.Calc();
         }

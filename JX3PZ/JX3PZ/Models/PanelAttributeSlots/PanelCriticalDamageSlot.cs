@@ -11,7 +11,7 @@ namespace JX3PZ.Models
     {
         public readonly string KiloNumRateKey; // atPhysicsCriticalDamagePowerBaseKiloNumRate
 
-        public new static readonly double PointCoef = StaticConst.fGP.CF;
+        public new static readonly double PointCoef = StaticConst.CurrentLevelGlobalParams.CriticalPower;
         public const double KiloNumRateCoef = 1024.0;
 
         public int KiloNumRate { get; protected set; } = 0; // 百分比属性
@@ -29,7 +29,7 @@ namespace JX3PZ.Models
             ExtraKey.Add($"atAllType{Suffix}");
 
             GetAttributes();
-            RateAttribute = AttributeID.Get(KiloNumRateKey);
+            RateAttribute = KAttributeID.Get(KiloNumRateKey);
             if (DamageType == DamageTypeEnum.Magic) ExtraKey.Add($"atMagic{Suffix}");
 
             if (SubType == DamageSubTypeEnum.Solar || SubType == DamageSubTypeEnum.Lunar)

@@ -5,38 +5,40 @@ using JX3CalculatorShared.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using JYCalculator.Data;
 
 namespace JX3CalculatorShared.Class
 {
     public class SkillDataBase : ObservableObject
     {
         public string Name { get; }
-        public string SkillName => Info.Skill_Name;
+        public string SkillName => Info.SkillName;
         public int nCount { get; set; }
         public double CD { get; set; } // CD 事件
         public double CostEnergy { get; set; } // 神机消耗
-        public double AddCT { get; set; } // 增加会心
-        public double AddCF { get; set; } // 增加会效
-        public double AddDmg { get; set; } // 增加伤害
-        public double AddNPCDmg { get; set; } // 增加非侠士
+        public double AddCriticalStrikeRate { get; set; } // 增加会心
+        public double AddCriticalPowerRate { get; set; } // 增加会效
+        public double AddDamage { get; set; } // 增加伤害
+        public double AddNPC_Coef { get; set; } // 增加非侠士
         public double ChannelIntervalCoef { get; set; } = 1; // 系数修改倍率
         public int Frame { get; set; } // 帧数
         public double IntervalTime => Frame / StaticConst.FRAMES_PER_SECOND; // 初始时间间隔
         public double nChannelInterval => Info.nChannelInterval * ChannelIntervalCoef;
-        public double WPCoef => Info.WP_Coef; // 武伤系数
+        public double WeaponDamageCoef => Info.WP_Coef; // 武伤系数
 
+        public List<string> SkillNameTags { get; private set; } = new List<string>();
 
         public SkillInfoItemBase Info;
-        public HashSet<string> RecipeNames; // 已应用的秘籍名称
-        public HashSet<string> SkillModifierNames; // 已应用的SkillModifier名称
+        public HashSet<string> AppliedRecipes; // 已应用的秘籍名称
+        public HashSet<string> AppliedSkillModifiers; // 已应用的SkillModifier名称
 
         public SkillDataBase(SkillInfoItemBase item)
         {
             Info = item;
             Name = Info.Name;
 
-            RecipeNames = new HashSet<string>(6);
-            SkillModifierNames = new HashSet<string>();
+            AppliedRecipes = new HashSet<string>(6);
+            AppliedSkillModifiers = new HashSet<string>();
 
             Reset();
         }
@@ -50,15 +52,17 @@ namespace JX3CalculatorShared.Class
             nCount = old.nCount;
             Frame = old.Frame;
 
-            AddCT = old.AddCT;
-            AddCF = old.AddCF;
-            AddDmg = old.AddDmg;
-            AddNPCDmg = old.AddNPCDmg;
+            AddCriticalStrikeRate = old.AddCriticalStrikeRate;
+            AddCriticalPowerRate = old.AddCriticalPowerRate;
+            AddDamage = old.AddDamage;
+            AddNPC_Coef = old.AddNPC_Coef;
 
             ChannelIntervalCoef = old.ChannelIntervalCoef;
 
-            RecipeNames = old.RecipeNames.ToHashSet();
-            SkillModifierNames = old.SkillModifierNames.ToHashSet();
+            AppliedRecipes = old.AppliedRecipes.ToHashSet();
+            AppliedSkillModifiers = old.AppliedSkillModifiers.ToHashSet();
+
+            SkillNameTags = old.SkillNameTags.Copy();
         }
 
         /// <summary>
@@ -71,15 +75,19 @@ namespace JX3CalculatorShared.Class
             nCount = Info.nCount;
             Frame = Info.Frame;
 
-            AddCT = Info.Add_CT;
-            AddCF = Info.Add_CF;
-            AddDmg = Info.Add_Dmg;
-            AddNPCDmg = Info.Add_NPCDmg;
+            AddCriticalStrikeRate = Info.Add_CT;
+            AddCriticalPowerRate = Info.Add_CF;
+            AddDamage = Info.Add_Dmg;
+            AddNPC_Coef = Info.Add_NPCDmg;
 
             ChannelIntervalCoef = 1.0;
 
-            RecipeNames.Clear();
-            SkillModifierNames.Clear();
+            AppliedRecipes.Clear();
+            AppliedRecipes.AddRange(Info.AppliedRecipes);
+            AppliedSkillModifiers.Clear();
+            AppliedSkillModifiers.AddRange(Info.AppliedRecipes);
+            SkillNameTags.Clear();
+            SkillNameTags.AddRange(Info.SkillNameTags);
         }
 
         public double GetAPCoef()
@@ -88,34 +96,35 @@ namespace JX3CalculatorShared.Class
             double ap_Coef = 0;
             switch (Info.Type)
             {
-                case SkillDataTypeEnum.Channel:
-                    {
-                        finalG += Frame;
-                        ap_Coef = CalcAPCoef(finalG);
-                        break;
-                    }
+                case SkillDataTypeEnum.NormalChannel:
+                {
+                    finalG += Frame;
+                    ap_Coef = CalcAPCoef(finalG);
+                    break;
+                }
 
                 case SkillDataTypeEnum.Normal:
                 case SkillDataTypeEnum.Exclude:
-                    {
-                        ap_Coef = CalcAPCoef(finalG);
-                        break;
-                    }
+                case SkillDataTypeEnum.MultiChannel:
+                {
+                    ap_Coef = CalcAPCoef(finalG);
+                    break;
+                }
 
                 case SkillDataTypeEnum.DOT:
-                    {
-                        ap_Coef = CalcDOTAPCoef(finalG, nCount, Frame);
-                        break;
-                    }
+                {
+                    ap_Coef = CalcDOTAPCoef(finalG, nCount, Frame);
+                    break;
+                }
 
                 case SkillDataTypeEnum.Physics:
                 case SkillDataTypeEnum.NoneAP:
                 case SkillDataTypeEnum.PZ:
                 case SkillDataTypeEnum.NormalDOT:
-                    {
-                        ap_Coef = 0;
-                        break;
-                    }
+                {
+                    ap_Coef = 0;
+                    break;
+                }
             }
 
             return ap_Coef;
@@ -141,7 +150,7 @@ namespace JX3CalculatorShared.Class
         public double CalcDOTAPCoef(double finalG, int count, double intervalframe)
         {
             var coef1 = CalcAPCoef(finalG);
-            var coef2 = Math.Max(16, (int)(intervalframe * count / 12.0)) / StaticConst.FRAMES_PER_SECOND / count;
+            var coef2 = Math.Max(16, (int) (intervalframe * count / 12.0)) / StaticConst.FRAMES_PER_SECOND / count;
             return coef1 * coef2;
         }
 
@@ -156,61 +165,68 @@ namespace JX3CalculatorShared.Class
             switch (key)
             {
                 case "Add_CT":
-                    {
-                        AddCT += value;
-                        break;
-                    }
+                {
+                    AddCriticalStrikeRate += value;
+                    break;
+                }
 
                 case "Add_Dmg":
-                    {
-                        AddDmg += value;
-                        break;
-                    }
+                {
+                    AddDamage += value;
+                    break;
+                }
 
                 case "Add_CF":
-                    {
-                        AddCF += value;
-                        break;
-                    }
+                {
+                    AddCriticalPowerRate += value;
+                    break;
+                }
 
                 case "Frame":
-                    {
-                        Frame += (int)value;
-                        break;
-                    }
+                {
+                    Frame += (int) value;
+                    break;
+                }
 
                 case "CD":
-                    {
-                        CD += value;
-                        break;
-                    }
+                {
+                    CD += value;
+                    break;
+                }
 
                 case "Add_nCount":
+                {
+                    if (Info.FightName != "穿心(DOT)" || !SkillName.Contains("穿林"))
                     {
-                        if (Info.Fight_Name != "穿心(DOT)" || !SkillName.Contains("穿林"))
-                        {
-                            nCount += (int)value; // 穿林穿心DOT不吃跳数加成
-                        }
-                        break;
+                        nCount += (int) value; // 穿林穿心DOT不吃跳数加成
                     }
 
+                    break;
+                }
+
                 case "Add_CostEnergy":
-                    {
-                        CostEnergy += value;
-                        break;
-                    }
+                {
+                    CostEnergy += value;
+                    break;
+                }
+
+                case "Add_NPC_Dmg":
+                {
+                    AddNPC_Coef += value;
+                    break;
+                }
 
                 case "Range":
                 case "Target":
                 case "Add_Energy":
-                    {
-                        break;
-                    }
+                {
+                    break;
+                }
                 default:
-                    {
-                        handled = false;
-                        break;
-                    }
+                {
+                    handled = false;
+                    break;
+                }
             }
 
             return handled;
@@ -223,26 +239,26 @@ namespace JX3CalculatorShared.Class
             switch (key)
             {
                 case "Coef":
+                {
+                    foreach (var v in value)
                     {
-                        foreach (var v in value)
-                        {
-                            var realv = (double)v;
-                            ChannelIntervalCoef *= realv;
-                        }
-
-                        break;
+                        var realv = (double) v;
+                        ChannelIntervalCoef *= realv;
                     }
+
+                    break;
+                }
 
                 case "QiPo":
-                    {
-                        break;
-                    }
+                {
+                    break;
+                }
 
                 default:
-                    {
-                        handled = false;
-                        break;
-                    }
+                {
+                    handled = false;
+                    break;
+                }
             }
 
             return handled;
@@ -256,12 +272,31 @@ namespace JX3CalculatorShared.Class
         {
             // 应用秘籍，默认不重新计算系数
             var name = recipe.Name;
-            if (RecipeNames.Contains(name))
+
+            if (Info.AppliedRecipes.Contains(name)) // 如果Info已经有了这个秘籍就跳过
+            {
+                return;
+            }
+
+            if (recipe.RecipeID == 5145)
+            {
+                // 瞬发追命特殊处理
+                if (Info.IsDerived)
+                {
+                    return; // 对于派生技能不应该再次修饰
+                }
+                if (Frame > 0)
+                {
+                    return; // 非瞬发的追命不应该吃到此效果
+                }
+            }
+
+            if (AppliedRecipes.Contains(name))
             {
                 throw new ArgumentException($"已存在同名秘籍！{name}");
             }
 
-            RecipeNames.Add(name);
+            AppliedRecipes.Add(name);
             ApplyEffects(recipe.SSkillAttrs);
             if (update)
             {
@@ -288,7 +323,7 @@ namespace JX3CalculatorShared.Class
         {
             // 应用秘籍组，默认不重新计算系数
             if (recipeGroup == null) return;
-            RecipeNames.AddRange(recipeGroup.Names);
+            AppliedRecipes.AddRange(recipeGroup.Names);
             ApplyEffects(recipeGroup.SSkillAttrs);
             if (update)
             {
@@ -304,12 +339,17 @@ namespace JX3CalculatorShared.Class
         public void ApplySkillModifier(SkillModifier modifier)
         {
             var name = modifier.Name;
-            if (SkillModifierNames.Contains(name))
+            if (Info.AppliedSkillModifiers.Contains(name))
             {
                 throw new ArgumentException($"已存在同名MOD！{name}");
             }
 
-            SkillModifierNames.Add(modifier.Name);
+            if (AppliedSkillModifiers.Contains(name))
+            {
+                throw new ArgumentException($"已存在同名MOD！{name}");
+            }
+
+            AppliedSkillModifiers.Add(modifier.Name);
             ApplyEffects(modifier.SAttrs);
         }
 

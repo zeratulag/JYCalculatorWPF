@@ -10,7 +10,7 @@ namespace JYCalculator.Src
         public void FixCTProfit(double ct)
         {
             // 修复会心收益
-            FinalProfit.FixCT(ct, FinalFChars.Normal.L_Percent);
+            FinalProfit.FixCriticalStrike(ct, FinalFChars.Normal.StrengthPercent);
         }
 
         public void GetFinal()
@@ -30,7 +30,7 @@ namespace JYCalculator.Src
         {
             // 生成战斗统计
             var normal = new CombatStat(DamageFreqDFs.Normal);
-            var xw = new CombatStat(DamageFreqDFs.XW);
+            var xw = new CombatStat(DamageFreqDFs.XinWu);
 
             if (AppStatic.XinFaTag == "JY")
             {

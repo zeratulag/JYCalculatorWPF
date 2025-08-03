@@ -61,7 +61,7 @@ namespace JYCalculator.Models
             SkillEvents.Clear();
             if (SL)
             {
-                SkillEvents.Add(StaticXFData.DB.SkillInfo.Events["SL"]);
+                SkillEvents.Add(StaticXFData.DB.BaseSkillInfo.Events["SL"]);
             }
             SkillEvents.AddRange(WP.SkillEvents);
         }

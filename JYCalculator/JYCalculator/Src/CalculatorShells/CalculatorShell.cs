@@ -19,7 +19,7 @@
         {
             var LM = Equip.WP.IsLongMen ? Equip.WP.Value : 0; // 龙门飞剑等级
             var arg = new DPSCalcShellArg(Equip.SL, QiXue.聚精凝神, LM, Equip.YZ, BigFM, Buffs.BuffSpecial,
-                InitInput.NoneBigFMInitCharacter);
+                InitInput.NoneBigFMInitCharacter, Arg.EquipSpecialEffectConfig);
             KernelShell = new DPSKernelShell(FullCharGroup.ZhenBuffed, CTarget, SkillDFs, SkillNum, FightTime, arg);
         }
     }

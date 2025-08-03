@@ -32,7 +32,7 @@ namespace JX3CalculatorShared.Data
         // 以下属性均为构造器生成
 
         public readonly BaseBuff Buff; // 阵法本体BUFF（全程覆盖）
-        public readonly Buff BuffZ5; // 五阵BUFF（需要叠加，有层数）
+        public readonly KBuff BuffZ5; // 五阵BUFF（需要叠加，有层数）
         public string ToolTip { get; }
 
         public Func<double, int?, BaseBuffGroup> Emit; // 缓存版本的Emit
@@ -101,20 +101,24 @@ namespace JX3CalculatorShared.Data
             return sb.ToString();
         }
 
-        public (BaseBuff buff, Buff buffZ5) ParseBuff()
+        public (BaseBuff buff, KBuff buffZ5) ParseBuff()
         {
             BaseBuff buff = null;
-            Buff buffZ5 = null;
+            KBuff buffZ5 = null;
 
             if (Buff_dict != null)
             {
-                buff = new BaseBuff(name: Name + "_Buff", descName: DescName, data: Buff_dict);
+                buff = new BaseBuff(name: Name + "_Buff", descName: DescName, id: 0, level: 0, data: Buff_dict);
+                buff.BuffID = BuffID;
+                buff.MakeIDLevel();
             }
 
             if (BuffZ5_dict != null)
             {
-                buffZ5 = new Buff(name: Name + "_Z5Buff", descName: DescName + "_五阵", data: BuffZ5_dict,
+                buffZ5 = new KBuff(name: Name + "_Z5Buff", descName: DescName + "_五阵", id: 0, level: 0, data: BuffZ5_dict,
                     maxStack: Z5_max_stack);
+                buffZ5.BuffID = BuffZ5ID;
+                buffZ5.MakeIDLevel();
             }
 
             return (buff, buffZ5);

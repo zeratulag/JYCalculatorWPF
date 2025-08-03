@@ -8,7 +8,7 @@ namespace JX3CalculatorShared.Globals
 {
     // 存储一些和心法无关的常数和常量
     public static class AppStatic
-    // 存储一些计算器设置常量（发布版本）
+        // 存储一些计算器设置常量（发布版本）
     {
         public const string URI_PREFIX = "pack://application:,,,/";
         public const string DATA_FOLDER = "Resource/Data/";
@@ -23,26 +23,26 @@ namespace JX3CalculatorShared.Globals
         public const string BUILD_PATH = DATA_FOLDER + "BuildDateTime.txt";
         public const string EquipMap_Path = DATA_FOLDER + "EquipMap.xlsx";
         public const string Pz_Path = DATA_FOLDER + "pz.xlsx";
-        public const string LevelData_Path = DATA_FOLDER + "levelData.json";
+        public const string LevelData_Path = DATA_FOLDER + "LevelData.json";
 
         public static string XinFaTag; // 需要手动设定
         public static string XinFa; // 需要手动设定
-
 
         public const string HasteModifyType = "atHasteBase";
     }
 
     public static class StaticConst
-    // 存储一些游戏常量，此类的成员将会被using static 直接访问
+        // 存储一些游戏常量，此类的成员将会被using static 直接访问
     {
-        public const int CurrentLevel = 120; // 当前人物等级
+        public const int CurrentLevel = 130; // 当前人物等级
+        public const int PreviousLevel = 120; // 上个人物等级
         public const double FRAMES_PER_SECOND = 16.0; // 每秒16逻辑帧
         public const double GCD = 1.5;
         public const int GCD_FPS = 24;
         public const int NumberOfQiXue = 12;
         public const double G_KILO_NUM = 1024.0; // 郭氏千
         public const double G_KILO_SQUARE_NUM = 1048576.0; // 郭氏千平方
-        public static readonly GlobalParams fGP;
+        public static readonly GlobalParams CurrentLevelGlobalParams;
         public const double CriticalDamageStart = 1.75; // 初始会效
         public const double CriticalDamageMax = 3.00; // 会效最大值
         public const double DefMax = 0.75; // 防御减伤最大值
@@ -57,11 +57,11 @@ namespace JX3CalculatorShared.Globals
 
         static StaticConst()
         {
-            fGP = new GlobalParams(CurrentLevel);
+            CurrentLevelGlobalParams = new GlobalParams(CurrentLevel);
         }
     }
 
-    public static class Funcs
+    public static class GlobalFunctions
     {
         public static string MergeIDLevel(int iD, int level)
         {
@@ -86,19 +86,32 @@ namespace JX3CalculatorShared.Globals
         public static double RealRound(this double x, int nDigits = 0)
         {
             double n = Math.Pow(10, nDigits);
-            double res = (int)(x * n + 0.5) / n;
+            double res = (int) (x * n + 0.5) / n;
             return res;
         }
 
         public static int MathRound(this double x)
         {
-            int res = (int)(x + 0.5);
+            int res = (int) (x + 0.5);
             return res;
         }
 
         public static int MathRound(this decimal x)
         {
-            int res = (int)(x + 0.5m);
+            int res = (int) (x + 0.5m);
+            return res;
+        }
+
+        /// <summary>
+        /// 基于属性率，属性点数和转换系数计算最终属性值
+        /// </summary>
+        /// <param name="rate">属性率，eg 0.01 会心</param>
+        /// <param name="point">属性等级，eg 58607 会心等级</param>
+        /// <param name="coef">属性等级转换系数，eg 130级 197703.00</param>
+        /// <returns>最终属性值，eg 0.306439</returns>
+        public static double CalcFinalValueByRateAndPoint(double rate, double point, double coef)
+        {
+            double res = rate + point / coef;
             return res;
         }
     }
@@ -114,41 +127,41 @@ namespace JX3CalculatorShared.Globals
 
     public static class GlobalParamLUA
     {
-        public const double fPlayerCriticalCof = 0.75; // 会效起点
-        public const double fCriticalStrikeParam = 9.530; // 会心
-        public const double fCriticalStrikePowerParam = 3.335; // 会效
-        public const double fDefCriticalStrikeParam = 9.530; // 御劲
-        public const double fDecriticalStrikePowerParam = 1.380; // 化劲
-        public const double fHitValueParam = 6.931; // 命中
-        public const double fDodgeParam = 3.703; // 闪躲
-        public const double fParryParam = 4.345; // 招架
-        public const double fInsightParam = 9.189; // 无双
-        public const double fPhysicsShieldParam = 5.091; // 外防
-        public const double fMagicShieldParam = 5.091; // 内防
-        public const double fOvercomeParam = 9.530; // 破防
-        public const double fHasteRate = 11.695; // 加速
-        public const double fToughnessDecirDamageCof = 2.557; // 御劲减会效
-        public const double fSurplusParam = 13.192; // 破招
-        public const double fAssistedPowerCof = 9.53; // 侠客属性
+        public const double fPlayerCriticalCof = 0.75; //裸体会效
+        public const double fCriticalStrikeParam = 9.985; //会心
+        public const double fCriticalStrikePowerParam = 3.679; //会效
+        public const double fDefCriticalStrikeParam = 9.985; //御劲
+        public const double fDecriticalStrikePowerParam = 1.669; //化劲
+        public const double fHitValueParam = 7.644; //命中
+        public const double fDodgeParam = 4.628; //闪避
+        public const double fParryParam = 5.432; //招架
+        public const double fInsightParam = 6.734; //无双（识破）
+        public const double fPhysicsShieldParam = 6.364; //外防
+        public const double fMagicShieldParam = 6.364; //内防
+        public const double fOvercomeParam = 11.412; //破防
+        public const double fHasteRate = 10.610; //急速
+        public const double fToughnessDecirDamageCof = 2.784; //御劲效果
+        public const double fSurplusParam = 7.421; //破招伤害
+        public const double fAssistedPowerCof = 9.985; //凝神
     }
 
 
     public static class BaseGlobalParams
     {
         // 宇宙常数类
-        public const double CT = GlobalParamLUA.fCriticalStrikeParam;
-        public const double CF = GlobalParamLUA.fCriticalStrikePowerParam;
-        public const double HT = GlobalParamLUA.fHitValueParam;
-        public const double WS = GlobalParamLUA.fInsightParam;
-        public const double Def = GlobalParamLUA.fPhysicsShieldParam;
-        public const double OC = GlobalParamLUA.fOvercomeParam;
-        public const double HS = GlobalParamLUA.fHasteRate;
-        public const double PZ = GlobalParamLUA.fSurplusParam;
-        public const double PDef = GlobalParamLUA.fPhysicsShieldParam; // 外防
-        public const double MDef = GlobalParamLUA.fMagicShieldParam; // 内防
-        public const double HJ = GlobalParamLUA.fDecriticalStrikePowerParam; // 化劲
-        public const double YJ = GlobalParamLUA.fDefCriticalStrikeParam; // 御劲
-        public const double YJCF = GlobalParamLUA.fToughnessDecirDamageCof; // 御劲减会效
+        public const double CriticalStrike = GlobalParamLUA.fCriticalStrikeParam;
+        public const double CriticalPower = GlobalParamLUA.fCriticalStrikePowerParam;
+        public const double Hit = GlobalParamLUA.fHitValueParam;
+        public const double Strain = GlobalParamLUA.fInsightParam;
+        public const double Shield = GlobalParamLUA.fPhysicsShieldParam;
+        public const double Overcome = GlobalParamLUA.fOvercomeParam;
+        public const double Haste = GlobalParamLUA.fHasteRate;
+        public const double Surplus = GlobalParamLUA.fSurplusParam;
+        public const double PhysicsShield = GlobalParamLUA.fPhysicsShieldParam; // 外防
+        public const double MagicShield = GlobalParamLUA.fMagicShieldParam; // 内防
+        public const double DefPlayerDamage = GlobalParamLUA.fDecriticalStrikePowerParam; // 化劲
+        public const double DefCriticalStrike = GlobalParamLUA.fDefCriticalStrikeParam; // 御劲
+        public const double DefCriticalPower = GlobalParamLUA.fToughnessDecirDamageCof; // 御劲减会效
 
         public static readonly ImmutableDictionary<string, double> Dict;
 
@@ -156,19 +169,19 @@ namespace JX3CalculatorShared.Globals
         {
             var res = new Dictionary<string, double>()
             {
-                {nameof(CT), CT},
-                {nameof(CF), CF},
-                {nameof(HT), HT},
-                {nameof(WS), WS},
-                {nameof(Def), Def},
-                {nameof(OC), OC},
-                {nameof(HS), HS},
-                {nameof(PZ), PZ},
-                {nameof(HJ), HJ},
-                {nameof(PDef), PDef},
-                {nameof(MDef), MDef},
-                {nameof(YJ), YJ},
-                {nameof(YJCF), YJCF},
+                {nameof(CriticalStrike), CriticalStrike},
+                {nameof(CriticalPower), CriticalPower},
+                {nameof(Hit), Hit},
+                {nameof(Strain), Strain},
+                {nameof(Shield), Shield},
+                {nameof(Overcome), Overcome},
+                {nameof(Haste), Haste},
+                {nameof(Surplus), Surplus},
+                {nameof(DefPlayerDamage), DefPlayerDamage},
+                {nameof(PhysicsShield), PhysicsShield},
+                {nameof(MagicShield), MagicShield},
+                {nameof(DefCriticalStrike), DefCriticalStrike},
+                {nameof(DefCriticalPower), DefCriticalPower},
             };
             return res;
         }
@@ -194,19 +207,19 @@ namespace JX3CalculatorShared.Globals
 
     public class GlobalParams
     {
-        public readonly double CT = 0;
-        public readonly double CF = 0;
-        public readonly double HT = 0;
-        public readonly double WS = 0;
-        public readonly double Def = 0;
-        public readonly double OC = 0;
-        public readonly double HS = 0;
-        public readonly double PZ = 0;
-        public readonly double HJ = 0; // 化劲
-        public readonly double PDef = 0;
-        public readonly double MDef = 0;
-        public readonly double YJ = 0;
-        public readonly double YJCF = 0; // 御劲减会效
+        public readonly double CriticalStrike = 0; // 会心
+        public readonly double CriticalPower = 0; // 会效
+        public readonly double Hit = 0; // 命中
+        public readonly double Strain = 0; // 无双
+        public readonly double Shield = 0; // 防御
+        public readonly double Overcome = 0; // 破防
+        public readonly double Haste = 0; // 加速
+        public readonly double Surplus = 0; // 破招
+        public readonly double DefPlayerDamage = 0; // 化劲
+        public readonly double PhysicsShield = 0; // 内攻防御
+        public readonly double MagicShield = 0; // 外攻防御
+        public readonly double DefCriticalStrike = 0;
+        public readonly double DefCriticalPower = 0; // 御劲减会效
 
         public readonly int _Level;
 
@@ -217,20 +230,20 @@ namespace JX3CalculatorShared.Globals
             _Level = level;
             double levelFactor = LevelFactor(level);
 
-            CT = BaseGlobalParams.CT * levelFactor;
-            CF = BaseGlobalParams.CF * levelFactor;
-            HT = BaseGlobalParams.HT * levelFactor;
-            WS = BaseGlobalParams.WS * levelFactor;
-            Def = BaseGlobalParams.Def * levelFactor;
-            OC = BaseGlobalParams.OC * levelFactor;
-            HS = BaseGlobalParams.HS * levelFactor;
-            HJ = BaseGlobalParams.HJ * levelFactor;
-            PDef = BaseGlobalParams.PDef * levelFactor;
-            MDef = BaseGlobalParams.MDef * levelFactor;
-            YJ = BaseGlobalParams.YJ * levelFactor;
-            YJCF = BaseGlobalParams.YJCF * levelFactor;
+            CriticalStrike = BaseGlobalParams.CriticalStrike * levelFactor;
+            CriticalPower = BaseGlobalParams.CriticalPower * levelFactor;
+            Hit = BaseGlobalParams.Hit * levelFactor;
+            Strain = BaseGlobalParams.Strain * levelFactor;
+            Shield = BaseGlobalParams.Shield * levelFactor;
+            Overcome = BaseGlobalParams.Overcome * levelFactor;
+            Haste = BaseGlobalParams.Haste * levelFactor;
+            DefPlayerDamage = BaseGlobalParams.DefPlayerDamage * levelFactor;
+            PhysicsShield = BaseGlobalParams.PhysicsShield * levelFactor;
+            MagicShield = BaseGlobalParams.MagicShield * levelFactor;
+            DefCriticalStrike = BaseGlobalParams.DefCriticalStrike * levelFactor;
+            DefCriticalPower = BaseGlobalParams.DefCriticalPower * levelFactor;
 
-            PZ = BaseGlobalParams.PZ;
+            Surplus = BaseGlobalParams.Surplus;
 
             Dict = GetDict();
         }
@@ -238,29 +251,34 @@ namespace JX3CalculatorShared.Globals
         public static double LevelFactor(int level)
         {
             double res = 0;
+
             if (level <= 15)
             {
                 res = 50;
             }
-            else if (15 <= level && level < 90)
+            else if (level <= 90)
             {
                 res = 4 * level - 10;
             }
-            else if (90 <= level && level < 95)
+            else if (level <= 95)
             {
-                res = 85 * (level - 90) + 350;
+                res = 85 * level - 7300;
             }
-            else if (95 <= level && level < 100)
+            else if (level <= 100)
             {
-                res = 185 * (level - 95) + 775;
+                res = 185 * level - 16800;
             }
-            else if (100 <= level && level < 110)
+            else if (level <= 110)
             {
-                res = 205 * (level - 100) + 1700;
+                res = 205 * level - 18800;
             }
-            else if (110 <= level && level < 130)
+            else if (level <= 120)
             {
-                res = 450 * (level - 110) + 3750;
+                res = 450 * level - 45750;
+            }
+            else
+            {
+                res = 1155 * level - 130350;
             }
 
             return res;
@@ -278,7 +296,7 @@ namespace JX3CalculatorShared.Globals
             int i = 0;
             foreach (string key in BaseGlobalParams.Dict.Keys)
             {
-                double value = (double)this.GetField(key);
+                double value = (double) this.GetField(key);
                 paramsStrings[i] = $"{key}: {value}";
                 i++;
             }
@@ -301,19 +319,19 @@ namespace JX3CalculatorShared.Globals
             var txt = JsonConvert.SerializeObject(this, Formatting.Indented);
             var res = new Dictionary<string, double>()
             {
-                {nameof(CT), CT},
-                {nameof(CF), CF},
-                {nameof(HT), HT},
-                {nameof(WS), WS},
-                {nameof(Def), Def},
-                {nameof(OC), OC},
-                {nameof(HS), HS},
-                {nameof(PZ), PZ},
-                {nameof(PDef), PDef},
-                {nameof(MDef), MDef},
-                {nameof(HJ), HJ},
-                {nameof(YJ), YJ},
-                {nameof(YJCF), YJCF}
+                {nameof(CriticalStrike), CriticalStrike},
+                {nameof(CriticalPower), CriticalPower},
+                {nameof(Hit), Hit},
+                {nameof(Strain), Strain},
+                {nameof(Shield), Shield},
+                {nameof(Overcome), Overcome},
+                {nameof(Haste), Haste},
+                {nameof(Surplus), Surplus},
+                {nameof(PhysicsShield), PhysicsShield},
+                {nameof(MagicShield), MagicShield},
+                {nameof(DefPlayerDamage), DefPlayerDamage},
+                {nameof(DefCriticalStrike), DefCriticalStrike},
+                {nameof(DefCriticalPower), DefCriticalPower}
             };
             return res;
         }
@@ -323,11 +341,14 @@ namespace JX3CalculatorShared.Globals
     {
         // 描述系统自带主属性加成的常数
         public const int VitalityToMaxLifeBase = 10; // 体质 atMaxLifeBase
-        public const double SpiritToMagicCriticalStrike = 655.36 / 1024.0; // 根骨加内功会心 atMagicCriticalStrike
-        public const double StrengthToPhysicsOvercome = 307.2 / 1024.0; // 力道加外功破防 atPhysicsOvercomeBase
-        public const double StrengthToPhysicsAttackPower = 153.6 / 1024.0; // 力道加外功基础攻击 atPhysicsAttackPowerBase
-        public const double AgilityToPhysicsCriticalStrike = 655.36 / 1024.0; // 身法加外功会心 atPhysicsCriticalStrike
-        public const double SpunkToMagicAttackPower = 184.32 / 1024.0; // 元气加内功基础攻击 atMagicAttackPowerBase
-        public const double SpunkToMagiOvercome = 307.2 / 1024.0; // 元气加内功基础破防 atMagicOvercome
+
+        public const double StrengthToPhysicsBaseOvercome = 0.3; // 力道加外功基础破防 atPhysicsOvercomeBase
+        public const double StrengthToPhysicsBaseAttackPower = 0.163; // 力道加外功基础攻击 atPhysicsAttackPowerBase
+        public const double AgilityToPhysicsCriticalStrike = 0.9; // 身法加外功会心 atPhysicsCriticalStrike
+
+        public const double SpiritToMagicCriticalStrike = 0.9; // 根骨加内功会心 atMagicCriticalStrike
+
+        public const double SpunkToMagicBaseAttackPower = 0.181; // 元气加内功基础攻击 atMagicAttackPowerBase
+        public const double SpunkToMagicBaseOvercome = 0.3; // 元气加内功基础破防 atMagicOvercome
     }
 }

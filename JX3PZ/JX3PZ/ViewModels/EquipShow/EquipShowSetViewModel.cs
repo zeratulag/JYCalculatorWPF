@@ -39,12 +39,13 @@ namespace JX3PZ.ViewModels
             HasSet = true;
             CPzSet = p;
             SetName = p.SetName;
-            TotalCount = p.Num;
+            TotalCount = p.UniqueNum;
 
             var setEquips = ImmutableArray.CreateBuilder<EquipShowSetEquipViewModel>();
-            for (int i = 0; i < p.Num; i++)
+            for (int i = 0; i < p.UniqueNum; i++)
             {
-                var v1 = new EquipShowSetEquipViewModel(p.EIDs[i], p.EquipNames[i]);
+                //var v1 = new EquipShowSetEquipViewModel(p.EIDs[i], p.EquipNames[i]);
+                var v1 = new EquipShowSetEquipViewModel(p.SetEquipModels[i]);
                 setEquips.Add(v1);
             }
 
@@ -70,7 +71,7 @@ namespace JX3PZ.ViewModels
             else
             {
                 Result = res;
-                Count = Result.Count;
+                Count = Result.TotalNum;
             }
 
             GetHeader();
@@ -85,10 +86,11 @@ namespace JX3PZ.ViewModels
 
         public void GetSetEquips()
         {
-            Count = Result.Count;
+            Count = Result.TotalNum;
             foreach (var _ in SetEquips)
             {
-                _.Has = Result.EIDs.Contains(_.EID);
+                //_.Has = Result.EIDs.Contains(_.EID);
+                _.Has = _.Model.Match(Result.EIDs);
             }
         }
 
@@ -96,7 +98,7 @@ namespace JX3PZ.ViewModels
         {
             foreach (var _ in SetEffects)
             {
-                _.IsActive = _.Count <= Result.Count;
+                _.IsActive = _.Count <= Result.TotalNum;
             }
         }
 
@@ -162,10 +164,26 @@ namespace JX3PZ.ViewModels
         public bool Has { get; set; }
         public string Color => Has ? ColorConst.Yellow : ColorConst.Inactive;
 
-        public EquipShowSetEquipViewModel(string eID, string name)
+        public readonly PzSetEquipModel Model;
+
+        //public EquipShowSetEquipViewModel(string eID, string name)
+        //{
+        //    EID = eID;
+        //    Name = name;
+        //}
+
+        public EquipShowSetEquipViewModel(PzSetEquipModel model)
         {
-            EID = eID;
-            Name = name;
+            Model = model;
+            if (model.Num == 1)
+            {
+                EID = model.EIDs[0];
+                Name = model.Names[0];
+            }
+            else
+            {
+                Name = model.Names.Join(" / ");
+            }
         }
 
         #region 流文档元素

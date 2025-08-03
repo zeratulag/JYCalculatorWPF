@@ -16,19 +16,19 @@ namespace JYCalculator.Utils
         {
             // 添加并应用秘籍
             skillDfs.Normal.AddRecipeAndApply(normal);
-            skillDfs.XW.AddRecipeAndApply(xw);
+            skillDfs.XinWu.AddRecipeAndApply(xw);
         }
 
         public static void ApplySkillModifier(this Period<SkillDataDF> skillDfs, SkillModifier normal, SkillModifier xw)
         {
             // 添加应用SkillModifier
             skillDfs.Normal.ApplySkillModifier(normal);
-            skillDfs.XW.ApplySkillModifier(xw);
+            skillDfs.XinWu.ApplySkillModifier(xw);
         }
 
         public static Period<SkillFreqCTDF> Copy(this Period<SkillFreqCTDF> old)
         {
-            return new Period<SkillFreqCTDF>(old.Normal?.Copy(), old.XW?.Copy());
+            return new Period<SkillFreqCTDF>(old.Normal?.Copy(), old.XinWu?.Copy());
         }
     }
 }

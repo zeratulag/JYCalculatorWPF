@@ -24,7 +24,11 @@ namespace JYCalculator.Views.UserControls
         {
             if (TabItem_MultiZhen.IsSelected)
             {
-                GlobalContext.Views.Main.DpsView.Expander_CombatStat.IsExpanded = false;
+                // 检查 GlobalContext.Views.Main 和 DpsView 是否为 null
+                if (GlobalContext.Views.Main?.DpsView?.Expander_CombatStat != null)
+                {
+                    GlobalContext.Views.Main.DpsView.Expander_CombatStat.IsExpanded = false;
+                }
             }
         }
     }

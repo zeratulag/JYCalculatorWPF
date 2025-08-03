@@ -5,6 +5,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Windows.Data;
 using static JYCalculator.Globals.XFStaticConst;
 
 namespace JYCalculator.Class
@@ -14,62 +15,16 @@ namespace JYCalculator.Class
         #region 成员
 
         // 力道
-        public double Base_L { get; set; }
+        public double BaseStrength { get; set; }
 
-        [JsonIgnore]
-        public double Final_L => Base_L * (1 + L_Percent);
-        public double L_Percent { get; set; } = 0;
+        [JsonIgnore] public double FinalStrength => BaseStrength * (1 + StrengthPercent);
+        public double StrengthPercent { get; set; } = 0;
 
-        [JsonIgnore]
-        public bool HasL_Percent => L_Percent > 0; // 是否有非基础力道
+        [JsonIgnore] public bool HasBaseStrengthPercent => StrengthPercent > 0; // 是否有非基础力道
+
         #endregion
 
         #region 构造
-
-        /// <summary>
-        /// 表示人物初始属性（没有任何增益）的类
-        /// </summary>
-        /// <param name="baseL">基础力道</param>
-        /// <param name="lpercent">力道提升</param>
-        /// <param name="base_ap">基础攻击</param>
-        /// <param name="final_ap">最终攻击</param>
-        /// <param name="wp">武伤</param>
-        /// <param name="ct">会心</param>
-        /// <param name="cf">会效</param>
-        /// <param name="ws">无双</param>
-        /// <param name="pz">破招</param>
-        /// <param name="oc">破防</param>
-        /// <param name="hs">加速</param>
-        /// <param name="had_BigFM_hat">是否带了伤帽</param>
-        /// <param name="had_BigFM_jacket">是否带了伤衣</param>
-        /// <param name="name">名称</param>
-        public InitCharacter(double baseL, double lpercent,
-            double base_ap, double final_ap, double wp,
-            double ct, double cf, double ws,
-            double pz, double oc, double hs,
-            bool had_BigFM_hat = false, bool had_BigFM_jacket = false,
-            string name = "") : this()
-        {
-            Base_L = baseL;
-            L_Percent = lpercent;
-            Base_AP = base_ap;
-            Final_AP = final_ap;
-            WP = wp;
-
-            CT = ct;
-            CF = cf;
-            WS = ws;
-
-            PZ = pz;
-            OC = oc;
-            HS = hs;
-
-            Had_BigFM_hat = had_BigFM_hat;
-            Had_BigFM_jacket = had_BigFM_jacket;
-            Name = name;
-
-            PostConstructor();
-        }
 
         /// <summary>
         /// 复制构造
@@ -77,23 +32,26 @@ namespace JYCalculator.Class
         /// <param name="old">旧的对象</param>
         public InitCharacter(InitCharacter old) : base()
         {
-            Base_L = old.Base_L;
-            L_Percent = old.L_Percent;
-            Base_AP = old.Base_AP;
-            Final_AP = old.Final_AP;
-            WP = old.WP;
+            BaseStrength = old.BaseStrength;
+            StrengthPercent = old.StrengthPercent;
+            PhysicsBaseAttackPower = old.PhysicsBaseAttackPower;
+            PhysicsFinalAttackPower = old.PhysicsFinalAttackPower;
+            BaseWeaponDamage = old.BaseWeaponDamage;
 
-            CT = old.CT;
-            CF = old.CF;
-            WS = old.WS;
+            PhysicsCriticalStrike = old.PhysicsCriticalStrike;
+            PhysicsCriticalStrikeRate = old.PhysicsCriticalStrikeRate;
 
-            PZ = old.PZ;
-            OC = old.OC;
-            HS = old.HS;
+            PhysicsCriticalPowerValue = old.PhysicsCriticalPowerValue;
+            StrainRate = old.StrainRate;
+
+            BaseSurplus = old.BaseSurplus;
+            PhysicsBaseOvercome = old.PhysicsBaseOvercome;
+            Haste = old.Haste;
 
             Had_BigFM_jacket = old.Had_BigFM_jacket;
             Had_BigFM_hat = old.Had_BigFM_hat;
             Name = old.Name;
+            EquipScore = old.EquipScore;
             PostConstructor();
         }
 
@@ -105,23 +63,35 @@ namespace JYCalculator.Class
         /// <param name="panel"></param>
         protected void _UpdateFromJBPanel(JBBB panel)
         {
-            Base_L = panel.Strength;
-            L_Percent = 0;
-            Base_AP = panel.PhysicsAttackPowerBase;
-            Final_AP = panel.PhysicsAttackPower;
-            WP = panel.MeleeWeaponDamage + panel.MeleeWeaponDamageRand / 2;
+            BaseStrength = panel.Strength;
+            StrengthPercent = 0;
+            PhysicsBaseAttackPower = panel.PhysicsAttackPowerBase;
+            PhysicsFinalAttackPower = panel.PhysicsAttackPower;
+            BaseWeaponDamage = panel.MeleeWeaponDamage + panel.MeleeWeaponDamageRand / 2;
 
-            CT = panel.PhysicsCriticalStrikeRate;
-            CF = panel.PhysicsCriticalDamagePowerPercent;
-            WS = panel.StrainPercent;
+            PhysicsCriticalStrike = panel.PhysicsCriticalStrike;
 
-            PZ = panel.SurplusValue;
-            OC = Math.Round(panel.PhysicsOvercomePercent * fGP.OC);
-            HS = Math.Round(panel.HastePercent * fGP.HS);
+            var criticalStrikeRate =
+                panel.CalcPhysicsCriticalStrikeRate(XFStaticConst.CurrentLevelParams.CriticalStrike);
+            if (Math.Abs(criticalStrikeRate - 0.01) < 0.001)
+            {
+                PhysicsCriticalStrikeRate = 0.01; // 弩箭加1%会心。
+            }
+            //FinalStrainValue = panel.StrainPercent;
 
+
+            PhysicsCriticalPowerValue = panel.PhysicsCriticalDamagePowerPercent;
+            StrainRate = 0;
+            BaseSurplus = panel.SurplusValue;
+            BaseStrain = panel.Strain;
+            //PhysicsBaseOvercome = Math.Round(panel.PhysicsOvercomePercent * CurrentLevelParams.Overcome);
+            PhysicsBaseOvercome = panel.PhysicsOvercome;
+            //Haste = Math.Round(panel.HastePercent * CurrentLevelParams.Haste);
+            Haste = panel.Haste;
             Had_BigFM_jacket = panel.EquipList.Had_BigFM_jacket;
             Had_BigFM_hat = panel.EquipList.Had_BigFM_hat;
             Name = panel.Title;
+            EquipScore = panel.Score;
         }
 
         /// <summary>
@@ -130,23 +100,29 @@ namespace JYCalculator.Class
         /// <param name="ichar"></param>
         protected void _UpdateFromIChar(InitCharacter ichar)
         {
-            Base_L = ichar.Base_L;
-            L_Percent = ichar.L_Percent;
-            Base_AP = ichar.Base_AP;
-            Final_AP = ichar.Final_AP;
-            WP = ichar.WP;
+            BaseStrength = ichar.BaseStrength;
+            StrengthPercent = ichar.StrengthPercent;
+            PhysicsBaseAttackPower = ichar.PhysicsBaseAttackPower;
+            PhysicsFinalAttackPower = ichar.PhysicsFinalAttackPower;
+            BaseWeaponDamage = ichar.BaseWeaponDamage;
 
-            CT = ichar.CT;
-            CF = ichar.CF;
-            WS = ichar.WS;
+            PhysicsCriticalStrike = ichar.PhysicsCriticalStrike;
+            PhysicsCriticalStrikeRate = ichar.PhysicsCriticalStrikeRate;
 
-            PZ = ichar.PZ;
-            OC = ichar.OC;
-            HS = ichar.HS;
+            PhysicsCriticalPowerValue = ichar.PhysicsCriticalPowerValue;
+
+            BaseSurplus = ichar.BaseSurplus;
+            PhysicsBaseOvercome = ichar.PhysicsBaseOvercome;
+            Haste = ichar.Haste;
+
+            BaseStrain = ichar.BaseStrain;
+            StrainRate = ichar.StrainRate;
 
             Had_BigFM_jacket = ichar.Had_BigFM_jacket;
             Had_BigFM_hat = ichar.Had_BigFM_hat;
             Name = ichar.Name;
+
+            EquipScore = ichar.EquipScore;
         }
 
         public InitCharacter(XinFaCharacterPanel panel) : this()
@@ -156,24 +132,28 @@ namespace JYCalculator.Class
 
         public void UpdateFromXFPanel(XinFaCharacterPanel panel)
         {
-            Base_L = panel.Primary.Base;
-            L_Percent = panel.Primary.BasePercentAdd / 1024.0;
+            BaseStrength = panel.Primary.Base;
+            StrengthPercent = panel.Primary.BasePercentAdd / 1024.0;
 
-            Base_AP = panel.Attack.Base;
-            Final_AP = panel.Attack.Final;
-            WP = panel.MeleeWeapon.DamageAverage;
+            PhysicsBaseAttackPower = panel.Attack.Base;
+            PhysicsFinalAttackPower = panel.Attack.Final;
+            BaseWeaponDamage = panel.MeleeWeapon.DamageAverage;
 
-            CT = panel.CriticalStrike.Final;
-            CF = panel.CriticalDamage.PanelFinal;
-            WS = panel.Strain.Final;
+            PhysicsCriticalStrike = panel.CriticalStrike.Point;
+            PhysicsCriticalStrikeRate = panel.CriticalStrike.RatePct;
 
-            PZ = panel.Surplus.Final;
-            OC = panel.Overcome.Final;
-            HS = panel.Haste.FinalPoint;
+            PhysicsCriticalPowerValue = panel.CriticalDamage.PanelFinal;
+            BaseStrain = panel.Strain.BasePoint;
+            StrainRate = panel.Strain.PercentPct;
+
+            BaseSurplus = panel.Surplus.Final;
+            PhysicsBaseOvercome = panel.Overcome.Final;
+            Haste = panel.Haste.FinalPoint;
 
             Had_BigFM_jacket = true;
             Had_BigFM_hat = true;
             Name = panel.Name;
+            EquipScore = panel.EquipScore;
         }
 
         #region 显示
@@ -183,10 +163,10 @@ namespace JYCalculator.Class
             var res = new List<string>
             {
                 "人物初始属性：",
-                $"{Base_L:F0} 力道，{Base_AP:F0} 基础攻击，{Final_AP:F0} 最终攻击，{WP:F1} 武器伤害，{PZ:F0} 破招",
+                $"{BaseStrength:F0} 力道，{PhysicsBaseAttackPower:F0} 基础攻击，{PhysicsFinalAttackPower:F0} 最终攻击，{BaseWeaponDamage:F1} 武器伤害，{BaseSurplus:F0} 破招",
 
-                $"{CT:P2} 会心，{CF:P2} 会效，{WS:P2} 无双，" +
-                $"{OC:F0}({OC / fGP.OC:P2}) 破防，{HS:F0}({HS / fGP.HS:P2}) 加速",
+                $"{PhysicsCriticalStrikeValue:P2} 会心，{PhysicsCriticalPowerValue:P2} 会效，{FinalStrainValue:P2} 无双，" +
+                $"{PhysicsBaseOvercome:F0}({PhysicsBaseOvercome / CurrentLevelParams.Overcome:P2}) 破防，{Haste:F0}({Haste / CurrentLevelParams.Haste:P2}) 加速",
             };
 
             res.Add("");
@@ -195,213 +175,5 @@ namespace JYCalculator.Class
 
         #endregion
 
-
-        #region 属性计算_各种属性
-
-        public void Add_WP(double value)
-        {
-            WP += value;
-        }
-
-        public void Add_CT(double value)
-        {
-            CT += value;
-        }
-
-        public void Add_CT_Point(double value)
-        {
-            Add_CT(value / fGP.CT);
-        }
-
-        public void Add_CF(double value)
-        {
-            CF += value;
-        }
-
-        public void Add_CF_Point(double value)
-        {
-            Add_CF(value / fGP.CF);
-        }
-
-        public void Add_WS(double value)
-        {
-            WS += value;
-        }
-
-        public void Add_WS_Point(double value)
-        {
-            Add_WS(value / fGP.WS);
-        }
-
-        public void Add_HSP(double value)
-        {
-            HS += value;
-        }
-
-        public void Add_PZ(double value)
-        {
-            PZ += value;
-        }
-
-        public void Add_Final_AP(double value)
-        {
-            Final_AP += value;
-        }
-
-        public void Add_Base_AP(double value)
-        {
-            Base_AP += value;
-            Add_Final_AP(value);
-        }
-
-        public void Add_OC(double value)
-        {
-            OC += value;
-        }
-
-        public void Add_S(double value) //身法
-        {
-            Add_CT_Point(value * XFConsts.CT_PER_S);
-        }
-
-        public void Add_Final_L(double value) // 最终力道
-        {
-            Add_Base_AP(value * XFConsts.AP_PER_L);
-            Add_OC(value * XFConsts.OC_PER_L);
-
-            Add_Final_AP(value * XFConsts.F_AP_PER_L);
-            Add_CT_Point(value * XFConsts.CT_PER_L);
-        }
-
-        public void Add_Base_L(double value)
-        {
-            Base_L += value;
-            Add_Final_L(value * (1 + L_Percent));
-        }
-
-        public void Add_L_Percent(double value)
-        {
-            L_Percent += value;
-            Add_Final_L(value * Base_L);
-        }
-
-
-        /// <summary>
-        /// 增加全属性
-        /// </summary>
-        /// <param name="value"></param>
-        public void Add_All_BasePotent(double value)
-        {
-            Add_Base_L(value);
-            Add_S(value);
-            // TODO: 配装器里还需要增加体质
-        }
-
-        #endregion
-
-        #region 属性计算
-
-        /// <summary>
-        /// 属性修改分派，注意这段代码是由Python程序SwitchTool.py生成的
-        /// </summary>
-        /// <param name="key">简化后的属性名称</param>
-        /// <param name="value">属性值</param>
-        protected void _AddSAttr(string key, double value)
-        {
-            switch (key)
-            {
-                case "WP":
-                    {
-                        Add_WP(value);
-                        break;
-                    }
-                case "CT":
-                    {
-                        Add_CT(value);
-                        break;
-                    }
-                case "CT_Point":
-                    {
-                        Add_CT_Point(value);
-                        break;
-                    }
-                case "CF":
-                    {
-                        Add_CF(value);
-                        break;
-                    }
-                case "CF_Point":
-                    {
-                        Add_CF_Point(value);
-                        break;
-                    }
-                case "WS":
-                    {
-                        Add_WS(value);
-                        break;
-                    }
-                case "WS_Point":
-                    {
-                        Add_WS_Point(value);
-                        break;
-                    }
-                case "HSP":
-                    {
-                        Add_HSP(value);
-                        break;
-                    }
-                case "PZ":
-                    {
-                        Add_PZ(value);
-                        break;
-                    }
-                case "Final_AP":
-                    {
-                        Add_Final_AP(value);
-                        break;
-                    }
-
-                case "Base_AP":
-                    {
-                        Add_Base_AP(value);
-                        break;
-                    }
-
-                case "OC":
-                case "Base_OC":
-                    {
-                        Add_OC(value);
-                        break;
-                    }
-                case "S":
-                    {
-                        Add_S(value);
-                        break;
-                    }
-                case "L":
-                case "Base_L":
-                    {
-                        Add_Base_L(value);
-                        break;
-                    }
-                case "Final_L":
-                    {
-                        Add_Final_L(value);
-                        break;
-                    }
-                case "All_BasePotent":
-                    {
-                        Add_All_BasePotent(value);
-                        break;
-                    }
-                default:
-                    {
-                        Trace.WriteLine($"未知的I属性！ {key}:{value} ");
-                        break;
-                    }
-            }
-        }
-
-        #endregion
     }
 }

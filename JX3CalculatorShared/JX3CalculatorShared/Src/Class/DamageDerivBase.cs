@@ -6,15 +6,16 @@ namespace JX3CalculatorShared.Class
     public class DamageDerivBase
     {
         public string Name { get; set; }
-        public double Base_AP { get; set; } // 基础攻击
-        public double Base_OC { get; set; } // 基础破防
-        public double PZ { get; set; } // 破招
-        public double WS_Point { get; set; } // 无双
-        public double CT_Point { get; set; } // 会心
-        public double CF_Point { get; set; } // 会效
-        public double WP { get; set; } // 武器伤害
-        public double Final_AP { get; set; } // 最终攻击
-        public double Final_OC { set; get; } // 最终破防
+        public double PhysicsBaseAttackPower { get; set; } // 基础攻击
+        public double PhysicsBaseOvercome { get; set; } // 基础破防
+        public double BaseSurplus { get; set; } // 破招
+        public double FinalStrain { get; set; } // 最终无双
+        public double BaseStrain { get; set; } // 基础无双
+        public double PhysicsCriticalStrike { get; set; } // 会心
+        public double PhysicsCriticalPower { get; set; } // 会效
+        public double BaseWeaponDamage { get; set; } // 武器伤害
+        public double PhysicsFinalAttackPower { get; set; } // 最终攻击
+        public double PhysicsFinalOvercome { set; get; } // 最终破防
         [ExcelIgnore] public AttrProfitList ProfitList { get; protected set; }
         public string OrderDesc => ProfitList.OrderDesc;
 
@@ -32,15 +33,16 @@ namespace JX3CalculatorShared.Class
         public DamageDerivBase(DamageDerivBase old)
         {
             Name = old.Name;
-            Final_AP = old.Final_AP;
-            WP = old.WP;
-            PZ = old.PZ;
-            WS_Point = old.WS_Point;
-            CT_Point = old.CT_Point;
-            CF_Point = old.CF_Point;
-            Final_OC = old.Final_OC;
-            Base_AP = old.Base_AP;
-            Base_OC = old.Base_OC;
+            PhysicsFinalAttackPower = old.PhysicsFinalAttackPower;
+            BaseWeaponDamage = old.BaseWeaponDamage;
+            BaseSurplus = old.BaseSurplus;
+            FinalStrain = old.FinalStrain;
+            BaseStrain = old.BaseStrain;
+            PhysicsCriticalStrike = old.PhysicsCriticalStrike;
+            PhysicsCriticalPower = old.PhysicsCriticalPower;
+            PhysicsFinalOvercome = old.PhysicsFinalOvercome;
+            PhysicsBaseAttackPower = old.PhysicsBaseAttackPower;
+            PhysicsBaseOvercome = old.PhysicsBaseOvercome;
         }
 
         public virtual DamageDerivBase Copy()
@@ -57,32 +59,33 @@ namespace JX3CalculatorShared.Class
         /// <param name="w">权重系数（技能频率）</param>
         public virtual void WeightedAdd(DamageDerivBase other, double w = 1.0)
         {
-            Final_AP += other.Final_AP * w;
-            WP += other.WP * w;
-            PZ += other.PZ * w;
-            WS_Point += other.WS_Point * w;
-            CT_Point += other.CT_Point * w;
-            CF_Point += other.CF_Point * w;
-            Final_OC += other.Final_OC * w;
-            Base_AP += other.Base_AP * w;
-            Base_OC += other.Base_OC * w;
+            PhysicsFinalAttackPower += other.PhysicsFinalAttackPower * w;
+            BaseWeaponDamage += other.BaseWeaponDamage * w;
+            BaseSurplus += other.BaseSurplus * w;
+            BaseStrain += other.BaseStrain * w;
+            FinalStrain += other.FinalStrain * w;
+            PhysicsCriticalStrike += other.PhysicsCriticalStrike * w;
+            PhysicsCriticalPower += other.PhysicsCriticalPower * w;
+            PhysicsFinalOvercome += other.PhysicsFinalOvercome * w;
+            PhysicsBaseAttackPower += other.PhysicsBaseAttackPower * w;
+            PhysicsBaseOvercome += other.PhysicsBaseOvercome * w;
         }
 
         // 根据属性加权求收益
         public virtual void ApplyAttrWeight(AttrWeightBase aw)
         {
             Weight = aw;
-
             Name = aw.Name;
-            Base_AP *= aw.AP;
-            Base_OC *= aw.OC;
-            CT_Point *= aw.CT_Point;
-            CF_Point *= aw.CF_Point;
-            WS_Point *= aw.WS_Point;
-            PZ *= aw.PZ;
-            WP *= aw.WP;
-            Final_AP *= aw.Final_AP;
-            Final_OC *= aw.Final_OC;
+            PhysicsBaseAttackPower *= aw.BaseAttackPower;
+            PhysicsBaseOvercome *= aw.BaseOvercome;
+            PhysicsCriticalStrike *= aw.CriticalStrike;
+            PhysicsCriticalPower *= aw.CriticalPower;
+            BaseStrain *= aw.BaseStrain;
+            BaseSurplus *= aw.BaseSurplus;
+            BaseWeaponDamage *= aw.BaseWeaponDamage;
+            PhysicsFinalAttackPower *= aw.FinalAttackPower;
+            PhysicsFinalOvercome *= aw.FinalOvercome;
+            FinalStrain *= aw.FinalStrain;
         }
 
 
@@ -93,15 +96,16 @@ namespace JX3CalculatorShared.Class
         {
             var l = new List<AttrProfitItem>
             {
-                new AttrProfitItem(nameof(Final_AP), "最终攻击", Final_AP),
-                new AttrProfitItem(nameof(Final_OC), "最终破防", Final_AP),
-                new AttrProfitItem(nameof(Base_AP), "基础攻击", Base_AP),
-                new AttrProfitItem(nameof(Base_OC), "基础破防", Base_OC),
-                new AttrProfitItem(nameof(PZ), "破招", PZ),
-                new AttrProfitItem(nameof(WS_Point), "无双", WS_Point),
-                new AttrProfitItem(nameof(CT_Point), "会心", CT_Point),
-                new AttrProfitItem(nameof(CF_Point), "会效", CF_Point),
-                new AttrProfitItem(nameof(WP), "武伤", WP)
+                new AttrProfitItem(nameof(PhysicsFinalAttackPower), "最终攻击", PhysicsFinalAttackPower),
+                new AttrProfitItem(nameof(PhysicsFinalOvercome), "最终破防", PhysicsFinalOvercome),
+                new AttrProfitItem(nameof(PhysicsBaseAttackPower), "基础攻击", PhysicsBaseAttackPower),
+                new AttrProfitItem(nameof(PhysicsBaseOvercome), "基础破防", PhysicsBaseOvercome),
+                new AttrProfitItem(nameof(BaseSurplus), "破招", BaseSurplus),
+                new AttrProfitItem(nameof(FinalStrain), "最终无双", FinalStrain),
+                new AttrProfitItem(nameof(BaseStrain), "基础无双", BaseStrain),
+                new AttrProfitItem(nameof(PhysicsCriticalStrike), "会心", PhysicsCriticalStrike),
+                new AttrProfitItem(nameof(PhysicsCriticalPower), "会效", PhysicsCriticalPower),
+                new AttrProfitItem(nameof(BaseWeaponDamage), "武伤", BaseWeaponDamage)
             };
             return l;
         }
@@ -110,13 +114,13 @@ namespace JX3CalculatorShared.Class
         {
             var l = new List<AttrProfitItem>
             {
-                new AttrProfitItem(nameof(Base_AP), "攻击", Base_AP),
-                new AttrProfitItem(nameof(Base_OC), "破防", Base_OC),
-                new AttrProfitItem(nameof(PZ), "破招", PZ),
-                new AttrProfitItem(nameof(WS_Point), "无双", WS_Point),
-                new AttrProfitItem(nameof(CT_Point), "会心", CT_Point),
-                new AttrProfitItem(nameof(CF_Point), "会效", CF_Point),
-                new AttrProfitItem(nameof(WP), "武伤", WP)
+                new AttrProfitItem(nameof(PhysicsBaseAttackPower), "攻击", PhysicsBaseAttackPower),
+                new AttrProfitItem(nameof(PhysicsBaseOvercome), "破防", PhysicsBaseOvercome),
+                new AttrProfitItem(nameof(BaseSurplus), "破招", BaseSurplus),
+                new AttrProfitItem(nameof(BaseStrain), "无双", BaseStrain),
+                new AttrProfitItem(nameof(PhysicsCriticalStrike), "会心", PhysicsCriticalStrike),
+                new AttrProfitItem(nameof(PhysicsCriticalPower), "会效", PhysicsCriticalPower),
+                new AttrProfitItem(nameof(BaseWeaponDamage), "武伤", BaseWeaponDamage)
             };
             return l;
         }
@@ -125,10 +129,9 @@ namespace JX3CalculatorShared.Class
         {
             var res = new List<double>(8)
             {
-                Base_AP, Base_OC,
-                PZ, WS_Point,
-                CT_Point, CF_Point,
-                //WP
+                PhysicsBaseAttackPower, PhysicsBaseOvercome,
+                BaseSurplus, BaseStrain,
+                PhysicsCriticalStrike, PhysicsCriticalPower,
             };
             return res;
         }

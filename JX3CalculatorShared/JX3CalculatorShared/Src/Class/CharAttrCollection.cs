@@ -6,7 +6,7 @@ namespace JX3CalculatorShared.Class
 {
     public class CharAttrCollection : AttrCollection
     {
-        public static readonly Func<string, AttributeID> GetTemplate = AttributeIDLoader.GetAttributeID;
+        public static readonly Func<string, KAttributeID> GetTemplate = AttributeIDLoader.GetAttributeID;
 
         public static CharAttrCollection Empty = new CharAttrCollection(false);
         public static CharAttrCollection SimplifiedEmpty = new CharAttrCollection(true);

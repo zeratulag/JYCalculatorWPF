@@ -189,7 +189,7 @@ namespace JX3PZ.ViewModels
                 return;
             }
 
-            SelectedBigFMIndex = 0;
+            SelectedBigFMIndex = BigFMSource.Cast<object>().Count() - 1;
         }
 
 

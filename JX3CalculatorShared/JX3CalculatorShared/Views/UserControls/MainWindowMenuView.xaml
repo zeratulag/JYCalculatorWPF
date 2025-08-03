@@ -61,6 +61,8 @@
 
             <MenuItem Header="关于(_A)"
                       Command="{Binding Path=ShowAboutCmd}" />
+            <MenuItem Header="日志(_L)"
+                      Command="{Binding Path=OpenLogFileDirCmd}" />
 
         </MenuItem>
 

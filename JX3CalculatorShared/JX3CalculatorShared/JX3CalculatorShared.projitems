@@ -17,6 +17,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)Globals\KAttribute.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Globals\ZAttribute.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\SkillBuildSav.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Src\Class\BuffCoverItem.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Src\Class\BuffRecord.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Src\Class\BuffToRecipeItem.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Src\Class\CalcResult.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Messages\StaticMessager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\BigFMConfigModelBase.cs" />
@@ -30,10 +33,16 @@
     <Compile Include="$(MSBuildThisFileDirectory)Src\Class\CharAttrCollection.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Src\Class\CoverDFBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Src\Class\CoverItem.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Src\Class\EquipSpecialEffectEntry.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Src\Class\KAttributeEntry.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Src\Class\KBuffEntity.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Src\Class\PiaoHuangDamage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Src\Class\SimpleAttributeEntry.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Src\Class\SkillAttrCollection.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Src\Class\SkillBuild.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Src\Class\SkillCountItemBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Src\Class\SkillEventTypeMask.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Src\Class\SkillEventTypeMaskManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Src\Class\TargetModifier.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Src\Data\AttributeIDLoader.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Src\Data\CalcDataBase.cs" />
@@ -50,7 +59,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Src\Class\AttrModifier.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Src\Class\BaseBuff.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Src\Class\BaseBuffGroup.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Src\Class\Buff.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Src\Class\KBuff.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Src\Class\BuffCoverDFBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Src\Class\CombatStatItemBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Src\Class\DPSTable.cs" />
@@ -89,8 +98,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Src\DB\ZhenFaDBBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Src\Class\JBBB.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Src\Class\JBPZEquipSnapshotCollection.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Src\Class\SkillFreqDict.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Src\Class\SkillNumDict.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Src\DPSKernelOptimizer\OptimizedICharResultBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\BindingTool.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\ClassExtensions.cs" />
@@ -116,26 +123,28 @@
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Common\AbsDependViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Common\AbsViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ImportJX3BOXViewModel.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Main\BuffViewModel\AllBuffConfigViewModelBase.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Main\BuffViewModel\BuffConfigViewModel.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Main\BuffViewModel\BuffViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\MainWindow\BuffViewModel\AllBuffConfigViewModelBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\MainWindow\BuffViewModel\BuffConfigViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\MainWindow\BuffViewModel\BuffViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Common\CheckBoxViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Common\CollectionViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Common\ComboBoxViewModel.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Main\FightOptionViewModels\AbilityViewModel.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Main\FightOptionViewModels\FightOptionSav.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Main\FightOptionViewModels\FightOptionSummaryViewModel.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Main\FightOptionViewModels\ZhenFaViewModel.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Main\InitInputViewModels\BigFMConfigViewModel.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Main\InitInputViewModels\EquipOptionConfigSav.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Main\InitInputViewModels\EquipOptionSlotViewModel.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Main\ItemDTViewModels\ItemDTConfigViewModelBase.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Main\ItemDTViewModels\ItemDTSlotViewModel.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Main\MiJiViewModels\MiJiViewModelBase.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Main\OptimizationViewModelBase.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Main\QiXueViewModels\QiXueSlotViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\MainWindow\FightOptionViewModels\AbilityViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\MainWindow\FightOptionViewModels\FightOptionSav.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\MainWindow\FightOptionViewModels\FightOptionSummaryViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\MainWindow\FightOptionViewModels\ZhenFaViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\MainWindow\InitInputViewModels\BigFMConfigViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\MainWindow\InitInputViewModels\EquipOptionConfigSav.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\MainWindow\InitInputViewModels\EquipOptionSlotViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\MainWindow\InitInputViewModels\EquipSpecialEffectConfigViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\MainWindow\InitInputViewModels\EquipSpecialEffectSlotViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\MainWindow\ItemDTViewModels\ItemDTConfigViewModelBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\MainWindow\ItemDTViewModels\ItemDTSlotViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\MainWindow\MiJiViewModels\MiJiViewModelBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\MainWindow\OptimizationViewModelBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\MainWindow\QiXueViewModels\QiXueSlotViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Messages\Messages.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Main\SkillBuildManagerViewModelBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\MainWindow\SkillBuildManagerViewModelBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\Converter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\Dialogs\AboutDialog.xaml.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\Dialogs\ImportJBDialog.xaml.cs" />
@@ -148,9 +157,15 @@
     <Compile Include="$(MSBuildThisFileDirectory)Views\UserControls\CombatStatDataGrid.xaml.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\UserControls\DPSView.xaml.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\UserControls\EquipOptionView.xaml.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\UserControls\EquipSpecialEffectConfigView.xaml.cs">
+      <DependentUpon>EquipSpecialEffectConfigView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Views\UserControls\FightOptionView.xaml.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\UserControls\InitCharCommands.xaml.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\UserControls\ItemDTConfigView.xaml.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\UserControls\Items\EquipSpecialEffectItemView.xaml.cs">
+      <DependentUpon>EquipSpecialEffectItemView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Views\UserControls\Items\BigFMItemView.xaml.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\UserControls\Items\BuffItemView.xaml.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\UserControls\Items\EquipOptionItemView.xaml.cs" />
@@ -185,6 +200,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="$(MSBuildThisFileDirectory)Views\InputDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\Resources\EquipSpecialEffect.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -252,6 +271,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\UserControls\EquipSpecialEffectConfigView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="$(MSBuildThisFileDirectory)Views\UserControls\FightOptionView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -261,6 +284,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="$(MSBuildThisFileDirectory)Views\UserControls\ItemDTConfigView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\UserControls\Items\EquipSpecialEffectItemView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

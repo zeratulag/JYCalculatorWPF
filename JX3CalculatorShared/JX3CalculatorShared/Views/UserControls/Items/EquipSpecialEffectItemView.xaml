@@ -1,0 +1,50 @@
+﻿<UserControl x:Class="JX3CalculatorShared.Views.UserControls.EquipSpecialEffectItemView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:JX3CalculatorShared.Views.UserControls"
+             xmlns:hc="https://handyorg.github.io/handycontrol"
+             xmlns:globals="clr-namespace:JX3PZ.Globals"
+             mc:Ignorable="d"
+             Style="{StaticResource Style.ControlWithToolTip}">
+    <Grid VerticalAlignment="Center">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Image Grid.Column="0" Grid.Row="0" Grid.RowSpan="2"
+               Width="24"
+               Height="24"
+               Source="{Binding Path=IconID, Converter={StaticResource IconIDToImgConverter}}" />
+        <Image Grid.Column="0" Grid.Row="0" Grid.RowSpan="2"
+               Width="24"
+               Height="24"
+               Source="{Binding Path=Quality, Converter={StaticResource FileNameToImgConverter}}" />
+        <DockPanel Grid.Row="0" Grid.Column="1"
+                    Margin="5,0,0,0">
+            <hc:SimpleText DockPanel.Dock="Left"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Center"
+                FontSize="12"
+                Foreground="{Binding Path=Quality, Converter={StaticResource QualityToColorConverter}}"
+                Text="{Binding Path=EquipName}" />
+            <hc:SimpleText DockPanel.Dock="Right"
+                FontSize="12"
+                Visibility="{Binding Path=IsValid, Converter={StaticResource BooleanToVisibility}}"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Center"
+                Margin="0,0,0,0"
+                Text="{Binding Path = Level, StringFormat='\{0\}品'}" />
+        </DockPanel>
+        <hc:SimpleText Grid.Column="1" Grid.Row="1"
+                       Margin="5,0,0,0"
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Stretch"
+                       Text="{Binding Path=DescName}" Foreground="{Binding SpecialEffectColor}"/>
+    </Grid>
+</UserControl>

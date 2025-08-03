@@ -1,5 +1,4 @@
 ﻿using JX3CalculatorShared.Utils;
-using Minimod.PrettyPrint;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -270,7 +269,7 @@ namespace JX3CalculatorShared.Class
 
         public string OtherToStr()
         {
-            return Others.PrettyPrint();
+            return Others.ToString();
         }
 
         public string ToStr()

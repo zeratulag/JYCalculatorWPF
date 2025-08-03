@@ -25,6 +25,8 @@
 
         public string Name { get; set; } = "";
 
+        public int EquipScore { get; set; } // 装备分数
+
         public XinFaCharacterPanel() { }
 
         public XinFaCharacterPanel(CharacterPanel cPanel)
@@ -48,6 +50,7 @@
             MeleeWeapon = cPanel.MeleeWeapon;
             RangeWeapon = cPanel.RangeWeapon;
             MaxLife = cPanel.MaxLife;
+            EquipScore = cPanel.EquipScore;
         }
     }
 }

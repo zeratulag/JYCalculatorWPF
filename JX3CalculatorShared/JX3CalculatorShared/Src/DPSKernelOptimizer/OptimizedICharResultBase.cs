@@ -12,12 +12,12 @@ namespace JX3CalculatorShared.Class
         /// </summary>
         public double CT { get; set; }
         public double OC { get; set; }
-        [JsonIgnore] public double OCPct => OC / StaticConst.fGP.OC; // 面板破防值
-        [JsonIgnore] public double CTPoint => CT * StaticConst.fGP.CT; // 会心点数
+        [JsonIgnore] public double OCPct => OC / StaticConst.CurrentLevelGlobalParams.Overcome; // 面板破防值
+        [JsonIgnore] public double CTPoint => CT * StaticConst.CurrentLevelGlobalParams.CriticalStrike; // 会心点数
         public double CTProportion { get; set; } // 会心占比
         public double WS { get; set; }
         public double PZ { get; set; }
-        [JsonIgnore] public double WSPoint => WS * StaticConst.fGP.WS; // 无双点数
+        [JsonIgnore] public double WSPoint => WS * StaticConst.CurrentLevelGlobalParams.Strain; // 无双点数
         public double WSProportion { get; set; } // 无双占比
         public double FinalDPS { get; set; }
         public double DPSIncreasement { get; set; } // 提升量

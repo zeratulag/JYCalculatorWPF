@@ -2,52 +2,55 @@
 {
     public enum ZAttributeType
     {
-        None = 0,
-        All_BasePotent,
-        All_DmgAdd,
-        Base_L,
-        Base_MDef,
-        Base_PDef,
-        Base_Y,
-        CF,
-        CF_Point,
-        CT,
-        CT_Point,
-        HSP,
-        ExtraSP,
-        IgnoreA,
-        L_Percent,
-        M_AP_Percent,
-        M_Base_AP,
-        M_Base_OC,
-        M_DmgAdd,
-        M_OC_Percent,
-        M_YS,
-        MDef_Percent,
-        P_AP_Percent,
-        P_Base_AP,
-        P_Base_OC,
-        P_DmgAdd,
-        P_OC_Percent,
-        P_YS,
-        PDef_Percent,
-        PZ,
-        WP,
-        WS,
-        WS_Point,
-        Y_Percent,
+        None = 0, // 默认
 
-        Final_PDef,
-        Final_MDef,
+        AllDamageAdd,
+        PhysicsDamageAdd,
 
-        Final_L,
-        OC_Percent,
-        Final_AP,
-        Base_AP,
-        AP_Percent,
-        Final_OC,
-        Base_OC,
-        S,
-        DmgAdd
+        BaseStrength, // 基础属性
+        FinalStrength,
+        StrengthPercent,
+
+        BaseAgility,
+        AllBasePotent,
+
+        PhysicsCriticalPowerRate, // 会效值
+        PhysicsCriticalPower, // 会效等级
+
+        PhysicsCriticalStrikeValue, // 会心值
+        PhysicsCriticalStrike, // 会心等级
+        PhysicsCriticalStrikeRate, // 会心率
+
+        Haste,
+        ExtraHaste,
+
+        PhysicsFinalAttackPower,
+        PhysicsBaseAttackPower,
+        PhysicsAttackPowerPercent,
+
+        PhysicsBaseOvercome,
+        PhysicsOvercomePercent,
+
+        BaseSurplus,
+        BaseWeaponDamage,
+
+        StrainRate,
+        BaseStrain,
+        FinalStrain,
+        StrainPercent,
+
+
+        MagicBaseAttackPower,
+
+        AllShieldIgnore,
+
+        MagicBaseShield, // 目标防御属性
+        PhysicsBaseShield,
+        MagicDamageCoefficient,
+        MagicShieldPercent,
+        PhysicsFinalShield,
+        MagicFinalShield,
+        PhysicsDamageCoefficient,
+        PhysicsShieldPercent,
     }
 }

@@ -14,16 +14,20 @@ namespace JYCalculator.Class
         public Target CTarget;
         public SkillDataDF DataDf;
         public string BaseLineSkillName { get; protected set; }
+        public int PiaoHuangStack { get; } // 飘黄层数 
 
         public SkillDamageDF(SkillDataDF datadf, FullCharacter fchar, FullCharacter snapfchar,
-            Target target)
+            Target target, int piaoHuangStack = 0)
         {
             FChar = fchar;
             SnapFChar = snapfchar;
             CTarget = target;
             DataDf = datadf;
+            PiaoHuangStack = piaoHuangStack;
 
             Data = DataDf.Data.ToDictionary(_ => _.Key, _ => new SkillDamage(_.Value, FChar, CTarget));
+            var pH = Data[SkillKeyConst.逐云寒蕊_130];
+            pH.PiaoHuangStack = PiaoHuangStack; // 逐云寒蕊的飘黄层数
 
             switch (AppStatic.XinFaTag)
             {
@@ -44,7 +48,7 @@ namespace JYCalculator.Class
         public void GetDamage()
         {
             Data[BaseLineSkillName].GetDamage();
-            var baseline = Data[BaseLineSkillName].FinalEDamage;
+            var baseline = Data[BaseLineSkillName].FinalExpectDamage;
             foreach (var _ in Data.Values)
             {
                 _.GetDamage();

@@ -8,6 +8,9 @@ using JX3PZ.Globals;
 using JX3PZ.ViewModels;
 using System.Collections.Generic;
 using System.Linq;
+using JX3CalculatorShared.Data;
+using JYCalculator.Data;
+using JYCalculator.DB;
 
 namespace JX3PZ.Models
 {
@@ -15,6 +18,8 @@ namespace JX3PZ.Models
     {
         // 用于表示一个装备槽上装备、附魔、强化、五行石、五彩石的类
         public Equip CEquip { get; set; }
+        public string CEquipID => CEquip?.EID;
+
         public int Strength { get; set; } // 装备栏精炼，注意可能大于装备精炼
         public int RealStrength { get; set; } // 真实生效的精炼等级
         public Enhance CEnhance { get; set; } // 附魔
@@ -23,7 +28,8 @@ namespace JX3PZ.Models
         public int[] DiamondLevels { get; set; } // 五行石镶嵌
         public Stone CStone { get; set; } // 五彩石
         public int Position { get; private set; }
-        public EquipSlotEnum EquipSlot => (EquipSlotEnum)Position;
+        public EquipSlotEnum EquipSlot => (EquipSlotEnum) Position;
+
 
         #region 通过计算得到的属性
 
@@ -32,6 +38,7 @@ namespace JX3PZ.Models
         public int DiamondIntensity;
         public EquipStrengthDiamondModel EquipStrengthDiamond;
         public EquipSnapShotAttributeEntry AttributeEntry;
+        public EquipSpecialEffectItem CEquipSpecialEffect;
 
         #endregion
 
@@ -79,6 +86,7 @@ namespace JX3PZ.Models
             CEnhance = cEnhance;
             CBigFM = cBigFM;
 
+            CEquipSpecialEffect = StaticXFData.DB.EquipSpecialEffectItems.Get(CEquipID);
             Calc();
         }
 
@@ -219,6 +227,7 @@ namespace JX3PZ.Models
             {
                 res.Add(PzType.Stone);
             }
+
             return res;
         }
     }

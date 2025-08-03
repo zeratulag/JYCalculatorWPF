@@ -15,5 +15,5 @@
     <!--  Bool到是否显示转换器  -->
     <BooleanToVisibilityConverter x:Key="BooleanToVisibility" />
     <views:BooleanToVisibilityHiddenConverter x:Key="BooleanToVisibilityHiddenConverter" />
-
+    <views:ListToStringConverter x:Key="ListToStringConverter"/>
 </ResourceDictionary>

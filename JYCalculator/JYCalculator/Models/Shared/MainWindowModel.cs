@@ -83,8 +83,9 @@ namespace JYCalculator.Models
         {
             Shellbuffs = new BuffShellInput(BuffVM.BuffAttrsDesc, BuffVM.DebuffAttrsDesc, ItemDTVM.AttrsDesc,
                 BuffVM.Arg);
-            CalcShellArg = new CalculatorShellArg(_VMs.SkillMiJiVM.CompatibleSkillBuilds, (int)InitChar.HS,
-                _VMs.OptimizationVM.IsChecked, InitInputVM.BigFMVM.Arg, BuffVM.Arg);
+            CalcShellArg = new CalculatorShellArg(_VMs.SkillMiJiVM.CompatibleSkillBuilds, (int) InitChar.Haste,
+                _VMs.OptimizationVM.IsChecked, InitInputVM.BigFMVM.Arg, BuffVM.Arg,
+                InitInputVM.EquipSpecialEffectVM.Model.Arg, FightOptionVM.TargetAllWaysFullHP);
             var calcShell = new CalculatorShell(this);
             calcShell.UpdateInput(this);
             var res = calcShell.Calc();

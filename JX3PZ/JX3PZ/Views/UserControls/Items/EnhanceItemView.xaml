@@ -32,13 +32,13 @@
 
         <hc:SimpleText Grid.Row="0" Grid.Column="2"
                        VerticalAlignment="Center"
-                       FontSize="12"
+                       FontSize="13"
                        Foreground="{Binding Path=Quality, Converter={StaticResource QualityToColorConverter}}"
                        Text="{Binding Path=ItemName}" />
 
         <hc:SimpleText Grid.Row="1" Grid.Column="2"
                        VerticalAlignment="Bottom"
-                       FontSize="10"
+                       FontSize="11"
                        Text="{Binding Path=Desc}" />
 
     </Grid>

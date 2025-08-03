@@ -1,5 +1,6 @@
 ﻿using JX3CalculatorShared.Class;
 using JX3CalculatorShared.Globals;
+using JYCalculator.Globals;
 using MiniExcelLibs.Attributes;
 using System;
 using System.Net.NetworkInformation;
@@ -19,34 +20,38 @@ namespace JYCalculator.Class
         public double Freq { get; private set; } = 0; // 频率（默认为0）
         public double DPS { get; private set; } = 0;
 
-        public double OrgPhysicsDmg { get; set; } = 0; // 原始外功伤害（固定部分+外功攻击部分+武器部分）
-        public double OrgPZDmg { get; set; } = 0; // 原始破招伤害（仅当技能是破招类才有）
+        public double OrgPhysicsDamage { get; set; } = 0; // 原始外功伤害（固定部分+外功攻击部分+武器部分）
+        public double OrgSurplusDamage { get; set; } = 0; // 原始破招伤害（仅当技能是破招类才有）
         public double StdPhysicsDmg { get; set; } // 基准外功伤害
 
         // 目标防御
-        public double FinalPDef { get; set; } // 等价外功最终防御，这里先计算B类无视防御以及比例减防御
-        public double ClosingPDef { get; set; } // 结算防御，在Final的基础上考虑了A类无视防御
-        public double BearPDef { get; set; } // 防御承伤率
+        public double FinalPhysicsDef { get; set; } // 等价外功最终防御，这里先计算B类无视防御以及比例减防御
+        public double ClosingPhysicsDef { get; set; } // 结算防御，在Final的基础上考虑了A类无视防御
+        public double BearPhysicsDef { get; set; } // 防御承伤率
 
         // 各类增伤
-        public double ParaPOC { get; set; } // 外功破防增伤
-        public double ParaPYS { get; set; } // 外功易伤
-        public double ParaWS { get; set; } // 无双增伤
-        public double ParaPDmgAdd { get; set; } // 外功伤害提高
-        public double ParaNPC { get; set; } // 非侠士增伤
+        public double ParaPhysicsFinalOvercomeValue { get; set; } // 外功破防增伤
+        public double ParaPhysicsDamageCoefficient { get; set; } // 外功易伤
+        public double ParaFinalStrainValue { get; set; } // 无双增伤
+        public double ParaPhysicsDamageAdd { get; set; } // 外功伤害提高
+        public double ParaNPC_Coef { get; set; } // 非侠士增伤
         public double ParaLevelCrush { get; set; } // 等级压制系数
-        public double RealPhysicsDmg { get; set; } // 实际外功伤害
-        public double RealDmg { get; set; } // 实际伤害
-        public double RealCriticalDmg { get; set; } // 实际会心伤害
-        public double CT { get; set; } // 会心会效
-        public double CF { get; set; }
-        public double Expect { get; set; } // 期望
+        public double RealPhysicsDamage { get; set; } // 实际外功伤害
+        public double RealDamage { get; set; } // 实际伤害
+        public double RealCriticalDamage { get; set; } // 实际会心伤害
+        public double CriticalStrikeValue { get; set; } // 会心会效
+        public double CriticalPowerValue { get; set; }
+        public double ExpectValue { get; set; } // 期望
         public double ExpectPhysicsDmg { get; set; } // 实际外功伤害期望
-        public double FinalEDamage { get; set; } // 最终伤害期望
+        public double FinalExpectDamage { get; set; } // 最终伤害期望
 
         public double RelativeDamage { get; set; } // 相对伤害
 
         [ExcelIgnore] public DamageDeriv Deriv { get; protected set; } // 求导
+
+        public bool IsSuperCustom { get; }
+        public bool IsPiaoHuang130 { get; } // 是否为飘黄130
+        public int PiaoHuangStack { get; set; } // 飘黄层数
 
         #endregion
 
@@ -56,6 +61,8 @@ namespace JYCalculator.Class
         {
             Data = data;
             Name = data.Name;
+            IsPiaoHuang130 = Data.Name == SkillKeyConst.逐云寒蕊_130;
+            IsSuperCustom = Data.Info.Type == SkillDataTypeEnum.SuperCustom;
         }
 
         public SkillDamage(SkillData data, FullCharacter fchar, Target target) : this(data)
@@ -77,18 +84,20 @@ namespace JYCalculator.Class
         {
             if (IsSuperCustom)
             {
-                CT = 0;
-                CF = StaticConst.CriticalDamageStart;
-                Expect = 1;
+                CriticalStrikeValue = 0;
+                CriticalPowerValue = StaticConst.CriticalDamageStart;
+                ExpectValue = 1;
             }
             else
             {
-                CT = Math.Min(1, Data.AddCT + FChar.CT);
-                CF = Math.Max(StaticConst.CriticalDamageStart, Math.Min(StaticConst.CriticalDamageMax, Data.AddCF + FChar.CF));
-                Expect = CT * (CF - 1) + 1;
+                CriticalStrikeValue = Math.Min(1, Data.AddCriticalStrikeRate + FChar.PhysicsCriticalStrikeValue);
+                CriticalPowerValue = Math.Max(StaticConst.CriticalDamageStart,
+                    Math.Min(StaticConst.CriticalDamageMax,
+                        Data.AddCriticalPowerRate + FChar.PhysicsCriticalPowerValue));
+                ExpectValue = CriticalStrikeValue * (CriticalPowerValue - 1) + 1;
             }
 
-            RealCriticalDmg = RealDmg * Expect;
+            RealCriticalDamage = RealDamage * ExpectValue;
         }
 
         public void SetFreq(double freq)
@@ -98,7 +107,7 @@ namespace JYCalculator.Class
 
         public void GetDPS()
         {
-            DPS = FinalEDamage * Freq;
+            DPS = FinalExpectDamage * Freq;
         }
 
         public void GetDeriv()

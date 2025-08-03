@@ -4,7 +4,7 @@ namespace JX3PZ.Models
 {
     public class PanelOvercomeSlot : PanelSubTypeValueSlot
     {
-        public static readonly double PointCoef = StaticConst.fGP.OC;
+        public static readonly double PointCoef = StaticConst.CurrentLevelGlobalParams.Overcome;
         public double FinalPct => Final / PointCoef;
         public new static readonly string Suffix = "OvercomeBase";
 

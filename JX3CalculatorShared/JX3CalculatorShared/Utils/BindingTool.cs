@@ -20,7 +20,7 @@ namespace JX3CalculatorShared.Utils
 
         static ImageLib()
         {
-            Icon = new Dictionary<int, BitmapImage>(400);
+            Icon = new Dictionary<int, BitmapImage>(700);
             Diamond = new Dictionary<int, BitmapImage>(10);
             Path = new Dictionary<string, BitmapImage>(10);
         }

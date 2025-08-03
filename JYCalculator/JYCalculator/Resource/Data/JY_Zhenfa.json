@@ -13,7 +13,7 @@
         "ItemName": "北斗七星阵",
         "DescName": "北斗七星阵",
         "KungFu": "太虚剑意",
-        "Desc": "一重粗识：阅历提高5%，声望提高5%，外功会心几率提高3%。\n二重略懂：无双提高2%。\n三重巧熟：外功会心效果等级提高15%。\n四重精妙：外功招式会心则可使阵眼额外获得一格气。\n五重游刃：阵眼施展续气招式会心，则小队成员外功会心几率提高1%，最多叠加五层。\n六重忘我：被会心攻击则可使阵眼外功基础攻击力提高20%，持续8秒。",
+        "Desc": "一重粗识：阅历提高5%，声望提高5%，外功会心几率提高3%。\n二重略懂：无双提高2%。\n三重巧熟：外功会心效果等级提高15%。\n四重精妙：外功招式会心则可使阵眼额外获得一格气。\n五重游刃：阵眼施展续气招式，则小队成员外功会心几率提高1%，最多叠加五层。\n六重忘我：被会心攻击则可使阵眼外功基础攻击力提高20%，持续8秒。",
         "Buff_dict": {
             "atFormationEffect": 0,
             "atPhysicsCriticalStrikeBaseRate": 300,
@@ -27,7 +27,7 @@
         },
         "Z5_max_stack": 5,
         "Z5_default_stack": 5,
-        "Z5_cover": 1.0,
+        "Z5_cover": 0.6,
         "BuffID": "947_6",
         "BuffZ5ID": "950_1"
     },
@@ -61,7 +61,7 @@
         "ItemName": "依山观澜阵",
         "DescName": "依山观澜阵",
         "KungFu": "山居剑意/问水诀",
-        "Desc": "一重粗识：阅历提高5%，声望提高5%，身法提高3%。\n二重略懂：外功基础攻击力提高5%。\n三重巧熟：外功会心效果提高20%。\n四重精妙：小队成员外功招式会心则阵眼获得3点剑气值。\n五重游刃：阵眼使用招式“莺鸣柳”则全队武器伤害提高1571点。\n六重忘我：小队成员闪避则阵眼获得外功会心率提高20%，持续5秒。",
+        "Desc": "一重粗识：阅历提高5%，声望提高5%，身法提高3%。\n二重略懂：外功基础攻击力提高5%。\n三重巧熟：外功会心效果提高20%。\n四重精妙：小队成员外功招式会心则阵眼获得3点剑气值。\n五重游刃：阵眼使用招式“莺鸣柳”则全队武器伤害提高2385点。\n六重忘我：小队成员闪避则阵眼获得外功会心率提高20%，持续5秒。",
         "Buff_dict": {
             "atFormationEffect": 0,
             "atAddReputationPercent": 50,
@@ -71,7 +71,7 @@
             "atPhysicsCriticalDamagePowerBaseKiloNumRate": 204
         },
         "BuffZ5_dict": {
-            "atMeleeWeaponDamageBase": 1571
+            "atMeleeWeaponDamageBase": 2385
         },
         "Z5_max_stack": 1,
         "Z5_default_stack": 1,
@@ -133,7 +133,7 @@
         "ItemName": "千机百变阵",
         "DescName": "千机百变阵",
         "KungFu": "天罗诡道",
-        "Desc": "一重粗识：阅历提高5%，声望提高5%，内功基础攻击提高5%。\n二重略懂：无视目标5%防御等级。\n三重巧熟：受到的外功伤害降低5%，会心效果提高15%。\n四重精妙：内功招式会心则使阵眼恢复10点神机值。\n五重游刃：施展耗能量技能，则使小队成员会心几率提高5%，持续4秒。\n六重忘我：若重伤，则阵眼移动速度提高50%，受到的伤害降低50%，持续5秒。",
+        "Desc": "一重粗识：阅历提高5%，声望提高5%，内功基础攻击提高5%。\n二重略懂：无视目标5%防御等级。\n三重巧熟：受到的外功伤害降低5%，会心效果提高15%。\n四重精妙：内功招式会心则使阵眼恢复10点神机值。\n五重游刃：施展耗能量技能，则使小队成员会心几率提高5%，持续4秒。\n六重忘我：若重伤，则阵眼移动速度提高50%，化解自身气血最大值50%伤害，持续5秒。",
         "Buff_dict": {
             "atFormationEffect": 0,
             "atAddExpPercent": 50,
@@ -163,7 +163,7 @@
         "ItemName": "降龙伏虎阵",
         "DescName": "降龙伏虎阵",
         "KungFu": "笑尘诀",
-        "Desc": "一重粗识：阅历提高5%，声望提高5%，外功基础攻击提高5%。\n二重略懂：外功破防提高10%。\n三重巧熟：移动速度提高5%。\n四重精妙：招式会心则阵眼外功破防值提高30%。\n五重游刃：阵眼施展“龙战于野”，则外功破防值提高770点，最多叠5层，持续30秒。\n六重忘我：小队成员被会心攻击则可使阵眼外功攻击提高20%。",
+        "Desc": "一重粗识：阅历提高5%，声望提高5%，外功基础攻击提高5%。\n二重略懂：外功破防提高10%。\n三重巧熟：移动速度提高5%。\n四重精妙：招式会心则阵眼外功破防值提高30%。\n五重游刃：阵眼施展“龙战于野”，则外功破防值提高2980点，最多叠5层，持续30秒。\n六重忘我：小队成员被会心攻击则可使阵眼外功攻击提高20%。",
         "Buff_dict": {
             "atFormationEffect": 0,
             "atAddExpPercent": 50,
@@ -173,11 +173,11 @@
             "atMoveSpeedPercent": 51
         },
         "BuffZ5_dict": {
-            "atPhysicsOvercomeBase": 770
+            "atPhysicsOvercomeBase": 2980
         },
         "Z5_max_stack": 5,
         "Z5_default_stack": 5,
-        "Z5_cover": 1.0,
+        "Z5_cover": 0.0,
         "BuffID": "6342_6",
         "BuffZ5ID": "6345_1"
     },
@@ -279,7 +279,7 @@
         },
         "Z5_max_stack": 1,
         "Z5_default_stack": 1,
-        "Z5_cover": 0.5,
+        "Z5_cover": 0.58,
         "BuffID": "15957_6",
         "BuffZ5ID": "15961_1"
     },
@@ -289,13 +289,13 @@
         "ItemName": "横云破锋阵",
         "DescName": "横云破锋阵",
         "KungFu": "孤锋诀",
-        "Desc": "一重粗识：阅历提高5%，声望提高5%，外功基础攻击提高5%。\n二重略懂：破招点数提高1516点。\n三重巧熟：外功破防等级提高25%。\n四重精妙：小队成员招式会心则使阵眼会心效果提高10%。\n五重游刃：阵眼施展“灭影追风”时，小队成员伤害将无视目标10%减伤效果。\n六重忘我：小队成员重伤时，阵眼将立刻获得“识破”效果及100点“锐意”。",
+        "Desc": "一重粗识：阅历提高5%，声望提高5%，外功基础攻击提高5%。\n二重略懂：破招点数提高2667点。\n三重巧熟：外功破防等级提高25%。\n四重精妙：小队成员招式会心则使阵眼会心效果提高10%。\n五重游刃：阵眼施展“灭影追风”时，小队成员伤害将无视目标10%减伤效果。\n六重忘我：小队成员重伤时，阵眼将立刻清除“观风寻隙”发现弱点的间隔时间，并获得100点“锐意”。",
         "Buff_dict": {
             "atFormationEffect": 0,
             "atAddExpPercent": 50,
             "atAddReputationPercent": 50,
             "atPhysicsAttackPowerPercent": 50,
-            "atSurplusValueBase": 1516,
+            "atSurplusValueBase": 2667,
             "atPhysicsOvercomePercent": 256
         },
         "BuffZ5_dict": {
@@ -332,36 +332,7 @@
         },
         "Z5_max_stack": 1,
         "Z5_default_stack": 1,
-        "Z5_cover": 0.7,
-        "BuffID": "27236_6",
-        "BuffZ5ID": "27238_1"
-    },
-    "WL_Zhen(ZhuYan)": {
-        "Name": "WL_Zhen(ZhuYan)",
-        "IconID": 20426,
-        "ItemName": "苍梧引灵阵(丛云朱厌)",
-        "DescName": "苍梧引灵阵",
-        "KungFu": "山海心诀",
-        "Desc": "一重粗识：阅历提高5%，声望提高5%，全会心提高3%。\n二重略懂：无双提高2%。\n三重巧熟：造成伤害提高6%。\n四重精妙：阵眼消耗一枚唤灵印时获得1%受到伤害降低效果，最多6层，持续10秒。\n五重游刃：阵眼施展“白羽流星”强化招式时，使小队成员会心效果提高15%，持续6秒。\n六重忘我：若重伤目标，则阵眼回复30%内力值。",
-        "Buff_dict": {
-            "atFormationEffect": 0,
-            "atAddExpPercent": 50,
-            "atAddReputationPercent": 50,
-            "atLunarCriticalStrikeBaseRate": 300,
-            "atSolarCriticalStrikeBaseRate": 300,
-            "atNeutralCriticalStrikeBaseRate": 300,
-            "atPoisonCriticalStrikeBaseRate": 300,
-            "atPhysicsCriticalStrikeBaseRate": 300,
-            "atStrainRate": 20,
-            "atAllDamageAddPercent": 62
-        },
-        "BuffZ5_dict": {
-            "atPhysicsCriticalDamagePowerBaseKiloNumRate": 150,
-            "atMagicCriticalDamagePowerBaseKiloNumRate": 150
-        },
-        "Z5_max_stack": 1,
-        "Z5_default_stack": 1,
-        "Z5_cover": 1.0,
+        "Z5_cover": 0.96,
         "BuffID": "27236_6",
         "BuffZ5ID": "27238_1"
     },
@@ -371,11 +342,13 @@
         "ItemName": "江湖行侠阵",
         "DescName": "江湖行侠阵",
         "KungFu": "无界心法",
-        "Desc": "伤害提高5%，无双提高10%，疗伤成效提高5%",
+        "Desc": "伤害提高5%，无双提高10%，疗伤成效提高5%，阅历提高5%，声望提高5%",
         "Buff_dict": {
             "atAllPhysicsDamageAddPercent": 52,
             "atAllMagicDamageAddPercent": 52,
-            "atStrainRate": 104
+            "atStrainRate": 104,
+            "atAddReputationPercent": 50,
+            "atAddExpPercent": 50
         },
         "BuffZ5_dict": null,
         "Z5_max_stack": 0,

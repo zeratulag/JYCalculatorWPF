@@ -14,6 +14,9 @@ namespace JX3PZ.Class
             BasicTag = ParseStrList(eq.BasicTag_Str);
             ExtraTag = ParseStrList(eq.ExtraTag_Str);
             DiamondTag = ParseStrList(eq.DiamondTag_Str);
+
+            HasHaste = ExtraTag.Contains("加速"); // 是否有加速
+            HasSpecial = ExtraTag.Contains("特效"); // 是否有特效
         }
 
         public static ImmutableArray<string> ParseStrList(string x)
@@ -29,6 +32,7 @@ namespace JX3PZ.Class
             }
         }
 
-        public bool HasHaste => ExtraTag.Contains("加速"); // 是否有加速
+        public bool HasHaste { get; } // 是否有加速
+        public bool HasSpecial { get; } // 是否有特效
     }
 }

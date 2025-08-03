@@ -31,8 +31,7 @@ namespace JYCalculator.Globals
         public static readonly string FileFilter; // 打开方式的Filter;
         public static readonly string SkillBuildFileFilter; // 武学方案Filter
 
-        public const string GameVersion = "雾海寻龙";
-
+        public const string GameVersion = "太极秘录";
 
 
         public const string JX3BOXURL = @"https://www.jx3box.com/bps/49353"; // JX3BOX主页
@@ -48,13 +47,15 @@ namespace JYCalculator.Globals
         public static readonly DateTime LastPatchTime; // 最新技改时间
 
         #region 技改后需要修改
-        public const string XFTutorialURL = @"https://www.jx3box.com/bps/78665"; // 当前版本惊羽攻略
-        public const string LastPatchURL = @"https://jx3.xoyo.com/index/#/article-details?kid=1333872"; // 最新技改内容
+
+        public const string XFTutorialURL = @"https://www.jx3box.com/bps/98609"; // 当前版本惊羽攻略
+        public const string LastPatchURL = @"https://jx3.xoyo.com/index/index.html#/article-details?kid=1334611"; // 最新技改内容
+
         #endregion
 
         static XFAppStatic()
         {
-            LastPatchTime = new DateTime(2024, 07, 08); // 最新技改时间
+            LastPatchTime = new DateTime(2025, 5, 12); // 最新技改时间
 
             AppVersion = Assembly.GetExecutingAssembly().GetName().Version;
             var version = AppVersion.ToString();
@@ -107,11 +108,6 @@ namespace JYCalculator.Globals
         public static string GetXFSID(string key)
         {
             string key1 = key;
-            if (!key1.EndsWith("_DmgAdd"))
-            {
-                key1 = key.RemovePrefix(TypePrefix);
-            }
-
             return key1;
         }
     }
@@ -121,80 +117,106 @@ namespace JYCalculator.Globals
     {
         // 和心法有关的常数
 
-        public const DamageTypeEnum CurrentDamnagType = DamageTypeEnum.Physics; // 当前心法伤害类型
+        public const DamageTypeEnum CurrentDamageType = DamageTypeEnum.Physics; // 当前心法伤害类型
 
         public const double
-            ChannelIntervalToAPFactor = CurrentDamnagType == DamageTypeEnum.Physics ? 10.0 : 12.0; // 内功为12，外功为10
+            ChannelIntervalToAPFactor = CurrentDamageType == DamageTypeEnum.Physics ? 10.0 : 12.0; // 内功为12，外功为10
 
-        public const double AP_PER_L = 0.15; // 力道加基础攻击
-        public const double OC_PER_L = 0.3; // 力道加基础破防
-        public const double CT_PER_S = 0.64; // 身法加会心
+        public const double FinalStrengthToPhysicsBaseAttackPower =
+            SystemPrimaryAttribute.StrengthToPhysicsBaseAttackPower; // 力道加基础攻击
+
+        public const double FinalStrengthToPhysicsBaseOvercome =
+            SystemPrimaryAttribute.StrengthToPhysicsBaseOvercome; // 力道加基础破防
+
+        public const double
+            AgilityToPhysicsCriticalStrike = SystemPrimaryAttribute.AgilityToPhysicsCriticalStrike; // 身法加会心
 
         // 唐门_内功_箭弩
 
         public const double
-            F_AP_PER_Y = 1792.0 / StaticConst.G_KILO_NUM; // 力道提高1.45外功AP，STRENGTH_TO_PHYSICS_ATTACK_POWER_COF 1485
+            F_AP_PER_Y = 1792.0 / StaticConst.G_KILO_NUM; // 元气加内攻AP
 
         public const double
-            CT_PER_Y = 584.0 / StaticConst.G_KILO_NUM; // 力道提高0.59会心，STRENGTH_TO_PHYSICS_CRITICAL_STRIKE_COF 604
+            CT_PER_Y = 584.0 / StaticConst.G_KILO_NUM; // 元气加会心
 
         public const double
-            F_AP_PER_L =
+            JY_FinalStrengthToPhysicsFinalAttackPower =
                 (double) JYXinFa.STRENGTH_TO_PHYSICS_ATTACK_POWER_COF /
                 StaticConst.G_KILO_NUM; // 力道提高1.45外功AP，STRENGTH_TO_PHYSICS_ATTACK_POWER_COF 1485
 
         public const double
-            CT_PER_L = (double) JYXinFa.STRENGTH_TO_PHYSICS_CRITICAL_STRIKE_COF /
-                       StaticConst.G_KILO_NUM; // 力道提高0.59会心，STRENGTH_TO_PHYSICS_CRITICAL_STRIKE_COF 604
+            JY_FinalStrengthToPhysicsCriticalStrike = (double) JYXinFa.STRENGTH_TO_PHYSICS_CRITICAL_STRIKE_COF /
+                                                      StaticConst
+                                                          .G_KILO_NUM; // 力道提高0.59会心，STRENGTH_TO_PHYSICS_CRITICAL_STRIKE_COF 604
 
         public const double
             NPC_Coef = (double) JYXinFa.DST_NPC_DAMAGE_COEFFICIENT /
                        StaticConst.G_KILO_NUM; // DST_NPC_DAMAGE_COEFFICIENT
 
         public static AttrWeight PointWeight = new AttrWeight("单点属性", "提高一点属性增加的DPS")
-            {AP = 1, L = 1, WP = 1, Final_AP = 1, Final_OC = 1, Final_L = 1};
+        {
+            BaseAttackPower = 1, BaseStrength = 1, BaseWeaponDamage = 1, FinalAttackPower = 1, FinalOvercome = 1,
+            FinalStrength = 1, FinalStrain = 1
+        };
 
         public static AttrWeight ScoreWeight = new AttrWeight("同分属性", "提高等分属性增加的DPS")
-            {AP = 1048.0 / 2340.0, L = 524.0 / 2340.0, WP = 1571.0 / 2340.0};
+        {
+            BaseAttackPower = StoneValue.BaseAttackPowerAtThird / StoneValue.ThirdValue,
+            BaseStrength = StoneValue.BaseStrengthAtThird / StoneValue.ThirdValue,
+            BaseWeaponDamage = StoneValue.BaseWeaponDamageAtThird / StoneValue.ThirdValue
+        };
+        // 分母是五彩石三属性值
+    }
+
+    public static class StoneValue
+    {
+        public const double ThirdValue = 5850.0; // 绿字属性位于第三条的数值，例如会效
+        public const double BaseAttackPowerAtThird = 1590.0; // 攻击属性位于第三条的数值
+        public const double BaseStrengthAtFirst = 188.0; // 力道属性位于第一条的数值
+        public const double BaseWeaponDamageAtThird = 2385.0; // 武伤位于第三条的数值
+        public const double BaseStrengthAtThird = BaseStrengthAtFirst * 4.0; // 拟合力道位于第三条的数值
     }
 
 
     public class XFGlobalParams : GlobalParams
     {
-        public readonly double XPZ = 0; // 心法破招系数
-        public readonly double XPZ_BY = 0; // 白雨破招系数
+        public readonly double XFSurplus = 0; // 心法破招系数
+        public readonly double XFSurplusBY = 0; // 白雨破招系数
 
         public XFGlobalParams(int level) : base(level)
         {
-            XPZ = PZ * (1 + XFStaticConst.XinFaPZCoef);
-            XPZ_BY = PZ * (1 + XFStaticConst.BaiYuPZCoef);
-            Dict.Add(nameof(XPZ), XPZ);
-            Dict.Add(nameof(XPZ_BY), XPZ_BY);
+            XFSurplus = Surplus * (1 + XFStaticConst.XinFaPZCoef);
+            XFSurplusBY = Surplus * (1 + XFStaticConst.BaiYuPZCoef);
+            Dict.Add(nameof(XFSurplus), XFSurplus);
+            Dict.Add(nameof(XFSurplusBY), XFSurplusBY);
         }
     }
 
     public static class XFStaticConst
     {
-        public static readonly XFGlobalParams fGP;
+        public static readonly XFGlobalParams CurrentLevelParams; // 当前等级的心法转换系数
         public const double XinFaPZCoef = (0.78 - 1); // 心法破招系数，唐门惊羽破招子技能.lua  dwSkillLevel == 1
         public const double BaiYuPZCoef = (0.5328765 - 1); // 白雨破招系数， dwSkillLevel == 2
         public const double PZ_BaiYuPer_Normal_ZX = 1.486; // 非心无期间，平均每个逐星附带的白雨破招数量
+        public const int EnergyInjectionFreqToPZCoef = 3; // 3次注能触发一次破招
 
         public static readonly Haste CurrentHaste;
 
+        // 有用的五彩石属性
         public static readonly string[] UsefulStoneAttrs =
         {
             "atStrengthBase", "atPhysicsAttackPowerBase",
             "atPhysicsCriticalStrike", "atPhysicsOvercomeBase", "atPhysicsCriticalDamagePowerBase",
+            "atHasteBase"
         };
 
-        public static class XW
+        public static class XinWuConsts
         {
-            public const double CT = 1500.0 / 10000.0;
-            public const double CF = 300.0 / 1024.0;
-            public const int ExtraSP = 204;
-            public const double AP_Percent = 512.0 / 1024.0; // 天罗专用
-            public const double CD = 90.0; // CD时间
+            public const double CriticalStrikeValue = 1500.0 / 10000.0;
+            public const double CriticalPowerValue = 300.0 / 1024.0;
+            public const int ExtraHaste = 204;
+            public const double PhysicsAttackPowerPercent = 512.0 / 1024.0; // 天罗专用
+            public const double CD = 75.0; // 心无CD时间
             public const double Time = 15.0; // 持续时间
 
             public const string XWBuffName = "XinWuPangWu";
@@ -212,7 +234,7 @@ namespace JYCalculator.Globals
 
         static XFStaticConst()
         {
-            fGP = new XFGlobalParams(StaticConst.CurrentLevel);
+            CurrentLevelParams = new XFGlobalParams(StaticConst.CurrentLevel);
             CurrentHaste = new Haste(StaticConst.CurrentLevel);
         }
     }
@@ -227,6 +249,7 @@ namespace JYCalculator.Globals
         public const string 逐星箭 = "ZX";
         public const string 追命箭 = "ZM";
         public const string 追命箭_瞬发 = "ZM_SF";
+        public const string 追命箭_百步穿杨 = "ZM_BBCY";
         public const string 破 = "PZ";
         public const string 破_白雨跳珠 = "PZ_BaiYu";
         public const string 罡风镖法 = "GF";
@@ -251,5 +274,6 @@ namespace JYCalculator.Globals
         public const string 暴雨梨花针7 = "LH7";
 
         public const string 白雨跳珠 = "BaiYuTiaoZhu";
+        public const string 逐云寒蕊_130 = "ZhuYunHanRui_130";
     }
 }

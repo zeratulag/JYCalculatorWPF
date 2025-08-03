@@ -3,11 +3,18 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
+using JYCalculator.Data;
+using JX3CalculatorShared.Globals;
+using JX3CalculatorShared.Src.Class;
 
 namespace JX3CalculatorShared.Data
 {
     public partial class SkillEventItem
     {
+        public SkillEventTypeMask EventTypeMask { get; private set; }
+        public HashSet<string> TriggerSkillNames => EventTypeMask.TriggerSkillNames;
+        public HashSet<int> TriggerSkillIDs => EventTypeMask.TriggerSkillIDs;
+
         #region 方法
 
         public bool CanTrigger(SkillInfoItemBase skillItem)
@@ -18,21 +25,24 @@ namespace JX3CalculatorShared.Data
         public IEnumerable<string> SkillTrigger(IEnumerable<SkillInfoItemBase> skillItems)
         {
             var res = from item in skillItems
-                      where CanTrigger(item)
-                      select item.Name;
+                where CanTrigger(item)
+                select item.Name;
             return res.ToImmutableArray();
         }
 
-        // 设置可以触发的技能名
-        public void SetTriggerSkillNames(IEnumerable<string> names)
-        {
-            TriggerSkillNames = names.ToHashSet();
-        }
+        //// 设置可以触发的技能名
+        //public void SetTriggerSkillNames(IEnumerable<string> names)
+        //{
+        //    TriggerSkillNames = names.ToHashSet();
+        //}
 
         public void Parse()
         {
             Prob = Odds / 1024.0;
+            EventTypeMask = SkillEventTypeMaskManager.Create(EventType, EventMask1, EventMask2);
+            EventTypeMask.SkillEventItems.Add(this);
         }
+
         #endregion
 
         /// <summary>
@@ -46,13 +56,14 @@ namespace JX3CalculatorShared.Data
             {
                 throw new ArgumentException("必须以神力为输入！");
             }
+
             var res = item.DeepClone();
-            res.Name = "PZ";
+            res.Name = "BaseSurplus";
             res.EventName = "破招";
             res.Type = "破招";
             res.Associate = "";
             res.DescName = "破招";
-            res.EventType = "Hit";
+            res.EventType = SkillEventTypeEnum.Hit;
             res.Odds = 1024;
             res.Prob = 1.0;
             return res;
@@ -146,7 +157,5 @@ namespace JX3CalculatorShared.Data
         {
             return CDBuffCoverRate(hitfreq, Prob, Time, CD);
         }
-
-
     }
 }

@@ -6,7 +6,6 @@ using JYCalculator.Globals;
 using JYCalculator.Models;
 using JYCalculator.Src;
 using JYCalculator.ViewModels;
-using Minimod.PrettyPrint;
 using Newtonsoft.Json;
 using System;
 using System.ComponentModel;
@@ -14,6 +13,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Windows;
 using System.Windows.Input;
+using Serilog;
 
 namespace JYCalculator.Views
 {
@@ -112,7 +112,6 @@ namespace JYCalculator.Views
 
         #region 为复选框填充数据源
 
-
         public void BindMiJi()
         {
             foreach (var kvp in _VM.SkillMiJiVM.SkillMiJi)
@@ -139,14 +138,14 @@ namespace JYCalculator.Views
         public void ExportMiJi()
         {
             var res = _VM.SkillMiJiVM.Config;
-            Trace.WriteLine(res.PrettyPrint());
+            Log.Information(res.ToString());
         }
 
         public MainWindowSav ExportAll()
         {
             var res = _VM.Model.Export();
             var json = JsonConvert.SerializeObject(res, Formatting.Indented);
-            Trace.WriteLine(json);
+            Log.Information(json);
             return res;
         }
 

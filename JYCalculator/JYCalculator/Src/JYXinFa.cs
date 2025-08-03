@@ -6,6 +6,7 @@ using JX3PZ.Models;
 using JYCalculator.Globals;
 using System.Collections.Generic;
 using System.Collections.Immutable;
+using Syncfusion.Linq;
 
 namespace JYCalculator.Src
 {
@@ -62,6 +63,8 @@ namespace JYCalculator.Src
                     nPhysicsAttackPower: 1450),
                 new LevelSkillData(DecriticalDamagePowerBase: 1078, nNeHit: 442, nPhysicsOvercome: 2929,
                     nPhysicsAttackPower: 3277),
+                new LevelSkillData(DecriticalDamagePowerBase: 1078, nNeHit: 442, nPhysicsOvercome: 9025,
+                    nPhysicsAttackPower: 6187)
             }.ToImmutableArray();
 
             HuaJinData =
@@ -71,10 +74,10 @@ namespace JYCalculator.Src
 
         #endregion
 
-        public const int DST_NPC_DAMAGE_COEFFICIENT = 133; // 非侠士增伤
-        public const int STRENGTH_TO_PHYSICS_ATTACK_POWER_COF = 1485; // 力道提高1.45外功AP
-        public const int STRENGTH_TO_PHYSICS_CRITICAL_STRIKE_COF = 604; // 力道提高0.59会心
-        public const int CURRENTLEVEL = 13; // 当前版本心法等级
+        public const int DST_NPC_DAMAGE_COEFFICIENT = 164; // 非侠士增伤 @唐门_内功_箭弩.lua
+        public const int STRENGTH_TO_PHYSICS_ATTACK_POWER_COF = 1731; // 力道提高1.69外功AP
+        public const int STRENGTH_TO_PHYSICS_CRITICAL_STRIKE_COF = 707; // 力道提高0.69会心
+        public const int CURRENTLEVEL = 14; // 当前版本心法等级 130级 = 14，120级 = 13
 
         public readonly int Level = CURRENTLEVEL;
         public readonly int MAGIC_SHIELD = 0;
@@ -93,10 +96,14 @@ namespace JYCalculator.Src
         {
             Level = level;
 
-            if (Level >= 11)
+            if (Level >= 11 && Level < 14)
             {
                 MAGIC_SHIELD += 950;
                 PHYSICS_SHIELD_BASE += 950;
+            } else if (Level >= 14)  // 130级专用
+            {
+                MAGIC_SHIELD += 2850;
+                PHYSICS_SHIELD_BASE += 2850;
             }
 
             MAX_LIFE_PERCENT_ADD = (Level * 1 + 10) * 1024 / 100;

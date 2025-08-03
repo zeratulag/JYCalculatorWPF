@@ -8,7 +8,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
-
+using Serilog;
 
 namespace JX3CalculatorShared.ViewModels
 {
@@ -348,7 +348,7 @@ namespace JX3CalculatorShared.ViewModels
             catch (Exception e)
             {
                 succ = false;
-                Trace.WriteLine(e);
+                Log.Information(e.ToString());
                 throw;
             }
             finally

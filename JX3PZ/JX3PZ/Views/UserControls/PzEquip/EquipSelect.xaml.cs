@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace JX3PZ.Views
 {
@@ -29,6 +30,19 @@ namespace JX3PZ.Views
         public EquipSelect()
         {
             InitializeComponent();
+        }
+
+        private void LevelRangeSlider_LostMouseCapture(object sender, MouseEventArgs e)
+        {
+            var rangeSlider = sender as HandyControl.Controls.RangeSlider;
+
+            // 获取绑定表达式
+            var bindingExpressionStart = rangeSlider.GetBindingExpression(HandyControl.Controls.RangeSlider.ValueStartProperty);
+            var bindingExpressionEnd = rangeSlider.GetBindingExpression(HandyControl.Controls.RangeSlider.ValueEndProperty);
+
+            // 手动更新绑定源
+            bindingExpressionStart?.UpdateSource();
+            bindingExpressionEnd?.UpdateSource();
         }
     }
 }

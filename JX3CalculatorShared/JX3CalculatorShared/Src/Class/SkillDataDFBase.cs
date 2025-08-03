@@ -38,14 +38,14 @@ namespace JX3CalculatorShared.Class
         {
             foreach (var recipe in recipes)
             {
-                foreach (var skillname in recipe.EffectSkillName)
+                foreach (var skillName in recipe.EffectSkillName)
                 {
-                    if (!Skill2Recipe.ContainsKey(skillname))
+                    if (!Skill2Recipe.ContainsKey(skillName))
                     {
-                        Skill2Recipe.Add(skillname, new List<Recipe>());
+                        Skill2Recipe.Add(skillName, new List<Recipe>());
                     }
 
-                    Skill2Recipe[skillname].Add(recipe);
+                    Skill2Recipe[skillName].Add(recipe);
                 }
             }
         }
@@ -56,9 +56,9 @@ namespace JX3CalculatorShared.Class
             {
                 if (recipeGroup.Recipes != null)
                 {
-                    foreach (var skillname in recipeGroup.EffectSkillName)
+                    foreach (var skillName in recipeGroup.EffectSkillName)
                     {
-                        Skill2RecipeGroup.Add(skillname, recipeGroup);
+                        Skill2RecipeGroup.Add(skillName, recipeGroup);
                     }
                 }
             }

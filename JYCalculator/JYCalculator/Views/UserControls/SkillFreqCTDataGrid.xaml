@@ -16,10 +16,9 @@
             VerticalScrollBarVisibility="Auto">
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding Path=Name}" Header="Name" />
-                <DataGridTextColumn Binding="{Binding Path=AddCT, StringFormat={}{0:P2}}" Header="会心提高" />
-
-                <DataGridTextColumn Binding="{Binding Path=CT, StringFormat={}{0:P2}}" Header="会心" />
-                <DataGridTextColumn Binding="{Binding Path=Freq, StringFormat={}{0:F4}}" Header="频率" />
+                <DataGridTextColumn Binding="{Binding Path=AddCriticalStrikeRate, StringFormat=P2}" Header="会心提高" />
+                <DataGridTextColumn Binding="{Binding Path=CriticalStrikeValue, StringFormat=P2}" Header="会心" />
+                <DataGridTextColumn Binding="{Binding Path=Freq, StringFormat=F4}" Header="频率" />
 
             </DataGrid.Columns>
         </DataGrid>

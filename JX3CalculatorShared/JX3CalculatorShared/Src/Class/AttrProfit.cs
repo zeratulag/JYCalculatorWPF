@@ -95,7 +95,7 @@ namespace JX3CalculatorShared.Class
         {
             for (int i = 0; i < Data.Count; i++)
             {
-                if (Data[i].Name == "WP")
+                if (Data[i].Name == "BaseWeaponDamage")
                 {
                     Data.RemoveAt(i);
                     break;

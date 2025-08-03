@@ -3,7 +3,7 @@
                     xmlns:views="clr-namespace:JX3CalculatorShared.Views"
                     xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
                     xmlns:sf="http://schemas.syncfusion.com/wpf"
-                    xmlns:sfgrid="clr-namespace:Syncfusion.UI.Xaml.Grid;assembly=Syncfusion.SfGrid.WPF">
+                    >
 
     <!--  物品外部边界框  -->
     <Style x:Key="Style.ItemExternalBorder" TargetType="Border">
@@ -194,9 +194,9 @@
         <Setter Property="HorizontalAlignment" Value="Left"/>
     </Style>
 
-    <Style x:Key="Style.CenterSfDataGridCell" TargetType="sfgrid:GridCell">
+    <!--<Style x:Key="Style.CenterSfDataGridCell" TargetType="sfgrid:GridCell">
         <Setter Property="HorizontalContentAlignment" Value="Center" />
-    </Style>
+    </Style>-->
 
 
     <!--  外观类似Block的RichBox（可以选中文字，不可编辑）  -->

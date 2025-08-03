@@ -20,7 +20,7 @@ namespace JX3CalculatorShared.Class
         public static readonly ImmutableDictionary<EquipSubTypeEnum, string> AttrMap =
             new Dictionary<EquipSubTypeEnum, string>
             {
-                {EquipSubTypeEnum.JACKET, "Base_AP"}, {EquipSubTypeEnum.HAT, "Base_OC"}
+                {EquipSubTypeEnum.JACKET, "BaseAttackPower"}, {EquipSubTypeEnum.HAT, "BaseOvercome"}
             }.ToImmutableDictionary();
 
         public readonly string Name;
@@ -35,7 +35,7 @@ namespace JX3CalculatorShared.Class
         public readonly int LevelMin;
         public readonly int LevelMax;
         public readonly int Rank;
-        public readonly int DLCLevel;
+        public readonly int ExpansionPackLevel;
         public string EnhanceDesc;
         public readonly int Score;
         public readonly int Magic;
@@ -51,8 +51,9 @@ namespace JX3CalculatorShared.Class
 
         public readonly EnhanceAttributeEntryViewModel VM;
 
-        public bool IsSuperCustom => IsFixedDamaged(LevelMin); // 是否为固定伤害
+        public string SkillNameSuffix => $"{ExpansionPackLevel}#{Rank}"; // 大附魔对应技能名的后缀
 
+        public bool IsSuperCustom => ExpansionPackLevel >= 130 || IsFixedDamaged(LevelMin); // 是否为固定伤害, 130 级开始全是固定伤害
 
         #endregion
 
@@ -116,8 +117,8 @@ namespace JX3CalculatorShared.Class
             if (AttrMap.TryGetValue(SubType, out var value))
             {
                 key = value;
-                res.Add($"M_{key}", Magic);
-                res.Add($"P_{key}", Physics);
+                res.Add($"Magic{key}", Magic);
+                res.Add($"Physics{key}", Physics);
             }
 
             return res;
@@ -177,7 +178,7 @@ namespace JX3CalculatorShared.Class
             item.Level_Min, item.Level_Max, item.Rank,
             magic: item.Magic, physics: item.Physics, tag: BottomsFMTag.NotBottoms)
         {
-            DLCLevel = item.DLCLevel;
+            ExpansionPackLevel = item.ExpansionPackLevel;
             EnhanceDesc = item.EnhanceDesc;
             Score = item.Score;
             VM = new EnhanceAttributeEntryViewModel(this);

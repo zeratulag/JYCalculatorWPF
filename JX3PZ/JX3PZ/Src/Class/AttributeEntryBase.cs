@@ -12,7 +12,7 @@ namespace JX3PZ.Class
         /// 通用属性词条，包括数值类属性和非数值类属性
         /// </summary>
         public string ModifyType { get; }
-        public AttributeID Attribute { get; }
+        public KAttributeID Attribute { get; }
         public AttributeEntryTypeEnum EntryType { get; protected set; }
         public string Desc { get; protected set; } = null;
 

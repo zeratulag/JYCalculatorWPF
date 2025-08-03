@@ -36,7 +36,7 @@ namespace JX3PZ.Views
             //// 在这里实现对新值的处理
             //// 例如，你可以更新控件的显示或处理新的XAML文本
             //// 这里只是打印到控制台作为示例
-            //Trace.WriteLine($"XamlText updated: {XamlText}");
+            //Log.Information($"XamlText updated: {XamlText}");
             ////var res = (FlowDocument) FlowDocumentTool.ConvertXamlText(XamlText);
         }
 

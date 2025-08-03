@@ -22,7 +22,7 @@ namespace JYCalculator.Class
             Skill2RecipeGroup = Data.ToDictionary(_ => _.Key, _ => new SkillRecipeGroup());
         }
 
-        public SkillDataDF() : this(StaticXFData.DB.SkillInfo)
+        public SkillDataDF() : this(StaticXFData.DB.AllSkillInfo)
         {
         }
 
@@ -85,16 +85,16 @@ namespace JYCalculator.Class
         /// <param name="recipe">目标秘籍</param>
         public void AddRecipeAndApply(Recipe recipe)
         {
-            foreach (var skillname in recipe.EffectSkillName)
+            foreach (var skillName in recipe.EffectSkillName)
             {
-                if (!Skill2Recipe.ContainsKey(skillname))
+                if (!Skill2Recipe.ContainsKey(skillName))
                 {
-                    Skill2Recipe.Add(skillname, new List<Recipe>());
+                    Skill2Recipe.Add(skillName, new List<Recipe>());
                 }
 
-                Skill2Recipe[skillname].Add(recipe);
-                Data[skillname].ApplyRecipe(recipe);
-                Data[skillname].Update();
+                Skill2Recipe[skillName].Add(recipe);
+                Data[skillName].ApplyRecipe(recipe);
+                Data[skillName].Update();
             }
         }
 

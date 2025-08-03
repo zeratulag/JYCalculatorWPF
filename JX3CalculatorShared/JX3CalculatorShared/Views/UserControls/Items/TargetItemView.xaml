@@ -10,6 +10,6 @@
              Style="{StaticResource Style.ControlWithToolTip}">
     <StackPanel Orientation="Horizontal">
         <TextBlock Text="{Binding Level}" Margin="0 0 5 0" FontWeight="Bold" VerticalAlignment="Center"/>
-        <TextBlock Text="{Binding DescName}" VerticalAlignment="Center"/>
+        <TextBlock Text="{Binding RealDescName}" VerticalAlignment="Center"/>
     </StackPanel>
 </UserControl>

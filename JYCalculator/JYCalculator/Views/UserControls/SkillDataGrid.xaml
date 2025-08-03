@@ -8,6 +8,7 @@
              mc:Ignorable="d"
              x:Name="skillDataGrid">
     <Grid>
+        <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
         <DataGrid
             dgx:DataGridFilter.IsAutoFilterEnabled="True"
             AutoGenerateColumns="False"
@@ -17,29 +18,20 @@
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding Path=Name}" Header="Name" />
                 <DataGridTextColumn Binding="{Binding Path=SkillName}" Header="技能" />
-                <DataGridTextColumn Binding="{Binding Path=AddCT, StringFormat={}{0:P2}}" Header="+会心" />
-                <DataGridTextColumn Binding="{Binding Path=AddCF, StringFormat={}{0:P2}}" Header="+会效" />
-                <DataGridTextColumn Binding="{Binding Path=AddDmg, StringFormat={}{0:P2}}" Header="+伤害" />
-                <DataGridTextColumn Binding="{Binding Path=AddNPCDmg, StringFormat={}{0:P2}}" Header="+非侠" />
-                <DataGridTextColumn Binding="{Binding Path=nChannelInterval, StringFormat={}{0:F2}}" Header="nCI" />
-
-                <DataGridTextColumn Binding="{Binding Path=IntervalTime, StringFormat={}{0:F2}}" Header="时间" />
-
-                <DataGridTextColumn Binding="{Binding Path=Frame, StringFormat={}{0:F0}}" Header="帧数" />
-
-                <DataGridTextColumn Binding="{Binding Path=nCount, StringFormat={}{0:F0}}" Header="次数" />
-
-                <DataGridTextColumn Binding="{Binding Path=IgnoreB, StringFormat={}{0:P2}}" Header="无视防御B" />
-
-                <DataGridTextColumn Binding="{Binding Path=APCoef, StringFormat={}{0:F4}}" Header="外攻系数" />
-
-                <DataGridTextColumn Binding="{Binding Path=PZCoef, StringFormat={}{0:F4}}" Header="破招系数" />
-
-                <DataGridTextColumn Binding="{Binding Path=WPCoef, StringFormat={}{0:P2}}" Header="武器伤害" />
-
-
+                <DataGridTextColumn Binding="{Binding Path=AddCriticalStrikeRate, StringFormat=P2}" Header="+会心" />
+                <DataGridTextColumn Binding="{Binding Path=AddCriticalPowerRate, StringFormat=P2}" Header="+会效" />
+                <DataGridTextColumn Binding="{Binding Path=AddDamage, StringFormat=P2}" Header="+伤害" />
+                <DataGridTextColumn Binding="{Binding Path=AddNPC_Coef, StringFormat=P2}" Header="+非侠" />
+                <DataGridTextColumn Binding="{Binding Path=nChannelInterval, StringFormat=F2}" Header="nCI" />
+                <DataGridTextColumn Binding="{Binding Path=IntervalTime, StringFormat=F2}" Header="时间" />
+                <DataGridTextColumn Binding="{Binding Path=Frame, StringFormat=F0}" Header="帧数" />
+                <DataGridTextColumn Binding="{Binding Path=nCount, StringFormat=F0}" Header="次数" />
+                <DataGridTextColumn Binding="{Binding Path=IgnoreB, StringFormat=P2}" Header="无视防御B" />
+                <DataGridTextColumn Binding="{Binding Path=APCoef, StringFormat=F4}" Header="外攻系数" />
+                <DataGridTextColumn Binding="{Binding Path=PZCoef, StringFormat=F4}" Header="破招系数" />
+                <DataGridTextColumn Binding="{Binding Path=WeaponDamageCoef, StringFormat=P2}" Header="武器伤害" />
             </DataGrid.Columns>
-
         </DataGrid>
+        </ScrollViewer>
     </Grid>
 </UserControl>

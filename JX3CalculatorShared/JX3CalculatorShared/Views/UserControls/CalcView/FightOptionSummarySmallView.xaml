@@ -14,7 +14,7 @@
                 <Setter Property="HorizontalAlignment" Value="Left" />
             </Style>
         </StackPanel.Resources>
-        <local:TargetItemView Grid.Row="0" Grid.Column="0" DataContext="{Binding CTarget}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10 0"/>
+        <local:TargetItemView Grid.Row="0" Grid.Column="0" DataContext="{Binding CTargetViewModel}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10 0"/>
         <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"
                    Text="{Binding ItemName, StringFormat={}{0}手法水平}" ToolTip="{Binding ToolTip}" TextAlignment="Center"
                    DataContext="{Binding CAbility}"

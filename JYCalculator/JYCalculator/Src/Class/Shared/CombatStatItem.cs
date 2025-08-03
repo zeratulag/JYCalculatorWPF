@@ -23,9 +23,9 @@ namespace JYCalculator.Class
         {
             Num = data.Freq * time;
 
-            CTNum = Num * data.CT;
+            CTNum = Num * data.CriticalStrikeValue;
 
-            TotalDamage = data.FinalEDamage * Num;
+            TotalDamage = data.FinalExpectDamage * Num;
             GetShowNum();
         }
 
@@ -48,7 +48,7 @@ namespace JYCalculator.Class
 
         public void QueryFightName()
         {
-            FightName = StaticXFData.DB.SkillInfo.Name2CombatName[Name];
+            FightName = StaticXFData.DB.AllSkillInfo.Name2CombatName[Name];
         }
 
 

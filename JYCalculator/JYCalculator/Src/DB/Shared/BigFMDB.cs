@@ -9,11 +9,11 @@ namespace JYCalculator.DB
     {
 
         #region 构造
-        public BigFMDB(IEnumerable<Enchant> itemdata, IEnumerable<BottomsFMItem> bottomsdata) : base(itemdata, bottomsdata)
+        public BigFMDB(IEnumerable<Enchant> itemdata) : base(itemdata)
         {
         }
 
-        public BigFMDB(XFDataLoader xfDataLoader) : this(xfDataLoader.BigFM, xfDataLoader.BottomsFM)
+        public BigFMDB(XFDataLoader xfDataLoader) : this(xfDataLoader.BigFM)
         {
         }
 

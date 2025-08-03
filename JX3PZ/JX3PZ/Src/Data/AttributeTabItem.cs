@@ -23,7 +23,7 @@ namespace JX3PZ.Data
 
         #endregion
 
-        public AttributeID Attribute { get; protected set; }
+        public KAttributeID Attribute { get; protected set; }
 
         public void Parse()
         {

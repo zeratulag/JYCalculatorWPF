@@ -19,7 +19,7 @@ namespace JX3PZ.Models
         public void CalcXFDamage(XinFaAttribute xf)
         {
             // 计算当前心法下的破招伤害
-            SurplusDamageCoef = (StaticConst.fGP.PZ * (1 + xf.PZCoef));
+            SurplusDamageCoef = (StaticConst.CurrentLevelGlobalParams.Surplus * (1 + xf.PZCoef));
             SurplusDamage = Final * SurplusDamageCoef;
         }
 

@@ -15,6 +15,9 @@ namespace JYCalculator.Data
         public double BL { get; set; } = 0;
         public double KongQueLing { get; set; } = 0;
         public double LveYingQiongCang { get; set; } = 0;
+        public double DP_LaoJia { get; set; } = 0;
+        public double CXDotCount { get; set; } = 0;
+        public double PZ { get; set; } = 0;
 
         public GenreTypeEnum GenreEnum { get; private set; }
 
@@ -23,19 +26,11 @@ namespace JYCalculator.Data
             Enum.TryParse(Genre, out GenreTypeEnum res);
             GenreEnum = res;
         }
-
-}
-
-    public class SkillInfoItem : SkillInfoItemBase
-    {
-        public double AP_Coef { get; set; } = 0;
-        public double IgnoreB { get; set; } = 0;
-
     }
 
     public class DiamondValueItem : DiamondValueItemBase
     {
         // 五行石镶嵌数值
-        public int L { get; set; }
+        public int BaseStrength { get; set; } // 基础力道
     }
 }

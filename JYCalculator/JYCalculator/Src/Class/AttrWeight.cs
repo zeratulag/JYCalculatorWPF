@@ -6,12 +6,12 @@ namespace JYCalculator.Class
 {
     public class AttrWeight : AttrWeightBase
     {
-        public double L { get; set; }
-        public double Final_L { get; set; } = double.NaN;
+        public double BaseStrength { get; set; }
+        public double FinalStrength { get; set; } = double.NaN;
 
         public AttrWeight(DiamondValueItem item) : base(item)
         {
-            L = item.L;
+            BaseStrength = item.BaseStrength;
         }
 
         public AttrWeight(string name, string toolTip = "") : base(name, toolTip)
@@ -21,8 +21,8 @@ namespace JYCalculator.Class
         public override Dictionary<string, double> ToDict()
         {
             var res = base.ToDict();
-            res.Add(nameof(L), L);
-            res.Add(nameof(Final_L), Final_L);
+            res.Add(nameof(BaseStrength), BaseStrength);
+            res.Add(nameof(FinalStrength), FinalStrength);
             return res;
         }
     }

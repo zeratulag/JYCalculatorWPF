@@ -20,7 +20,7 @@ namespace JX3CalculatorShared.Class
         public Recipe[] Recipes;
         public string[] Names; // 激活的秘籍名
 
-        public ImmutableHashSet<string> EffectSkillName;
+        public HashSet<string> EffectSkillName;
 
         public SkillAttrCollection SkillAttrs;
         public SkillAttrCollection SSkillAttrs;

@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:JX3PZ.Views"
+             xmlns:pzGlobals="clr-namespace:JX3PZ.Globals"
              xmlns:hc="https://handyorg.github.io/handycontrol"
              xmlns:sf="http://schemas.syncfusion.com/wpf"
              xmlns:userControls="clr-namespace:J3PZ.Views.UserControls"
@@ -73,16 +74,23 @@
             </StackPanel.Resources>
             <StackPanel Orientation="Horizontal" Margin="15 0 0 0">
                 <hc:NumericUpDown Style="{StaticResource LevelNumericUpDown}"
-                                  Value="{Binding MinLevel, UpdateSourceTrigger=PropertyChanged}" />
+                                  Value="{Binding MinLevel, UpdateSourceTrigger = PropertyChanged}" />
                 <hc:SimpleText FontSize="12" Text="品 至" VerticalAlignment="Center" Margin="5 0 20 0" />
                 <hc:NumericUpDown Style="{StaticResource LevelNumericUpDown}"
-                                  Value="{Binding MaxLevel, UpdateSourceTrigger=PropertyChanged}" />
+                                  Value="{Binding MaxLevel, UpdateSourceTrigger = PropertyChanged}" />
                 <hc:SimpleText FontSize="12" Text="品" VerticalAlignment="Center" Margin="5 0" />
             </StackPanel>
-            <hc:RangeSlider x:Name="LevelRangeSlider" Minimum="7000" Maximum="16500"
-                            hc:TipElement.Visibility="Visible" hc:TipElement.Placement="Bottom"
-                            ValueStart="{Binding Path=MinLevel}" ValueEnd="{Binding Path=MaxLevel}" Width="280"
-                            IsSnapToTickEnabled="True" TickFrequency="100" TickPlacement="BottomRight"
+            <hc:RangeSlider x:Name="LevelRangeSlider"
+                            Minimum="{Binding Source={x:Static pzGlobals:PzConst.MIN_EQUIP_LEVEL}}"
+                            Maximum="{Binding Source={x:Static pzGlobals:PzConst.MAX_EQUIP_LEVEL}}"
+                            hc:TipElement.Visibility="Visible"
+                            hc:TipElement.Placement="Bottom"
+                            hc:TipElement.StringFormat="#0"
+                            ValueStart="{Binding Path=MinLevel, UpdateSourceTrigger = Explicit}"
+                            ValueEnd="{Binding Path=MaxLevel, UpdateSourceTrigger = Explicit}"
+                            LostMouseCapture="LevelRangeSlider_LostMouseCapture"
+                            Width="280"
+                            IsSnapToTickEnabled="True" TickFrequency="200" TickPlacement="BottomRight"
                             HorizontalAlignment="Left" />
         </StackPanel>
 
@@ -93,9 +101,14 @@
                          SelectedItems="{Binding OtherFilterSelected}">
             <sf:CheckListBox.SelectAllTemplate>
                 <DataTemplate>
-                    <hc:SimpleText Text="全选" Margin="0 0 15  0"></hc:SimpleText>
+                    <hc:SimpleText Text="全选" Margin="0 0 15  0"/>
                 </DataTemplate>
             </sf:CheckListBox.SelectAllTemplate>
+            <sf:CheckListBox.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel Orientation="Horizontal" MaxWidth="{Binding Path=ActualWidth, ElementName=AttrCheckListBox}"/>
+                </ItemsPanelTemplate>
+            </sf:CheckListBox.ItemsPanel>
         </sf:CheckListBox>
 
         <hc:SimpleText Grid.Row="3" Grid.Column="0" Margin="0 10"

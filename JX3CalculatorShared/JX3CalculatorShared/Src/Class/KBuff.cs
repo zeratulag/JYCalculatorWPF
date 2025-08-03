@@ -3,13 +3,13 @@ using JX3CalculatorShared.Globals;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
+using JYCalculator.Src.Class;
 
 
 namespace JX3CalculatorShared.Class
 {
     public class KBuff : BaseBuff
     {
-        // 表示游戏内Buff的类（注意此时BUFF的覆盖率，层数，叠加状态未确定，实际效果未知）
         #region 成员
 
         public int DefaultStack;
@@ -28,6 +28,7 @@ namespace JX3CalculatorShared.Class
                 {BuffTypeEnum.Buff_Banquet, "宴席"},
                 {BuffTypeEnum.Buff_Extra, "额外"},
                 {BuffTypeEnum.Buff_ExtraStack, "特殊"},
+                {BuffTypeEnum.Buff_Special, "技能"}
             }.ToImmutableDictionary(); // 表示类型到描述的字典（自身，常见）
 
         #endregion
@@ -39,26 +40,28 @@ namespace JX3CalculatorShared.Class
         /// </summary>
         /// <param name="name">唯一名称（编码）</param>
         /// <param name="descName">描述名</param>
+        /// <param name="id"></param>
+        /// <param name="level"></param>
         /// <param name="iconID">图标ID（可选）</param>
         /// <param name="isTarget">如果为True表示这是对目标生效的DeBuff</param>
         /// <param name="data">属性字典</param>
         /// <param name="maxStack">最大叠加层数</param>
-        public KBuff(string name, string descName, int iconID = -1, bool isTarget = false,
+        public KBuff(string name, string descName, int id, int level, int iconID = -1, bool isTarget = false,
             IDictionary<string, double> data = null,
-            int maxStack = 1) : base(name, descName, iconID, isTarget, data)
+            int maxStack = 1) : base(name, descName, id, level, iconID, isTarget, data)
         {
             MaxStack = maxStack;
         }
 
-        public KBuff(string name, string descName, int iconID = -1, bool isTarget = false,
+        public KBuff(string name, string descName, int id, int level, int iconID = -1, bool isTarget = false,
             int maxStack = 1,
-            AttrCollection attrCollect = null) : base(name, descName, iconID: iconID, isTarget: isTarget,
+            AttrCollection attrCollect = null) : base(name, descName, id, level, iconID: iconID, isTarget: isTarget,
             attrCollect: attrCollect)
         {
             MaxStack = maxStack;
         }
 
-        public KBuff(Buff_dfItem item) : this(item.Name, item.DescName, item.IconID, item.IsTarget, item.MaxStackNum,
+        public KBuff(Buff_dfItem item) : this(item.Name, item.DescName, item.ID, item.Level, item.IconID, item.IsTarget, item.MaxStackNum,
             item.ParseItem())
         {
             BuffID = item.BuffID;
@@ -74,11 +77,8 @@ namespace JX3CalculatorShared.Class
             Order = item.Order;
             AppendType = item.AppendType;
             Intensity = item.Intensity;
+            MakeIDLevel();
         }
-
-        #endregion
-
-        #region 显示
 
         #endregion
 
@@ -94,6 +94,7 @@ namespace JX3CalculatorShared.Class
             res.Source = Source;
             res.BuffID = BuffID;
             res.Order = Order;
+            res.MakeIDLevel();
             res.MakeToolTip();
         }
 
@@ -129,7 +130,7 @@ namespace JX3CalculatorShared.Class
 
             var newCollect = CharAttrs.MultiplyValues(fcover * stack);
 
-            var res = new BaseBuff(newName, newDescName, iconID: IconID, isTarget: IsTarget,
+            var res = new BaseBuff(newName, newDescName, ID, Level, iconID: IconID, isTarget: IsTarget,
                 appendType: AppendType, intensity: Intensity,
                 attrCollect: newCollect);
             SyncInfo(res);
@@ -166,7 +167,7 @@ namespace JX3CalculatorShared.Class
             newName = newName + coverName;
 
             var newCollect = CharAttrs.MultiplyValues(fcover * equivalent_stack);
-            var res = new BaseBuff(newName, newDescName, iconID: IconID, isTarget: IsTarget,
+            var res = new BaseBuff(newName, newDescName, ID, Level, iconID: IconID, isTarget: IsTarget,
                 appendType: AppendType, intensity: Intensity,
                 attrCollect: newCollect);
             SyncInfo(res);
@@ -187,6 +188,11 @@ namespace JX3CalculatorShared.Class
             }
 
             return res;
+        }
+
+        public BaseBuff Emit(BuffRecord record)
+        {
+            return Emit(record.Cover, record.Stack);
         }
 
         /// <summary>

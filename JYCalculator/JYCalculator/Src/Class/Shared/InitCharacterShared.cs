@@ -7,6 +7,7 @@ using Newtonsoft.Json;
 using PropertyChanged;
 using System;
 using System.Collections.Generic;
+using JX3CalculatorShared.Globals;
 
 namespace JYCalculator.Class
 {
@@ -18,19 +19,41 @@ namespace JYCalculator.Class
 
         // 基础攻击，最终攻击, 武伤,
         // 会心, 会效, 无双, 破招, 破防, 加速,
-        public double Base_AP { get; set; }
-        public double Final_AP { get; set; }
-        public double WP { get; set; }
-        public double CT { get; set; }
-        public double CF { get; set; }
-        public double WS { get; set; }
-        public double PZ { get; set; }
-        public double OC { get; set; }
-        public double HS { get; set; }
+        public double PhysicsBaseAttackPower { get; set; }
+        public double PhysicsFinalAttackPower { get; set; }
+        public double BaseWeaponDamage { get; set; }
+        public double PhysicsCriticalStrike { get; set; } // 会心等级
+        public double PhysicsCriticalStrikeRate { get; set; } = 0.01; // 会心率
+        public double PhysicsCriticalPowerValue { get; set; }
+        public double BaseStrain { get; set; } // 基础无双等级
+        public double StrainRate { get; set; } = 0; // 无双百分比（直接加的）
+        public double BaseSurplus { get; set; }
+        public double PhysicsBaseOvercome { get; set; }
+        public double Haste { get; set; }
+        public int EquipScore { get; set; } // 装备分数
+
         public bool Had_BigFM_hat { get; set; } = false; // 是否已经包括帽子大附魔
         public bool Had_BigFM_jacket { get; set; } = false; // 是否已经包括上衣大附魔
-        [JsonIgnore] public double HSPct => Math.Min(HS / XFStaticConst.fGP.HS, HasteBase.MAX_HS); // 面板加速值
-        [JsonIgnore] public double OCPct => OC / XFStaticConst.fGP.OC; // 面板破防值
+
+        [JsonIgnore]
+        public double PhysicsCriticalStrikeValue => GlobalFunctions.CalcFinalValueByRateAndPoint(
+            PhysicsCriticalStrikeRate,
+            PhysicsCriticalStrike,
+            XFStaticConst.CurrentLevelParams.CriticalStrike); // 面板会心值
+
+        [JsonIgnore]
+        public double FinalStrainValue => GlobalFunctions.CalcFinalValueByRateAndPoint(
+            StrainRate,
+            BaseStrain,
+            XFStaticConst.CurrentLevelParams.Strain);
+
+        [JsonIgnore]
+        public double HasteValue => Math.Min(Haste / XFStaticConst.CurrentLevelParams.Haste, HasteBase.MAX_HS); // 面板加速值
+
+        [JsonIgnore]
+        public double PhysicsBaseOvercomeValue =>
+            PhysicsBaseOvercome / XFStaticConst.CurrentLevelParams.Overcome; // 面板破防值
+
         [JsonIgnore] public string Name { get; set; }
 
         #endregion
@@ -40,7 +63,11 @@ namespace JYCalculator.Class
         public InitCharacter(string name = "") : base(InputPropertyNameType.All)
         {
             // 除了HSPct和OCPct之外的所有变量都是输入变量
-            ExcludePropertyNames = new HashSet<string>() { nameof(HSPct), nameof(OCPct) };
+            ExcludePropertyNames = new HashSet<string>()
+            {
+                nameof(HasteValue), nameof(PhysicsBaseOvercomeValue), nameof(FinalStrainValue),
+                nameof(PhysicsCriticalStrikeValue)
+            };
             Name = name;
         }
 
@@ -110,8 +137,7 @@ namespace JYCalculator.Class
         /// <param name="value"></param>
         public void AddSAttr(string key, double value)
         {
-            //string key1 = key.RemovePrefix(XFAppStatic.TypePrefix);
-            _AddSAttr(key, value);
+            this.ProcessZAttr(key, value);
         }
 
         /// <summary>
@@ -147,8 +173,16 @@ namespace JYCalculator.Class
 
         #region 进阶计算
 
-        [DoNotNotify][JsonIgnore] public double CTOC_PointSum => CT * XFStaticConst.fGP.CT + OC; // 会破点数之和
-        [DoNotNotify][JsonIgnore] public double WSPZ_PointSum => XFStaticConst.fGP.WS * WS + PZ; // 无双破招点数之和
+        [DoNotNotify]
+        [JsonIgnore]
+        public double CTOC_PointSum =>
+            PhysicsCriticalStrikeValue * XFStaticConst.CurrentLevelParams.CriticalStrike +
+            PhysicsBaseOvercome; // 会破点数之和
+
+        [DoNotNotify]
+        [JsonIgnore]
+        public double WSPZ_PointSum =>
+            XFStaticConst.CurrentLevelParams.Strain * FinalStrainValue + BaseSurplus; // 无双破招点数之和
 
         /// <summary>
         /// 在会破属性之和保持不变的情况下，转移部分会心点数到破防
@@ -156,8 +190,8 @@ namespace JYCalculator.Class
         /// <param name="value">点数</param>
         public void TransCTToOC(double value)
         {
-            Add_CT_Point(-value);
-            Add_OC(value);
+            this.ProcessPhysicsCriticalStrike(-value);
+            this.ProcessPhysicsBaseOvercome(value);
         }
 
         /// <summary>
@@ -166,8 +200,8 @@ namespace JYCalculator.Class
         /// <param name="value">点数</param>
         public void TransWSToPZ(double value)
         {
-            Add_WS_Point(-value);
-            Add_PZ(value);
+            this.ProcessBaseStrain(-value);
+            this.ProcessBaseSurplus(value);
         }
 
         /// <summary>
@@ -176,7 +210,8 @@ namespace JYCalculator.Class
         /// <param name="ct">目标会心百分比</param>
         public void Reset_CT(double ct)
         {
-            var delta = CT * XFStaticConst.fGP.CT - ct * XFStaticConst.fGP.CT;
+            var delta = PhysicsCriticalStrikeValue * XFStaticConst.CurrentLevelParams.CriticalStrike -
+                        ct * XFStaticConst.CurrentLevelParams.CriticalStrike;
             TransCTToOC(delta);
         }
 
@@ -186,7 +221,8 @@ namespace JYCalculator.Class
         /// <param name="ws">目标无双百分比</param>
         public void Reset_WS(double ws)
         {
-            var delta = WS * XFStaticConst.fGP.WS - ws * XFStaticConst.fGP.WS;
+            var delta = FinalStrainValue * XFStaticConst.CurrentLevelParams.Strain -
+                        ws * XFStaticConst.CurrentLevelParams.Strain;
             TransWSToPZ(delta);
         }
 

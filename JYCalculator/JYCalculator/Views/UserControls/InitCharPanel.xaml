@@ -5,22 +5,23 @@
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:JYCalculator.Views.UserControls"
+             xmlns:hc="https://handyorg.github.io/handycontrol"
              mc:Ignorable="d">
-    <Grid x:Name="Grid_InitCharInput" >
+    <Grid x:Name="Grid_InitCharInput">
         <Grid.Resources>
             <Style TargetType="CheckBox">
                 <Setter Property="HorizontalContentAlignment" Value="Left" />
                 <Setter Property="VerticalContentAlignment" Value="Center" />
-                <Setter Property="FontSize" Value="12"/>
+                <Setter Property="FontSize" Value="12" />
             </Style>
             <Style TargetType="TextBlock" BasedOn="{StaticResource Style.CenterTextBlock}">
-                <Setter Property="FontSize" Value="13"/>
+                <Setter Property="FontSize" Value="13" />
             </Style>
             <Style TargetType="xctk:IntegerUpDown" BasedOn="{StaticResource Style.IntUpDown_InitInput}">
-                <Setter Property="FontSize" Value="14"/>
+                <Setter Property="FontSize" Value="14" />
             </Style>
             <Style TargetType="xctk:DoubleUpDown" BasedOn="{StaticResource Style.PercentUpDown_InitInput}">
-                <Setter Property="FontSize" Value="14"/>
+                <Setter Property="FontSize" Value="14" />
             </Style>
         </Grid.Resources>
 
@@ -30,6 +31,9 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="*" />
             <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*"/>
             <RowDefinition Height="*" />
             <RowDefinition Height="*" />
             <RowDefinition Height="*" />
@@ -43,73 +47,99 @@
             <ColumnDefinition Width="*" MinWidth="60" SharedSizeGroup="InitCharSpb" />
         </Grid.ColumnDefinitions>
 
-        <TextBlock Grid.Row="0" Grid.Column="0">基础攻击</TextBlock>
-        <TextBlock Grid.Row="1" Grid.Column="0">最终攻击</TextBlock>
-        <TextBlock Grid.Row="2" Grid.Column="0">会心</TextBlock>
-        <TextBlock Grid.Row="3" Grid.Column="0">会效</TextBlock>
+        <TextBlock Grid.Row="9" Grid.Column="0"
+                   Visibility="{Binding HasBaseStrengthPercent, Converter={StaticResource BooleanToVisibility}}">
+            力道提升
+        </TextBlock>
+        <TextBlock Grid.Row="9" Grid.Column="3"
+                   Visibility="{Binding HasBaseStrengthPercent, Converter={StaticResource BooleanToVisibility}}">
+            最终力道
+        </TextBlock>
 
-        <TextBlock Grid.Row="0" Grid.Column="3">基础力道</TextBlock>
-        <TextBlock Grid.Row="1" Grid.Column="3">武器伤害</TextBlock>
-        <TextBlock Grid.Row="2" Grid.Column="3">破招</TextBlock>
-        <TextBlock Grid.Row="3" Grid.Column="3">无双</TextBlock>
+        <TextBlock Grid.Row="0" Grid.Column="0" Text="基础攻击" />
+        <xctk:IntegerUpDown x:Name="PhysicsBaseAttackPower_spb" Grid.Row="0" Grid.Column="1"
+                            Value="{Binding Path = PhysicsBaseAttackPower}" />
+
+        <TextBlock Grid.Row="0" Grid.Column="3" Text="基础力道" />
+        <xctk:IntegerUpDown x:Name="BaseStrength_spb" Grid.Row="0" Grid.Column="4"
+                            Value="{Binding Path = BaseStrength}" />
+
+        <TextBlock Grid.Row="1" Grid.Column="0" Text="最终攻击" />
+        <xctk:IntegerUpDown x:Name="PhysicsFinalAttackPower_spb" Grid.Row="1" Grid.Column="1"
+                            Value="{Binding Path = PhysicsFinalAttackPower}" />
+
+        <TextBlock Grid.Row="1" Grid.Column="3" Text="武器伤害" />
+        <xctk:DoubleUpDown x:Name="BaseWeaponDamage_spb" Grid.Row="1" Grid.Column="4"
+                           Value="{Binding Path = BaseWeaponDamage}" Increment="0.5" FormatString="F1" />
+
+        <TextBlock Grid.Row="3" Grid.Column="3" Text="破招" />
+        <xctk:IntegerUpDown x:Name="BaseSurplus_spb" Grid.Row="3" Grid.Column="4"
+                            Value="{Binding Path = BaseSurplus}" />
+
+        <TextBlock Grid.Row="2" Grid.Column="0" Text="会心等级" />
+        <xctk:IntegerUpDown x:Name="PhysicsCriticalStrike_spb" Grid.Row="2" Grid.Column="1"
+                            Value="{Binding Path = PhysicsCriticalStrike}" />
+
+        <TextBlock Grid.Row="2" Grid.Column="3" Text="会心" />
+        <TextBlock x:Name="PPhysicsCriticalValue_spb" Grid.Row="2" Grid.Column="4"
+                   Text="{Binding Path = PhysicsCriticalStrikeValue, StringFormat=P2}" />
+
+        <!--<xctk:DoubleUpDown x:Name="PhysicsCriticalStrikeValue_spb" Grid.Row="2" Grid.Column="1"
+                         Value="{Binding Path = PhysicsCriticalStrikeValue}" Minimum="0.01" Maximum="1" Increment="0.01"/>-->
+
+        <TextBlock Grid.Row="3" Grid.Column="0" Text="会效" />
+        <xctk:DoubleUpDown x:Name="PhysicsCriticalPowerValue_spb" Grid.Row="3" Grid.Column="1"
+                           Value="{Binding Path = PhysicsCriticalPowerValue}" Minimum="1.75" Maximum="3"
+                           Increment="0.01" />
+
+        <TextBlock Grid.Row="4" Grid.Column="0" Text="无双等级" />
+        <xctk:IntegerUpDown x:Name="BaseStrain_spb" Grid.Row="4" Grid.Column="1"
+                            Value="{Binding Path = BaseStrain}" />
+
+        <TextBlock Grid.Row="4" Grid.Column="3" Text="无双" />
+        <TextBlock x:Name="FinalStrainValue_spb" Grid.Row="4" Grid.Column="4"
+                   Text="{Binding Path = FinalStrainValue, StringFormat=P2}" />
+
+        <TextBlock Grid.Row="5" Grid.Column="0" Text="破防等级" />
+        <xctk:IntegerUpDown x:Name="PhysicsBaseOvercome_spb" Grid.Row="5" Grid.Column="1"
+                            Value="{Binding Path = PhysicsBaseOvercome}" />
+
+        <TextBlock Grid.Row="5" Grid.Column="3" Text="破防" />
+        <TextBlock x:Name="PhysicsBaseOvercomeValue_spb" Grid.Row="5" Grid.Column="4"
+                   Text="{Binding Path = PhysicsBaseOvercomeValue, StringFormat=P2}" />
+
+        <TextBlock Grid.Row="6" Grid.Column="0" Text="加速等级" />
+        <xctk:IntegerUpDown x:Name="Haste_spb" Grid.Row="6" Grid.Column="1"
+                            Value="{Binding Path = Haste}" />
+
+        <TextBlock Grid.Row="6" Grid.Column="3" Text="加速" />
+        <TextBlock x:Name="HasteValue_spb" Grid.Row="6" Grid.Column="4"
+                   Text="{Binding Path = HasteValue, StringFormat=P2}" />
+
+        <TextBlock Grid.Row="7" Grid.Column="0" Text="装备分数" />
+        <xctk:IntegerUpDown x:Name="EquipScore_spb" Grid.Row="7" Grid.Column="1"
+                            Value="{Binding Path = EquipScore}" />
+
+        <CheckBox x:Name="Had_BigFM_hat_chb" Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="2"
+                  IsChecked="{Binding Path=Had_BigFM_hat}" Margin="5"
+                  ToolTip="如果填写的属性已经带了帽子大附魔，请勾选此项，避免重复计算大附魔收益">
+            属性包括伤·帽
+        </CheckBox>
+
+        <CheckBox x:Name="Had_BigFM_jacket_chb" Grid.Row="8" Grid.Column="3" Grid.ColumnSpan="2"
+                  IsChecked="{Binding Path=Had_BigFM_jacket}" Margin="5"
+                  ToolTip="如果填写的属性已经带了上衣大附魔，请勾选此项，避免重复计算大附魔收益">
+            属性包括伤·衣
+        </CheckBox>
 
 
-        <TextBlock Grid.Row="4" Grid.Column="0">破防等级</TextBlock>
-        <TextBlock Grid.Row="5" Grid.Column="0">加速等级</TextBlock>
-        <TextBlock Grid.Row="4" Grid.Column="3">破防</TextBlock>
-        <TextBlock Grid.Row="5" Grid.Column="3">加速</TextBlock>
+        <xctk:DoubleUpDown x:Name="StrengthPercent_spb" Grid.Row="9" Grid.Column="1"
+                           Visibility="{Binding HasBaseStrengthPercent, Converter={StaticResource BooleanToVisibility}}"
+                           Value="{Binding Path = StrengthPercent}" Minimum="0" Maximum="1" Increment="0.01" />
 
-        <TextBlock Grid.Row="7" Grid.Column="0" Visibility="{Binding HasL_Percent, Converter={StaticResource BooleanToVisibility}}">力道提升</TextBlock>
-        <TextBlock Grid.Row="7" Grid.Column="3" Visibility="{Binding HasL_Percent, Converter={StaticResource BooleanToVisibility}}">最终力道</TextBlock>
-
-        <xctk:IntegerUpDown x:Name="Base_AP_spb" Grid.Row="0" Grid.Column="1"
-                          Value="{Binding Path = Base_AP}" />
-
-        <xctk:IntegerUpDown x:Name="L_spb" Grid.Row="0" Grid.Column="4"
-                          Value="{Binding Path = Base_L}" />
-
-        <xctk:IntegerUpDown x:Name="Final_AP_spb" Grid.Row="1" Grid.Column="1"
-                          Value="{Binding Path = Final_AP}" />
-
-        <xctk:DoubleUpDown x:Name="WP_spb" Grid.Row="1" Grid.Column="4"
-                          Value="{Binding Path = WP}" Increment="0.5" FormatString="F1"/>
-
-        <xctk:IntegerUpDown x:Name="PZ_spb" Grid.Row="2" Grid.Column="4"
-                          Value="{Binding Path = PZ}" />
-
-        <xctk:IntegerUpDown x:Name="OC_spb" Grid.Row="4" Grid.Column="1"
-                          Value="{Binding Path = OC}" />
-
-        <xctk:IntegerUpDown x:Name="HS_spb" Grid.Row="5" Grid.Column="1"
-                          Value="{Binding Path = HS}" />
-
-        <xctk:DoubleUpDown x:Name="CT_spb" Grid.Row="2" Grid.Column="1"
-                         Value="{Binding Path = CT}" Minimum="0.01" Maximum="1" Increment="0.01"/>
-
-        <xctk:DoubleUpDown x:Name="CF_spb" Grid.Row="3" Grid.Column="1"
-                         Value="{Binding Path = CF}" Minimum="1.75" Maximum="3" Increment="0.01"/>
-
-        <xctk:DoubleUpDown x:Name="WS_spb" Grid.Row="3" Grid.Column="4"
-                         Value="{Binding Path = WS}" Increment="0.01"/>
-
-        <TextBlock x:Name="OC_Pct_spb" Grid.Row="4" Grid.Column="4"
-                   Text="{Binding Path = OCPct, StringFormat=P2}" />
-
-        <TextBlock x:Name="HS_Pct_spb" Grid.Row="5" Grid.Column="4"
-                   Text="{Binding Path = HSPct, StringFormat=P2}" />
-
-        <CheckBox x:Name="Had_BigFM_hat_chb" Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2" IsChecked="{Binding Path=Had_BigFM_hat}" Margin="5"
-                  ToolTip="如果填写的属性已经带了帽子大附魔，请勾选此项，避免重复计算大附魔收益">属性包括伤·帽</CheckBox>
-
-        <CheckBox x:Name="Had_BigFM_jacket_chb" Grid.Row="6" Grid.Column="3" Grid.ColumnSpan="2" IsChecked="{Binding Path=Had_BigFM_jacket}" Margin="5"
-                  ToolTip="如果填写的属性已经带了上衣大附魔，请勾选此项，避免重复计算大附魔收益">属性包括伤·衣</CheckBox>
-
-
-        <xctk:DoubleUpDown x:Name="L_Percent_spb" Grid.Row="7" Grid.Column="1" Visibility="{Binding HasL_Percent, Converter={StaticResource BooleanToVisibility}}"
-                         Value="{Binding Path = L_Percent}" Minimum="0" Maximum="1" Increment="0.01"/>
-
-        <TextBlock x:Name="Final_L_spb" Grid.Row="7" Grid.Column="4" Visibility="{Binding HasL_Percent, Converter={StaticResource BooleanToVisibility}}"
-                   Text="{Binding Path = Final_L, StringFormat=F0}" />
+        <TextBlock x:Name="FinalStrength_spb" Grid.Row="9" Grid.Column="4"
+                   Visibility="{Binding HasBaseStrengthPercent, Converter={StaticResource BooleanToVisibility}}"
+                   Text="{Binding Path = FinalStrength, StringFormat=F0}" />
 
     </Grid>
 </UserControl>

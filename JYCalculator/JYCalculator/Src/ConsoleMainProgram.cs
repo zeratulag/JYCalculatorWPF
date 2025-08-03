@@ -25,8 +25,8 @@ namespace JYCalculator.Src
 
 
             var data = StaticXFData.DB.ZhenFa.Data.Skip(1).First().Value.Buff;
-            var fGp = StaticConst.fGP;
-            var xGp = XFStaticConst.fGP;
+            var fGp = StaticConst.CurrentLevelGlobalParams;
+            var xGp = XFStaticConst.CurrentLevelParams;
 
 
             //var d2 = new SqliteConnectionStringBuilder(dbpath);
@@ -38,7 +38,6 @@ namespace JYCalculator.Src
             var d1 = DiamondTabLib.Data;
 
             var xf = new JYXinFa();
-            var guard = 0;
 #endif
         }
     }

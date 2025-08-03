@@ -19,6 +19,7 @@ namespace JYCalculator.Models
         public InitCharacter InitChar;
         public EquipOptionConfigSav EquipOption;
         public BigFMSlotConfig[] BigFM;
+        public Dictionary<string, string> EquipDict;
 
         public InitInputSav InputSav;
 
@@ -37,7 +38,13 @@ namespace JYCalculator.Models
             GetInitCharacter();
             GetEquipOption();
             GetBigFMConfig();
-            InputSav = new InitInputSav(InitChar, EquipOption, BigFM);
+            GetEquipDict();
+            InputSav = new InitInputSav(InitChar, EquipOption, BigFM, EquipDict);
+        }
+
+        private void GetEquipDict()
+        {
+            EquipDict = PlanModel.GetEquipDict();
         }
 
         private void GetInitCharacter()

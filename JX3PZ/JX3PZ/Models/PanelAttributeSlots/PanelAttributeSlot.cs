@@ -15,7 +15,7 @@ namespace JX3PZ.Models
 
         public readonly HashSet<string> ExtraKey; // 额外的属性名称
 
-        public readonly AttributeID BaseAttribute;
+        public readonly KAttributeID BaseAttribute;
         public string DescName { get; protected set; } // 描述名
 
         public int Base { get; protected set; } = 0; // 基础属性
@@ -32,7 +32,7 @@ namespace JX3PZ.Models
             BasePercentAddKey = $"{BaseKey}PercentAdd";
             ExtraKey = new HashSet<string>(6);
             ExtraKey.AddRange(extraKey);
-            BaseAttribute = AttributeID.Get(BaseKey);
+            BaseAttribute = KAttributeID.Get(BaseKey);
             DescName = BaseAttribute.SimpleDesc;
         }
 

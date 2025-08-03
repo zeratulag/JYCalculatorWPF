@@ -1,0 +1,24 @@
+﻿<UserControl x:Class="JX3CalculatorShared.Views.UserControls.EquipSpecialEffectConfigView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:JX3CalculatorShared.Views.UserControls"
+             xmlns:hc="https://handyorg.github.io/handycontrol"
+             mc:Ignorable="d"
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Expander>
+        <Expander.Header>
+            <hc:SimpleText Text="{Binding Path=Header}" TextWrapping="Wrap" />
+        </Expander.Header>
+        <ItemsControl Name="ItemsControl_EquipSpecialEffectConfigView"
+                      Style="{StaticResource Style.EquipSpecialEffectConfig}"
+                      ItemsSource="{Binding Data}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel Orientation="Horizontal"></WrapPanel>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+        </ItemsControl>
+    </Expander>
+</UserControl>

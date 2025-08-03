@@ -5,21 +5,22 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:JX3PZ.Views"
              xmlns:hc="https://handyorg.github.io/handycontrol"
+             xmlns:userControls="clr-namespace:JX3CalculatorShared.Views.UserControls"
              mc:Ignorable="d"
              d:DesignHeight="500" d:DesignWidth="200">
     <StackPanel Orientation="Vertical" HorizontalAlignment="Left">
         <StackPanel.Resources>
         </StackPanel.Resources>
 
-        <local:PanelScoreView DataContext="{Binding Score}"/>
+        <local:PanelScoreView DataContext="{Binding Score}" />
 
-        <hc:Divider Content="基础" Margin="0 10 0 10" FontSize="14"/>
+        <hc:Divider Content="基础" Margin="0 10 0 10" FontSize="14" />
 
         <local:PanelSlotView DataContext="{Binding Vitality}" />
 
         <local:PanelSlotView DataContext="{Binding Primary}" />
 
-        <hc:Divider Content="伤害" Margin="0 10 0 10" FontSize="14"/>
+        <hc:Divider Content="伤害" Margin="0 10 0 10" FontSize="14" />
 
         <local:PanelSlotView DataContext="{Binding Attack}" />
 
@@ -34,7 +35,7 @@
         <local:PanelSlotView DataContext="{Binding Haste}" />
         <local:PanelSlotView DataContext="{Binding MeleeWeapon}" />
 
-        <hc:Divider Content="生存" Margin="0 10 0 10" FontSize="14"/>
+        <hc:Divider Content="生存" Margin="0 10 0 10" FontSize="14" />
 
         <local:PanelSlotView DataContext="{Binding MaxLife}" />
         <local:PanelSlotView DataContext="{Binding PhysicsShield}" />
@@ -42,8 +43,17 @@
         <local:PanelSlotView DataContext="{Binding Toughness}" />
         <local:PanelSlotView DataContext="{Binding DecriticalDamage}" />
 
-        <hc:Divider Content="其他" Margin="0 10 0 10" FontSize="14"/>
+        <hc:Divider Content="其他" Margin="0 10 0 10" FontSize="14" />
         <local:PanelSlotView DataContext="{Binding PVXAllRoundSlot}" />
+
+        <hc:Divider Content="{Binding EquipSpecialEffectsDesc}" Margin="0 10 0 10" FontSize="14" />
+        <ItemsControl ItemsSource="{Binding EquipSpecialEffects}" HorizontalContentAlignment="Left">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <userControls:EquipSpecialEffectItemView HorizontalAlignment="Left" Margin="10, 0, 0, 5" Width="180"/>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
 
     </StackPanel>
 </UserControl>

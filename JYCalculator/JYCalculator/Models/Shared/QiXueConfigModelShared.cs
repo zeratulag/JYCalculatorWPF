@@ -33,9 +33,9 @@ namespace JYCalculator.Models
         /// </summary>
         public void GetXW()
         {
-            XWCD = XFStaticConst.XW.CD;
+            XWCD = XFStaticConst.XinWuConsts.CD;
             XWDuration = 10 + 5.0 * 聚精凝神.ToInt();
-            XWExtraSP = XFStaticConst.XW.ExtraSP * 聚精凝神.ToInt();
+            XWExtraHaste = XFStaticConst.XinWuConsts.ExtraHaste * 聚精凝神.ToInt();
             NormalDuration = XWCD - XWDuration;
         }
 
@@ -64,7 +64,7 @@ namespace JYCalculator.Models
 
         public void GetSkillEvents()
         {
-            SkillEvents = StaticXFData.DB.SkillInfo.GetQiXueEvents(QiXueNamesSet);
+            SkillEvents = StaticXFData.DB.BaseSkillInfo.GetQiXueEvents(QiXueNamesSet);
         }
 
         /// <summary>

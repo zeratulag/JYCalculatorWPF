@@ -8,39 +8,52 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
+using JYCalculator.Src.Class;
 
 namespace JX3CalculatorShared.DB
 {
-    public class BuffDBBase : IDB<string, Buff>
+    public class BuffDBBase : IDB<string, KBuff>
     {
         public static readonly ImmutableArray<string> BuffTypes =
             EnumTool.GetStrValues<BuffTypeEnum>().ToImmutableArray(); // Buff分类
 
-        public ImmutableDictionary<string, Buff> Buff_Self;
-        public ImmutableDictionary<string, Buff> Buff_Normal;
-        public ImmutableDictionary<string, Buff> DeBuff_Normal;
-        public ImmutableDictionary<string, Buff> Buff_Banquet;
-        public ImmutableDictionary<string, Buff> Buff_Extra;
-        public ImmutableDictionary<string, Buff> Buff_ExtraStack;
-        public ImmutableDictionary<string, Buff> Buff_ExtraTrigger;
-        public ImmutableDictionary<string, Buff> Buff_Special;
+        public readonly ImmutableDictionary<string, KBuff> Buff_Self;
+        public readonly ImmutableDictionary<string, KBuff> Buff_Normal;
+        public readonly ImmutableDictionary<string, KBuff> DeBuff_Normal;
+        public readonly ImmutableDictionary<string, KBuff> Buff_Banquet;
+        public readonly ImmutableDictionary<string, KBuff> Buff_Extra;
+        public readonly ImmutableDictionary<string, KBuff> Buff_ExtraStack;
+        public readonly ImmutableDictionary<string, KBuff> Buff_ExtraTrigger;
+        public readonly ImmutableDictionary<string, KBuff> Buff_Special;
+        public readonly ImmutableDictionary<string, KBuff> Buff_Skill;
+        public readonly ImmutableDictionary<string, KBuff> Buff_Equip;
+        public readonly ImmutableDictionary<string, KBuff> Buff_EquipSpecialEffect;
 
-        public ImmutableDictionary<string, BuffTypeEnum> TypeMap; // 表明每种buff对应的Type类型的字典
-        public ImmutableDictionary<string, string> QiXueToBuff; // 表示奇穴与Buff名称的关联
+        public readonly ImmutableDictionary<string, BuffTypeEnum> TypeMap; // 表明每种buff对应的Type类型的字典
+        public readonly ImmutableDictionary<string, string> QiXueToBuff; // 表示奇穴与Buff名称的关联
+
+        public readonly ImmutableDictionary<string, KBuff> AllBuffData; // 基于Key查询所有BUFF的字典
+        public readonly ImmutableDictionary<BuffTypeEnum, ImmutableDictionary<string, KBuff>> GroupedBuffDict;
+        public readonly ImmutableDictionary<(int ID, int Level), KBuff> AllBuffByIDLevel; // 基于ID和Level查询所有BUFF的字典
 
         public BuffDBBase(IEnumerable<Buff_dfItem> Buff_df)
         {
             var typeMapb = ImmutableDictionary.CreateBuilder<string, BuffTypeEnum>();
             var qixuetoBuffb = ImmutableDictionary.CreateBuilder<string, string>();
 
-            var buff_self = new Dictionary<string, Buff>();
-            var buff_normal = new Dictionary<string, Buff>();
-            var debuff_normal = new Dictionary<string, Buff>();
-            var buff_banquet = new Dictionary<string, Buff>();
-            var buff_extra = new Dictionary<string, Buff>();
-            var buff_extrastack = new Dictionary<string, Buff>();
-            var buff_extratrigger = new Dictionary<string, Buff>();
-            var buff_special = new Dictionary<string, Buff>();
+            var buff_self = new Dictionary<string, KBuff>();
+            var buff_normal = new Dictionary<string, KBuff>();
+            var debuff_normal = new Dictionary<string, KBuff>();
+            var buff_banquet = new Dictionary<string, KBuff>();
+            var buff_extra = new Dictionary<string, KBuff>();
+            var buff_extrastack = new Dictionary<string, KBuff>();
+            var buff_extratrigger = new Dictionary<string, KBuff>();
+            var buff_special = new Dictionary<string, KBuff>();
+            var buff_skill = new Dictionary<string, KBuff>();
+            var buff_equip = new Dictionary<string, KBuff>();
+            var buff_equipSpecialEffect = new Dictionary<string, KBuff>();
+
+            var all_buff = new Dictionary<string, KBuff>();
 
             foreach (var buff_dfitem in Buff_df)
             {
@@ -49,8 +62,10 @@ namespace JX3CalculatorShared.DB
                 var key = buff_dfitem.Name;
                 typeMapb.Add(key, bufftype);
 
-                var value = new Buff(buff_dfitem);
+                var value = new KBuff(buff_dfitem);
                 var assocaite = buff_dfitem.Associate;
+
+                all_buff.Add(buff_dfitem.BuffID, value);
 
                 if (assocaite.IsNullOrWhiteSpace() || assocaite.IsEmptyOrWhiteSpace())
                 {
@@ -67,52 +82,70 @@ namespace JX3CalculatorShared.DB
                 switch (bufftype)
                 {
                     case BuffTypeEnum.Buff_Self:
-                        {
-                            if (value.DescName != "弩箭机关") buff_self.Add(key, value);
-                            break;
-                        }
+                    {
+                        if (value.DescName != "弩箭机关") buff_self.Add(key, value);
+                        break;
+                    }
 
                     case BuffTypeEnum.Buff_Normal:
-                        {
-                            buff_normal.Add(key, value);
-                            break;
-                        }
+                    {
+                        buff_normal.Add(key, value);
+                        break;
+                    }
 
                     case BuffTypeEnum.Buff_Banquet:
-                        {
-                            buff_banquet.Add(key, value);
-                            break;
-                        }
+                    {
+                        buff_banquet.Add(key, value);
+                        break;
+                    }
 
                     case BuffTypeEnum.DeBuff_Normal:
-                        {
-                            debuff_normal.Add(key, value);
-                            break;
-                        }
+                    {
+                        debuff_normal.Add(key, value);
+                        break;
+                    }
 
                     case BuffTypeEnum.Buff_Extra:
-                        {
-                            buff_extra.Add(key, value);
-                            break;
-                        }
+                    {
+                        buff_extra.Add(key, value);
+                        break;
+                    }
 
                     case BuffTypeEnum.Buff_ExtraStack:
-                        {
-                            buff_extrastack.Add(key, value);
-                            break;
-                        }
+                    {
+                        buff_extrastack.Add(key, value);
+                        break;
+                    }
 
                     case BuffTypeEnum.Buff_ExtraTrigger:
-                        {
-                            buff_extratrigger.Add(key, value);
-                            break;
-                        }
+                    {
+                        buff_extratrigger.Add(key, value);
+                        break;
+                    }
 
                     case BuffTypeEnum.Buff_Special:
-                        {
-                            buff_special.Add(key, value);
-                            break;
-                        }
+                    {
+                        buff_special.Add(key, value);
+                        break;
+                    }
+
+                    case BuffTypeEnum.Buff_Skill:
+                    {
+                        buff_skill.Add(key, value);
+                        break;
+                    }
+
+                    case BuffTypeEnum.Buff_Equip:
+                    {
+                        buff_equip.Add(key, value);
+                        break;
+                    }
+
+                    case BuffTypeEnum.Buff_EquipSpecialEffect:
+                    {
+                        buff_equipSpecialEffect.Add(key, value);
+                        break;
+                    }
                 }
             }
 
@@ -127,59 +160,56 @@ namespace JX3CalculatorShared.DB
             Buff_ExtraStack = buff_extrastack.ToImmutableDictionary();
             Buff_ExtraTrigger = buff_extratrigger.ToImmutableDictionary();
             Buff_Special = buff_special.ToImmutableDictionary();
-        }
+            Buff_Skill = buff_skill.ToImmutableDictionary();
+            Buff_Equip = buff_equip.ToImmutableDictionary();
+            Buff_EquipSpecialEffect = buff_equipSpecialEffect.ToImmutableDictionary();
 
-        private IDictionary<string, Buff> GetDB(BuffTypeEnum bufftype)
-        {
-            switch (bufftype)
+            AllBuffData = all_buff.ToImmutableDictionary();
+            AllBuffByIDLevel = AllBuffData.Values.ToImmutableDictionary(e => (e.ID, e.Level), e => e);
+
+            GroupedBuffDict = new Dictionary<BuffTypeEnum, ImmutableDictionary<string, KBuff>>()
             {
-                case BuffTypeEnum.Buff_Self:
-                    {
-                        return Buff_Self;
-                    }
-
-                case BuffTypeEnum.Buff_Normal:
-                    {
-                        return Buff_Normal;
-                    }
-
-                case BuffTypeEnum.Buff_Banquet:
-                    {
-                        return Buff_Banquet;
-                    }
-
-                case BuffTypeEnum.DeBuff_Normal:
-                    {
-                        return DeBuff_Normal;
-                    }
-
-                default:
-                    {
-                        return null;
-                    }
-            }
+                {BuffTypeEnum.Buff_Self, Buff_Self},
+                {BuffTypeEnum.Buff_Normal, Buff_Normal},
+                {BuffTypeEnum.DeBuff_Normal, DeBuff_Normal},
+                {BuffTypeEnum.Buff_Banquet, Buff_Banquet},
+                {BuffTypeEnum.Buff_Extra, Buff_Extra},
+                {BuffTypeEnum.Buff_ExtraStack, Buff_ExtraStack},
+                {BuffTypeEnum.Buff_ExtraTrigger, Buff_ExtraTrigger},
+                {BuffTypeEnum.Buff_Special, Buff_Special},
+                {BuffTypeEnum.Buff_Skill, Buff_Skill},
+                {BuffTypeEnum.Buff_Equip, Buff_Equip},
+                {BuffTypeEnum.Buff_EquipSpecialEffect, Buff_EquipSpecialEffect}
+            }.ToImmutableDictionary();
         }
 
+        private IDictionary<string, KBuff> GetDB(BuffTypeEnum bufftype)
+        {
+            return GroupedBuffDict[bufftype];
+        }
 
-        public Buff Get(string name, BuffTypeEnum bufftype)
+        public KBuff Get(string name, BuffTypeEnum bufftype)
         {
             var db = GetDB(bufftype);
             return db[name];
         }
 
-        public Buff Get(string name)
+        public KBuff Get(string name)
         {
             var bufftype = GetBuffType(name);
             return Get(name, bufftype);
         }
 
+        public KBuff GetBuffByID(string id) => AllBuffData[id];
+
         public BaseBuff this[string name] => Get(name);
         public BaseBuff this[string name, BuffTypeEnum bufftype] => Get(name, bufftype);
 
-        public Buff GetExtra(string name)
+        public KBuff GetExtra(string name)
         {
             return Buff_Extra[name];
         }
+
 
         public BaseBuffGroup GetSingleTypeBaseBuffGroup(IEnumerable<string> names, BuffTypeEnum bufftype)
         {
@@ -272,6 +302,35 @@ namespace JX3CalculatorShared.DB
                     res.Add(KVP.Value);
                 }
             }
+
+            return res;
+        }
+
+        public KBuff QueryBuffByID(string buffID)
+        {
+            return AllBuffData[buffID];
+        }
+
+        public KBuff GetBuffByIDLeven(int ID, int Level)
+        {
+            return AllBuffByIDLevel[(ID, Level)];
+        }
+
+        /// <summary>
+        /// 通过Record构建Buff
+        /// </summary>
+        /// <param name="r"></param>
+        /// <returns></returns>
+        public BaseBuff GetBaseBuffByRecord(BuffRecord r)
+        {
+            var buff = GetBuffByIDLeven(r.ID, r.Level);
+            var res = buff.Emit(r);
+            return res;
+        }
+
+        public BaseBuff[] GetBaseBuffByRecords(IEnumerable<BuffRecord> rs)
+        {
+            var res = rs.Select(GetBaseBuffByRecord).ToArray();
             return res;
         }
     }

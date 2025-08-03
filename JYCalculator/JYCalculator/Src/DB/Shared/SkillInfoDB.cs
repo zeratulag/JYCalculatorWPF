@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 using JYCalculator.Globals;
+using JX3CalculatorShared.Src.Class;
 
 namespace JYCalculator.DB
 {
@@ -16,18 +17,21 @@ namespace JYCalculator.DB
     {
         #region 成员
 
-        public readonly ImmutableDictionary<string, SkillInfoItem> Skills;
+        public ImmutableDictionary<string, SkillInfoItem> Skills { get; private set; }
+
+        public ImmutableDictionary<(int ID, int Level), SkillInfoItem[]>
+            SkillsByIDLevel { get; private set; } // 基于ID和Level查询
+
         public readonly ImmutableDictionary<string, SkillEventItem> Events;
 
         public RecipeDB RecipeDb;
 
-        public readonly ImmutableDictionary<string, string> Name2CombatName; // 技能名到战斗统计名称的字典
-        public ImmutableDictionary<string, ImmutableArray<string>> Skill2Event { get; private set; } // 每个技能能触发哪些事件
-        public ImmutableDictionary<string, ImmutableArray<string>> Event2Skill { get; private set; } // 每个事件可以由哪些技能触发
+        public ImmutableDictionary<string, string> Name2CombatName { get; private set; } // 技能名到战斗统计名称的字典
+        //public ImmutableDictionary<string, ImmutableArray<string>> Skill2Event { get; private set; } // 每个技能能触发哪些事件
+        //public ImmutableDictionary<string, ImmutableArray<string>> Event2Skill { get; private set; } // 每个事件可以由哪些技能触发
 
         public ImmutableDictionary<string, ImmutableArray<string>> Skill2Recipe { get; private set; } // 每个技能能吃哪些秘籍
         public ImmutableDictionary<string, ImmutableArray<string>> Recipe2Skill { get; private set; } // 每个秘籍可以由哪些技能生效
-
 
         public readonly ImmutableDictionary<string, ImmutableArray<string>> QiXueToEvents; // 奇穴对应的事件（一对多）
 
@@ -38,15 +42,18 @@ namespace JYCalculator.DB
         public SkillInfoDB(IDictionary<string, SkillInfoItem> skillItems,
             IDictionary<string, SkillEventItem> eventItems)
         {
-
             var data = from kvp in skillItems
-                       where kvp.Value.Type != SkillDataTypeEnum.Exclude
-                       select kvp;
+                where kvp.Value.Type != SkillDataTypeEnum.Exclude
+                select kvp;
 
             Skills = data.ToImmutableDictionary();
+            SkillsByIDLevel = Skills.Values
+                .GroupBy(e => (e.SkillID, e.Level))
+                .ToImmutableDictionary(g => g.Key, g => g.ToArray());
+
             Events = eventItems.ToImmutableDictionary();
 
-            Name2CombatName = Skills.ToImmutableDictionary(_ => _.Key, _ => _.Value.Fight_Name);
+            Name2CombatName = Skills.ToImmutableDictionary(_ => _.Key, _ => _.Value.FightName);
 
             var events = eventItems.ToDict();
             var PZ = SkillEventItem.GetPZEventItemFromSL(events["SL"]);
@@ -62,10 +69,11 @@ namespace JYCalculator.DB
                     qx2E.AddIntoList(QXName, KVP.Key);
                 }
             }
+
             QiXueToEvents = qx2E.ToImmutableDictionary(_ => _.Key, _ => _.Value.ToImmutableArray());
         }
 
-        public SkillInfoDB(XFDataLoader xfDataLoader) : this(xfDataLoader.SkillData, xfDataLoader.SkillEvent)
+        public SkillInfoDB(XFDataLoader xfDataLoader) : this(xfDataLoader.BaseSkillInfoData, xfDataLoader.SkillEvent)
         {
         }
 
@@ -73,7 +81,16 @@ namespace JYCalculator.DB
         {
         }
 
+        // 基于ID和Level查询
+        public SkillInfoItem[] GetSkillByIDLevel(int id, int level)
+        {
+            if (SkillsByIDLevel.TryGetValue((id, level), out var skillItems))
+            {
+                return skillItems;
+            }
 
+            return Array.Empty<SkillInfoItem>();
+        }
 
         public void AttachRecipeDB(RecipeDB recipeDb)
         {
@@ -82,7 +99,8 @@ namespace JYCalculator.DB
 
         public void Process()
         {
-            SummarySkillTriggerEvent();
+            //SummarySkillTriggerEvent();
+            SummarySkillEventTypeMaskCanTrigger();
             SummarySkillEffectRecipe();
             AttachEffectSkillsToRecipeDB();
         }
@@ -95,6 +113,7 @@ namespace JYCalculator.DB
         {
             return Skills[name];
         }
+
         public SkillInfoItem this[string name] => Get(name);
 
         public SkillEventItem GetEvent(string name)
@@ -129,7 +148,6 @@ namespace JYCalculator.DB
                         skill2item.AddIntoList(skillName, itemName);
                         item2skill.AddIntoList(itemName, skillName);
                     }
-
                 }
             }
 
@@ -140,23 +158,40 @@ namespace JYCalculator.DB
         }
 
 
+        ///// <summary>
+        ///// 获取哪些事件可以由哪些技能触发的表
+        ///// </summary>
+        //public void SummarySkillTriggerEvent()
+        //{
+
+        //    var (skill2event, event2skill) = SummarySkillItem(Events, SkillInfoItemBase.CanTrigger);
+
+        //    //Skill2Event = skill2event.ToImmutableDictionary(_ => _.Key,
+        //    //    _ => _.Value.ToImmutableArray());
+
+        //    var Event2Skill = event2skill.ToImmutableDictionary(_ => _.Key,
+        //        _ => _.Value.ToImmutableArray());
+
+        //    foreach (var KVP in Event2Skill)
+        //    {
+        //        var eventItem = Events[KVP.Key];
+        //        eventItem.SetTriggerSkillNames(KVP.Value);
+        //    }
+        //}
+
         /// <summary>
-        /// 获取哪些事件可以由哪些技能触发的表
+        /// 获取事件和技能触发的对应关系
         /// </summary>
-        public void SummarySkillTriggerEvent()
+        public void SummarySkillEventTypeMaskCanTrigger()
         {
-
-            var (skill2event, event2skill) = SummarySkillItem(Events, SkillInfoItemBase.CanTrigger);
-
-            Skill2Event = skill2event.ToImmutableDictionary(_ => _.Key,
-                _ => _.Value.ToImmutableArray());
-
-            Event2Skill = event2skill.ToImmutableDictionary(_ => _.Key,
-                _ => _.Value.ToImmutableArray());
-
-            foreach (var KVP in Event2Skill)
+            foreach (var skill in Skills.Values)
             {
-                Events[KVP.Key].SetTriggerSkillNames(KVP.Value);
+                foreach (var eventType in SkillEventTypeMaskManager.Data.Values.Where(eventType =>
+                             skill.CanTrigger(eventType)))
+                {
+                    eventType.TriggerSkillIDs.Add(skill.SkillID);
+                    eventType.TriggerSkillNames.Add(skill.Name);
+                }
             }
         }
 
@@ -165,8 +200,7 @@ namespace JYCalculator.DB
         /// </summary>
         public void SummarySkillEffectRecipe(IDictionary<string, Recipe> recipes)
         {
-
-            var (skill2recipe, recipe2skill) = SummarySkillItem(recipes, SkillInfoItemBase.CanEffectRecipe);
+            var (skill2recipe, recipe2skill) = SummarySkillItem(recipes, SkillInfoItemBase.CanBeEffectedByRecipe);
 
             Skill2Recipe = skill2recipe.ToImmutableDictionary(_ => _.Key,
                 _ => _.Value.ToImmutableArray());
@@ -181,6 +215,7 @@ namespace JYCalculator.DB
         }
 
         #endregion
+
         /// <summary>
         /// 为秘籍DB添加生效技能组字段
         /// </summary>
@@ -207,6 +242,7 @@ namespace JYCalculator.DB
                     res.AddRange(events);
                 }
             }
+
             return res;
         }
 
@@ -237,18 +273,19 @@ namespace JYCalculator.DB
                 var cfreq = byfreq * info.EnergyInjection;
                 res += cfreq;
             }
+
             return res;
         }
 
-        public static readonly string[] BaoYuKeys = new string[] {
+        public static readonly string[] BaoYuKeys = new string[]
+        {
             SkillKeyConst.暴雨梨花针,
             SkillKeyConst.暴雨梨花针2,
             SkillKeyConst.暴雨梨花针3,
             SkillKeyConst.暴雨梨花针4,
             SkillKeyConst.暴雨梨花针5,
             SkillKeyConst.暴雨梨花针6,
-            SkillKeyConst.暴雨梨花针7};
-
-
+            SkillKeyConst.暴雨梨花针7
+        };
     }
 }

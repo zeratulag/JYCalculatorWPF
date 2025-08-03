@@ -59,7 +59,7 @@ namespace JX3PZ.Models
 
         public void GetSetResults()
         {
-            Results = Sets.ToDictionary(_ => _.Key, _ => _.Value.GetResult(SetCountItems[_.Key]));
+            Results = Sets.ToDictionary(_ => _.Key, _ => _.Value.CalcResult(SetCountItems[_.Key]));
         }
 
         public void GetActivatedAttributeEntries()

@@ -8,7 +8,7 @@
     <sf:SfChart
         x:Name="profitChart"
         MaxWidth="400"
-        MaxHeight="250"
+        MaxHeight="280"
         Margin="0,5,0,0"
         HorizontalAlignment="Stretch"
         HorizontalContentAlignment="Stretch"
@@ -45,7 +45,7 @@
                     <TextBlock
                         HorizontalAlignment="Right"
                         Foreground="White"
-                        Text="{Binding Path=Item.Value, StringFormat='{}{0:F3}'}"
+                        Text="{Binding Path=Item.Value, StringFormat=F3}"
                         FontSize="12" />
                 </DataTemplate>
             </sf:BarSeries.TooltipTemplate>

@@ -19,10 +19,11 @@ namespace JYCalculator.Src
         public readonly InitCharacter NoneBigFMInitCharacter; // 不含大附魔的初始人物属性
 
         public readonly BuffSpecialArg BuffSpecial;
+        public readonly EquipSpecialEffectConfigArg EquipSpecialEffectConfig;
 
         public DPSCalcShellArg(bool sl, bool bigXw, int longMen, YZOption yz, BigFMConfigModel bigFm,
             BuffSpecialArg buffSpecial,
-            InitCharacter ichar)
+            InitCharacter ichar, EquipSpecialEffectConfigArg equipSpecialEffectConfig)
         {
             SL = sl;
             BigXW = bigXw;
@@ -31,6 +32,7 @@ namespace JYCalculator.Src
             BigFM = bigFm;
             BuffSpecial = buffSpecial;
             NoneBigFMInitCharacter = ichar;
+            EquipSpecialEffectConfig = equipSpecialEffectConfig;
         }
 
     }

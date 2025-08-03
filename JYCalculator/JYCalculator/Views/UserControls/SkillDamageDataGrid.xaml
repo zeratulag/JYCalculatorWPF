@@ -19,24 +19,24 @@
                 <DataGridTextColumn Binding="{Binding Path=Name}" Header="Name" />
                 <DataGridTextColumn Binding="{Binding Path=SkillName}" Header="技能" />
 
-                <DataGridTextColumn Binding="{Binding Path=StdPhysicsDmg, StringFormat={}{0:F1}}" Header="基准外伤" />
+                <DataGridTextColumn Binding="{Binding Path=StdPhysicsDmg, StringFormat=F1}" Header="基准外伤" />
 
-                <DataGridTextColumn Binding="{Binding Path=ClosingPDef, StringFormat={}{0:F1}}" Header="外防" />
+                <DataGridTextColumn Binding="{Binding Path=ClosingPhysicsDef, StringFormat=F1}" Header="外防" />
 
-                <DataGridTextColumn Binding="{Binding Path=BearPDef, StringFormat={}{0:P2}}" Header="外承伤" />
+                <DataGridTextColumn Binding="{Binding Path=BearPhysicsDef, StringFormat=P2}" Header="外承伤" />
 
-                <DataGridTextColumn Binding="{Binding Path=RealPhysicsDmg, StringFormat={}{0:F1}}" Header="实际外伤" />
-                <DataGridTextColumn Binding="{Binding Path=RealDmg, StringFormat={}{0:F1}}" Header="实际伤害" />
+                <DataGridTextColumn Binding="{Binding Path=RealPhysicsDamage, StringFormat=F1}" Header="实际外伤" />
+                <DataGridTextColumn Binding="{Binding Path=RealDamage, StringFormat=F1}" Header="实际伤害" />
 
-                <DataGridTextColumn Binding="{Binding Path=CT, StringFormat={}{0:P2}}" Header="会心" />
-                <DataGridTextColumn Binding="{Binding Path=CF, StringFormat={}{0:P2}}" Header="会效" />
-                <DataGridTextColumn Binding="{Binding Path=Expect, StringFormat={}{0:F3}}" Header="期望" />
+                <DataGridTextColumn Binding="{Binding Path=CriticalStrikeValue, StringFormat=P2}" Header="会心" />
+                <DataGridTextColumn Binding="{Binding Path=CriticalPowerValue, StringFormat=P2}" Header="会效" />
+                <DataGridTextColumn Binding="{Binding Path=ExpectValue, StringFormat=F3}" Header="期望" />
 
-                <DataGridTextColumn Binding="{Binding Path=FinalEDamage, StringFormat={}{0:F1}}" Header="期望伤害" />
-                <DataGridTextColumn Binding="{Binding Path=RelativeDamage, StringFormat={}{0:F2}}" Header="相对伤害" />
+                <DataGridTextColumn Binding="{Binding Path=FinalExpectDamage, StringFormat=F1}" Header="期望伤害" />
+                <DataGridTextColumn Binding="{Binding Path=RelativeDamage, StringFormat=F2}" Header="相对伤害" />
 
-                <DataGridTextColumn Binding="{Binding Path=Freq, StringFormat={}{0:F3}}" Header="频率" />
-                <DataGridTextColumn Binding="{Binding Path=DPS, StringFormat={}{0:F1}}" Header="DPS" />
+                <DataGridTextColumn Binding="{Binding Path=Freq, StringFormat=F3}" Header="频率" />
+                <DataGridTextColumn Binding="{Binding Path=DPS, StringFormat=F1}" Header="DPS" />
 
             </DataGrid.Columns>
         </DataGrid>

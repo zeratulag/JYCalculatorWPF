@@ -11,7 +11,7 @@ namespace JX3PZ.Models
     {
         public readonly string RateKey; // atPhysicsCriticalStrikeBaseRate
 
-        public new static readonly double PointCoef = StaticConst.fGP.CT;
+        public new static readonly double PointCoef = StaticConst.CurrentLevelGlobalParams.CriticalStrike;
         public const double RateCoef = 10000.0;
 
         public new static readonly string Suffix = "CriticalStrike";
@@ -27,7 +27,7 @@ namespace JX3PZ.Models
             PointKey = $"at{Name}{Suffix}";
             RateKey = $"{PointKey}BaseRate";
             GetAttributes();
-            RateAttribute = AttributeID.Get(RateKey);
+            RateAttribute = KAttributeID.Get(RateKey);
             ExtraKey.Add($"atAllType{Suffix}");
             if (DamageType == DamageTypeEnum.Magic) ExtraKey.Add($"atMagic{Suffix}");
 

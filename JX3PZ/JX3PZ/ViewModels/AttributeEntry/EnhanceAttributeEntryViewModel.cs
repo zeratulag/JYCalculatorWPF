@@ -1,6 +1,7 @@
 ﻿using JX3CalculatorShared.Class;
 using JX3CalculatorShared.Utils;
 using JX3PZ.Data;
+using JX3PZ.Globals;
 using System.Windows.Documents;
 
 namespace JX3PZ.ViewModels
@@ -16,7 +17,7 @@ namespace JX3PZ.ViewModels
 
 
         // 附魔在装备预览界面显示的VM
-        public EnhanceAttributeEntryViewModel(string desc = "", string color = "#000000", string iconPath = null) : base(
+        public EnhanceAttributeEntryViewModel(string desc = "", string color = ColorConst.Default, string iconPath = null) : base(
             desc, color, iconPath)
         {
         }

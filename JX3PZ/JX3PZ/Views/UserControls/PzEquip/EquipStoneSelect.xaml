@@ -67,9 +67,10 @@
         <Label Grid.Row="1" Grid.Column="0" Margin="0 10">等级</Label>
         <StackPanel Grid.Row="1" Grid.Column="2" Orientation="Horizontal">
             <Slider x:Name="LevelSlider" Minimum="1" Maximum="6" Grid.Row="1" Grid.Column="2" Width="300"
-                    IsSnapToTickEnabled="True" TickFrequency="1" TickPlacement="BottomRight" Value="{Binding Level}"
+                    IsSnapToTickEnabled="True" TickFrequency="1" TickPlacement="BottomRight" Value="{Binding Level, UpdateSourceTrigger=Explicit}"
                     HorizontalAlignment="Stretch"
-                    VerticalAlignment="Center" />
+                    VerticalAlignment="Center"
+                    LostMouseCapture="LevelSlider_LostMouseCapture"/>
             <hc:NumericUpDown Margin="15 0"
                               VerticalAlignment="Center"
                               Maximum="{Binding ElementName=LevelSlider, Path=Maximum}"

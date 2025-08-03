@@ -6,6 +6,7 @@ using JYCalculator.DB;
 using JYCalculator.Globals;
 using Syncfusion.Data.Extensions;
 using System.Linq;
+using System.Security.Policy;
 
 
 namespace JYCalculator.Data
@@ -30,10 +31,24 @@ namespace JYCalculator.Data
             Data.Load();
             DB = new XFDataBase();
             StaticPzData.Enhance.LoadBigFM(DB.BigFM);
+            AfterLoad();
+        }
+
+        public static void AfterLoad()
+        {
+            AttachBuffToRecipeItem();
+            AfterParseSkillBuff();
+        }
+
+        private static void AfterParseSkillBuff()
+        {
+            SkillBuffFactory.AfterParse();
+            Data.AfterDBLoad();
+            DB.BuildAllSkillInfo();
         }
 
         public static Recipe GetRecipe(string name) => DB.Recipe[name];
-        public static Buff GetExtraTriggerBuff(string name) => DB.Buff.Buff_ExtraTrigger[name];
+        public static KBuff GetExtraTriggerBuff(string name) => DB.Buff.Buff_ExtraTrigger[name];
 
         public static void MakeStoneAttrFilter()
         {
@@ -43,5 +58,12 @@ namespace JYCalculator.Data
             EquipStoneSelectViewModel.SetFilterItems(res);
         }
 
+        public static void AttachBuffToRecipeItem()
+        {
+            foreach (var item in Data.BuffToRecipe.Values)
+            {
+                DB.AttachBuffToRecipeItem(item);
+            }
+        }
     }
 }

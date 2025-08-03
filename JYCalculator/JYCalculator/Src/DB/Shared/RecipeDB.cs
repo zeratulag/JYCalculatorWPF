@@ -14,7 +14,7 @@ namespace JYCalculator.DB
     {
         #region 成员
 
-        public readonly ImmutableDictionary<string, Recipe> Data;
+        public readonly ImmutableDictionary<string, Recipe> Data; // 基于Name构建的字典
 
         public readonly ImmutableDictionary<string, Recipe> Dict; // 按照(RecipeID, RecipeLevel)构建的字典
 
@@ -58,7 +58,7 @@ namespace JYCalculator.DB
             }
 
             Data = data.ToImmutableDictionary();
-            Dict = data.ToImmutableDictionary(_ => Funcs.MergeIDLevel(_.Value.RecipeID, _.Value.RecipeLevel),
+            Dict = data.ToImmutableDictionary(_ => GlobalFunctions.MergeIDLevel(_.Value.RecipeID, _.Value.RecipeLevel),
                 _ => _.Value);
 
             RecipeMiJiViewModels = DispatchRecipeMiJi(recipeMJ)
@@ -142,6 +142,12 @@ namespace JYCalculator.DB
         }
 
         public Recipe this[string name] => Get(name);
+
+        public Recipe GetRecipeByIdLevel(int recipeID, int recipeLevel)
+        {
+            var rawID = $@"{recipeID}_{recipeLevel}";
+            return Dict[rawID];
+        }
 
         #endregion
     }

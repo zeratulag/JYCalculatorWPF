@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using Serilog;
 
 namespace JX3CalculatorShared.Utils
 {
@@ -62,7 +63,7 @@ namespace JX3CalculatorShared.Utils
         public static void Cat<TKey, TValue>(this IDictionary<TKey, TValue> dict, string sep = "")
         {
             var catstr = dict.ToStr(sep);
-            Trace.WriteLine(catstr);
+            Log.Information(catstr);
         }
 
         #endregion

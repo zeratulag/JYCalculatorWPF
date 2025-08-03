@@ -4,26 +4,65 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:JX3CalculatorShared.Views.UserControls"
+             xmlns:hc="https://handyorg.github.io/handycontrol"
              mc:Ignorable="d">
-    <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
-        <TextBox
-            Name="FinalDPS_txb"
-            HorizontalAlignment="Center"
-            VerticalAlignment="Center"
-            FontSize="24"
-            FontWeight="Bold"
-            Foreground="Red"
-            Text="{Binding Path=FinalDPSTxt, Mode=OneWay}"
-            Style="{StaticResource Style.TextBlockBox}"
-            ToolTip="{Binding FinalDPSToolTip}"
-            Margin="0 0 0 5"/>
+    <Grid HorizontalAlignment="Center">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+        </Grid.RowDefinitions>
 
-        <TextBox VerticalAlignment="Center" MaxWidth="170"
-                 FontSize="12"
+        <hc:SimpleText Grid.Row="0" Grid.Column="0" Text="更换前" FontSize="12" HorizontalAlignment="Center"
+                       Visibility="{Binding Path=ShowDelta, Converter={StaticResource BooleanToVisibility}}" />
+        <TextBox Grid.Row="1" Grid.Column="0"
+                 HorizontalAlignment="Center"
+                 VerticalAlignment="Center"
+                 FontSize="22"
+                 Foreground="#666666"
+                 Text="{Binding Path=PreviousDPS, Mode=OneWay, StringFormat=F0}"
+                 Style="{StaticResource Style.TextBlockBox}"
+                 ToolTip="上次计算结果"
+                 Visibility="{Binding Path=ShowDelta, Converter={StaticResource BooleanToVisibility}}" />
+        <hc:SimpleText Grid.Row="0" Grid.Column="1" Text="→"
+                       HorizontalAlignment="Center" VerticalAlignment="Bottom"
+                       Visibility="{Binding Path=ShowDelta, Converter={StaticResource BooleanToVisibility}}"/>
+
+        <DockPanel Grid.Row="0" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center"
+                   Visibility="{Binding Path=ShowDelta, Converter={StaticResource BooleanToVisibility}}">
+            <hc:SimpleText DockPanel.Dock="Left" Text="更换后" FontSize="12"
+                           HorizontalAlignment="Left" VerticalAlignment="Center"
+                           Margin="20 0 3 0"/>
+            <TextBox DockPanel.Dock="Right" Text="{Binding Path=FormattedDelta, Mode=OneWay}"
+                     HorizontalAlignment="Right" VerticalAlignment="Center"
+                     Style="{StaticResource Style.TextBlockBox}"
+                     Foreground="{Binding DeltaColor}"/>
+        </DockPanel>
+
+        <TextBox Grid.Row="1" Grid.Column="2"
+                 HorizontalAlignment="Center"
+                 VerticalAlignment="Center"
+                 FontSize="24"
+                 FontWeight="Bold"
                  Foreground="Green"
+                 Text="{Binding Path=FinalDPS, Mode=OneWay, StringFormat=F0}"
+                 Style="{StaticResource Style.TextBlockBox}"
+                 ToolTip="当前计算结果"/>
+
+        <TextBox Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3"
+                 VerticalAlignment="Center" MaxWidth="180"
+                 HorizontalAlignment="Center"
+                 FontSize="13"
+                 FontWeight="Bold"
+                 Foreground="#DCA53E"
                  Text="{Binding Path=ProfitOrderDesc, Mode=OneWay}"
                  Style="{StaticResource Style.TextBlockBox}"
-                 ToolTip="{Binding ProfitOrderDescToolTip}" />
-    </StackPanel>
+                 ToolTip="属性收益顺序" />
+    </Grid>
 
 </UserControl>

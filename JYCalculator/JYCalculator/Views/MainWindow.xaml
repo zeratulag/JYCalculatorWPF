@@ -9,14 +9,13 @@
     xmlns:local="clr-namespace:JYCalculator.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:sf="http://schemas.syncfusion.com/wpf"
-    xmlns:sfgrid="clr-namespace:Syncfusion.UI.Xaml.Grid;assembly=Syncfusion.SfGrid.WPF"
     xmlns:suc="clr-namespace:JX3CalculatorShared.Views.UserControls"
     xmlns:uc="clr-namespace:JYCalculator.Views.UserControls"
     xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
     x:Name="JYMainWindow"
     Title="{Binding Path=Title}"
-    Width="1440"
-    Height="830"
+    Width="1450"
+    Height="900"
     AllowDrop="True"
     DragOver="MainWindow_OnDragOver"
     Drop="MainWindow_OnDrop"
@@ -51,7 +50,7 @@
                 <Style BasedOn="{StaticResource Style.ReadOnlyDataGrid}" TargetType="DataGrid" />
                 <Style BasedOn="{StaticResource Style.CenterDataGridCell}" TargetType="DataGridCell" />
                 <Style BasedOn="{StaticResource Style.CenterDataTextColumn}" TargetType="DataGridColumnHeader" />
-                <Style BasedOn="{StaticResource Style.CenterSfDataGridCell}" TargetType="sfgrid:GridCell" />
+                <!--<Style BasedOn="{StaticResource Style.CenterSfDataGridCell}" TargetType="sfgrid:GridCell" />-->
             </Grid.Resources>
 
             <!--  主界面（左半）  -->
@@ -136,39 +135,42 @@
 
             </DockPanel>
 
+            <!--<GridSplitter
+                x:Name="gridSplitter4"
+                Grid.Column="4"
+                Width="3"
+                ResizeDirection="Columns" />-->
+
             <!--  主界面（右半）  -->
             <DockPanel
                 Name="Grid_Main_Right"
                 Grid.Column="5"
                 LastChildFill="True">
 
-                <GroupBox
-                    x:Name="GroupBox_DPS"
-                    DockPanel.Dock="Top"
-                    Header="DPS期望">
-                    <suc:DPSView x:Name="DpsView" FinalDPS="{Binding Path=FinalDPS}" />
-
-                </GroupBox>
-                <Popup
-                    x:Name="CopyTextblock_pop"
-                    AllowsTransparency="True"
-                    Placement="Mouse"
-                    PopupAnimation="Slide"
-                    StaysOpen="False">
-                    <Border
-                        Background="White"
-                        BorderBrush="Beige"
-                        BorderThickness="2">
-                        <TextBlock Margin="5">已复制！</TextBlock>
-                    </Border>
-                </Popup>
-
-
                 <ScrollViewer
                     DockPanel.Dock="Top"
                     HorizontalScrollBarVisibility="Disabled"
                     VerticalScrollBarVisibility="Auto">
                     <hc:SimpleStackPanel Orientation="Vertical">
+                        <GroupBox
+                            x:Name="GroupBox_DPS"
+                            DockPanel.Dock="Top"
+                            Header="DPS期望">
+                            <suc:DPSView x:Name="DpsView" FinalDPS="{Binding Path=FinalDPS}" />
+                        </GroupBox>
+                        <Popup
+                            x:Name="CopyTextblock_pop"
+                            AllowsTransparency="True"
+                            Placement="Mouse"
+                            PopupAnimation="Slide"
+                            StaysOpen="False">
+                            <Border
+                                Background="White"
+                                BorderBrush="Beige"
+                                BorderThickness="2">
+                                <TextBlock Margin="5">已复制！</TextBlock>
+                            </Border>
+                        </Popup>
                         <suc:ProfitGroupBox />
                         <uc:OptimizationGroupBox DataContext="{Binding Path=OptimizationVM}" />
                     </hc:SimpleStackPanel>

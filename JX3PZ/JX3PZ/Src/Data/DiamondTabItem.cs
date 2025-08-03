@@ -148,6 +148,7 @@ namespace JX3PZ.Data
             return res;
         }
 
+        // 五行石装备分数系数计算，参考文档：https://www.jx3box.com/tool/30582
         public static double GetCoef(int level)
         {
             double res;
@@ -160,6 +161,7 @@ namespace JX3PZ.Data
                 res = 1.3 * (0.65 * level - 3.2);
             }
 
+            res *= PzScore.TaiJiDiamondCoef; // 太极秘录修改
             return res;
         }
 

@@ -1,4 +1,5 @@
-﻿using JX3CalculatorShared.Data;
+﻿using HandyControl.Controls;
+using JX3CalculatorShared.Data;
 using JX3CalculatorShared.Globals;
 using Newtonsoft.Json;
 using Syncfusion.Windows.Shared;
@@ -11,12 +12,10 @@ namespace JX3CalculatorShared.Class
 {
     public class EquipOption
     {
-
         public static DamageTypeEnum DamageType;
 
         #region 成员
 
-        public static readonly ImmutableDictionary<DamageTypeEnum, string> AttrMap;
         public readonly string Name;
         public string ItemName { get; private set; }
         public readonly EquipOptionType OptionType;
@@ -26,8 +25,16 @@ namespace JX3CalculatorShared.Class
 
         public readonly int Value;
         public readonly int Level;
-        public readonly int DLCLevel;
+        public readonly int ExpansionPackLevel;
         public string RawIDs;
+
+        public int BuffID { get; }
+        public int BuffLevel { get; }
+        public string BuffRawID { get; }
+        public string BuffAttributeID { get; }
+        public int BuffAttributeValue { get; }
+        public int MaxStackNum { get; }
+        public int FinalBuffAttributeValue { get; }
 
         public string[] EquipIDs { get; protected set; } // 记录对应的装备ID
 
@@ -36,11 +43,14 @@ namespace JX3CalculatorShared.Class
         public int IconID { get; }
         public int Quality { get; }
 
-
-        public AttributeID AID;
+        public KAttributeID BuffKAttributeID { get; private set; }
 
         public readonly bool IsWater; // 是否为水特效
         public readonly bool IsWind; // 是否为风特效
+        public readonly bool IsBigCW; // 是否为大橙武
+
+        public CharAttrCollection SCharAttr { get; protected set; }
+        public NamedAttrs AttrsDesc { get; protected set; }
 
         #endregion
 
@@ -76,8 +86,9 @@ namespace JX3CalculatorShared.Class
 
             DamageTypeDesc = DamageType == DamageTypeEnum.Magic ? "内功" : "外功";
 
-            IsWater = Tag == "Water";
-            IsWind = Tag == "Wind";
+            IsWater = Tag == "WaterWeapon";
+            IsWind = Tag == "WindYZ";
+            IsBigCW = Tag.StartsWith("BigChengWu");
         }
 
         public EquipOption(EquipOptionItem item)
@@ -86,8 +97,23 @@ namespace JX3CalculatorShared.Class
                 item.Value, item.Level, item.Quality)
         {
             OptionType = item.Type;
-            DLCLevel = item.DLCLevel;
+            ExpansionPackLevel = item.ExpansionPackLevel;
             RawIDs = item.EIDs_Str;
+
+            BuffID = item.BuffID;
+            BuffLevel = item.BuffLevel;
+            BuffRawID = item.BuffRawID;
+            BuffAttributeID = item.BuffAttributeID;
+            BuffAttributeValue = item.BuffAttributeValue;
+            MaxStackNum = item.MaxStackNum;
+            FinalBuffAttributeValue = item.FinalBuffAttributeValue;
+
+            if (FinalBuffAttributeValue != 0)
+            {
+                Value = FinalBuffAttributeValue;
+            }
+
+            GetAttributeID();
         }
 
         #endregion
@@ -96,7 +122,7 @@ namespace JX3CalculatorShared.Class
 
         protected virtual string Get_S_ID()
         {
-            var res = AttrMap.GetValueOrDefault(DamageType);
+            var res = BuffKAttributeID?.SID;
             return res;
         }
 
@@ -108,10 +134,13 @@ namespace JX3CalculatorShared.Class
         {
             var res = new Dictionary<string, double>();
 
-            if (IsWater || IsWind)
+            if (IsWater || IsWind || IsBigCW)
             {
                 var key = Get_S_ID();
-                res.Add(key, Value);
+                if (key != null)
+                {
+                    res.Add(key, Value);
+                }
             }
 
             return res;
@@ -128,8 +157,15 @@ namespace JX3CalculatorShared.Class
             if (RawIDs.IsNullOrWhiteSpace())
             {
                 EquipIDs = null;
+                return;
             }
-            else if (RawIDs.StartsWith("["))
+
+            if (RawIDs.Contains(',') && !RawIDs.StartsWith("["))
+            {
+                RawIDs = $@"[{RawIDs}]";
+            }
+
+            if (RawIDs.StartsWith("["))
             {
                 var arr = JsonConvert.DeserializeObject<int[]>(RawIDs);
                 var strs = from _ in arr select GetEquipID(TabID, _);
@@ -139,7 +175,7 @@ namespace JX3CalculatorShared.Class
             {
                 var Id = int.Parse(RawIDs);
                 var equipId = GetEquipID(TabID, Id);
-                EquipIDs = new[] { equipId };
+                EquipIDs = new[] {equipId};
             }
         }
 
@@ -155,51 +191,29 @@ namespace JX3CalculatorShared.Class
 
         public void GetAttributeID()
         {
-            string res = null;
-            if (OptionType == EquipOptionType.YZ)
-            {
-                if (DamageType == DamageTypeEnum.Magic)
-                {
-                    res = "atMagicOvercome";
-                }
-
-                if (DamageType == DamageTypeEnum.Physics)
-                {
-                    res = "atPhysicsOvercomeBase";
-                }
-            }
-            else
-            {
-                if (OptionType == EquipOptionType.WP && IsWater)
-                {
-                    res = $"at{DamageType.ToString()}AttackPowerBase";
-                }
-            }
-
+            var res = BuffAttributeID;
             if (res != null)
             {
-                AID = AttributeID.Get(res);
+                BuffKAttributeID = KAttributeID.Get(res);
             }
-
         }
 
         public string GetDesc()
         {
             string res = null;
-            GetAttributeID();
-            if (AID != null)
+            if (BuffKAttributeID != null)
             {
-
                 if (IsWater)
                 {
-                    res = $"（每层{Value / 10}{AID.EquipTag}）";
+                    res = $"（每层{Value / 10}{BuffKAttributeID.EquipTag}）";
                 }
 
                 if (IsWind)
                 {
-                    res = $"（{Value}{AID.EquipTag}）";
+                    res = $"（{Value}{BuffKAttributeID.EquipTag}）";
                 }
             }
+
             return res;
         }
     }
@@ -207,36 +221,20 @@ namespace JX3CalculatorShared.Class
     public class WPOption : EquipOption
     {
         public const int TabID = 6;
-        public readonly CharAttrCollection SCharAttr;
-        public readonly NamedAttrs AttrsDesc;
 
-        public readonly bool IsBigCW; // 是否为大橙武
+
         public readonly bool IsLongMen; // 是否为龙门飞剑
 
         public ImmutableArray<SkillEventItem> SkillEvents { get; private set; } // 关联的触发事件
-
-        public new static readonly ImmutableDictionary<DamageTypeEnum, string> AttrMap =
-            new Dictionary<DamageTypeEnum, string>()
-            {
-                {DamageTypeEnum.Magic, "M_Base_AP"},
-                {DamageTypeEnum.Physics, "P_Base_AP"}
-            }.ToImmutableDictionary();
 
         public WPOption(EquipOptionItem item)
             : base(item)
         {
             SCharAttr = new CharAttrCollection(GetSAtDict(), null, true);
             AttrsDesc = SCharAttr.ToNamed(ItemName);
-            IsBigCW = Name == "Big_CW";
-            IsLongMen = Name.StartsWith("LongMen#");
+            IsLongMen = Tag.StartsWith("LongMen");
             GetToolTip();
             ParseEquipIDs();
-        }
-
-        protected override string Get_S_ID()
-        {
-            var res = AttrMap.GetValueOrDefault(DamageType);
-            return res;
         }
 
         public void ParseEquipIDs()
@@ -249,24 +247,31 @@ namespace JX3CalculatorShared.Class
             var res = new List<SkillEventItem>();
             foreach (var _ in data)
             {
-                if (_.Type == "武器" && _.Associate == Tag)
+                if (_.Type == "武器" && Tag.StartsWith(_.Associate))
                 {
                     res.Add(_);
                 }
             }
 
-            SkillEvents = res.ToImmutableArray();
+            SkillEvents = res.Distinct(item => item.Name).ToImmutableArray();
         }
 
         // 获取新的提示
         public void GetToolTip()
         {
+            string newstr = "";
             if (Value > 0 && IsWater)
             {
-                var newstr = $"特效提升{Value}{DamageTypeDesc}攻击力";
-                var res = $"{ToolTip}\n{newstr}";
-                ToolTip = res;
+                newstr = $"特效提升{Value}{DamageTypeDesc}攻击力";
             }
+
+            if (Value > 0 && IsBigCW)
+            {
+                newstr = $"特效提升{Value}无双等级";
+            }
+
+            ToolTip = $"{ToolTip}\n{newstr}";
+            ;
         }
     }
 
@@ -274,16 +279,6 @@ namespace JX3CalculatorShared.Class
     {
         public const int TabID = 8;
         public readonly bool IsNormal; // 是否为普通腰坠
-
-        public readonly CharAttrCollection SCharAttr;
-        public readonly NamedAttrs AttrsDesc;
-
-        public new static readonly ImmutableDictionary<DamageTypeEnum, string> AttrMap =
-            new Dictionary<DamageTypeEnum, string>()
-            {
-                {DamageTypeEnum.Magic, "M_Base_OC"},
-                {DamageTypeEnum.Physics, "P_Base_OC"}
-            }.ToImmutableDictionary();
 
         public YZOption(EquipOptionItem item)
             : base(item)
@@ -293,12 +288,6 @@ namespace JX3CalculatorShared.Class
             IsNormal = (Value == 0);
             GetToolTip();
             ParseEquipIDs();
-        }
-
-        protected override string Get_S_ID()
-        {
-            var res = AttrMap.GetValueOrDefault(DamageType);
-            return res;
         }
 
         public void ParseEquipIDs()

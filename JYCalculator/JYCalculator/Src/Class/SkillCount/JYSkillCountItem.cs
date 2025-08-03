@@ -29,12 +29,17 @@ namespace JYCalculator.Src
         public double LveYingQiongCang; // 掠影苍穹
         public double CXL; // 穿心弩次数 
 
+        public double DP_LaoJia; // 牢甲夺魄次数（百步凝形专用）
+        public double CXDotCount; // 穿心DOT次数（百步凝形专用）
+        public double PZ; // 破招次数
 
-        public double _DPCast => DP; // 夺魄释放次数
+        public double _DPCast => DP + DP_LaoJia; // 夺魄释放次数
         public double _ZM_SFCast => ZM_SF; // 追命释放次数
         public double _ZMCast => ZM; // 读条追命释放次数
 
         #endregion
+
+        public double ZM_BBCY = 0; // 百步穿杨
 
         public int _BYPerCast = 5; // 单次大暴雨跳数
         public double BY; // 暴雨第1跳次数
@@ -60,6 +65,7 @@ namespace JYCalculator.Src
         public readonly bool 梨花带雨; // 是否为大暴雨
         public readonly bool 穿林打叶; // 是否为穿林穿心
         public readonly bool 白雨跳珠;
+        public bool 百步凝形 { get; set; } = false; // 是否为百步凝形
         public double ChuanLinDaYe => 穿林打叶 ? ZX : 0; // 穿林打叶数量
 
         public readonly string __CX_DOT_Key; // 穿心Dot的最终key
@@ -81,6 +87,9 @@ namespace JYCalculator.Src
             BL = item.BL;
             KongQueLing = item.KongQueLing;
             LveYingQiongCang = item.LveYingQiongCang;
+            DP_LaoJia = item.DP_LaoJia;
+            CXDotCount = item.CXDotCount;
+            PZ = item.PZ;
 
             _BYCast = item.BY_Cast;
             _BYPerCast = qiXue.BYPerCast;
@@ -106,6 +115,12 @@ namespace JYCalculator.Src
             CX_DOT = _CX_DOT_Stack * _cX_DOT_Hit;
         }
 
+        // 当穿心不能全程保持时，直接设定穿心次数，并且层数为1
+        public void SetCXDotByCXDotCount(double cxDotCount)
+        {
+            _CX_DOT_Hit = cxDotCount;
+            CX_DOT = cxDotCount;
+        }
 
         /// <summary>
         /// 设定梨花暴雨释放次数
@@ -174,6 +189,7 @@ namespace JYCalculator.Src
                 {nameof(KongQueLing), KongQueLing},
                 {nameof(LveYingQiongCang), LveYingQiongCang},
                 {nameof(ChuanLinDaYe), ChuanLinDaYe},
+                {nameof(PZ), PZ},
 
                 {"_ZX_Org", ZX},
                 {nameof(ZX_DOT), ZX_DOT}, {nameof(CXL), CXL},
@@ -185,6 +201,8 @@ namespace JYCalculator.Src
                 {nameof(_DPCast), _DPCast},
                 {nameof(_ZM_SFCast), _ZM_SFCast},
                 {nameof(_ZMCast), _ZMCast},
+
+                {nameof(ZM_BBCY), ZM_BBCY},
             };
 
             AddBaoYu(res);
@@ -213,12 +231,13 @@ namespace JYCalculator.Src
         public SkillFreqDict ToSkillFreqDict()
         {
             var dict = ToDict();
-            return new SkillFreqDict(dict, _Time, 白雨跳珠);
+            var arg = new SkillFreqArg(白雨跳珠, 百步凝形);
+            return new SkillFreqDict(dict, _Time, arg);
         }
 
         public void GetUtilization()
         {
-            var stdtime = _XW ? AbilitySkillTime.XW : AbilitySkillTime.Normal;
+            var stdtime = _XW ? AbilitySkillTime.XinWu : AbilitySkillTime.Normal;
             var GCDNum = DP + ZM_SF + ZX;
             _UTime = GCDNum * stdtime.GCD + stdtime.BL * BL + _BYTotalHitNum * stdtime.BY;
             _URate = _UTime / _Time;
@@ -241,21 +260,20 @@ namespace JYCalculator.Src
             KongQueLing *= k;
             LveYingQiongCang *= k;
 
+            DP_LaoJia *= k;
+            CXDotCount *= k;
+            PZ *= k;
+
             _BYCast *= k;
             SetLHBYNums(_BYCast);
 
             _Time = newTime;
         }
 
-        public void CalcGF()
-        {
-            GF = DP + ZM + BL + _BYCast + ZM_SF * 1 + ZX * 1.25 + CXL; // TODO: 需要修改，但是似乎没用上
-        }
-
         public double GetEnergyInjection()
         {
             var dict = ToDict();
-            var energyInjectionCount = StaticXFData.DB.SkillInfo.GetEnergyInjection(dict);
+            var energyInjectionCount = StaticXFData.DB.BaseSkillInfo.GetEnergyInjection(dict);
             double res = energyInjectionCount / _Time;
             return res;
         }

@@ -12,6 +12,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Immutable;
 using System.Linq;
+using HandyControl.Controls;
 
 namespace JX3PZ.Class
 {
@@ -126,7 +127,7 @@ namespace JX3PZ.Class
             HasBasicTag = !BasicTag_Str.IsEmptyOrWhiteSpace();
             HasDiamond = !DiamondTag_Str.IsEmptyOrWhiteSpace();
             IsValid = Quality > 0;
-            SubTypeEnum = (EquipSubTypeEnum)SubType;
+            SubTypeEnum = (EquipSubTypeEnum) SubType;
             EquipType = EquipMapLib.GetEquipTypeBySubType(SubTypeEnum);
             IsWeapon = EquipType == EquipTypeEnum.weapon;
             GetScore();
@@ -141,6 +142,7 @@ namespace JX3PZ.Class
             {
                 GetInfo?.Parse();
             }
+
             IsGetInfoParsed = true;
         }
 
@@ -189,6 +191,14 @@ namespace JX3PZ.Class
         }
 
 
+        // 是否为特效无修装备
+        public bool IsSpecialWuXiu()
+        {
+            var isWuXiu = OtherTag == "无修";
+            var hasSpecial = AttrTag.HasSpecial;
+            return isWuXiu && hasSpecial;
+        }
+
         /// <summary>
         /// 该装备是否满足筛选器要求
         /// </summary>
@@ -210,8 +220,8 @@ namespace JX3PZ.Class
             if (Quality > 4)
             {
                 // 橙武放宽品级要求
-                minLevel = 5000;
-                if (Name.StartsWith("煞·")) // 奇遇橙武和普通橙武完全一样
+                minLevel = 10000; // 130级旧橙武最低品级10000
+                if (Name.StartsWith("煞·")) // 奇遇橙武和普通橙武完全一样，跳过
                 {
                     return false;
                 }

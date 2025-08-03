@@ -51,6 +51,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Models\CharacterPanel\CharacterPanel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Src\Class\EquipGetInfo.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Src\Class\PzSetAttribute.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Src\Class\PzSubSet.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Src\Class\WeaponBaseAttrs.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Src\Data\StoneAttribute.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Src\Data\StoneCondition.cs" />

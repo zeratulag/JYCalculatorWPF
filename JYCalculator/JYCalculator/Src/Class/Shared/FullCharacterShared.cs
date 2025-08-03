@@ -11,6 +11,7 @@ using PropertyChanged;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using JYCalculator.Src.Class;
 
 namespace JYCalculator.Class
 {
@@ -19,27 +20,44 @@ namespace JYCalculator.Class
         #region 成员
 
         // 基础攻击，最终攻击，基础破防，最终破防，
-        public double Base_AP { get; set; }
-        public double Final_AP { get; set; }
-        public double Base_OC { get; set; }
-        public double Final_OC { get; set; }
+        public double PhysicsBaseAttackPower { get; set; }
+        public double PhysicsFinalAttackPower { get; set; }
+        public double PhysicsBaseOvercome { get; set; }
+        public double PhysicsFinalOvercome { get; set; }
 
         // 武器伤害，会心，会效，无双，破招，加速
-        public double WP { get; set; }
-        public double CT { get; set; }
-        public double CF { get; set; }
-        public double WS { get; set; }
-        public double PZ { get; set; }
-        public double HS { get; set; }
+        public double BaseWeaponDamage { get; set; }
+
+        public double PhysicsCriticalPowerValue { get; set; }
+
+        public double PhysicsCriticalStrike { get; set; } // 会心等级
+        public double PhysicsCriticalStrikeRate { get; set; } // 会心率
+
+        public double PhysicsCriticalStrikeValue => GlobalFunctions.CalcFinalValueByRateAndPoint(
+            PhysicsCriticalStrikeRate, PhysicsCriticalStrike, XFStaticConst.CurrentLevelParams.CriticalStrike);
+
+        public double BaseSurplus { get; set; }
+        public double Haste { get; set; }
+
+        public double BaseStrain { get; set; } // 基础无双等级
+        public double FinalStrain { get; set; } // 最终无双等级
+        public double StrainPercent { get; set; } // 无双提升
+        public double StrainRate { get; set; } = 0.0; // 无双%
+
+        public double FinalStrainValue =>
+            GlobalFunctions.CalcFinalValueByRateAndPoint(StrainRate, FinalStrain,
+                XFStaticConst.CurrentLevelParams.Strain);
 
         // 攻击提升，破防提升
-        public double AP_Percent { get; set; }
-        public double OC_Percent { get; set; }
+        public double PhysicsAttackPowerPercent { get; set; } = 0.0; // 攻击提升
+        public double PhysicsOvercomePercent { get; set; } = 0.0; // 破防提升
 
         // 无视防御A
-        public double IgnoreA { get; set; }
+        public double AllShieldIgnore { get; set; }
 
-        public double ExtraSP { get; set; } = 0; // 额外加速率（仅在大心无期间有）
+        public int EquipScore { get; set; } // 装备分数
+
+        public double ExtraHaste { get; set; } = 0; // 额外加速率（仅在大心无期间有）
         public bool Is_XW { get; private set; } = false; // 是否处于心无状态，
         public bool Has_Special_Buff { get; set; } = false; // 是否已经计算了自身神力弩心催寒buff
         public bool Had_BigFM_hat { get; set; } = false; // 是否已经包括帽子大附魔
@@ -47,9 +65,14 @@ namespace JYCalculator.Class
         public double Normal_GCD;
         public double BigXW_GCD;
         public double GCD => Is_XW ? BigXW_GCD : Normal_GCD;
-        public double Base_OC_Pct => Base_OC / XFStaticConst.fGP.OC; // 面板基础破防
-        public double Final_OC_Pct => Final_OC / XFStaticConst.fGP.OC; // 面板最终破防
-        public double HS_Pct => Math.Min(HS / XFStaticConst.fGP.HS, HasteBase.MAX_HS); // 面板加速值
+
+        public double PhysicsBaseOvercomeValue =>
+            PhysicsBaseOvercome / XFStaticConst.CurrentLevelParams.Overcome; // 面板基础破防值（eg 0.18）
+
+        public double PhysicsFinalOvercomeValue =>
+            PhysicsFinalOvercome / XFStaticConst.CurrentLevelParams.Overcome; // 面板最终破防
+
+        public double HasteValue => Math.Min(Haste / XFStaticConst.CurrentLevelParams.Haste, HasteBase.MAX_HS); // 面板加速值
         public double NPC_Coef = XFConsts.NPC_Coef; // 非侠士增伤
         [ExcelColumn(Index = 0)] public string Name { get; set; } = "F面板"; // 命名
 
@@ -90,15 +113,16 @@ namespace JYCalculator.Class
                 throw new ArgumentException("必须是爆发期面板！");
             }
 
-            Base_AP = xwCharacter.Base_AP;
-            AP_Percent = xwCharacter.AP_Percent;
-            Final_AP = xwCharacter.Final_AP;
+            PhysicsBaseAttackPower = xwCharacter.PhysicsBaseAttackPower;
+            PhysicsAttackPowerPercent = xwCharacter.PhysicsAttackPowerPercent;
+            PhysicsFinalAttackPower = xwCharacter.PhysicsFinalAttackPower;
 
-            CT = xwCharacter.CT;
-            CF = xwCharacter.CF;
-            WS = xwCharacter.WS;
+            PhysicsCriticalStrike = xwCharacter.PhysicsCriticalStrike;
+            PhysicsCriticalStrikeRate = xwCharacter.PhysicsCriticalStrikeRate;
 
-            ExtraSP = xwCharacter.ExtraSP;
+            PhysicsCriticalPowerValue = xwCharacter.PhysicsCriticalPowerValue;
+
+            ExtraHaste = xwCharacter.ExtraHaste;
             Name += "心无快照";
         }
 
@@ -128,18 +152,11 @@ namespace JYCalculator.Class
         #region 属性计算
 
         /// <summary>
-        /// 区分内功和外功属性
         /// </summary>
         /// <param name="key"></param>
         /// <param name="value"></param>
         public void AddSAttr(string key, double value)
         {
-            //string key1 = key;
-            //if (!key1.EndsWith("_DmgAdd"))
-            //{
-            //    key1 = key.RemovePrefix(XFAppStatic.TypePrefix);
-            //}
-            //_AddSAttr(key1, value);
             this.ProcessZAttr(key, value);
         }
 
@@ -182,14 +199,11 @@ namespace JYCalculator.Class
 
             FullCharacter other = this.DeepClone();
             other.AddBaseBuff(XWBuff);
-            //other.ProcessCT(XFStaticConst.XW.CT);
-            //other.ProcessCF(XFStaticConst.XW.CF);
-            //other.ExtraSP += XFStaticConst.XW.ExtraSP * bigXW.ToInt();
             other.AddSAttrDict(attrDict);
 
             if (AppStatic.XinFaTag == "TL")
             {
-                other.ProcessAP_Percent(XFStaticConst.XW.AP_Percent);
+                other.ProcessPhysicsAttackPowerPercent(XFStaticConst.XinWuConsts.PhysicsAttackPowerPercent);
             }
 
             other.Is_XW = true;
@@ -249,10 +263,21 @@ namespace JYCalculator.Class
             RemoveCharAttrCollection(attrs.Attr);
         }
 
+
         public void AddBaseBuff(BaseBuff baseBuff)
         {
             // 增加基础BUFF
             AddCharAttrCollection(baseBuff.SCharAttrs);
+        }
+
+        public void AddBaseBuffs(IEnumerable<BaseBuff> baseBuffs)
+        { // 增加一组基础BUFF
+            baseBuffs.ForEach(AddBaseBuff);
+        }
+
+        public void AddBuffRecord(BuffRecord r)
+        {
+            AddBaseBuff(r.ToBaseBuff());
         }
 
         public void AddZhenFa(ZhenFa zhen)
@@ -279,11 +304,11 @@ namespace JYCalculator.Class
         {
             switch (e.PropertyName)
             {
-                case nameof(HS):
-                    {
-                        UpdateGCD();
-                        break;
-                    }
+                case nameof(Haste):
+                {
+                    UpdateGCD();
+                    break;
+                }
             }
         }
 
@@ -292,22 +317,23 @@ namespace JYCalculator.Class
         /// </summary>
         protected void UpdateGCD()
         {
-            Normal_GCD = XFStaticConst.CurrentHaste.SKT(StaticConst.GCD, (int)HS, 0);
-            BigXW_GCD = XFStaticConst.CurrentHaste.SKT(StaticConst.GCD, (int)HS, XFStaticConst.XW.ExtraSP);
+            Normal_GCD = XFStaticConst.CurrentHaste.CalcHasteTime(StaticConst.GCD, (int) Haste, 0);
+            BigXW_GCD = XFStaticConst.CurrentHaste.CalcHasteTime(StaticConst.GCD, (int) Haste,
+                XFStaticConst.XinWuConsts.ExtraHaste);
         }
 
         #endregion
 
         #region 进阶计算
 
-        [DoNotNotify] public double CT_Point => CT * XFStaticConst.fGP.CT; // 会心点数
+        [DoNotNotify]
+        public double CT_Point => PhysicsCriticalStrikeValue * XFStaticConst.CurrentLevelParams.CriticalStrike; // 会心点数
 
-        [DoNotNotify] public double WS_Point => WS * XFStaticConst.fGP.WS; // 无双点数
+        [DoNotNotify] public double WS_Point => FinalStrainValue * XFStaticConst.CurrentLevelParams.Strain; // 无双点数
 
-        [DoNotNotify] public double CTOC_Point => CT_Point + Base_OC; // 会破点数之和
+        [DoNotNotify] public double CTOC_Point => CT_Point + PhysicsBaseOvercome; // 会破点数之和
 
-        [DoNotNotify] public double WSPZ_Point => WS_Point + PZ; // 无双破招点数之和
-
+        [DoNotNotify] public double WSPZ_Point => WS_Point + BaseSurplus; // 无双破招点数之和
 
         #endregion
     }

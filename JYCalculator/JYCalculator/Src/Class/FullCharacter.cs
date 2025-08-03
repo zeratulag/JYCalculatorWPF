@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using JYCalculator.Globals;
+using System.Collections.Generic;
 using static JYCalculator.Globals.XFStaticConst;
 
 namespace JYCalculator.Class
@@ -8,69 +9,18 @@ namespace JYCalculator.Class
         #region 成员
 
         // 基础力道，最终力道
-        public double Base_L { get; set; }
-        public double Final_L { get; set; }
-
+        public double BaseStrength { get; set; }
+        public double FinalStrength { get; set; }
 
         // 力道提升
-        public double L_Percent { get; set; }
-
+        public double StrengthPercent { get; set; } = 0;
 
         // 伤害提高
-        public double DmgAdd { get; set; } // 外功伤害提高
+        public double PhysicsDamageAdd { get; set; } // 外功伤害提高
 
         #endregion
 
         #region 构造
-
-        /// <summary>
-        /// 表示人物完整属性的类
-        /// </summary>
-        /// <param name="base_l">基础元气</param>
-        /// <param name="final_l">最终元气</param>
-        /// <param name="base_ap">基础攻击</param>
-        /// <param name="final_ap">最终攻击</param>
-        /// <param name="base_oc">基础破防</param>
-        /// <param name="final_oc">最终破防</param>
-        /// <param name="wp">武器伤害</param>
-        /// <param name="ct">会心</param>
-        /// <param name="cf">会效</param>
-        /// <param name="ws">无双</param>
-        /// <param name="pz">破招</param>
-        /// <param name="hs">加速</param>
-        /// <param name="lPercent">元气提升</param>
-        /// <param name="ap_percent">攻击提升</param>
-        /// <param name="oc_percent">破防提升</param>
-        /// <param name="ignorea">无视防御A</param>
-        /// <param name="dmgadd">伤害提高</param>
-        /// <param name="name">名称</param>
-        public FullCharacter(double base_l, double final_l, double base_ap, double final_ap, double base_oc,
-            double final_oc,
-            double wp, double ct, double cf, double ws, double pz, double hs,
-            double lPercent, double ap_percent, double oc_percent,
-            double ignorea, double dmgadd,
-            string name = "完整面板")
-        {
-            Base_L = base_l;
-            Final_L = final_l;
-            Base_AP = base_ap;
-            Final_AP = final_ap;
-            Base_OC = base_oc;
-            Final_OC = final_oc;
-            WP = wp;
-            CT = ct;
-            CF = cf;
-            WS = ws;
-            PZ = pz;
-            HS = hs;
-            L_Percent = lPercent;
-            AP_Percent = ap_percent;
-            OC_Percent = oc_percent;
-            IgnoreA = ignorea;
-            DmgAdd = dmgadd;
-            Name = name;
-            PostConstructor();
-        }
 
         /// <summary>
         /// 从InitCharacter转换
@@ -78,29 +28,35 @@ namespace JYCalculator.Class
         /// <param name="iChar">初始属性</param>
         public FullCharacter(InitCharacter iChar)
         {
-            Base_L = iChar.Base_L;
-            Final_L = iChar.Final_L;
-            Base_AP = iChar.Base_AP;
-            Final_AP = iChar.Final_AP;
-            Base_OC = iChar.OC;
-            Final_OC = iChar.OC;
+            BaseStrength = iChar.BaseStrength;
+            FinalStrength = iChar.FinalStrength;
+            PhysicsBaseAttackPower = iChar.PhysicsBaseAttackPower;
+            PhysicsFinalAttackPower = iChar.PhysicsFinalAttackPower;
+            PhysicsBaseOvercome = iChar.PhysicsBaseOvercome;
+            PhysicsFinalOvercome = iChar.PhysicsBaseOvercome;
 
-            WP = iChar.WP;
-            CT = iChar.CT;
-            CF = iChar.CF;
-            WS = iChar.WS;
-            PZ = iChar.PZ;
-            HS = iChar.HS;
+            BaseWeaponDamage = iChar.BaseWeaponDamage;
+            PhysicsCriticalPowerValue = iChar.PhysicsCriticalPowerValue;
 
+            PhysicsCriticalStrikeRate = iChar.PhysicsCriticalStrikeRate; // 弩箭加1%会心。
+            PhysicsCriticalStrike = iChar.PhysicsCriticalStrike;
+            BaseStrain = iChar.BaseStrain;
+            FinalStrain = BaseStrain;
+            StrainRate = iChar.StrainRate;
+            StrainPercent = 0.0;
 
-            L_Percent = iChar.L_Percent;
-            AP_Percent = 0.0;
-            OC_Percent = 0.0;
+            BaseSurplus = iChar.BaseSurplus;
+            Haste = iChar.Haste;
 
-            IgnoreA = 0.0;
-            DmgAdd = 0.0;
+            StrengthPercent = iChar.StrengthPercent;
+            PhysicsAttackPowerPercent = 0.0;
+            PhysicsOvercomePercent = 0.0;
+
+            AllShieldIgnore = 0.0;
+            PhysicsDamageAdd = 0.0;
 
             Name = iChar.Name;
+            EquipScore = iChar.EquipScore;
             Had_BigFM_jacket = iChar.Had_BigFM_jacket;
             Had_BigFM_hat = iChar.Had_BigFM_hat;
             PostConstructor();
@@ -112,30 +68,37 @@ namespace JYCalculator.Class
         /// <param name="old"></param>
         public FullCharacter(FullCharacter old)
         {
-            Base_L = old.Base_L;
-            Final_L = old.Final_L;
-            Base_AP = old.Base_AP;
-            Final_AP = old.Final_AP;
-            Base_OC = old.Base_OC;
-            Final_OC = old.Final_OC;
+            BaseStrength = old.BaseStrength;
+            FinalStrength = old.FinalStrength;
+            PhysicsBaseAttackPower = old.PhysicsBaseAttackPower;
+            PhysicsFinalAttackPower = old.PhysicsFinalAttackPower;
+            PhysicsBaseOvercome = old.PhysicsBaseOvercome;
+            PhysicsFinalOvercome = old.PhysicsFinalOvercome;
 
-            WP = old.WP;
-            CT = old.CT;
-            CF = old.CF;
-            WS = old.WS;
-            PZ = old.PZ;
-            HS = old.HS;
+            BaseWeaponDamage = old.BaseWeaponDamage;
+            PhysicsCriticalPowerValue = old.PhysicsCriticalPowerValue;
 
+            BaseSurplus = old.BaseSurplus;
+            Haste = old.Haste;
 
-            L_Percent = old.L_Percent;
-            AP_Percent = old.AP_Percent;
-            OC_Percent = old.OC_Percent;
+            PhysicsCriticalStrike = old.PhysicsCriticalStrike;
+            PhysicsCriticalStrikeRate = old.PhysicsCriticalStrikeRate;
 
-            IgnoreA = old.IgnoreA;
-            DmgAdd = old.DmgAdd;
+            BaseStrain = old.BaseStrain;
+            FinalStrain = old.FinalStrain;
+            StrainPercent = old.StrainPercent;
+            StrainRate = old.StrainRate;
+
+            StrengthPercent = old.StrengthPercent;
+            PhysicsAttackPowerPercent = old.PhysicsAttackPowerPercent;
+            PhysicsOvercomePercent = old.PhysicsOvercomePercent;
+
+            AllShieldIgnore = old.AllShieldIgnore;
+            PhysicsDamageAdd = old.PhysicsDamageAdd;
 
             Name = old.Name;
-            ExtraSP = old.ExtraSP;
+            EquipScore = old.EquipScore;
+            ExtraHaste = old.ExtraHaste;
             Is_XW = old.Is_XW;
             Has_Special_Buff = old.Has_Special_Buff;
 
@@ -162,15 +125,15 @@ namespace JYCalculator.Class
 
             var res = new List<string>
             {
-                $"{Final_L:F2}({Base_L:F2}) 力道，" +
-                $"{Final_AP:F2}({Base_AP:F2}) 攻击，" +
-                $"{Final_OC:F2}({Base_OC:F2}) 破防，" +
-                $"{WP:F2} 武器伤害",
+                $"{FinalStrength:F2}({BaseStrength:F2}) 力道，" +
+                $"{PhysicsFinalAttackPower:F2}({PhysicsBaseAttackPower:F2}) 攻击，" +
+                $"{PhysicsFinalOvercome:F2}({PhysicsBaseOvercome:F2}) 破防，" +
+                $"{BaseWeaponDamage:F2} 武器伤害",
 
-                $"{CT:P2} 会心，{CF:P2} 会效，{WS:P2} 无双，" +
-                $"{HS}({HS / fGP.HS + ExtraSP / 1024:P2}) 加速，{PZ} 破招",
-                $"{L_Percent:P2} 元气提升，{AP_Percent:P2} 攻击提升，{OC_Percent:P2} 破防提升，" +
-                $"{IgnoreA:P2} 无视防御A，{DmgAdd:P2} 伤害提高，",
+                $"{PhysicsCriticalStrikeValue:P2} 会心，{PhysicsCriticalPowerValue:P2} 会效，{FinalStrainValue:P2} 无双，" +
+                $"{Haste}({Haste / CurrentLevelParams.Haste + ExtraHaste / 1024:P2}) 加速，{BaseSurplus} 破招",
+                $"{StrengthPercent:P2} 元气提升，{PhysicsAttackPowerPercent:P2} 攻击提升，{PhysicsOvercomePercent:P2} 破防提升，" +
+                $"{AllShieldIgnore:P2} 无视防御A，{PhysicsDamageAdd:P2} 伤害提高，",
 
                 $"{hadDict[Is_XW]}处于心无状态，{hadDict[Has_Special_Buff]}计算特殊增益",
 
@@ -181,6 +144,5 @@ namespace JYCalculator.Class
         }
 
         #endregion
-
     }
 }

@@ -34,7 +34,7 @@ namespace JYCalculator.Class
 
         public void UpdateHSP(CalculatorShell shell)
         {
-            UpdateHSP(shell.HS, shell.XWExtraSP);
+            UpdateHSP(shell.Haste, shell.XWExtraHaste);
         }
 
         public void Calc()

@@ -1,11 +1,10 @@
-﻿using System;
-using JX3CalculatorShared.Class;
+﻿using JX3CalculatorShared.Class;
 using JX3CalculatorShared.Common;
 using JX3CalculatorShared.Globals;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
-using JYCalculator.Globals;
+using JX3PZ.Globals;
 
 
 namespace JX3CalculatorShared.Data
@@ -47,162 +46,8 @@ namespace JX3CalculatorShared.Data
 
     public class AbsSkillDataItem : AbsGeneralItem
     {
-        public string Skill_Name { get; set; }
+        public string SkillName { get; set; }
     }
-
-    public class SkillInfoItemBase : AbsSkillDataItem
-    {
-        public string Fight_Name { get; set; }
-        public double Interval { get; set; }
-        public int Frame { get; set; }
-        public int nCount { get; set; } = 1;
-        public double CostEnergy { get; set; } = 0;
-        public double CD { get; set; } = 0;
-        public double Fixed_Min { get; set; } = 0;
-        public double Fixed_Max { get; set; } = 0;
-        public double Fixed_Dmg { get; set; } = 0;
-        public double SurplusFactor { get; set; } = Double.NaN;
-        public double nChannelInterval { get; set; }
-        public double WP_Coef { get; set; } = 0;
-        public double Add_Dmg { get; set; } = 0;
-
-        public double Add_NPCDmg { get; set; } = 0;
-        public double Add_CT { get; set; } = 0;
-        public double Add_CF { get; set; } = 0;
-        public int IconID { get; set; }
-        public int SkillID { get; set; }
-        public int Level { get; set; }
-        public int RecipeType { get; set; }
-        public ulong SkillEventMask1 { get; set; }
-        public ulong SkillEventMask2 { get; set; }
-        public int Cast_SkillID { get; set; }
-        public ulong Cast_SkillEventMask1 { get; set; }
-        public ulong Cast_SkillEventMask2 { get; set; }
-        public string BelongKungfu { get; set; }
-        public SkillDataTypeEnum Type { get; set; }
-        public bool IsPZ => Type == SkillDataTypeEnum.PZ; // 是否为类破招技能
-        public double SurplusCoef { get; private set; } = 0;
-        public int EnergyInjection { get; private set; } // 注能次数
-
-        /// <summary>
-        /// 判断技能能否触发事件
-        /// </summary>
-        /// <param name="skillInfoItem">技能</param>
-        /// <param name="eventItem">技能事件</param>
-        /// <returns>能否触发</returns>
-        public static bool CanTrigger(SkillInfoItemBase skillInfoItem, SkillEventItem eventItem)
-        {
-            if (skillInfoItem.Type == SkillDataTypeEnum.DOT || skillInfoItem.Type == SkillDataTypeEnum.PZ)
-            {
-                // DOT和破招无法触发任何事件
-                return false;
-            }
-
-            bool skill1 = (skillInfoItem.SkillEventMask1 & eventItem.EventMask1) > 0;
-            bool skill2 = (skillInfoItem.SkillEventMask2 & eventItem.EventMask2) > 0;
-            bool cast1 = (skillInfoItem.Cast_SkillEventMask1 & eventItem.EventMask1) > 0;
-            bool cast2 = (skillInfoItem.Cast_SkillEventMask2 & eventItem.EventMask2) > 0;
-            bool eventskill = (skillInfoItem.SkillID > 0) && (skillInfoItem.SkillID == eventItem.EventSkillID);
-            bool res = skill1 || skill2 || cast1 || cast2 || eventskill;
-            return res;
-        }
-
-        public bool CanTrigger(SkillEventItem eventItem)
-        {
-            return CanTrigger(this, eventItem);
-        }
-
-        public IEnumerable<string> TriggerEvent(IEnumerable<SkillEventItem> eventItems)
-        {
-            var res = from item in eventItems
-                      where CanTrigger(item)
-                      select item.Name;
-            return res.ToImmutableArray();
-        }
-
-        /// <summary>
-        /// 判断技能是否吃秘籍
-        /// </summary>
-        /// <param name="info">技能</param>
-        /// <param name="recipe">秘籍</param>
-        /// <returns></returns>
-        public static bool CanEffectRecipe(SkillInfoItemBase info, Recipe recipe)
-        {
-            bool res = false;
-
-            if (recipe.EffectSkillName.Count > 0)
-            {
-                res = recipe.EffectSkillName.Contains(info.Name);
-            }
-            else
-            {
-                bool skillrecipe = (info.SkillID > 0) && (info.SkillID == recipe.SkillID);
-                bool skillrecipeType =
-                    (info.RecipeType > 0) && (info.RecipeType == recipe.SkillRecipeType);
-                res = skillrecipe || skillrecipeType;
-            }
-            return res;
-        }
-
-        public bool CanEffectRecipe(Recipe recipe)
-        {
-            return CanEffectRecipe(this, recipe);
-        }
-
-        public IEnumerable<string> EffectRecipe(IEnumerable<Recipe> recipes)
-        {
-            var res = from item in recipes
-                      where CanEffectRecipe(item)
-                      select item.Name;
-            return res.ToImmutableArray();
-        }
-
-
-        // 获取充能次数
-        public int GetEnergyInjectionNum()
-        {
-            int res = 0;
-
-            if (Type == SkillDataTypeEnum.PZ || Type == SkillDataTypeEnum.DOT)
-            {
-                return 0;
-            }
-
-            if (AppStatic.XinFaTag == "JY")
-            {
-                if ((BelongKungfu == "百步穿杨" || BelongKungfu == "乾坤一掷") && Name != "BaiYuTiaoZhu" && Name != "KongQueLing")
-                {
-                    // 注意奇穴的白雨跳珠不能触发注能
-                    res += 1;
-                }
-
-                if (Name == SkillKeyConst.穿心弩)
-                {
-                    res += 3;
-                }
-            }
-
-            return res;
-        }
-
-        public void Parse()
-        {
-            EnergyInjection = GetEnergyInjectionNum();
-            GetSurplusCoef();
-        }
-
-        // 计算破招系数
-        public void GetSurplusCoef()
-        {
-            if (IsPZ)
-            {
-                int nFactor = (int) SurplusFactor;
-                var factor = (double) nFactor / StaticConst.G_KILO_SQUARE_NUM;
-                SurplusCoef = XFStaticConst.fGP.PZ * (1 + factor);
-            }
-        }
-    }
-
 
     public partial class SkillEventItem : AbsGeneralItem
     {
@@ -211,7 +56,7 @@ namespace JX3CalculatorShared.Data
         public string Type { get; set; }
         public string Associate { get; set; }
         public string DescName { get; set; }
-        public string EventType { get; set; }
+        public SkillEventTypeEnum EventType { get; set; }
         public int Odds { get; set; }
         public int SkillID { get; set; }
         public int SkillLevel { get; set; }
@@ -219,7 +64,6 @@ namespace JX3CalculatorShared.Data
         public ulong EventMask2 { get; set; }
         public int EventSkillID { get; set; }
         public int EventSkillLevel { get; set; }
-        public HashSet<string> TriggerSkillNames { get; private set; } // 可以触发事件的技能Name
         public double Prob { get; private set; } // 触发概率
         public double Time { get; set; } // 持续时间
         public double CD { get; set; } // CD时间
@@ -248,7 +92,7 @@ namespace JX3CalculatorShared.Data
     {
         public int SetID { get; set; }
         public string SetName { get; set; }
-        public string EIDs_Str { get; set; }
+        public string EID_Str { get; set; }
         public string Effect2 { get; set; }
         public string Effect4 { get; set; }
     }
@@ -285,7 +129,8 @@ namespace JX3CalculatorShared.Data
 
     public abstract class AbsBuffItem : AbsIconToolTipItem, ILuaTable
     {
-        public static TabParser Parser = new TabParser("At_key{0:D}", "At_value{0:D}", AttributeIDLoader.AttributeIsValue);
+        public static TabParser Parser =
+            new TabParser("At_key{0:D}", "At_value{0:D}", AttributeIDLoader.AttributeIsValue);
 
         public AttrCollection ParseItem()
         {
@@ -327,6 +172,21 @@ namespace JX3CalculatorShared.Data
         public int? At_value6 { get; set; }
         public string At_key7 { get; set; }
         public int? At_value7 { get; set; }
+
+        public int ID { get; private set; }
+        public int Level { get; private set; }
+
+        public void MakeIDLevel()
+        {
+            var res = BaseBuff.ParseIDLevel(BuffID);
+            ID = res.ID;
+            Level = res.Level;
+        }
+
+        public void ParseIDLevel() // [TODO] 数据中直接带上ID和Level，避免运行时解析
+        {
+            MakeIDLevel();
+        }
     }
 
     public class ItemDTItem : AbsBuffItem
@@ -335,7 +195,7 @@ namespace JX3CalculatorShared.Data
         public int Quality { get; set; }
         public string ItemNameM { get; set; }
         public string 类型 { get; set; }
-        public int DLCLevel { get; set; }
+        public int ExpansionPackLevel { get; set; }
         public ItemDTTypeEnum Type { get; set; }
         public int BuffEnchantID { get; set; }
         public int Level { get; set; }
@@ -362,7 +222,7 @@ namespace JX3CalculatorShared.Data
         public int UIID { get; set; }
         public int ID { get; set; }
         public string ItemName { get; set; }
-        public int DLCLevel { get; set; } = StaticConst.CurrentLevel;
+        public int ExpansionPackLevel { get; set; } = StaticConst.CurrentLevel;
     }
 
     public class Enchant : AbsEnchant
@@ -377,7 +237,6 @@ namespace JX3CalculatorShared.Data
         public int Magic { get; set; }
         public int Physics { get; set; }
         public string EnhanceDesc { get; set; }
-
     }
 
     public class BottomsFMItem : AbsEnchant
@@ -398,13 +257,23 @@ namespace JX3CalculatorShared.Data
         public int Level { get; set; }
         public int Order { get; set; }
         public int Quality { get; set; }
-        public int DLCLevel { get; set; }
+        public int ExpansionPackLevel { get; set; }
+
+        public int BuffID { get; set; }
+        public int BuffLevel { get; set; }
+        public string BuffRawID { get; set; }
+        public string BuffAttributeID { get; set; }
+        public int BuffAttributeValue { get; set; } = 0;
+        public int MaxStackNum { get; set; } = 0;
+        public int FinalBuffAttributeValue { get; set; } = 0;
+
         public string EIDs_Str { get; set; }
     }
 
     public class RecipeItem : AbsIconToolTipItem, ILuaTable
     {
-        public static TabParser Parser = new TabParser("SAt_key{0:D}", "SAt_value{0:D}", AttributeIDLoader.SkillAttributeIsValue);
+        public static TabParser Parser =
+            new TabParser("SAt_key{0:D}", "SAt_value{0:D}", AttributeIDLoader.SkillAttributeIsValue);
 
         public AttrCollection ParseItem()
         {
@@ -422,6 +291,8 @@ namespace JX3CalculatorShared.Data
         public int SAt_value2 { get; set; }
         public string SAt_key3 { get; set; }
         public int SAt_value3 { get; set; }
+        public string SAt_key4 { get; set; }
+        public int SAt_value4 { get; set; }
         public string DescName { get; set; }
         public string RecipeName { get; set; }
         public string obj_name { get; set; }
@@ -434,13 +305,14 @@ namespace JX3CalculatorShared.Data
         public int DesignLevel { get; set; }
         public string Associate { get; set; }
         public bool IsExclude { get; set; } = false;
+        public string SkillNameTag { get; set; }
 
         public string RawSkillNames { get; set; } = ""; // 当此项不为空时，会直接解析生效的技能名；否则需要对比SkillID进行求解生效技能名
 
         public static string GetToolTipTail(int ID, int Level)
         {
             string tail = "";
-            var id = Funcs.MergeIDLevel(ID, Level);
+            var id = GlobalFunctions.MergeIDLevel(ID, Level);
             if (ID > 0)
             {
                 tail = $"\n\nID: {id}";
@@ -458,13 +330,14 @@ namespace JX3CalculatorShared.Data
     public class DiamondValueItemBase
     {
         public int Level { get; set; }
-        public int AP { get; set; }
-        public int OC { get; set; }
-        public int CF { get; set; }
-        public int CT { get; set; }
-        public int PZ { get; set; }
-        public int WS { get; set; }
+        public int BaseAttackPower { get; set; } // 基础攻击
+        public int BaseOvercome { get; set; } // 基础破防
+        public int CriticalStrike { get; set; } // 会心等级
+        public int CriticalPower { get; set; } // 会效等级
+        public int BaseSurplus { get; set; } // 基础破招值
+        public int BaseStrain { get; set; } // 基础无双值
     }
+
     public class SkillBuildItem : AbsGeneralItem
     {
         public string Build { get; set; }
@@ -475,5 +348,83 @@ namespace JX3CalculatorShared.Data
         public string RawBannedQiXues { get; set; }
         public string RawEssentialMiJis { get; set; }
         public string RawSav { get; set; }
+    }
+
+    public partial class EquipSpecialEffectItem : AbsIconToolTipItem
+    {
+        public string EID { get; set; }
+        public int ID { get; set; } = -1;
+        public string EquipName { get; set; }
+        public int EquipSubType { get; set; } = -1;
+        public EquipSubTypeEnum SubType { get; set; }
+        public int Level { get; set; } = -1;
+        public int UIID { get; set; } = -1;
+        public int Quality { get; set; } = -1;
+        public int EquipSpecialEffectEventID { get; set; } = -1;
+        public string EquipSpecialEffectEventDesc { get; set; }
+        public string EquipSpecialEffectName { get; set; }
+        public EquipSpecialEffectTypeEnum SpecialEffectType { get; set; }
+        public EquipSpecialEffectBaseTypeEnum SpecialEffectBaseType { get; set; }
+        public string DescName { get; set; }
+        public string EventName { get; set; }
+        public bool NeedCalcEventFreq { get; set; }
+        public string ItemName { get; set; }
+        // 以下属性由解析得到
+        public bool IsValid { get; private set; }
+        public string SpecialEffectColor { get; private set; }
+        public EquipSpecialEffectEntry SpecialEffectEntry { get; private set; }
+
+        public static bool IsValidItem(EquipSpecialEffectItem item)
+        {
+            return item != null && item.Level > 0;
+        }
+
+        public void Parse()
+        {
+            IsValid = IsValidItem(this);
+            SpecialEffectColor = IsValid ? ColorConst.Orange : ColorConst.Default;
+        }
+
+        public void AttachEquipSpecialEffectEntry(EquipSpecialEffectEntry entry)
+        {
+            SpecialEffectEntry = entry;
+        }
+
+    }
+
+    public partial class EquipSpecialEffectEntry: AbsGeneralItem
+    {
+        public int EquipLevel { get; set; } = -1;
+        public int SkillEventID { get; set; } = -1;
+        public int SkillID { get; set; } = -1;
+        public int SkillLevel { get; set; } = -1;
+        public EquipSpecialEffectTypeEnum SpecialEffectType { get; set; }
+        public EquipSpecialEffectBaseTypeEnum SpecialEffectBaseType { get; set; }
+        public string SkillScriptFileName { get; set; }
+        public string Sample { get; set; }
+        public string Comment { get; set; }
+        public int CD { get; set; } = -1;
+        public int DamageSkillID { get; set; } = -1;
+        public int DamageSkillILevel { get; set; } = -1;
+        public int BuffTime1 { get; set; } = -1;
+        public int BuffID1 { get; set; } = -1;
+        public int BuffLevel1 { get; set; } = -1;
+        public int BuffStack1 { get; set; } = -1;
+        public int BuffCover1 { get; set; } = -1;
+        public int BuffID2 { get; set; } = -1;
+        public int BuffLevel2 { get; set; } = -1;
+        public int BuffStack2 { get; set; } = -1;
+        public int BuffCover2 { get; set; } = -1;
+        public int BuffID3 { get; set; } = -1;
+        public int BuffLevel3 { get; set; } = -1;
+        public int BuffStack3 { get; set; } = -1;
+        public int BuffCover3 { get; set; } = -1;
+        public string DescName { get; set; }
+        public bool NeedCalcEventFreq { get; set; }
+        public string EventName { get; set; }
+
+        public bool IsSnapAdaptiveBuff { get; private set; }
+
+        public SkillEventItem SkillEvent { get; private set; }
     }
 }

@@ -4,6 +4,7 @@ using JX3CalculatorShared.Utils;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
+using System.Linq;
 
 
 namespace JX3CalculatorShared.Class
@@ -42,7 +43,9 @@ namespace JX3CalculatorShared.Class
         public readonly SkillAttrCollection SkillAttrs;
         public readonly SkillAttrCollection SSkillAttrs;
 
-        public ImmutableHashSet<string> EffectSkillName; // 可以作用的技能key
+        public readonly string SkillNameTag;
+
+        public HashSet<string> EffectSkillName; // 可以作用的技能key
 
         #endregion
 
@@ -71,15 +74,16 @@ namespace JX3CalculatorShared.Class
             ToolTip = item.ToolTip + item.GetToolTipTail();
 
             Type = item.Type;
+            SkillNameTag = item.SkillNameTag;
 
 
             if (item.RawSkillNames != "")
             {
-                EffectSkillName = StringTool.ParseStringList(item.RawSkillNames).ToImmutableHashSet();
+                EffectSkillName = StringTool.ParseStringList(item.RawSkillNames).ToHashSet();
             }
             else
             {
-                EffectSkillName = (new HashSet<string>()).ToImmutableHashSet();
+                EffectSkillName = (new HashSet<string>()).ToHashSet();
             }
 
         }
@@ -111,6 +115,7 @@ namespace JX3CalculatorShared.Class
 
             ToolTip = old.ToolTip;
             Type = old.Type;
+            SkillNameTag = old.SkillNameTag;
 
             EffectSkillName = old.EffectSkillName;
 
@@ -131,7 +136,7 @@ namespace JX3CalculatorShared.Class
         /// <param name="skillNames">技能名列表</param>
         public void SetEffectSkills(IEnumerable<string> skillNames)
         {
-            EffectSkillName = skillNames.ToImmutableHashSet();
+            EffectSkillName = skillNames.ToHashSet();
         }
 
         #endregion

@@ -9,8 +9,8 @@ namespace JYCalculator.DB
 {
     public class BuffDB : BuffDBBase
     {
-        public readonly Buff XW;
-        public readonly Buff BigXW;
+        public readonly KBuff XW;
+        public readonly KBuff BigXW;
 
         #region 构造
 
@@ -24,8 +24,8 @@ namespace JYCalculator.DB
 
         public BuffDB() : this(StaticXFData.Data.Buff_df)
         {
-            XW = Buff_Special[XFStaticConst.XW.XWBuffName];
-            BigXW = Buff_Special[XFStaticConst.XW.BigXWBuffName];
+            XW = Buff_Special[XFStaticConst.XinWuConsts.XWBuffName];
+            BigXW = Buff_Special[XFStaticConst.XinWuConsts.BigXWBuffName];
         }
 
         #endregion

@@ -44,8 +44,8 @@ namespace JX3PZ.Models
 
         public virtual double Coef { get; protected set; } = 0; // 换算系数
 
-        public readonly AttributeID PointAttribute;
-        public AttributeID PercentAttribute { get; protected set; }
+        public readonly KAttributeID PointAttribute;
+        public KAttributeID PercentAttribute { get; protected set; }
         public string PointDescName => PointAttribute.FullDesc; // 点数描述名
         public string PercentDescName => PercentAttribute.FullDesc; // 几率描述名
 
@@ -65,7 +65,7 @@ namespace JX3PZ.Models
             ExtraKey = new HashSet<string>(6);
             ExtraKey.AddRange(extraKey);
 
-            PointAttribute = AttributeID.Get(BasePointKey);
+            PointAttribute = KAttributeID.Get(BasePointKey);
         }
 
         public double GetFinalPoint()

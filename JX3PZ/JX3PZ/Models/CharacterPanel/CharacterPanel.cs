@@ -24,6 +24,7 @@ namespace JX3PZ.Models
         public PanelWeaponSlot RangeWeapon { get; } // 远程武器伤害属性
 
         public PanelMaxLifeSlot MaxLife { get; } // 最大生命值
+        public int EquipScore { get; set; } // 装备分数
 
         public PlayerLevelData LevelData;
 

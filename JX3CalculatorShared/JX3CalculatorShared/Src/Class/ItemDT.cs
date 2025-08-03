@@ -9,7 +9,6 @@ using System.Linq;
 
 namespace JX3CalculatorShared.Class
 {
-
     public class ItemDT : ICatsable
     {
         #region 成员
@@ -24,7 +23,7 @@ namespace JX3CalculatorShared.Class
         public readonly BaseBuff Buff;
         public readonly KeyValuePair<string, double> SimpleAttr;
         public readonly bool IsValid; // 是否为有效单体
-        public readonly int DLCLevel; // 出现等级
+        public readonly int ExpansionPackLevel; // 出现等级
         public readonly int BuffEnchantID; // Buff/EnchantID（因为武器磨石不是BUFF）
         public readonly int Level;
 
@@ -37,6 +36,7 @@ namespace JX3CalculatorShared.Class
         public string ItemDTType { get; } // 中文类型（食品增强，食品辅助……）
 
         public RelayCommand CancelThisCmd { get; }
+
         #endregion
 
         #region 构造
@@ -54,15 +54,17 @@ namespace JX3CalculatorShared.Class
             return (part1, part2);
         }
 
-        public static BaseBuff GenerateBaseBuff(string name, string descName, int iconID, Dictionary<string, double> data)
+        public static BaseBuff GenerateBaseBuff(string name, string descName, int id, int level, int iconID,
+            Dictionary<string, double> data)
         {
-            var res = new BaseBuff(name: name, descName: descName, iconID: iconID, isTarget: false, data: data);
+            var res = new BaseBuff(name: name, descName: descName, id: id, level: level, iconID: iconID,
+                isTarget: false, data: data);
             return res;
         }
 
         public BaseBuff GenerateBaseBuff()
         {
-            var res = GenerateBaseBuff(Name, DescName, IconID, Data);
+            var res = GenerateBaseBuff(Name, DescName, BuffEnchantID, Level, IconID, Data);
             return res;
         }
 
@@ -71,8 +73,8 @@ namespace JX3CalculatorShared.Class
             string res = "";
             if (UIID > 0)
             {
-
             }
+
             res = $"\n\nUIID: {UIID}";
             return res;
         }
@@ -88,7 +90,7 @@ namespace JX3CalculatorShared.Class
             Quality = item.Quality;
             Type = item.Type;
             ItemName = item.ItemName;
-            DLCLevel = item.DLCLevel;
+            ExpansionPackLevel = item.ExpansionPackLevel;
             BuffEnchantID = item.BuffEnchantID;
             Level = item.Level;
 

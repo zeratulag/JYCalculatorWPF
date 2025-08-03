@@ -7,15 +7,17 @@ namespace JX3CalculatorShared.Class
     public class AttrWeightBase
     {
         public string Name { get; }
-        public double AP { get; set; }
-        public double OC { get; set; } = 1;
-        public double CT_Point { get; set; } = 1;
-        public double CF_Point { get; set; } = 1;
-        public double WS_Point { get; set; } = 1;
-        public double PZ { get; set; } = 1;
-        public double WP { get; set; } = 0;
-        public double Final_AP { get; set; } = double.NaN;
-        public double Final_OC { get; set; } = double.NaN;
+        public double BaseAttackPower { get; set; }
+        public double BaseOvercome { get; set; } = 1;
+        public double CriticalStrike { get; set; } = 1;
+        public double CriticalPower { get; set; } = 1;
+        public double BaseStrain { get; set; } = 1;
+        public double BaseSurplus { get; set; } = 1;
+        public double BaseWeaponDamage { get; set; } = 0;
+        public double FinalAttackPower { get; set; } = double.NaN;
+        public double FinalOvercome { get; set; } = double.NaN;
+        public double FinalStrain { get; set; } = double.NaN;
+
         public string ToolTip { get; }
 
         private const string DiamondSuffix = "级孔";
@@ -24,14 +26,14 @@ namespace JX3CalculatorShared.Class
         public AttrWeightBase(DiamondValueItemBase item)
         {
             Name = $"{item.Level}{DiamondSuffix}";
-            AP = item.AP;
-            OC = item.OC;
-            CF_Point = item.CF;
-            CT_Point = item.CT;
+            BaseAttackPower = item.BaseAttackPower;
+            BaseOvercome = item.BaseOvercome;
+            CriticalStrike = item.CriticalStrike;
+            CriticalPower = item.CriticalPower;
 
-            PZ = item.PZ;
-            WS_Point = item.WS;
-            WP = Double.NaN;
+            BaseSurplus = item.BaseSurplus;
+            BaseStrain = item.BaseStrain;
+            BaseWeaponDamage = Double.NaN;
 
             ToolTip = $"{item.Level}级五行石镶嵌孔增加的DPS";
 
@@ -54,17 +56,17 @@ namespace JX3CalculatorShared.Class
         {
             var res = new Dictionary<string, double>()
             {
-                {nameof(AP), AP},
-                {nameof(OC), OC},
-                {nameof(CT_Point), CT_Point},
-                {nameof(CF_Point), CF_Point},
-                {nameof(WS_Point), WS_Point},
-                {nameof(PZ), PZ},
-                {nameof(WP), WP},
-                {nameof(Final_AP), Final_AP},
-                {nameof(Final_OC), Final_OC},
+                {nameof(BaseAttackPower), BaseAttackPower},
+                {nameof(BaseOvercome), BaseOvercome},
+                {nameof(CriticalStrike), CriticalStrike},
+                {nameof(CriticalPower), CriticalPower},
+                {nameof(BaseStrain), BaseStrain},
+                {nameof(BaseSurplus), BaseSurplus},
+                {nameof(BaseWeaponDamage), BaseWeaponDamage},
+                {nameof(FinalAttackPower), FinalAttackPower},
+                {nameof(FinalOvercome), FinalOvercome},
+                {nameof(FinalStrain), FinalStrain},
             };
-            // res.Add(nameof(L), L);
             return res;
         }
     }

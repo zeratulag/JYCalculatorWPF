@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using JX3CalculatorShared.Data;
 using JX3PZ.Globals;
 using JX3PZ.Models;
 
@@ -26,6 +27,9 @@ namespace JX3PZ.ViewModels
         public PanelToughnessSlotViewModel Toughness { get; }
         public PanelPVXAllRoundSlotViewModel PVXAllRoundSlot { get; }
 
+        public EquipSpecialEffectItem[] EquipSpecialEffects { get; private set; }
+        public string EquipSpecialEffectsDesc { get; private set; } = "特效精简(0)";
+
         public PzResultViewModel()
         {
             Score = new PzEquipScoreViewModel();
@@ -46,6 +50,7 @@ namespace JX3PZ.ViewModels
             Toughness = new PanelToughnessSlotViewModel();
 
             PVXAllRoundSlot = new PanelPVXAllRoundSlotViewModel();
+            EquipSpecialEffects = null;
         }
 
         public PzResultViewModel(PzPlanModel model)
@@ -73,6 +78,13 @@ namespace JX3PZ.ViewModels
             Toughness.UpdateFrom(model);
 
             PVXAllRoundSlot.UpdateFrom(model);
+            EquipSpecialEffects = model.GetValidEquipSpecialEffectItems();
+            UpdateEquipSpecialEffectsDesc();
+        }
+
+        public void UpdateEquipSpecialEffectsDesc()
+        {
+            EquipSpecialEffectsDesc = $"特效精简({EquipSpecialEffects.Length})";
         }
 
         public PzAttributeSlotsViewModelBase[] GetAttributeSlots()

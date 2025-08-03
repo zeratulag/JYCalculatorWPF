@@ -2,9 +2,12 @@
 using JX3CalculatorShared.ViewModels;
 using JYCalculator.Class;
 using JYCalculator.Data;
+using Serilog;
 using System.Collections.Generic;
 using System.Collections.Immutable;
+using System.Diagnostics;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace JYCalculator.Src
 {
@@ -25,8 +28,7 @@ namespace JYCalculator.Src
         public readonly FullCharacter[] InputChars; // 在不同阵法下的InputChar
 
         public readonly DPSKernelShell[] DPSKernelShells; // 不同阵法下的Kernel
-
-        public readonly Dictionary<string, MultiZhenRes> Result; // 结论
+        public Dictionary<string, MultiZhenRes> Result { get; private set; } // 结论
         public MultiZhenRes[] ResultArr;
 
         #endregion
@@ -67,29 +69,71 @@ namespace JYCalculator.Src
 
         public void Calc()
         {
-            GetInputs();
+            //GetInputs();
+            GetInputsParallel();
+            //BenchmarkGetInputs();
             GetRelative();
             GetRank();
+        }
+
+        public void BenchmarkGetInputs()
+        {
+            // 串行
+            var sw1 = Stopwatch.StartNew();
+            GetInputs();
+            sw1.Stop();
+            Log.Information("GetInputs (串行) 耗时: {Elapsed} ms", sw1.Elapsed.TotalMilliseconds);
+
+            // 并行
+            var sw2 = Stopwatch.StartNew();
+            GetInputsParallel();
+            sw2.Stop();
+            Log.Information("GetInputsParallel (并行) 耗时: {Elapsed} ms", sw2.Elapsed.TotalMilliseconds);
         }
 
 
         public void GetInputs()
         {
+            Result.Clear();
             for (int i = 0; i < AllZhen.Length; i++)
             {
-                var _ = AllZhen[i];
+                var czhen = AllZhen[i];
                 var newInput = NoneZhenInputChar.Copy();
-                newInput.AddZhenFa(_);
-                newInput.Name = _.Name;
+                newInput.AddZhenFa(czhen);
+                newInput.Name = czhen.Name;
                 InputChars[i] = newInput;
                 var newShell = OriginalShell.ChangeInputChar(newInput);
                 newShell.CalcCurrent();
-                newShell.Name = _.Name;
+                newShell.Name = czhen.Name;
                 DPSKernelShells[i] = newShell;
 
-                var resi = new MultiZhenRes(_.IconID, newShell.CurrentDPSKernel.FinalDPS, _.ItemName);
-                Result.Add(_.Name, resi);
+                var resi = new MultiZhenRes(czhen.Name, czhen.IconID, newShell.CurrentDPSKernel.FinalDPS,
+                    czhen.ItemName);
+                Result.Add(czhen.Name, resi);
             }
+        }
+
+        public void GetInputsParallel()
+        {
+            var localResultArr = new MultiZhenRes[AllZhen.Length];
+
+            Parallel.For(0, AllZhen.Length, i =>
+            {
+                var czhen = AllZhen[i];
+                var newInput = NoneZhenInputChar.Copy();
+                newInput.AddZhenFa(czhen);
+                newInput.Name = czhen.Name;
+                InputChars[i] = newInput;
+                var newShell = OriginalShell.ChangeInputChar(newInput);
+                newShell.CalcCurrent();
+                newShell.Name = czhen.Name;
+                DPSKernelShells[i] = newShell;
+                var resi = new MultiZhenRes(czhen.Name, czhen.IconID, newShell.CurrentDPSKernel.FinalDPS,
+                    czhen.ItemName);
+                localResultArr[i] = resi;
+            });
+
+            Result = localResultArr.ToDictionary(e => e.Key, e => e);
         }
 
         public void GetRelative()

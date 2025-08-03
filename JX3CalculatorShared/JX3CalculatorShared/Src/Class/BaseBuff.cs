@@ -25,6 +25,8 @@ namespace JX3CalculatorShared.Class
         public string ToolTip;
 
         public int Order;
+        public int ID { get; private set; }
+        public int Level { get; private set; }
 
         public int AppendType { get; protected set; } = -1; // 覆盖叠加方式，-1表示无冲突
         public int Intensity { get; protected set; } = -1;
@@ -48,19 +50,27 @@ namespace JX3CalculatorShared.Class
             IsTarget = isTarget;
         }
 
+        public BaseBuff()
+        {
+        }
+
         /// <param name="name">唯一名称（编码）</param>
         /// <param name="descName">描述名</param>
+        /// <param name="id"></param>
+        /// <param name="level"></param>
         /// <param name="iconID">图标ID（可选）</param>
         /// <param name="isTarget">如果为True表示这是对目标生效的DeBuff</param>
         /// <param name="data">属性字典</param>
-        public BaseBuff(string name, string descName, int iconID = -1, bool isTarget = false,
+        public BaseBuff(string name, string descName, int id, int level, int iconID = -1, bool isTarget = false,
             IDictionary<string, double> data = null) : this(name, descName, iconID, isTarget)
         {
             CharAttrs = new CharAttrCollection(data);
             SCharAttrs = CharAttrs.Simplify();
+            ID = id;
+            Level = level;
         }
 
-        public BaseBuff(string name, string descName, int iconID = -1, bool isTarget = false,
+        public BaseBuff(string name, string descName, int id, int level, int iconID = -1, bool isTarget = false,
             int appendType = -1, int intensity = -1,
             AttrCollection attrCollect = null) : this(name, descName, iconID, isTarget)
         {
@@ -68,17 +78,19 @@ namespace JX3CalculatorShared.Class
             SCharAttrs = CharAttrs.Simplify();
             AppendType = appendType;
             Intensity = intensity;
+            ID = id;
+            Level = level;
         }
 
-        public static BaseBuff ParseAbsBuffItem(AbsBuffItem item, bool isTarget)
-        {
-            var attrCollection = item.ParseItem();
-            var res = new BaseBuff(item.Name, item.DescName,
-                iconID: item.IconID, isTarget: isTarget, attrCollect: attrCollection);
-            res.ToolTipDesc = item.ToolTipDesc;
-            res.MakeToolTip();
-            return res;
-        }
+        //public static BaseBuff ParseAbsBuffItem(AbsBuffItem item, bool isTarget)
+        //{
+        //    var attrCollection = item.ParseItem();
+        //    var res = new BaseBuff(item.Name, item.DescName, TODO, TODO,
+        //        iconID: item.IconID, isTarget: isTarget, attrCollect: attrCollection);
+        //    res.ToolTipDesc = item.ToolTipDesc;
+        //    res.MakeToolTip();
+        //    return res;
+        //}
 
 
         /// <summary>
@@ -103,11 +115,28 @@ namespace JX3CalculatorShared.Class
 
         #endregion
 
-        #region 显示
-
-        #endregion
-
         #region 方法
+
+        public static (int ID, int Level) ParseIDLevel(string buffID)
+        {
+            if (string.IsNullOrWhiteSpace(buffID))
+                throw new ArgumentException("buffID cannot be null or empty.", nameof(buffID));
+
+            var parts = buffID.Split('_');
+            if (parts.Length != 2)
+                throw new FormatException("buffID must be in the format 'number_number', e.g. '3254_1'.");
+
+            int id = int.Parse(parts[0]);
+            int level = int.Parse(parts[1]);
+            return (id, level);
+        }
+
+        public void MakeIDLevel()
+        {
+            var res = ParseIDLevel(BuffID);
+            ID = res.ID;
+            Level = res.Level;
+        }
 
         public string GetToolTipHead()
         {
@@ -133,10 +162,6 @@ namespace JX3CalculatorShared.Class
         {
             ToolTip = GetToolTip();
         }
-
-        #endregion
-
-        #region 简化
 
         #endregion
     }

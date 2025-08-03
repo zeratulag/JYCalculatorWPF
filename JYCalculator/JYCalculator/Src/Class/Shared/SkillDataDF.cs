@@ -29,9 +29,9 @@ namespace JYCalculator.Class
             var lhby = Data["LHBY"];
             var by = Data["BY"];
             lhby.IgnoreB = by.IgnoreB;
-            lhby.AddDmg = by.AddDmg;
-            lhby.AddCT = by.AddCT;
-            lhby.AddCF = by.AddCF;
+            lhby.AddDamage = by.AddDamage;
+            lhby.AddCriticalStrikeRate = by.AddCriticalStrikeRate;
+            lhby.AddCriticalPowerRate = by.AddCriticalPowerRate;
         }
 
 

@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              xmlns:userControls="clr-namespace:JX3CalculatorShared.Views.UserControls"
+             xmlns:hc="https://handyorg.github.io/handycontrol"
              mc:Ignorable="d">
     <Grid x:Name="Grid_FightOption">
         <Grid.RowDefinitions>
@@ -23,7 +24,9 @@
         </Grid.Resources>
 
 
-        <Label Grid.Row="0" Grid.Column="0">时长</Label>
+        <hc:SimpleText Grid.Row="0" Grid.Column="0"
+                       HorizontalAlignment="Center" VerticalAlignment="Center" Text="时长" />
+
         <Grid Grid.Row="0" Grid.Column="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="15*" />
@@ -42,7 +45,7 @@
                     Style="{StaticResource Style.IntUpDown_InitInput}"
                     Text="300"
                     Value="{Binding Path=FightTime}" />
-                <Label>秒</Label>
+                <hc:SimpleText Text="秒" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             </StackPanel>
 
             <RadioButton
@@ -64,8 +67,11 @@
 
         </Grid>
 
-        <Label Grid.Row="1" Grid.Column="0">目标</Label>
+        <!--
+        <Label Grid.Row="1" Grid.Column="0">目标</Label>-->
 
+        <hc:SimpleText Grid.Row="1" Grid.Column="0"
+                       HorizontalAlignment="Center" VerticalAlignment="Center" Text="目标" />
 
         <Grid Grid.Row="1" Grid.Column="1">
 
@@ -88,18 +94,15 @@
                 </ComboBox.ItemTemplate>
             </ComboBox>
 
-            <Label
-                Grid.Column="1"
-                Margin="5,5,0,5"
-                HorizontalAlignment="Right"
-                DockPanel.Dock="Right">
-                手法
-            </Label>
+            <hc:SimpleText Grid.Column="1"
+                           Margin="5,5,5,5"
+                           HorizontalAlignment="Right"
+                           Text="手法" VerticalAlignment="Center" />
             <ComboBox
                 x:Name="FightOption_Ability_cbb"
                 Grid.Column="2"
                 MinWidth="30"
-                Margin="0,5"
+                Margin="0,5, 20, 5"
                 DisplayMemberPath="ItemName"
                 Style="{StaticResource Style.FightOptionCbb}"
                 DataContext="{Binding Path=AbilityVM}">
@@ -108,17 +111,22 @@
         </Grid>
 
 
-        <Label Grid.Row="2" Grid.Column="0">阵法</Label>
+        <hc:SimpleText Grid.Row="2" Grid.Column="0" Text="阵法" HorizontalAlignment="Center" VerticalAlignment="Center" />
         <DockPanel
             Grid.Row="2"
             Grid.Column="1"
             LastChildFill="False">
 
-            <ComboBox
-                x:Name="FightOption_ZhenFa_cbb"
-                Margin="5,5"
-                DataContext="{Binding Path=ZhenFaVM}"
-                Style="{StaticResource Style.ZhenFaCbb}" />
+            <ComboBox DockPanel.Dock="Left"
+                      x:Name="FightOption_ZhenFa_cbb"
+                      Margin="5,5"
+                      DataContext="{Binding Path=ZhenFaVM}"
+                      Style="{StaticResource Style.ZhenFaCbb}" />
+            <CheckBox DockPanel.Dock="Right" IsChecked="{Binding Path=TargetAllWaysFullHP}" 
+                      Margin="0 0 30 0"
+                      VerticalAlignment="Center" ToolTip="勾选时，[百步穿杨]奇穴会始终触发">
+                目标永远满血
+            </CheckBox>
         </DockPanel>
     </Grid>
 </UserControl>

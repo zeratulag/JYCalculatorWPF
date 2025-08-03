@@ -28,8 +28,8 @@ namespace JX3PZ.ViewModels
         public int SelectedIndex { get; set; } = -1;
         public Equip SelectedItem { get; set; }
 
-        public int MaxLevel { get; set; } = PzConst.MAX_EQUIP_LEVEL;
-        public int MinLevel { get; set; } = PzConst.MIN_EQUIP_LEVEL;
+        public int MaxLevel { get; set; } = PzConst.DEFAULT_MAX_EQUIP_LEVEL;
+        public int MinLevel { get; set; } = PzConst.DEFAULT_MIN_EQUIP_LEVEL;
 
         public CheckItem[] AttrFilterItems { get; }
         public ObservableCollection<object> AttrFilterSelected { get; set; }
@@ -48,7 +48,6 @@ namespace JX3PZ.ViewModels
             Position = position;
             Map = EquipMapLib.GetEquipMapItem(position);
             SubType = Map.SubType;
-
             AttrFilterItems = new CheckItem[]
             {
                 new CheckItem("会心"),
@@ -57,7 +56,10 @@ namespace JX3PZ.ViewModels
                 new CheckItem("加速"),
                 new CheckItem("破招"),
                 new CheckItem("无双"),
+                new CheckItem("特效"),
+                new CheckItem("全能"),
             };
+
             AttrFilterSelected = new ObservableCollection<object>();
 
             OtherFilterItems = new CheckItem[]
@@ -65,17 +67,20 @@ namespace JX3PZ.ViewModels
                 new CheckItem("散件"),
                 new CheckItem("套装"),
                 new CheckItem("精简"),
-                new CheckItem("无封"),
+                new CheckItem("无修"),
             };
             OtherFilterSelected = new ObservableCollection<object>(OtherFilterItems);
 
-            Source = StaticPzData.Equip[SubType];
+            var allSource = StaticPzData.Equip[SubType];
+            //Source = allSource.Where(item => ! item.IsSpecialWuXiu()).ToImmutableArray(); // 暂时不支持特效无修装备
+            Source = allSource.ToImmutableArray(); // 加入特效无修装备
             ItemsSourceView = CollectionViewSource.GetDefaultView(Source);
 
             GetFilterArg();
             ItemsSourceView.Filter = (_ => CanFilter((Equip)_));
 
             DropEquipCmd = new RelayCommand(DropEquip);
+            ApplyFilter(); // 筛选一次
             RegisterFilterEvents();
             WeakReferenceMessenger.Default.Register<PzEquipFilterMessage>(this);
         }
@@ -132,9 +137,11 @@ namespace JX3PZ.ViewModels
 
         public void Load(string eid)
         {
+            var oldFilterArg = FilterArg;
             FilterArg = null;
             var i = Source.IndexOf(_ => _.EID == eid);
             SelectedIndex = i;
+            FilterArg = oldFilterArg;
         }
 
         public void Load(JBPZEquipSnapshot s)

@@ -48,11 +48,11 @@ namespace JX3CalculatorShared.Class
             {
                 if (FullID == "atSetEquipmentRecipe" || FullID == "atSkillEventHandler")
                 {
-                    return "#ff9600";
+                    return ColorConst.Orange;
                 }
             }
 
-            return "#000000";
+            return ColorConst.Default;
         }
 
 
@@ -114,7 +114,7 @@ namespace JX3CalculatorShared.Class
     }
 
 
-    public class AttributeID : AbsAttributeID
+    public class KAttributeID : AbsAttributeID
     {
         #region 成员
 
@@ -144,7 +144,7 @@ namespace JX3CalculatorShared.Class
 
         #region 构造
 
-        public AttributeID(AttrItem item) : base(item.FullID, item.SID, item.Denominator, item.Type)
+        public KAttributeID(AttrItem item) : base(item.FullID, item.SID, item.Denominator, item.Type)
         {
             Target = item.Target;
             CategoryTitle = item.CategoryTitle;
@@ -166,7 +166,7 @@ namespace JX3CalculatorShared.Class
             RealValueExpression = AttributeIDPattern.GetValuePattern(item.GeneratedMagic);
         }
 
-        public static AttributeID Get(string fullId)
+        public static KAttributeID Get(string fullId)
         {
             return AttributeIDLoader.GetAttributeID(fullId);
         }
@@ -202,12 +202,12 @@ namespace JX3CalculatorShared.Class
 
         public override bool Equals(object obj)
         {
-            var other = obj as AttributeID;
+            var other = obj as KAttributeID;
             if (object.ReferenceEquals(null, other)) return false;
             return FullID == other.FullID;
         }
 
-        public static bool operator ==(AttributeID at1, AttributeID at2)
+        public static bool operator ==(KAttributeID at1, KAttributeID at2)
         {
             if (object.ReferenceEquals(null, at1))
                 return object.ReferenceEquals(null, at2);
@@ -216,7 +216,7 @@ namespace JX3CalculatorShared.Class
             return at1.Equals(at2);
         }
 
-        public static bool operator !=(AttributeID at1, AttributeID at2)
+        public static bool operator !=(KAttributeID at1, KAttributeID at2)
         {
             if (object.ReferenceEquals(null, at1))
                 return !object.ReferenceEquals(null, at2);

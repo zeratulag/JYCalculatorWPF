@@ -56,21 +56,20 @@ namespace JX3CalculatorShared.Common
     public class Period<T> where T : class
     {
         public T Normal;
-        public T XW;
+        public T XinWu;
         /// <summary>
         /// 用于描述在平时和心无不同状态的类集合
         /// </summary>
         /// <param name="normal">平时状态</param>
-        /// <param name="xw">心无</param>
-        public Period(T normal, T xw)
+        /// <param name="xinWu">心无</param>
+        public Period(T normal, T xinWu)
         {
             Normal = normal;
-            XW = xw;
+            XinWu = xinWu;
         }
 
         public Period()
         {
-
         }
 
     }

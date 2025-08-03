@@ -2,6 +2,7 @@
 using System.Linq;
 using JX3CalculatorShared.Class;
 using JX3CalculatorShared.ViewModels;
+using JYCalculator.Class;
 
 namespace JX3CalculatorShared.Src
 {
@@ -10,18 +11,20 @@ namespace JX3CalculatorShared.Src
     /// </summary>
     public class CalculatorShellArg
     {
-        public BigFMConfigArg BigFM;
-        public int HS; // 当前加速值
-        public BuffSpecialArg BuffSpecial;
+        public BigFMConfigArg BigFM { get; }
+        public int HS { get; } // 当前加速值
+        public BuffSpecialArg BuffSpecial { get; }
         public bool AllSkillMiJiIsSupport => RecipeCompatibleSkillBuilds.Length > 0; // 秘籍是否支持
-        public SkillBuild[] RecipeCompatibleSkillBuilds;
-
-        public bool EnableOptimization; // 是否启用优化建议
-        public double ShortTimeBonus; // 短时间战斗红利系数
+        public SkillBuild[] RecipeCompatibleSkillBuilds { get; }
+        public bool EnableOptimization { get; } // 是否启用优化建议
+        public double ShortTimeBonus { get; } // 短时间战斗红利系数
+        public bool TargetAllWaysFullHP { get; } // 目标永远满血
+        public EquipSpecialEffectConfigArg EquipSpecialEffectConfig { get; }
 
         public CalculatorShellArg(IEnumerable<SkillBuild> recipeCompatibleSkillBuilds, int hs,
             bool opt, BigFMConfigArg bigFM,
-            BuffSpecialArg buffSpecial, double shortTimeBonus = 0.0)
+            BuffSpecialArg buffSpecial, EquipSpecialEffectConfigArg equipSpecialEffectConfig,
+            bool targetAllWaysFullHP = false, double shortTimeBonus = 0.0)
         {
             RecipeCompatibleSkillBuilds = recipeCompatibleSkillBuilds.ToArray();
             BigFM = bigFM;
@@ -29,6 +32,8 @@ namespace JX3CalculatorShared.Src
             EnableOptimization = opt;
             BuffSpecial = buffSpecial;
             ShortTimeBonus = shortTimeBonus;
+            EquipSpecialEffectConfig = equipSpecialEffectConfig;
+            TargetAllWaysFullHP = targetAllWaysFullHP;
         }
 
         public CalculatorShellArg()
@@ -43,6 +48,8 @@ namespace JX3CalculatorShared.Src
             EnableOptimization = old.EnableOptimization;
             BuffSpecial = old.BuffSpecial;
             ShortTimeBonus = old.ShortTimeBonus;
+            TargetAllWaysFullHP = old.TargetAllWaysFullHP;
+            EquipSpecialEffectConfig = old.EquipSpecialEffectConfig;
         }
 
         public CalculatorShellArg Copy()

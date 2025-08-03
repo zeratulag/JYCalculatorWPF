@@ -27,7 +27,7 @@
             VerticalAlignment="Center"
             FontSize="24"
             FontWeight="Bold"
-            Foreground="Red"
+            Foreground="Green"
             Text="{Binding Path=FinalDPStxt, Mode=OneWay}"
             MouseLeftButtonDown="CopyFinalDPS"
             Style="{StaticResource Style.TextBlockBox}"
@@ -46,9 +46,9 @@
                 ItemsSource="{Binding Path=DPSTable}">
                 <DataGrid.Columns>
                     <DataGridTextColumn Binding="{Binding Path=DescName}" Header="时段" />
-                    <DataGridTextColumn Binding="{Binding Path=DPS, StringFormat={}{0:F0}}"
+                    <DataGridTextColumn Binding="{Binding Path=DPS, StringFormat=F0}"
                                         Header="DPS" />
-                    <DataGridTextColumn Binding="{Binding Path=Proportion, StringFormat={}{0:P2}}"
+                    <DataGridTextColumn Binding="{Binding Path=Proportion, StringFormat=P2}"
                                         Header="占比" />
                 </DataGrid.Columns>
             </DataGrid>

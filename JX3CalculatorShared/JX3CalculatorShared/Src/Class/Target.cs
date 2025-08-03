@@ -19,25 +19,24 @@ namespace JX3CalculatorShared.Class
         public int Level { get; }
         public double DefCoef { get; } // 防御系数
         public string DescName { get; private set; }
-
-        [ExcelIgnore]
-        public string ToolTip { get; }
+        [ExcelIgnore] public string RealDescName => DescName;
+        [ExcelIgnore] public string ToolTip { get; }
         public string ItemName { get; }
 
-        public double Base_PDef { get; set; }  // 基础外防
-        public double Final_PDef { get; set; } // 最终外防
-        public double Base_MDef { get; set; } // 基础内防
-        public double Final_MDef { get; set; } // 最终内防
-        public double PDef_Percent { get; set; } // +外防
-        public double MDef_Percent { get; set; } // +内防
-        public double P_YS { get; set; } // 外功易伤
-        public double M_YS { get; set; } // 内功易伤
+        public double PhysicsBaseShield { get; set; } // 基础外防
+        public double PhysicsFinalShield { get; set; } // 最终外防
+        public double MagicBaseShield { get; set; } // 基础内防
+        public double MagicFinalShield { get; set; } // 最终内防
+        public double PhysicsShieldPercent { get; set; } = 0.0; // +外防
+        public double MagicShieldPercent { get; set; } = 0.0; // +内防
+        public double PhysicsDamageCoefficient { get; set; } = 1.0; // 外功承伤
+        public double MagicDamageCoefficient { get; set; } = 1.0; // 内功承伤
 
         #endregion
 
-        public double PDefReduceDmg => DamageTool.DefReduceDmg(Final_PDef, DefCoef); // 外防值
+        public double PhysicsShieldReduceDamageValue => DamageTool.DefReduceDmg(PhysicsFinalShield, DefCoef); // 外防减伤值
 
-        public double MDefReduceDmg => DamageTool.DefReduceDmg(Final_MDef, DefCoef); // 内防值
+        public double MagicShieldReduceDamageValue => DamageTool.DefReduceDmg(MagicFinalShield, DefCoef); // 内防减伤值值
 
 
         public string GetItemName()
@@ -55,8 +54,8 @@ namespace JX3CalculatorShared.Class
             var resList = new List<string>();
             resList.Add($"{DescName} {Level}级");
             resList.Add(StringConsts.TooltipDivider0);
-            resList.Add($"外功防御：{PDefReduceDmg:P2} ({Final_PDef:F0})");
-            resList.Add($"内功防御：{MDefReduceDmg:P2} ({Final_MDef:F0})");
+            resList.Add($"外功防御：{PhysicsShieldReduceDamageValue:P2} ({PhysicsFinalShield:F0})");
+            resList.Add($"内功防御：{MagicShieldReduceDamageValue:P2} ({MagicFinalShield:F0})");
             var res = String.Join("\n", resList);
             return res;
         }
@@ -71,7 +70,7 @@ namespace JX3CalculatorShared.Class
         public Target(int level, string descName = "", int? baseDef = null, string toolTip = "")
         {
             Level = level;
-            DefCoef = BaseGlobalParams.Def * GlobalParams.LevelFactor(level);
+            DefCoef = BaseGlobalParams.Shield * GlobalParams.LevelFactor(level);
 
             bool hasKey = GlobalData.BossBaseDefs.ContainsKey(level);
             bool incompleteInput = descName == "" || baseDef == null;
@@ -82,12 +81,10 @@ namespace JX3CalculatorShared.Class
             }
 
             DescName = descName != "" ? descName : GlobalData.MuZhuangDescNames[level];
-            Base_PDef = baseDef ?? GlobalData.BossBaseDefs[level];
+            PhysicsBaseShield = baseDef ?? GlobalData.BossBaseDefs[level];
 
-            Final_PDef = Base_PDef;
-            Final_MDef = Base_MDef = Base_PDef;
-            PDef_Percent = MDef_Percent = 0.0;
-            P_YS = M_YS = 0.0;
+            PhysicsFinalShield = PhysicsBaseShield;
+            MagicFinalShield = MagicBaseShield = PhysicsBaseShield;
 
             ItemName = GetItemName();
             ToolTip = toolTip;
@@ -105,21 +102,20 @@ namespace JX3CalculatorShared.Class
             ToolTip = old.ToolTip;
             ItemName = old.ItemName;
 
-            Base_PDef = old.Base_PDef;
-            Final_PDef = old.Final_PDef;
-            Base_MDef = old.Base_MDef;
-            Final_MDef = old.Final_MDef;
-            PDef_Percent = old.PDef_Percent;
-            MDef_Percent = old.MDef_Percent;
-            P_YS = old.P_YS;
-            M_YS = old.M_YS;
+            PhysicsBaseShield = old.PhysicsBaseShield;
+            PhysicsFinalShield = old.PhysicsFinalShield;
+            MagicBaseShield = old.MagicBaseShield;
+            MagicFinalShield = old.MagicFinalShield;
+            PhysicsShieldPercent = old.PhysicsShieldPercent;
+            MagicShieldPercent = old.MagicShieldPercent;
+            PhysicsDamageCoefficient = old.PhysicsDamageCoefficient;
+            MagicDamageCoefficient = old.MagicDamageCoefficient;
         }
 
         public Target Copy()
         {
             return new Target(this);
         }
-
 
         #endregion
 
@@ -129,14 +125,15 @@ namespace JX3CalculatorShared.Class
         {
             List<string> res = new List<string>();
             res.Add($"{DescName}，{Level} 级目标，防御系数：{DefCoef:F2}");
-            res.Add($"{Final_PDef:F0} 点外功防御，提供 {PDefReduceDmg:P2} 外功减伤");
-            res.Add($"{Final_MDef:F0} 点内功防御，提供 {MDefReduceDmg:P2} 内功减伤");
+            res.Add($"{PhysicsFinalShield:F0} 点外功防御，提供 {PhysicsShieldReduceDamageValue:P2} 外功减伤");
+            res.Add($"{MagicFinalShield:F0} 点内功防御，提供 {MagicShieldReduceDamageValue:P2} 内功减伤");
 
             if (more)
             {
-                res.Add($"{Base_PDef:F2} 点基础外功防御，{Final_PDef:F2} 点最终外功防御，{PDef_Percent:P2} 基础外防提升");
-                res.Add($"{Base_MDef:F2} 点基础内功防御，{Final_MDef:F2} 点最终内功防御，{MDef_Percent:P2} 基础内防提升");
-                res.Add($"{P_YS:P2} 外功易伤，{M_YS:P2} 内功易伤");
+                res.Add(
+                    $"{PhysicsBaseShield:F2} 点基础外功防御，{PhysicsFinalShield:F2} 点最终外功防御，{PhysicsShieldPercent:P2} 基础外防提升");
+                res.Add($"{MagicBaseShield:F2} 点基础内功防御，{MagicFinalShield:F2} 点最终内功防御，{MagicShieldPercent:P2} 基础内防提升");
+                res.Add($"{PhysicsDamageCoefficient:P2} 外功承伤，{MagicDamageCoefficient:P2} 内功承伤");
             }
 
             res.Add("");
@@ -155,8 +152,8 @@ namespace JX3CalculatorShared.Class
             List<string> res = new List<string>();
             res.Add($"{DescName} {Level}级");
             res.Add(StringConsts.TooltipDivider0);
-            res.Add($"外功防御：{PDefReduceDmg:P2} ({Final_PDef:f0})");
-            res.Add($"内功防御：{MDefReduceDmg:P2} ({Final_MDef:f0})");
+            res.Add($"外功防御：{PhysicsShieldReduceDamageValue:P2} ({PhysicsFinalShield:f0})");
+            res.Add($"内功防御：{MagicShieldReduceDamageValue:P2} ({MagicFinalShield:f0})");
             res.Add("");
             if (cat)
             {
@@ -249,5 +246,28 @@ namespace JX3CalculatorShared.Class
             Cat(false);
         }
     }
-}
+    public class TargetViewModel
+    {
+        public int Level { get; }
+        public string DescName { get; }
+        public bool AllWaysFullHP { get; }
+        public string RealDescName { get; }
 
+        public TargetViewModel(Target CTarget, bool allWaysFullHP)
+        {
+            DescName = CTarget.DescName;
+            Level = CTarget.Level;
+            AllWaysFullHP = allWaysFullHP;
+            RealDescName = GetFullDescName();
+        }
+
+        public string GetFullDescName()
+        {
+            if (AllWaysFullHP)
+            {
+                return $"{DescName}(满血)";
+            }
+            return DescName;
+        }
+    }
+}

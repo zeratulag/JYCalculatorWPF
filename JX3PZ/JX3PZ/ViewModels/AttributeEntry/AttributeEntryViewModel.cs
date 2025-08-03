@@ -1,4 +1,5 @@
 ﻿using JX3CalculatorShared.Utils;
+using JX3PZ.Globals;
 using System.Windows.Documents;
 
 namespace JX3PZ.ViewModels
@@ -7,9 +8,9 @@ namespace JX3PZ.ViewModels
     {
         // 词条属性的VM
         public string Desc { get; protected set; }
-        public virtual string Color { get; protected set; } = "#000000";
+        public virtual string Color { get; protected set; } = ColorConst.Default;
 
-        public AttributeEntryViewModel(string desc = "", string color = "#000000")
+        public AttributeEntryViewModel(string desc = "", string color = ColorConst.Default)
         {
             Desc = desc;
             Color = color;
