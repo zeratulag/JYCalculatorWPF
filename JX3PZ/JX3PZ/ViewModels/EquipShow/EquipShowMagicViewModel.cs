@@ -120,7 +120,7 @@ namespace JX3PZ.ViewModels
             if (!HasDiamond) return null;
             var para = FlowDocumentTool.NewParagraph(nameof(Diamonds));
             para.Margin = new Thickness(1, 0, 0, 0);
-            para.AddLines(Diamonds.Select(_ => _.DiamondLevelSpan));
+            para.AddLines(Diamonds.Select(d => d.MakeSpan()));
             return para;
         }
 

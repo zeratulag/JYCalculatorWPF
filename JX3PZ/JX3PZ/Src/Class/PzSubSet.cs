@@ -26,8 +26,8 @@ namespace JX3PZ.Class
             }
             else
             {
-                EIDs = StringTool.ParseStringList(EID_Str, ",").ToImmutableArray();
-                EquipNames = StringTool.ParseStringList(EquipName_Str, ",").ToImmutableArray();
+                EIDs = StringTool.ParseStringList(EID_Str).ToImmutableArray();
+                EquipNames = StringTool.ParseStringList(EquipName_Str).ToImmutableArray();
             }
         }
     }

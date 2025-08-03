@@ -27,7 +27,7 @@ namespace JX3PZ.Class
             }
             else
             {
-                var res = StringTool.ParseStringList(x, " ").ToImmutableArray();
+                var res = StringTool.ParseStringList(x, ' ').ToImmutableArray();
                 return res;
             }
         }

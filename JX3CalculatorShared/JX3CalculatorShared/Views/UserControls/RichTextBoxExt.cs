@@ -8,10 +8,38 @@ namespace JX3CalculatorShared.Views.UserControls
 {
     public class RichTextBoxExt : RichTextBox
     {
+
+        // 创建一个新的依赖属性，类型为FlowDocument
+        public static readonly DependencyProperty DocumentSourceProperty =
+            DependencyProperty.Register(
+                nameof(DocumentSource),
+                typeof(FlowDocument),
+                typeof(RichTextBoxExt),
+                new FrameworkPropertyMetadata(null, OnDocumentSourceChanged));
+
+        // .NET属性包装器
+        public FlowDocument DocumentSource
+        {
+            get { return (FlowDocument)GetValue(DocumentSourceProperty); }
+            set { SetValue(DocumentSourceProperty, value); }
+        }
+
+        // 当DocumentSource改变时，直接更新RichTextBox的Document属性
+        private static void OnDocumentSourceChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (d is RichTextBoxExt richTextBox)
+            {
+                var newDocument = e.NewValue as FlowDocument;
+                // 直接赋值，这是最高效的方式
+                richTextBox.Document = newDocument ?? new FlowDocument();
+            }
+        }
+
+
         // Register the XamlText dependency property
         public static readonly DependencyProperty XamlTextProperty =
             DependencyProperty.Register(
-                "XamlText",
+                nameof(XamlText),
                 typeof(string),
                 typeof(RichTextBoxExt),
                 new FrameworkPropertyMetadata(string.Empty, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnXamlTextChanged)

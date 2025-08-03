@@ -5,6 +5,7 @@ using JX3PZ.Globals;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Documents;
+using System.Windows.Media;
 
 namespace JX3PZ.Data
 {
@@ -26,18 +27,20 @@ namespace JX3PZ.Data
 
         public readonly DiamondTabItem Item; // 父对象
         public string EquipTag { get; }
+        public string ImagePath { get; }
 
-        public readonly Span DiamondLevelSpan;
+        public SolidColorBrush CForeground { get;}
 
         public DiamondLevelItem(DiamondTabItem item, int level)
         {
             Item = item;
             Level = level;
             Quality = DiamondTabItem.GetQuality(level);
+            ImagePath = BindingTool.Diamond2Path(Level);
 
             if (Level > 0)
             {
-                Color = "#00c848";
+                Color = ColorConst.Green;
                 LevelDesc = $"{StringConsts.ChinaNumber[Level]}级五行石";
                 if (item.IsEmpty)
                 {
@@ -66,7 +69,7 @@ namespace JX3PZ.Data
                 EquipTag = "空";
             }
 
-            DiamondLevelSpan = GetSpan();
+            CForeground = SolidColorBrushLib.FromColor(Color, true);
         }
 
         public static IEnumerable<DiamondLevelItem> GetLevelItems(DiamondTabItem item)
@@ -78,15 +81,14 @@ namespace JX3PZ.Data
 
         #region 流文档元素
 
-        public Span GetSpan()
+        public Span MakeSpan()
         {
-            var imagePath = BindingTool.Diamond2Path(Level);
             // 创建Run控件
             Run run = new Run(AttributeEntryDesc)
             {
-                Foreground = SolidColorBrushLib.FromColor(Color, true),
+                Foreground = CForeground,
             };
-            var span = FlowDocumentTool.GetImageSpan(imagePath, run);
+            var span = FlowDocumentTool.GetImageSpan(ImagePath, run);
             return span;
         }
 

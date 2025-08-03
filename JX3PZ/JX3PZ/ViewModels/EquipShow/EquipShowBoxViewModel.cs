@@ -7,8 +7,12 @@ namespace JX3PZ.ViewModels
     public class EquipShowBoxViewModel : ObservableObject
     {
         public readonly EquipShowBoxModel Model = new EquipShowBoxModel();
-        public FlowDocument FDocument => Model.FDocument;
-        public string XamlText => Model.XamlText;
+        public FlowDocument FDocument { get; private set; }
+
+#if DEBUG
+        public string FlowDocumentText =>
+            new System.Windows.Documents.TextRange(FDocument.ContentStart, FDocument.ContentEnd).Text;
+#endif
 
         public readonly EquipShowViewModel EquipShowVM;
 
@@ -24,7 +28,6 @@ namespace JX3PZ.ViewModels
         public void UpdateWhenNotHasEquip()
         {
             Model.ClearDocument();
-            SyncXamlText();
         }
 
         public void Update()
@@ -33,18 +36,19 @@ namespace JX3PZ.ViewModels
                 EquipShowVM.Set, EquipShowVM.Tail, EquipShowVM.Extra);
         }
 
-        public void UpdateFrom(EquipShowHeadViewModel head, EquipShowMagicViewModel magic, EquipShowStoneViewModel stone,
-            EquipShowEnhanceViewModel enhance, EquipShowSetViewModel set, EquipShowTailViewModel tail, EquipShowExtraViewModel extra)
+        public void UpdateFrom(EquipShowHeadViewModel head, EquipShowMagicViewModel magic,
+            EquipShowStoneViewModel stone,
+            EquipShowEnhanceViewModel enhance, EquipShowSetViewModel set, EquipShowTailViewModel tail,
+            EquipShowExtraViewModel extra)
         {
             Model.UpdateFrom(head, magic, stone, enhance, set, tail);
-            OnPropertyChanged(nameof(Extra));
-            SyncXamlText();
+            AfterModelUpdate();
         }
 
-        // 同步Model结果，触发Changed事件
-        public void SyncXamlText()
+        public void AfterModelUpdate()
         {
-            OnPropertyChanged(nameof(XamlText));
+            OnPropertyChanged(nameof(Extra));
+            FDocument = Model.FDocument;
         }
 
     }

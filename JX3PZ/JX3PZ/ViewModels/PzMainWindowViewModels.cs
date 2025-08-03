@@ -211,7 +211,7 @@ namespace JX3PZ.ViewModels
             Model.UpdateFrom(Data);
             Model.Calc();
             UpdateStoneActive();
-            UpdateShowBoxs();
+            UpdateShowBoxes();
         }
 
         public void UpdatePzResult()
@@ -235,7 +235,7 @@ namespace JX3PZ.ViewModels
         {
             Model.CalcSet();
             UpdateSetVMs();
-            UpdateShowBoxs();
+            UpdateShowBoxes();
         }
 
         public void UpdateSetVMs()
@@ -257,9 +257,9 @@ namespace JX3PZ.ViewModels
             }
         }
 
-        public void UpdateShowBoxs()
+        public void UpdateShowBoxes()
         {
-            Dict.Values.ForEach(_ => _.EquipShowVM.UpdateShowBox());
+            Dict.Values.ForEach(e => e.EquipShowVM.UpdateShowBox());
         }
 
         private void _Load(JBPZEquipSnapshotCollection equipList)

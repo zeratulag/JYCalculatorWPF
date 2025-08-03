@@ -1,8 +1,10 @@
 ﻿using JX3CalculatorShared.Utils;
 using JX3PZ.ViewModels;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Markup;
+using System.Xml;
 
 namespace JX3PZ.Models
 {
@@ -17,7 +19,6 @@ namespace JX3PZ.Models
         public Section Tail = null;
 
         public FlowDocument FDocument { get; private set; } = null;
-        public string XamlText { get; private set; }
 
         public EquipShowBoxModel()
         {
@@ -28,10 +29,10 @@ namespace JX3PZ.Models
         public void ClearDocument()
         {
             FDocument = new FlowDocument();
-            SerializeFlowDocument();
         }
 
-        public void UpdateFrom(EquipShowHeadViewModel head, EquipShowMagicViewModel magic, EquipShowStoneViewModel stone, EquipShowEnhanceViewModel enhance,
+        public void UpdateFrom(EquipShowHeadViewModel head, EquipShowMagicViewModel magic,
+            EquipShowStoneViewModel stone, EquipShowEnhanceViewModel enhance,
             EquipShowSetViewModel set, EquipShowTailViewModel tail)
         {
             Head = head?.GetSection();
@@ -52,12 +53,12 @@ namespace JX3PZ.Models
             Set = set.HasSet ? set?.GetSection() : null;
             Tail = tail?.GetSection();
             GetFlowDocument();
-            SerializeFlowDocument();
         }
+
 
         public FlowDocument GetFlowDocument()
         {
-            FlowDocument doc = new FlowDocument() { PagePadding = new Thickness(0) };
+            FlowDocument doc = new FlowDocument() {PagePadding = new Thickness(0)};
             doc.AddSection(Head);
             doc.AddSection(Magic);
             doc.AddSection(Stone);
@@ -67,12 +68,6 @@ namespace JX3PZ.Models
             doc.AddSection(Tail);
             FDocument = doc;
             return doc;
-        }
-
-        public string SerializeFlowDocument()
-        {
-            XamlText = XamlWriter.Save(FDocument);
-            return XamlText;
         }
     }
 }

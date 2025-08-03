@@ -75,14 +75,10 @@ namespace JYCalculator
 
         public void AfterLoad()
         {
-            var watch = System.Diagnostics.Stopwatch.StartNew();
-
             EquipStoneSelectSources.Load();
             StaticXFData.MakeStoneAttrFilter();
             //StaticPzData.GetEquipDefaultShow();
             StaticPzData.Data.AttachEquipOptions(StaticXFData.DB.EquipOption);
-
-            watch.Stop();
         }
     }
 }

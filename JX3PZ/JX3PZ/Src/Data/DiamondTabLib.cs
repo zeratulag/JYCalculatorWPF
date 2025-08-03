@@ -16,9 +16,9 @@ namespace JX3PZ.Data
         public static DiamondTabItem Get(int id)
         {
             DiamondTabItem res;
-            if (Data.ContainsKey(id))
+            if (Data.TryGetValue(id, out var value))
             {
-                res = Data[id];
+                res = value;
             }
             else
             {

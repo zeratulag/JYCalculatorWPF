@@ -1,4 +1,5 @@
 ﻿using JX3CalculatorShared.Globals;
+using JX3PZ.Globals;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 
@@ -42,7 +43,7 @@ namespace JX3CalculatorShared.Views
             {QualityEnum.None, "#000000"},
             {QualityEnum.GREY, "#a9a9a9"},
             {QualityEnum.WHITE, "#ffffff"},
-            {QualityEnum.GREEN, "#00C848"},
+            {QualityEnum.GREEN, ColorConst.Green},
             {QualityEnum.BLUE, "#007eff"},
             {QualityEnum.PURPLE, "#ff2dff"},
             {QualityEnum.ORANGE, "#ffa500"},

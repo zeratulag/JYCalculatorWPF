@@ -13,7 +13,9 @@
              d:DesignHeight="450" d:DesignWidth="800"
              x:Name="equipShowBox">
     <hc:SimpleStackPanel Orientation="Vertical">
-        <userControls:RichTextBoxExt x:Name="equipShowRichTextBox" Width="300" XamlText="{Binding Path=XamlText, Mode=OneWay}" IsReadOnly="True" Background="#132221" Padding="-14 -4" BorderThickness="0" FontSize="14"/>
+        <userControls:RichTextBoxExt x:Name="equipShowRichTextBox" Width="300"
+                                     DocumentSource="{Binding Path=FDocument, Mode=OneWay}" 
+                                     IsReadOnly="True" Background="#132221" Padding="-14 -4" BorderThickness="0" FontSize="14"/>
         <local:EquipShowExtra DataContext="{Binding Extra}" Margin="-4 15 0 0"/>
     </hc:SimpleStackPanel>
 </UserControl>

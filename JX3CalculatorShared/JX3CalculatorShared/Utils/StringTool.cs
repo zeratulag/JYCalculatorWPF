@@ -171,19 +171,20 @@ namespace JX3CalculatorShared.Utils
         /// <param name="x">输入字符串</param>
         /// <param name="sep">分隔符</param>
         /// <returns>字符串数组</returns>
-        public static IEnumerable<string> ParseStringList(string x, string sep = ",")
+        public static IEnumerable<string> ParseStringList(string x, char sep = ',')
         {
             string y = x.RemovePrefix("[").RemoveSuffix("]");
             if (y == null)
             {
                 return new List<string>(0);
             }
+
             var xs = y.Split(sep);
-            var res = from _ in xs select _.Trim();
+            var res = xs.Select(_ => _.Trim());
             return res;
         }
 
-        public static ImmutableHashSet<string> ParseStringListAsImmutableHashSet(string x, string sep = ",")
+        public static ImmutableHashSet<string> ParseStringListAsImmutableHashSet(string x, char sep = ',')
         {
             return ParseStringList(x, sep).ToImmutableHashSet();
         }
@@ -194,10 +195,10 @@ namespace JX3CalculatorShared.Utils
         /// <param name="x">输入字符串</param>
         /// <param name="sep">分隔符</param>
         /// <returns>整型数组</returns>
-        public static IEnumerable<int> ParseIntList(string x, string sep = ",")
+        public static IEnumerable<int> ParseIntList(string x, char sep = ',')
         {
             var strings = ParseStringList(x, sep);
-            var res = from _ in strings select int.Parse(_);
+            var res = strings.Select(e => int.Parse(e));
             return res;
         }
     }
