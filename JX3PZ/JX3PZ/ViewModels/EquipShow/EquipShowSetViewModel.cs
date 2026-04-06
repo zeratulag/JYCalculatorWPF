@@ -162,7 +162,7 @@ namespace JX3PZ.ViewModels
         public string EID { get; }
         public string Name { get; }
         public bool Has { get; set; }
-        public string Color => Has ? ColorConst.Yellow : ColorConst.Inactive;
+        public string Color => Has ? ColorConst.Yellow : ColorConst.Gray;
 
         public readonly PzSetEquipModel Model;
 
@@ -203,7 +203,7 @@ namespace JX3PZ.ViewModels
         public string Desc { get; } // 描述
         public string CountDesc { get; } // [2] XXX
         public bool IsActive { get; set; } // 是否激活
-        public string Color => IsActive ? ColorConst.Green : ColorConst.Inactive;
+        public string Color => IsActive ? ColorConst.Green : ColorConst.Gray;
 
         public EquipShowSetEffectViewModel(int count, string desc)
         {

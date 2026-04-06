@@ -1,0 +1,64 @@
+﻿<UserControl x:Class="JYCalculator.Views.UserControls.FinalCharPanel"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:JYCalculator.Views.UserControls"
+             xmlns:hc="https://handyorg.github.io/handycontrol"
+             mc:Ignorable="d"
+             d:DesignHeight="450" d:DesignWidth="800">
+
+    <Grid Margin="5">
+        <Grid.Resources>
+            <Style TargetType="TextBox" BasedOn="{StaticResource Style.TextBlockBox}" />
+        </Grid.Resources>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition Width="5"/>
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <!-- 竖直分割线 -->
+        <Border Grid.Column="1" Grid.RowSpan="5" BorderBrush="Gray" BorderThickness="0,0,1,0"/>
+
+        <hc:SimpleText Grid.Row="0" Grid.Column="0" Text="基础攻击"/>
+        <hc:SimpleText Grid.Row="0" Grid.Column="1" Text="{Binding PhysicsBaseAttackPower, StringFormat=F0}" />
+
+        <hc:SimpleText Grid.Row="0" Grid.Column="3" Text="最终攻击" />
+        <hc:SimpleText Grid.Row="0" Grid.Column="4" Text="{Binding PhysicsFinalAttackPower, StringFormat=F0}" />
+
+        <hc:SimpleText Grid.Row="1" Grid.Column="0" Text="会心" />
+        <hc:SimpleText Grid.Row="1" Grid.Column="1" Text="{Binding PhysicsCriticalStrikeValue, StringFormat=P2}" />
+
+        <hc:SimpleText Grid.Row="1" Grid.Column="3" Text="会心效果" />
+        <hc:SimpleText Grid.Row="1" Grid.Column="4" Text="{Binding PhysicsCriticalPowerValue, StringFormat=P2}" />
+
+        <hc:SimpleText Grid.Row="2" Grid.Column="0" Text="加速等级"/>
+        <hc:SimpleText Grid.Row="2" Grid.Column="1" Text="{Binding Haste, StringFormat=F0}" />
+
+        <hc:SimpleText Grid.Row="2" Grid.Column="3" Text="{Binding HasteRank, StringFormat=加速 ({0}段)}" />
+        <hc:SimpleText Grid.Row="2" Grid.Column="4" Text="{Binding HasteValue, StringFormat=P2}" />
+
+        <hc:SimpleText Grid.Row="3" Grid.Column="0" Text="无双" />
+        <hc:SimpleText Grid.Row="3" Grid.Column="1" Text="{Binding FinalStrainValue, StringFormat=P2}" />
+
+        <hc:SimpleText Grid.Row="3" Grid.Column="3" Text="破招" />
+        <hc:SimpleText Grid.Row="3" Grid.Column="4" Text="{Binding BaseSurplus, StringFormat=F0}" />
+
+        <hc:SimpleText Grid.Row="4" Grid.Column="0" Text="破防" />
+        <hc:SimpleText Grid.Row="4" Grid.Column="1" Text="{Binding PhysicsFinalOvercomeValue, StringFormat=P2}" />
+
+        <hc:SimpleText Grid.Row="4" Grid.Column="3" Text="力道" />
+        <hc:SimpleText Grid.Row="4" Grid.Column="4" Text="{Binding FinalStrength, StringFormat=F0}" />
+
+    </Grid>
+</UserControl>

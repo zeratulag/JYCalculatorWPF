@@ -5,6 +5,7 @@ using JX3CalculatorShared.Utils;
 using Serilog;
 using System.Collections.Generic;
 using System.Linq;
+using JYCalculator.Globals;
 
 namespace JYCalculator.Class
 {
@@ -57,6 +58,10 @@ namespace JYCalculator.Class
                 {
                     var value = new SkillFreqCriticalStrike(df.Data[key], fchar, KVP.Value);
                     Data.SetKeyValue(key, value);
+                } else if (key == SkillKeyConst.穿心弩DOT_Hit)
+                {
+                    var value = new SkillFreqCriticalStrike(SkillKeyConst.穿心弩DOT_Hit, fchar, KVP.Value);
+                    Data.SetKeyValue(key, value);
                 }
             }
 
@@ -78,15 +83,25 @@ namespace JYCalculator.Class
         /// </summary>
         /// <param name="key">技能key</param>
         /// <param name="freq">技能频率</param>
-        public void AddSkillFreq(string key, double freq)
+        public void AddSkillFreq(string key, double freq, bool clearCache = true)
         {
+            if (ModifyAddSkillFreq(key, freq, clearCache))
+            {
+                return;
+            }
+
             if (SkillDatas.Data.ContainsKey(key))
             {
                 var newFreqCT = new SkillFreqCriticalStrike(SkillDatas.Data[key], FChar, freq);
                 Data.Add(key, newFreqCT);
             }
 
-            ClearCache();
+            if (clearCache) ClearCache();
+        }
+
+        public void AddSkillFreq(string key, double num, double seconds)
+        {
+            AddSkillFreq(key, num / seconds);
         }
 
         /// <summary>
@@ -106,15 +121,29 @@ namespace JYCalculator.Class
         /// 增加特定技能频率
         /// </summary>
         /// <param name="key">技能key</param>
-        /// <param name="dfreq">delta技能频率，增量</param>
-        public void ModifySkillFreq(string key, double dfreq)
+        /// <param name="deltaFreq">delta技能频率，增量</param>
+        /// <param name="clearCache"></param>
+        public bool ModifyAddSkillFreq(string key, double deltaFreq, bool clearCache = true)
         {
-            if (Data.TryGetValue(key, out var value))
+            bool success = Data.TryGetValue(key, out var value);
+            if (success)
             {
-                value.Freq += dfreq;
+                value.Freq += deltaFreq;
+                if (clearCache) ClearCache();
             }
+            return success;
+        }
 
-            ClearCache();
+        /// <summary>
+        /// 增加特定技能频率
+        /// </summary>
+        /// <param name="key">技能key</param>
+        /// <param name="deltaNum">技能数</param>
+        /// <param name="seconds">时长(秒)</param>
+        /// <returns></returns>
+        public bool ModifyAddSkillFreq(string key, double deltaNum, double seconds, bool clearCache = true)
+        {
+            return ModifyAddSkillFreq(key, deltaNum / seconds, clearCache);
         }
 
         /// <summary>
@@ -125,8 +154,21 @@ namespace JYCalculator.Class
         /// <param name="dfreq">频率值</param>
         public void TransSkillFreq(string srcKey, string dstKey, double dfreq)
         {
-            ModifySkillFreq(srcKey, -dfreq);
-            ModifySkillFreq(dstKey, dfreq);
+            AddSkillFreq(srcKey, -dfreq, false);
+            AddSkillFreq(dstKey, dfreq);
+        }
+
+        /// <summary>
+        /// 从技能1转移频率给技能2
+        /// </summary>
+        /// <param name="srcKey">源技能key</param>
+        /// <param name="dstKey">目标技能key</param>
+        /// <param name="dfreq">频率值</param>
+        public void TransSkillFreq(string srcKey, string dstKey, double num, double seconds)
+        {
+            var dfreq = num / seconds;
+            AddSkillFreq(srcKey, -dfreq, false);
+            AddSkillFreq(dstKey, dfreq);
         }
 
 

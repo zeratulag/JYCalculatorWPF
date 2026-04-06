@@ -61,7 +61,7 @@ namespace JX3PZ.Data
             }
             else
             {
-                Color = ColorConst.Inactive;
+                Color = ColorConst.Gray;
                 AttributeDesc = "未熔嵌";
                 ShortAttributeDesc = AttributeDesc;
                 ToolTip = "未熔嵌";

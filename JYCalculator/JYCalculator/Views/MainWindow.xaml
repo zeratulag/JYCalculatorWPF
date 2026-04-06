@@ -27,7 +27,7 @@
         <KeyBinding Command="{Binding Path=SaveCurrentCmd}" Gesture="Ctrl+S" />
         <KeyBinding Command="{Binding Path=OpenFileCmd}" Gesture="Ctrl+O" />
         <KeyBinding Command="{Binding Path=NewCmd}" Gesture="Ctrl+N" />
-        <KeyBinding Command="{Binding Path=OpenImportJBBBDialogCmd}" Gesture="Ctrl+I" />
+        <KeyBinding Command="{Binding Path=OpenImportDataDialogCmd}" Gesture="Ctrl+I" />
     </Window.InputBindings>
 
     <DockPanel>
@@ -36,11 +36,11 @@
             <!--  主界面  -->
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="10" />
-                <ColumnDefinition Width="10.5*" />
+                <ColumnDefinition Width="10.5*" MinWidth="500"/>
                 <ColumnDefinition Width="5" />
-                <ColumnDefinition Width="6.5*" />
+                <ColumnDefinition Width="6.5*" MinWidth="300"/>
                 <ColumnDefinition Width="5" />
-                <ColumnDefinition Width="8*" />
+                <ColumnDefinition Width="8*" MinWidth="400"/>
             </Grid.ColumnDefinitions>
             <Grid.Resources>
                 <Style BasedOn="{StaticResource Style.CenterLabel}" TargetType="Label" />
@@ -98,13 +98,22 @@
                             </hc:SimpleStackPanel>
                         </ScrollViewer>
                     </TabItem>
-                    <TabItem Header="无界端">
+                    <TabItem Header="无界端" Visibility="Collapsed">
                         <hc:SimpleStackPanel>
                             <hc:SimpleText Text="敬请期待……"/>
                         </hc:SimpleStackPanel>
                     </TabItem>
                 </TabControl>
             </Grid>
+
+            <!-- 分隔左(Col1) 与 中(Col3) 的手柄：使用 Col2 -->
+            <GridSplitter x:Name="GridSplitter1"
+                          Grid.Column="2"
+                          Width="5"
+                          HorizontalAlignment="Center"
+                          VerticalAlignment="Stretch"
+                          ResizeDirection="Columns"
+                          ResizeBehavior="PreviousAndNext"/>
 
             <!--  主界面（中间）  -->
             <DockPanel
@@ -118,6 +127,9 @@
                     DockPanel.Dock="Top"
                     Header="战斗选项">
                     <suc:FightOptionView x:Name="CFightOptionView" DataContext="{Binding FightOptionVM}" />
+                </GroupBox>
+                <GroupBox DockPanel.Dock="Top" Header="最终属性">
+                    <uc:FinalCharPanel x:Name="CFinalCharPanel" DataContext="{Binding FinalCharPanelVM}"/>
                 </GroupBox>
 
                 <ScrollViewer
@@ -140,6 +152,15 @@
                 Grid.Column="4"
                 Width="3"
                 ResizeDirection="Columns" />-->
+
+            <GridSplitter x:Name="GridSplitter2"
+                          Grid.Column="4"
+                          Width="5"
+                          HorizontalAlignment="Center"
+                          VerticalAlignment="Stretch"
+                          ResizeDirection="Columns"
+                          ResizeBehavior="PreviousAndNext"/>
+
 
             <!--  主界面（右半）  -->
             <DockPanel

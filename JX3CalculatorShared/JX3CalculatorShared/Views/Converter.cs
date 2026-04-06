@@ -1,12 +1,14 @@
 ﻿using JX3CalculatorShared.Globals;
 using JX3CalculatorShared.Utils;
 using JX3PZ.Data;
+using MingYiTools;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Windows;
 using System.Windows.Data;
+using System.Windows.Documents;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using static JX3CalculatorShared.Utils.BindingTool;
@@ -301,6 +303,56 @@ namespace JX3CalculatorShared.Views
                 return string.Join(", ", list); // 用逗号分隔显示
             }
             return string.Empty;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public class RichTextSegmentsToDocumentConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            var segments = value as IEnumerable<RichTextSegment>;
+            if (segments == null) return null;
+
+            var doc = new FlowDocument
+            {
+                // 去除文档默认的页边距，使其紧凑
+                PagePadding = new Thickness(0),
+                Background = Brushes.Transparent,
+            };
+
+            var para = new Paragraph { Margin = new Thickness(0) };
+
+            foreach (var seg in segments)
+            {
+                if (string.IsNullOrEmpty(seg.Text)) continue;
+
+                var run = new Run(seg.Text);
+
+                // 处理颜色
+                if (!string.IsNullOrEmpty(seg.Color))
+                {
+                    try
+                    {
+                        // 解析 Hex 颜色 (#RRGGBB)
+                        var brush = (SolidColorBrush)new BrushConverter().ConvertFromString(seg.Color);
+                        run.Foreground = brush;
+                    }
+                    catch
+                    {
+                        // 颜色解析失败回退到默认色（通常跟随 ToolTip 前景色）
+                    }
+                }
+
+                para.Inlines.Add(run);
+            }
+
+            doc.Blocks.Add(para);
+            return doc;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

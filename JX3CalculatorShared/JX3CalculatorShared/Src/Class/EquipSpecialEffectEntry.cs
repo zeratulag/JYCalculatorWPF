@@ -2,6 +2,7 @@
 using JYCalculator.Class;
 using Serilog.Debugging;
 using System;
+using System.Linq;
 
 namespace JX3CalculatorShared.Data
 {
@@ -27,6 +28,14 @@ namespace JX3CalculatorShared.Data
             if (SpecialEffectBaseType != tarTypeEnum)
             {
                 throw new ArgumentException($"非法的特效类型！{Name}，期望为{tarTypeEnum}");
+            }
+        }
+
+        public void CheckSpecialEffectBaseType(EquipSpecialEffectBaseTypeEnum[] tarTypeEnums)
+        {
+            if (!tarTypeEnums.Contains(SpecialEffectBaseType))
+            {
+                throw new ArgumentException($"非法的特效类型！{Name}，期望为{tarTypeEnums}");
             }
         }
 

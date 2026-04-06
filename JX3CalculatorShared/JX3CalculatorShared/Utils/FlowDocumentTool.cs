@@ -1,6 +1,7 @@
 ﻿using JX3PZ.Globals;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -29,9 +30,18 @@ namespace JX3CalculatorShared.Utils
             return res;
         }
 
+        public static FlowDocument Copy(this FlowDocument source)
+        {
+            if (source == null) return null;
+            //string xaml = XamlWriter.Save(source);
+            string xaml = source.GetXamlUsingCache();
+            var res = (FlowDocument) XamlReader.Parse(xaml);
+            return res;
+        }
+
         public static Run GetRun(string text, string color = ColorConst.Default)
         {
-            var run = new Run(text) { Foreground = SolidColorBrushLib.FromColor(color, true) };
+            var run = new Run(text) {Foreground = SolidColorBrushLib.FromColor(color, true)};
             return run;
         }
 
@@ -122,7 +132,6 @@ namespace JX3CalculatorShared.Utils
         }
 
 
-
         // 返回一个文档对象中的所有字符串
         public static string GetAllText(this TextElement element)
         {
@@ -147,7 +156,6 @@ namespace JX3CalculatorShared.Utils
         }
 
 
-
         // 向Section中添加一个Paragraph，如果这个Paragraph为空，则不添加
         public static void AddParagraph(this Section section, Paragraph paragraph)
         {
@@ -160,22 +168,24 @@ namespace JX3CalculatorShared.Utils
         // 新建一个0距离的Section
         public static Section NewSection(object tag = null)
         {
-            var res = new Section() { Margin = new Thickness(0) };
+            var res = new Section() {Margin = new Thickness(0)};
             if (tag != null)
             {
                 res.Tag = tag;
             }
+
             return res;
         }
 
         // 新建一个0距离的段落
         public static Paragraph NewParagraph(object tag = null)
         {
-            var res = new Paragraph() { Margin = new Thickness(0) };
+            var res = new Paragraph() {Margin = new Thickness(0)};
             if (tag != null)
             {
                 res.Tag = tag;
             }
+
             return res;
         }
 
@@ -201,6 +211,7 @@ namespace JX3CalculatorShared.Utils
                 {
                     para.Inlines.Add(new LineBreak());
                 }
+
                 i++;
             }
         }
@@ -216,14 +227,15 @@ namespace JX3CalculatorShared.Utils
                     spans.Add(new Span(new Run(text)));
                 }
             }
+
             AddLines(para, spans);
         }
     }
 
     public struct ColorText
     {
-        public readonly string Text;
-        public readonly string Color;
+        public string Text { get; }
+        public string Color { get; }
 
         public ColorText(string text, string color)
         {

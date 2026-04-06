@@ -2,6 +2,7 @@
 using JX3CalculatorShared.Common;
 using JYCalculator.Class;
 using JYCalculator.Models;
+using Syncfusion.Windows.Shared;
 
 namespace JYCalculator.Src
 {
@@ -105,13 +106,27 @@ namespace JYCalculator.Src
             var normalHit = Arg.SkillNum.Normal.FinalSkillFreq[dotHitName];
             var normalDot = Arg.SkillNum.Normal.FinalSkillFreq[dotName];
 
-            normalStat.FixDOTShowNum(dotName, normalHit, normalDot);
-
             var xwHit = Arg.SkillNum.XW.FinalSkillFreq[dotHitName];
             var xwDot = Arg.SkillNum.XW.FinalSkillFreq[dotName];
 
+            try
+            {
+                normalHit = FreqCTDFs.Normal.Data[dotHitName].Freq;
+                normalDot = FreqCTDFs.Normal.Data[dotName].Freq;
+                xwHit = FreqCTDFs.XinWu.Data[dotHitName].Freq;
+                xwDot = FreqCTDFs.XinWu.Data[dotName].Freq;
+
+            } catch
+            {
+                // ignored
+            }
+
+
+            normalStat.FixDOTShowNum(dotName, normalHit, normalDot);
             xwStat.FixDOTShowNum(dotName, xwHit, xwDot);
         }
+
+
 
         public void CalcDerivs()
         {

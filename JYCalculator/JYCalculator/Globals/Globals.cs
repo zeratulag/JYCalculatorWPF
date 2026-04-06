@@ -31,7 +31,7 @@ namespace JYCalculator.Globals
         public static readonly string FileFilter; // 打开方式的Filter;
         public static readonly string SkillBuildFileFilter; // 武学方案Filter
 
-        public const string GameVersion = "太极秘录";
+        public const string GameVersion = "山海源流";
 
 
         public const string JX3BOXURL = @"https://www.jx3box.com/bps/49353"; // JX3BOX主页
@@ -44,19 +44,20 @@ namespace JYCalculator.Globals
         public static readonly Version AppVersion;
         public static readonly string MainTitle;
         public static readonly DateTime BuildDateTime; // 构建时间
-        public static readonly DateTime LastPatchTime; // 最新技改时间
+
+        public const int QQGroupNumber = 992142441; // QQ交流群号码
 
         #region 技改后需要修改
 
-        public const string XFTutorialURL = @"https://www.jx3box.com/bps/98609"; // 当前版本惊羽攻略
-        public const string LastPatchURL = @"https://jx3.xoyo.com/index/index.html#/article-details?kid=1334611"; // 最新技改内容
+        public const string XFTutorialURL = @"https://www.jx3box.com/bps/103768"; // 当前版本惊羽攻略
+        public static readonly DateTime LastPatchTime = new DateTime(2026, 1, 19); // 最新技改时间
+        public const string
+            LastPatchURL = @"https://jx3.xoyo.com/index/index.html#/article-details?kid=1335246"; // 最新技改内容
 
         #endregion
 
         static XFAppStatic()
         {
-            LastPatchTime = new DateTime(2025, 5, 12); // 最新技改时间
-
             AppVersion = Assembly.GetExecutingAssembly().GetName().Version;
             var version = AppVersion.ToString();
             var dateTimeStr = ImportTool.ReadAllTextFromResource(AppStatic.BUILD_PATH, Encoding.Default).Trim();
@@ -70,7 +71,7 @@ namespace JYCalculator.Globals
             CurrentAppMeta =
                 new AppMetaInfo(AppVersion, XinFa, GameVersion, StaticConst.CurrentLevel, LastPatchTime);
 
-            MainTitle = $"惊羽诀配装计算器 Pro（v{version} 公测版）";
+            MainTitle = $"惊羽诀配装计算器 Pro（v{version} 内测版）";
             FileFilter = $"计算方案 (*.{FileExtension})|*.{FileExtension}"; // 打开方式的Filter
             SkillBuildFileFilter = $"武学方案 (*.jyb)|*.jyb";
 
@@ -251,10 +252,12 @@ namespace JYCalculator.Globals
         public const string 追命箭_瞬发 = "ZM_SF";
         public const string 追命箭_百步穿杨 = "ZM_BBCY";
         public const string 破 = "PZ";
+        public const string 破_穿心弩 = "PZ_ChuanXinNu";
         public const string 破_白雨跳珠 = "PZ_BaiYu";
         public const string 罡风镖法 = "GF";
         public const string 孔雀翎 = "KongQueLing";
         public const string 穿林打叶 = "ChuanLinDaYe";
+        public const string 穿心弩DOT_Hit = "_CX_DOT_Hit";
 
         public const string 星斗阑干 = "CW_DOT";
 
@@ -264,6 +267,9 @@ namespace JYCalculator.Globals
         public const string _夺魄箭_释放 = "_DPCast";
         public const string _追命箭_释放 = "_ZMCast";
         public const string _追命箭_瞬发_释放 = "_ZM_SFCast";
+        public const string 枢甲_追命 = "ShuJia_ZhuiMing";
+        public const string 枢甲_夺魄 = "ShuJia_DuoPo";
+        public const string 追命箭_神兵 = "CW_ZM";
 
         public const string 暴雨梨花针 = "BY";
         public const string 暴雨梨花针2 = "LH2";
@@ -275,5 +281,10 @@ namespace JYCalculator.Globals
 
         public const string 白雨跳珠 = "BaiYuTiaoZhu";
         public const string 逐云寒蕊_130 = "ZhuYunHanRui_130";
+    }
+
+    public static class SkillNameConst
+    {
+        public const string 穿心弩DOT_Hit = "穿心弩DOTHit";
     }
 }

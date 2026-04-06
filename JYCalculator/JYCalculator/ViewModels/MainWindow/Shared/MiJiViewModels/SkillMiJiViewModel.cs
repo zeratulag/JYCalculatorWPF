@@ -40,6 +40,9 @@ namespace JYCalculator.ViewModels
 
         // 形如 暴雨[0/4]的指示
         public string HeaderName => $"{SkillName} [{nChecked:D1}/4]";
+        public int SkillIconID { get; }
+        public string SkillToolTip { get; }
+
         public bool IsValid => nChecked <= 4;
 
         public bool IsSupport; // 是否是支持的秘籍
@@ -55,6 +58,8 @@ namespace JYCalculator.ViewModels
             SkillKey = Data[0].Skill_key;
             SkillName = Data[0].SkillName;
             SkillID = Data[0].SkillID;
+            SkillIconID = Data[0].SkillIconID;
+            SkillToolTip = Data[0].SkillToolTip;
             foreach (var item in items)
             {
                 if (item.Skill_key != SkillKey)

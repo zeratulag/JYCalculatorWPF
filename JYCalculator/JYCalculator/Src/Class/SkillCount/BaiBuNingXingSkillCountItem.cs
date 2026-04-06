@@ -7,6 +7,7 @@ namespace JYCalculator.Class.SkillCount
 {
     public class BaiBuNingXingSkillCountItem : JYSkillCountItem
     {
+
         public BaiBuNingXingSkillCountItem(AbilitySkillNumItem item, QiXueConfigModel qiXue) : base(item, qiXue)
         {
             百步凝形 = true;
@@ -36,6 +37,11 @@ namespace JYCalculator.Class.SkillCount
         {
             double coef = targetAllWaysFullHp ? 1 : 0.3;
             ZM_BBCY = ZM * coef;
+        }
+
+        public void CalcPZChuanXinNu()
+        {
+
         }
 
         public void DoPreWork()

@@ -25,7 +25,7 @@
 
             <Separator />
             <MenuItem Header="导入">
-                <MenuItem Command="{Binding Path=OpenImportJBBBDialogCmd}" Header="JX3BOX面板"
+                <MenuItem Command="{Binding Path=OpenImportDataDialogCmd}" Header="JX3BOX面板"
                           InputGestureText="Ctrl+I" />
             </MenuItem>
 

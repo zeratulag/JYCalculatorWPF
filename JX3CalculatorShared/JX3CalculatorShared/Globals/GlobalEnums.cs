@@ -175,12 +175,17 @@
     public enum EquipSpecialEffectTypeEnum
     {
         None = 0,
+        Unknown,
         SECONDARY_WEAPON__SuperCustomDamage,
         WRIST__SuperCustomDamage,
+        WRIST__DOTSuperCustomDamage,
+        BELT__DOTSuperCustomDamage,
 
         RING__Overcome,
         RING__CriticalStrike,
         RING__Surplus,
+        RING__Strain,
+
         BELT__Attribute,
         BELT__Random_Attribute,
         PENDANT__Overcome,
@@ -204,7 +209,9 @@
     public enum EquipSpecialEffectBaseTypeEnum
     {
         None = 0,
+        Unknown,
         SuperCustomDamage,
+        DOTSuperCustomDamage,
         AdaptiveBuff,
         AddBuff,
         RandomBuff

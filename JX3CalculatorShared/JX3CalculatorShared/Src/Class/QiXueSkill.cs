@@ -12,6 +12,8 @@ namespace JX3CalculatorShared.Class
         public readonly int Order;
         public readonly int SkillID;
         public readonly int Level;
+        public bool IsMixPool { get; } // 是否为混池奇穴
+        public int FinalOrder { get; set; }
         public string ItemName { get; }
         public string ItemNameP { get; }
         public string ShortName { get; }
@@ -24,7 +26,9 @@ namespace JX3CalculatorShared.Class
         {
             Key = item.key;
             Position = item.position;
+            IsMixPool = StaticConst.IsMixPoolQiXue(Position);
             Order = item.order;
+            FinalOrder = Order;
             SkillID = item.SkillID;
             Level = item.Level;
             ItemName = item.ItemName;
@@ -34,7 +38,6 @@ namespace JX3CalculatorShared.Class
             IconID = item.IconID;
             Name = item.Name;
             ToolTip = item.ToolTip + GetToolTipTail();
-
         }
 
         public string GetToolTipTail()
@@ -45,6 +48,5 @@ namespace JX3CalculatorShared.Class
         }
 
         #endregion
-
     }
 }

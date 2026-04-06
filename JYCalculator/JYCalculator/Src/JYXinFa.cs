@@ -74,7 +74,7 @@ namespace JYCalculator.Src
 
         #endregion
 
-        public const int DST_NPC_DAMAGE_COEFFICIENT = 164; // 非侠士增伤 @唐门_内功_箭弩.lua
+        public const int DST_NPC_DAMAGE_COEFFICIENT = 195; // 非侠士增伤 @唐门_内功_箭弩.lua
         public const int STRENGTH_TO_PHYSICS_ATTACK_POWER_COF = 1731; // 力道提高1.69外功AP
         public const int STRENGTH_TO_PHYSICS_CRITICAL_STRIKE_COF = 707; // 力道提高0.69会心
         public const int CURRENTLEVEL = 14; // 当前版本心法等级 130级 = 14，120级 = 13

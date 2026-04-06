@@ -20,10 +20,11 @@ namespace JX3PZ.ViewModels
         public int SubType;
         public EquipMapItem Map;
 
-        public ImmutableArray<Enhance> EnhanceSource { get; } // 所有小附魔
+        public ImmutableArray<Enhance> AllEnhanceSource { get; } // 所有小附魔
         public readonly ImmutableArray<BigFM> AllBigFMSource; // 所有大附魔
-        public ICollectionView BigFMSource { get; private set; } // 当前大附魔
 
+        public ICollectionView EnhanceSource { get; private set; } // 当前大附魔
+        public ICollectionView BigFMSource { get; private set; } // 当前大附魔
         //private int _strengthLevel;
 
         public int StrengthLevel
@@ -60,13 +61,16 @@ namespace JX3PZ.ViewModels
             SlotMaxStrengthLevel = Map.MaxStrengthLevel;
             MaxStrengthLevel = SlotMaxStrengthLevel;
             RealMaxStrengthLevel = MaxStrengthLevel;
-            EnhanceSource = StaticPzData.Enhance.UseFulEnhances[SubType];
-            if (StaticPzData.Enhance.BigFM.ContainsKey(Map.SubTypeEnum))
+            AllEnhanceSource = StaticPzData.Enhance.UseFulEnhances[SubType];
+            EnhanceSource = CollectionViewSource.GetDefaultView(AllEnhanceSource);
+            EnhanceSource.Filter = (e => IsEnhanceFit((Enhance)e));
+
+            if (StaticPzData.Enhance.BigFM.TryGetValue(Map.SubTypeEnum, out var bigFMs))
             {
-                AllBigFMSource = StaticPzData.Enhance.BigFM[Map.SubTypeEnum];
+                AllBigFMSource = bigFMs;
                 HasBigFM = true;
                 BigFMSource = CollectionViewSource.GetDefaultView(AllBigFMSource);
-                BigFMSource.Filter = (_ => IsBigFMFit((BigFM)_));
+                BigFMSource.Filter = (e => IsBigFMFit((BigFM) e));
             }
             else
             {
@@ -111,6 +115,18 @@ namespace JX3PZ.ViewModels
             }
         }
 
+        public bool IsEnhanceFit(Enhance item)
+        {
+            if (SelectedEquip == null)
+            {
+                return true;
+            }
+            else
+            {
+                return SelectedEquip.FitEnhance(item);
+            }
+        }
+
         public void OnSelectedEquipChanged()
         {
             ApplyEquipFilter();
@@ -118,6 +134,7 @@ namespace JX3PZ.ViewModels
 
         public void ApplyEquipFilter()
         {
+            EnhanceSource.Refresh();
             if (HasBigFM) BigFMSource.Refresh();
         }
 
@@ -149,15 +166,37 @@ namespace JX3PZ.ViewModels
         private void _Load(int strength = 0, int enhance = -1, int enchant = -1)
         {
             StrengthLevel = strength;
-            SelectedEnhanceIndex = EnhanceSource.IndexOf(_ => _.ID == enhance);
-            SelectedBigFMIndex = 0;
-            if (enchant > 0)
+
+            // 查找小附魔在 EnhanceSource 中的索引
+            SelectedEnhanceIndex = -1;
+            if (enhance >= 0)
             {
-                SelectedBigFMIndex = 0;
+                int idx = 0;
+                foreach (Enhance e in EnhanceSource)
+                {
+                    if (e.ID == enhance)
+                    {
+                        SelectedEnhanceIndex = idx;
+                        break;
+                    }
+                    idx++;
+                }
             }
-            else
+
+            // 查找大附魔在 BigFMSource 中的索引
+            SelectedBigFMIndex = -1;
+            if (enchant > 0 && HasBigFM && BigFMSource != null)
             {
-                SelectedBigFMIndex = -1;
+                int idx = 0;
+                foreach (BigFM b in BigFMSource)
+                {
+                    if (b.ID == enchant)
+                    {
+                        SelectedBigFMIndex = idx;
+                        break;
+                    }
+                    idx++;
+                }
             }
         }
 
@@ -200,12 +239,12 @@ namespace JX3PZ.ViewModels
         /// <returns>最好的idx和最高收益值</returns>
         public BestEnhanceResult GetBestEnhanceByCalcResult(CalcResult result)
         {
-            if (result == null) return new BestEnhanceResult(Position, 0, 0, EnhanceSource[0]);
+            if (result == null) return new BestEnhanceResult(Position, 0, 0, AllEnhanceSource[0]);
             var drv = result.DamageDeriv;
-            var profits = EnhanceSource.Select(_ => result.DamageDeriv.ProfitList.CalcProfit(_)).ToArray();
+            var profits = AllEnhanceSource.Select(_ => result.DamageDeriv.ProfitList.CalcProfit(_)).ToArray();
             var idx = profits.WhichMax();
             var p = profits[idx];
-            return new BestEnhanceResult(Position, idx, p, EnhanceSource[idx]);
+            return new BestEnhanceResult(Position, idx, p, AllEnhanceSource[idx]);
         }
 
         /// <summary>
@@ -214,7 +253,7 @@ namespace JX3PZ.ViewModels
         /// <returns>加速附魔的位置</returns>
         public int GetHasteEnhance()
         {
-            var i = EnhanceSource.IndexOf(_ => _.IsHaste && !_.Name.StartsWith("连雾·"));
+            var i = AllEnhanceSource.IndexOf(_ => _.IsHaste && !_.Name.StartsWith("连雾·"));
             return i;
         }
     }
@@ -238,7 +277,7 @@ namespace JX3PZ.ViewModels
         public BestEnhanceResult(int position, int index, double value, Enhance e)
         {
             Name = e.Name;
-            Slot = (EquipSlotEnum)position;
+            Slot = (EquipSlotEnum) position;
             Index = index;
             Value = value;
         }

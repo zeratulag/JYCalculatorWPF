@@ -15,18 +15,19 @@ namespace JX3PZ.Data
     {
         public string Path;
 
-        public ImmutableDictionary<int, Stone> Stone;
-        public ImmutableDictionary<int, Enhance> Enhance;
-        public ImmutableDictionary<int, PzSet> Set;
-        public ImmutableDictionary<string, PzSubSet> SubSet;
-        public ImmutableDictionary<int, Enchant> Enchant;
+        public ImmutableDictionary<int, Stone> Stone { get; private set; }
+        public ImmutableDictionary<int, Enhance> Enhance { get; private set; }
+        public ImmutableDictionary<int, PzSet> Set { get; private set; }
+        public ImmutableDictionary<string, PzSubSet> SubSet { get; private set; }
+        public ImmutableDictionary<int, Enchant> Enchant { get; private set; }
+        public ImmutableDictionary<int, Armor> Armor { get; private set; }
+        public ImmutableDictionary<int, Weapon> Weapon { get; private set; }
+        public ImmutableDictionary<int, Trinket> Trinket { get; private set; }
+        public ImmutableDictionary<string, Equip> Equip { get; private set; }
+        public ImmutableDictionary<string, PlayerLevelData> LevelData { get; private set; }
+        public ImmutableArray<DiamondItemEntry> DiamondItemEntries { get; private set; }
 
-        public ImmutableDictionary<int, Armor> Armor;
-        public ImmutableDictionary<int, Weapon> Weapon;
-        public ImmutableDictionary<int, Trinket> Trinket;
-
-        public ImmutableDictionary<string, Equip> Equip;
-        public ImmutableDictionary<string, PlayerLevelData> LevelData;
+        public DiamondDatabase DiamondDB { get; private set; }
 
         public static int GetEquipID(Equip e) => e.ID;
 
@@ -58,6 +59,18 @@ namespace JX3PZ.Data
             LoadEnhance();
             LoadEquip();
             LoadLevelData();
+            LoadDiamondItem();
+            MakeDB();
+        }
+
+        public void MakeDB()
+        {
+            DiamondDB = new DiamondDatabase(DiamondItemEntries);
+        }
+
+        private void LoadDiamondItem()
+        {
+            DiamondItemEntries = ReadSheetAsArray<DiamondItemEntry>(Path, "diamond");
         }
 
         public void LoadLevelData()

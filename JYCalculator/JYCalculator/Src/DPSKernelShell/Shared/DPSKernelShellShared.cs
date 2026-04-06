@@ -7,13 +7,14 @@ using JYCalculator.Globals;
 using JYCalculator.Models;
 using JYCalculator.Utils;
 using System.Linq;
+using JYCalculator.Data;
 
 namespace JYCalculator.Src
 {
     /// <summary>
     /// 固定技能数和技能信息，仅仅根据面板计算DPS
     /// </summary>
-    public partial class DPSKernelShell
+    public class DPSKernelShell
     {
         #region 成员
 
@@ -93,7 +94,7 @@ namespace JYCalculator.Src
             if (deep)
             {
                 CTarget = old.CTarget.Copy();
-                SkillDfs = new Period<SkillDataDF>(SkillDfs.Normal.Copy(), SkillDfs.XinWu.Copy());
+                SkillDfs = new Period<SkillDataDF>(old.SkillDfs.Normal.Copy(), old.SkillDfs.XinWu.Copy());
                 SkillNum = old.SkillNum.DeepClone();
                 FightTime = old.FightTime.DeepClone();
                 Arg = old.Arg.DeepClone();
@@ -186,34 +187,44 @@ namespace JYCalculator.Src
             }
             else
             {
-                var LongXWFChar = GetXWChar(BuffedFChars.XinWu, FightTime.LongItem);
+                var LongXWFChar = GetXWYZChar(BuffedFChars.XinWu, FightTime.LongItem);
                 LongXWFChar.Name = "长时间心无最终";
-                var ShortXWFChar = GetXWChar(BuffedFChars.XinWu, FightTime.ShortItem);
+                var ShortXWFChar = GetXWYZChar(BuffedFChars.XinWu, FightTime.ShortItem);
                 ShortXWFChar.Name = "短时间心无最终";
 
-                LongFChars = new Period<FullCharacter>(BuffedFChars.Normal, LongXWFChar);
-                ShortFChars = new Period<FullCharacter>(BuffedFChars.Normal, ShortXWFChar);
+                var LongNormalFChar = GetNormalYZChar(BuffedFChars.Normal, FightTime.LongItem);
+                LongXWFChar.Name = "长时间最终";
+                var ShortNormalFChar = GetNormalYZChar(BuffedFChars.Normal, FightTime.ShortItem);
+                ShortXWFChar.Name = "短时间最终";
+
+                LongFChars = new Period<FullCharacter>(LongNormalFChar, LongXWFChar);
+                ShortFChars = new Period<FullCharacter>(ShortNormalFChar, ShortXWFChar);
             }
         }
 
         /// <summary>
-        /// 获得考虑了腰坠后的心无面板
+        /// 获得考虑了腰坠后的面板
         /// </summary>
-        /// <param name="FChar">心无属性</param>
-        /// <param name="Cover">心无期间腰坠覆盖率</param>
+        /// <param name="FChar">属性</param>
+        /// <param name="Cover">腰坠覆盖率</param>
         /// <returns>输入的面板</returns>
-        public FullCharacter GetXWChar(FullCharacter FChar, double Cover)
+        public FullCharacter GetYZChar(FullCharacter FChar, double Cover)
         {
             var YZAttrs = Arg.YZ.SCharAttr;
-            var RealAttr = YZAttrs.Values.ToDictionary(_ => _.Key, _ => _.Value * Cover);
+            var RealAttr = YZAttrs.Values.ToDictionary(e => e.Key, e => e.Value * Cover);
             var res = FChar.Copy();
             res.AddSAttrDict(RealAttr);
             return res;
         }
 
-        public FullCharacter GetXWChar(FullCharacter FChar, FightTimeSummaryItem item)
+        public FullCharacter GetXWYZChar(FullCharacter FChar, FightTimeSummaryItem item)
         {
-            return GetXWChar(FChar, item.YZOverXWCover);
+            return GetYZChar(FChar, item.YZOverXWCover);
+        }
+
+        public FullCharacter GetNormalYZChar(FullCharacter FChar, FightTimeSummaryItem item)
+        {
+            return GetYZChar(FChar, item.YZOverNormalCover);
         }
 
         public void GetDPSKernel()
@@ -231,24 +242,59 @@ namespace JYCalculator.Src
         // 修正因为有限时长导致的频率有误
         public void FixTimeSkillFreqCTDFs()
         {
-            FixLveYingQiongCangFreq();
-            FixNieJingZhuiMing();
-            FixNingXingZhuiMing();
+            //FixLveYingQiongCangFreq();
+            //FixNieJingZhuiMing();
+            FixNingXingStartZhuiMing();
+            FixChuanXingDOT();
+            FixNingXingStartXinWuStartZhuiMing();
         }
-        
-        // 修正凝形起手的那个追命
-        private void FixNingXingZhuiMing()
+
+        private void FixNingXingStartXinWuStartZhuiMing()
         {
-            if (SkillNum.Normal.百步凝形_丝路风语)
+            if (!SkillNum.Normal.寒江凝形_山海源流) return;
+
+            var nieJingLevel = 1;
+            var rank = SkillNum.XfAbility.Normal.Rank;
+            // 修正第一个心无窥影期间的追命，没有蹑景
+            if (SkillNum.Equip.WP.IsBigCW)
+            {
+                // 橙武
+            }
+            else
+            {
+                nieJingLevel = 1;
+                if (rank == 3)
+                {
+                    nieJingLevel = 2;
+                }
+            }
+            var source = ZhuiMingSkillMapper.GetBuffEntityList(nieJingLevel, 1);
+            var target = ZhuiMingSkillMapper.GetBuffEntityList(0, 1);
+            var sourceName = SkillInfoItem.CalcDerivedSkillInfoName(SkillKeyConst.追命箭, source);
+            var targetName = SkillInfoItem.CalcDerivedSkillInfoName(SkillKeyConst.追命箭, target);
+
+            const double num = 1.0;
+            LongSkillFreqCTDFs.XinWu.TransSkillFreq(sourceName, targetName, num, FightTime.LongItem.XWTime);
+            ShortSkillFreqCTDFs.XinWu.TransSkillFreq(sourceName, targetName, num, FightTime.ShortItem.XWTime);
+        }
+
+        // 修正凝形流起手的那个追命
+        private void FixNingXingStartZhuiMing()
+        {
+            if (SkillNum.Normal.百步凝形_丝路风语 || SkillNum.Normal.寒江凝形_山海源流)
             {
                 const double num = 1.0;
                 var longFreq = num / FightTime.LongItem.NormalTime;
                 var shortFreq = num / FightTime.ShortItem.NormalTime;
 
-                LongSkillFreqCTDFs.Normal.ModifySkillFreq(SkillKeyConst.追命箭, longFreq);
-                ShortSkillFreqCTDFs.Normal.ModifySkillFreq(SkillKeyConst.追命箭, shortFreq);
-                LongSkillFreqCTDFs.Normal.ModifySkillFreq(SkillKeyConst.追命箭_百步穿杨, longFreq);
-                ShortSkillFreqCTDFs.Normal.ModifySkillFreq(SkillKeyConst.追命箭_百步穿杨, shortFreq);
+                LongSkillFreqCTDFs.Normal.AddSkillFreq(SkillKeyConst.追命箭, longFreq);
+                ShortSkillFreqCTDFs.Normal.AddSkillFreq(SkillKeyConst.追命箭, shortFreq);
+
+                if (SkillNum.Normal.百步凝形_丝路风语)
+                {
+                    LongSkillFreqCTDFs.Normal.AddSkillFreq(SkillKeyConst.追命箭_百步穿杨, longFreq);
+                    ShortSkillFreqCTDFs.Normal.AddSkillFreq(SkillKeyConst.追命箭_百步穿杨, shortFreq);
+                }
             }
         }
 
@@ -258,11 +304,9 @@ namespace JYCalculator.Src
             if (SkillNum.Normal.追夺流_雾海寻龙)
             {
                 const double num = -4.0;
-                var longDeFreq = num / FightTime.LongItem.NormalTime;
-                var shortDeFreq = num / FightTime.ShortItem.NormalTime;
 
-                LongSkillFreqCTDFs.Normal.ModifySkillFreq(SkillKeyConst.掠影穹苍, longDeFreq);
-                ShortSkillFreqCTDFs.Normal.ModifySkillFreq(SkillKeyConst.掠影穹苍, shortDeFreq);
+                LongSkillFreqCTDFs.Normal.ModifyAddSkillFreq(SkillKeyConst.掠影穹苍, num, FightTime.LongItem.NormalTime);
+                ShortSkillFreqCTDFs.Normal.ModifyAddSkillFreq(SkillKeyConst.掠影穹苍, num, FightTime.ShortItem.NormalTime);
             }
         }
 
@@ -278,6 +322,36 @@ namespace JYCalculator.Src
 
                 LongSkillFreqCTDFs.XinWu.TransSkillFreq(SkillKeyConst.追命箭_蹑景3_瞬发, SkillKeyConst.追命箭_瞬发, LongDeFreq);
                 ShortSkillFreqCTDFs.XinWu.TransSkillFreq(SkillKeyConst.追命箭_蹑景3_瞬发, SkillKeyConst.追命箭_瞬发, ShortDeFreq);
+            }
+        }
+
+        private void FixChuanXingDOT()
+        {
+            if (SkillNum.Normal.寒江凝形_山海源流)
+            {
+                var cxDOTKey = SkillNum.QiXue.CX_DOT_Key;
+                var cxStack = SkillNum.QiXue.CX_DOT_Stack;
+                var cxHaste = SkillNum.Normal.ChuanXinHaste;
+                const double xwNoChuanXinTime = 9;
+                var xwLossNum = xwNoChuanXinTime / cxHaste.XWIntervalTime;
+                var xwHitLoss = 0;
+                var xwCountLoss = xwLossNum * 1;
+                LongSkillFreqCTDFs.XinWu.ModifyAddSkillFreq(cxDOTKey, -xwCountLoss, FightTime.LongItem.XWTime, false);
+                LongSkillFreqCTDFs.XinWu.ModifyAddSkillFreq(SkillKeyConst.穿心弩DOT_Hit, -xwHitLoss, FightTime.LongItem.XWTime, true);
+
+                ShortSkillFreqCTDFs.XinWu.ModifyAddSkillFreq(cxDOTKey, -xwCountLoss, FightTime.ShortItem.XWTime, false);
+                ShortSkillFreqCTDFs.XinWu.ModifyAddSkillFreq(SkillKeyConst.穿心弩DOT_Hit, -xwHitLoss, FightTime.ShortItem.XWTime, true);
+
+                var normalLossNum = 3.25 / cxHaste.IntervalTime;
+                var normalSingleNum = 0;
+                var normalHitLoss = normalLossNum;
+                var normalCountLoss = normalLossNum * cxStack + normalSingleNum;
+
+                LongSkillFreqCTDFs.Normal.ModifyAddSkillFreq(cxDOTKey, -normalCountLoss, FightTime.LongItem.NormalTime, false);
+                LongSkillFreqCTDFs.Normal.ModifyAddSkillFreq(SkillKeyConst.穿心弩DOT_Hit, -normalHitLoss, FightTime.LongItem.NormalTime, true);
+
+                ShortSkillFreqCTDFs.Normal.ModifyAddSkillFreq(cxDOTKey, -normalCountLoss, FightTime.ShortItem.NormalTime, false);
+                ShortSkillFreqCTDFs.Normal.ModifyAddSkillFreq(SkillKeyConst.穿心弩DOT_Hit, -normalHitLoss, FightTime.ShortItem.NormalTime, true);
             }
         }
 

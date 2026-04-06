@@ -38,8 +38,9 @@ namespace JX3CalculatorShared.Globals
         public const int PreviousLevel = 120; // 上个人物等级
         public const double FRAMES_PER_SECOND = 16.0; // 每秒16逻辑帧
         public const double GCD = 1.5;
-        public const int GCD_FPS = 24;
-        public const int NumberOfQiXue = 12;
+        public const int GCD_FRAME = 24;
+        public const int NumberOfQiXue = 10; // 奇穴数量
+        public const int HalfNumberOfQiXue = NumberOfQiXue / 2; // 奇穴数量的一半
         public const double G_KILO_NUM = 1024.0; // 郭氏千
         public const double G_KILO_SQUARE_NUM = 1048576.0; // 郭氏千平方
         public static readonly GlobalParams CurrentLevelGlobalParams;
@@ -48,6 +49,11 @@ namespace JX3CalculatorShared.Globals
         public const double DefMax = 0.75; // 防御减伤最大值
         public const double HJMax = 0.85; // 化劲减伤最大值
 
+        /// 是否为混池奇穴
+        public static bool IsMixPoolQiXue(int position)
+        {
+            return position > 7 && position <= NumberOfQiXue;
+        }
 
         public static readonly string[] UsefulStoneAttrs =
         {

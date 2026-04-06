@@ -27,6 +27,7 @@ namespace JYCalculator.Src
 
         // 输入成员
         public InitInputViewModel InitInput;
+
         public EquipOptionConfigModel Equip => InitInput.EquipOptionVM.Model;
         public BigFMConfigModel BigFM => InitInput.BigFMVM.Model;
 
@@ -55,7 +56,7 @@ namespace JYCalculator.Src
 
         public readonly FullCharacterGroup FullCharGroup; // 收集计算过程中所有的面板
 
-        public int Haste => (int)FullCharGroup.ZhenBuffed.Haste; // 加速
+        public int Haste => (int) FullCharGroup.ZhenBuffed.Haste; // 加速
         public int XWExtraHaste => QiXue.XWExtraHaste; // 心无额外加速
 
         public SkillNumModel SkillNum;
@@ -69,7 +70,7 @@ namespace JYCalculator.Src
         public string FinalDPStxtF; // 更加精确的DPS值
 
         public int CalcStatus { get; private set; } = -1; // 表示计算结果， 0表示计算成功
-        public SkillBuild CSkillBuild { get; protected set; } = null;// 流派
+        public SkillBuild CSkillBuild { get; protected set; } = null; // 流派
         public bool IsSupport { get; protected set; } = false; // 是否支持
 
         // 优化
@@ -145,7 +146,6 @@ namespace JYCalculator.Src
         [Time]
         public CalculatorShell Calc() // 全流程计算
         {
-
             GetSkillBuild();
             if (AppStatic.XinFaTag == "TL")
             {
@@ -173,7 +173,7 @@ namespace JYCalculator.Src
 
             if (!IsSupport)
             {
-                SetUnSupport();
+                SetUnSupportBuild();
                 CalcStatus = 1;
             }
             else
@@ -188,7 +188,8 @@ namespace JYCalculator.Src
         {
             // 获取流派
 
-            var validSkillBuild = QiXue.CompatibleSkillBuilds.Intersect(Arg.RecipeCompatibleSkillBuilds).OrderByDescending(_ => _.Priority).ToArray();
+            var validSkillBuild = QiXue.CompatibleSkillBuilds.Intersect(Arg.RecipeCompatibleSkillBuilds)
+                .OrderByDescending(_ => _.Priority).ToArray();
 
             if (validSkillBuild.Length > 0)
             {
@@ -202,12 +203,9 @@ namespace JYCalculator.Src
             }
 
             var skillNumGenre = CSkillBuild.Name;
-            if (CSkillBuild.Name == GenreTypeEnum.百步凝形_丝路风语.ToString())
+            if (Equip.WP.IsBigCW)
             {
-                if (Equip.WP.IsBigCW)
-                {
-                    skillNumGenre = GenreTypeEnum.百步凝形_丝路风语_橙武.ToString();
-                }
+                skillNumGenre = $"{skillNumGenre}_橙武";
             }
 
             var abilityGenre = StaticXFData.DB.Ability.GenreData[skillNumGenre];
@@ -279,21 +277,34 @@ namespace JYCalculator.Src
         {
             if (CSkillBuild != null)
             {
-                FinalDPStxt = $"{CDPSKernel.FinalDPS:F0}";
-                FinalDPStxtF = $"{CDPSKernel.FinalDPS:F2}";
+                if (FullCharGroup.NormalFinal.HasteRank >= 3)
+                {
+                    FinalDPStxt = $"{CDPSKernel.FinalDPS:F0}";
+                    FinalDPStxtF = $"{CDPSKernel.FinalDPS:F2}";
+                }
+                else
+                {
+                    SetUnSupportHaste();
+                }
             }
             else
             {
-                SetUnSupport();
+                SetUnSupportBuild();
             }
         }
 
         /// <summary>
         /// 设置奇穴秘籍不支持，不再计算DPS
         /// </summary>
-        public void SetUnSupport()
+        public void SetUnSupportBuild()
         {
             FinalDPStxt = "不支持的奇穴/秘籍！";
+            FinalDPStxtF = FinalDPStxt;
+        }
+
+        public void SetUnSupportHaste()
+        {
+            FinalDPStxt = "不支持的加速！";
             FinalDPStxtF = FinalDPStxt;
         }
 
@@ -313,6 +324,7 @@ namespace JYCalculator.Src
                 DpsKernelOp = new DPSKernelOptimizer(KernelShell);
                 DpsKernelOp.Calc();
             }
+
             MultiZhenDPSOp = new MultiZhenFaOptimizer(KernelShell, Zhen);
             MultiZhenDPSOp.Calc();
         }

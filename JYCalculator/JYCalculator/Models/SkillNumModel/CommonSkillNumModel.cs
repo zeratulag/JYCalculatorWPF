@@ -27,8 +27,10 @@ namespace JYCalculator.Models
         public readonly bool 追夺流_雾海寻龙 = false;
         public readonly bool 百步凝形_丝路风语 = false;
         public readonly bool 百步凝形_丝路风语_橙武 = false;
-
+        public readonly bool 寒江凝形_山海源流 = false;
         public bool CXMaintainThroughout => !百步凝形_丝路风语; // 穿心是否能全程保持
+        public HasteTableItem ChuanXinHaste = null; // 穿心
+        public string ChuanXinDOTKey = null;
 
         #endregion
 
@@ -43,10 +45,15 @@ namespace JYCalculator.Models
             Equip = equip;
             BigFM = bigfm;
 
+            Arg = arg;
+            AbilityRank = abilityitem.Rank;
+
             白雨流_万灵当歌 = abilityitem.GenreEnum == GenreTypeEnum.白雨流_万灵当歌;
             追夺流_雾海寻龙 = abilityitem.GenreEnum == GenreTypeEnum.追夺流_雾海寻龙;
             百步凝形_丝路风语_橙武 = abilityitem.GenreEnum == GenreTypeEnum.百步凝形_丝路风语_橙武;
             百步凝形_丝路风语 = abilityitem.GenreEnum == GenreTypeEnum.百步凝形_丝路风语 || 百步凝形_丝路风语_橙武;
+            寒江凝形_山海源流 = abilityitem.GenreEnum == GenreTypeEnum.寒江凝形_山海源流 ||
+                        abilityitem.GenreEnum == GenreTypeEnum.寒江凝形_山海源流_橙武;
 
             switch (abilityitem.GenreEnum)
             {
@@ -62,28 +69,20 @@ namespace JYCalculator.Models
                 }
                 case GenreTypeEnum.百步凝形_丝路风语:
                 case GenreTypeEnum.百步凝形_丝路风语_橙武:
+                default:
                 {
                     Num = new BaiBuNingXingSkillCountItem(abilityitem, qixue);
-                    var baseSkillRatioGroups = StaticXFData.Data.DefaultBaseSkillRatioGroups;
-                    if (百步凝形_丝路风语_橙武)
-                    {
-                        baseSkillRatioGroups = StaticXFData.Data.ChengWuBaseSkillRatioGroups;
-                    }
-
+                    var baseSkillRatioGroups =
+                        StaticXFData.Data.CSkillRatioManager.GetPeriodBaseSkillRatioGroup(IsBigChenWu, AbilityRank);
                     SkillRatioGroup = IsXW ? baseSkillRatioGroups.XinWu : baseSkillRatioGroups.Normal;
                     break;
                 }
             }
 
-            Arg = arg;
-
-            AbilityRank = abilityitem.Rank;
-
+            IsBigXW = IsXW && QiXue.聚精凝神;
             Time = IsXW ? QiXue.XWDuration : QiXue.NormalDuration;
             PZ_BYPerZX = IsXW ? 2.0 : XFStaticConst.PZ_BaiYuPer_Normal_ZX; // 单次逐星的平均白雨破招数
             Num.ResetTime(Time);
-
-            IsBigXW = IsXW && QiXue.聚精凝神;
 
             XFPostConstructor();
         }
@@ -103,7 +102,6 @@ namespace JYCalculator.Models
         {
             DoBeforeWork();
             CalcCX_DOT();
-            CalcZX_DOT();
         }
 
         // 夺追流需要的准备
@@ -133,15 +131,46 @@ namespace JYCalculator.Models
         {
             // 在其他技能数已经确定时的通用计算
             CalcGangFengFinal();
-            CalcNieJingZhuiMingFreq();
+            CalcShuJiaFreq();
             CalcLveYingQiongCangFreq();
-            CalcNingXingZhuimingFreq();
+            CalcNieYingZhuiMingFreq();
         }
 
-        // 分配凝形追命的各种技能数
-        private void CalcNingXingZhuimingFreq()
+        public void CalcShuJiaFreq()
         {
-            if (!百步凝形_丝路风语) return;
+            if (QiXue.追锋断念)
+            {
+                double zhuimingRatio = 0;
+                double duopoRatio = 0;
+                
+                if (IsBigChenWu)
+                {
+                    zhuimingRatio = IsXW
+                        ? (8.0 + 10) / (8.0 + 11.0)
+                        : (4 * 8.0 + 4 * 11.0) / 110.0; // 5分钟一共开了12次凝形，其中4次心无凝形，8次常规凝形，常规凝形中有4次橙武凝形。
+                    // 因此非心无阶段260s一共有 4*7 + 4*10次枢甲，对应110次追命。
+
+                    duopoRatio = IsXW
+                        ? 1.0
+                        : (4 * 4.0) / 63.0; // 5分钟一共开了12次凝形，其中4次心无凝形，8次常规凝形，常规凝形中有4次橙武凝形，4次非橙武凝形。
+                    // 橙武凝形中0次夺魄，非橙武凝形中4次夺魄。
+                    // 因此非心无阶段260s一共有 4*4.0次枢甲，对应63次夺魄。
+                }
+                else
+                {
+                    zhuimingRatio = IsXW ? 1.0 : 8.0 * 7 / 92.0; // 5分钟一共开了12次凝形，其中4次心无凝形，8次常规凝形。因此非心无阶段260s一共有8*7次枢甲，对应92次追命。
+                    duopoRatio = IsXW
+                        ? 1.0
+                        : (8 * 4.0) / 79.0; // 5分钟一共开了12次凝形，其中4次心无凝形，8次常规凝形。因此非心无阶段260s一共有8*4次枢甲，对应79次夺魄。
+                }
+
+                FinalSkillFreq.AddShuJiaByRatio(zhuimingRatio, duopoRatio);
+            }
+        }
+
+        // 分配蹑景追命的各种技能数
+        private void CalcNieYingZhuiMingFreq()
+        {
             SkillRatioGroup.AllocateSkillNum(FinalSkillFreq);
         }
 
@@ -154,16 +183,16 @@ namespace JYCalculator.Models
                 return;
             }
 
-            var cx = QiXue.穿林打叶 ? SkillHaste.CX2_CL_DOT : SkillHaste.CX3_DOT;
+            ChuanXinHaste = QiXue.穿林打叶 ? SkillHaste.CX2_CL_DOT : SkillHaste.CX3_DOT;
 
             double interval;
             if (IsBigXW)
             {
-                interval = cx.XWIntervalTime;
+                interval = ChuanXinHaste.XWIntervalTime;
             }
             else
             {
-                interval = cx.IntervalTime;
+                interval = ChuanXinHaste.IntervalTime;
             }
 
             Num.SetCXDOTByHit(Num._Time / interval);
@@ -171,88 +200,47 @@ namespace JYCalculator.Models
 
 
         // 计算逐星DOT
-        public void CalcZX_DOT()
-        {
-            if (QiXue.星落如雨)
-            {
-                var zx = SkillHaste.ZX_DOT;
-                double interval;
-                if (IsBigXW)
-                {
-                    interval = zx.XWIntervalTime;
-                }
-                else
-                {
-                    interval = zx.IntervalTime;
-                }
+        //public void CalcZX_DOT()
+        //{
+        //    if (QiXue.星落如雨)
+        //    {
+        //        var zx = SkillHaste.ZX_DOT;
+        //        double interval;
+        //        if (IsBigXW)
+        //        {
+        //            interval = zx.XWIntervalTime;
+        //        }
+        //        else
+        //        {
+        //            interval = zx.IntervalTime;
+        //        }
 
-                Num.ZX_DOT = Math.Min(Num.ZX * 6, Num._Time / interval);
-            }
-        }
+        //        Num.ZX_DOT = Math.Min(Num.ZX * 6, Num._Time / interval);
+        //    }
+        //}
 
         /// <summary>
         /// 计算百里数
         /// </summary>
-        public void CalcBL()
-        {
-            if (白雨流_万灵当歌)
-            {
-                var bl = GetBLFreqTime();
-                var realNum = Num as BaoYuSkillCountItem;
-                realNum?.ApplyBLFreq(bl.Freq, bl.Time);
-            }
-        }
-
-        /// <summary>
-        /// 计算百里频率和CD时间
-        /// </summary>
-        /// <returns></returns>
-        public (double Freq, double Time) GetBLFreqTime()
-        {
-            double raw_blcd = StaticXFData.DB.BaseSkillInfo.Skills[SkillKeyConst.百里追魂].CD; // 原始CD
-            double real_cd = raw_blcd;
-
-            if (QiXue.寒江夜雨)
-            {
-                var efreq = Num.GetEnergyInjection();
-                var hjfreq = efreq / 3.0 + Num.ZX / Num._Time;
-                if (QiXue.白雨跳珠)
-                {
-                    hjfreq += Num.ZX * PZ_BYPerZX / Num._Time;
-                }
-
-                real_cd = QiXue.GetBLCDByHanJiangFreq(hjfreq);
-            }
-
-            var rawBLFreq = 1 / real_cd;
-            var abilityrankcoef = (0.85 + 0.05 * AbilityRank); // 顶级手法下无延迟，应该为1
-            var realBLFreq = rawBLFreq * abilityrankcoef;
-
-            double bltime;
-            if (IsBigXW)
-            {
-                bltime = SkillHaste.BL.XWTime;
-            }
-            else
-            {
-                bltime = SkillHaste.BL.Time;
-            }
-
-            return (realBLFreq, bltime);
-        }
-
-
+        //public void CalcBL()
+        //{
+        //    if (白雨流_万灵当歌)
+        //    {
+        //        var bl = GetBLFreqTime();
+        //        var realNum = Num as BaoYuSkillCountItem;
+        //        realNum?.ApplyBLFreq(bl.Freq, bl.Time);
+        //    }
+        //}
         /*public void CalcGF()
         {
             Num.CalcGF();
         }*/
-
         public void CalcGangFengFinal()
         {
             FinalSkillFreq.CalcGangFeng();
             if (QiXue.蹑景追风)
             {
-                FinalSkillFreq.FixGangFengOnZhuiDuo();
+                FinalSkillFreq.FixGangFengOnZhuiDuo(IsBigChenWu);
             }
         }
 
@@ -266,8 +254,9 @@ namespace JYCalculator.Models
             GetBasicEventHitFreq();
             FinalNum = Num; // 惊羽可以直接赋值
             FinalSkillFreq = FinalNum.ToSkillFreqDict();
-            GetBigCWFreq(); // 惊羽需要先计算橙武频率，再计算其他频率
+            //GetBigCWFreq(); // 惊羽需要先计算橙武频率，再计算其他频率
             GetBigCWDPFreq();
+            GetBigZMFreq();
             GetFinalEventHitFreq();
             GetBasicSLCover();
             GetBigFMFreq();
@@ -277,11 +266,18 @@ namespace JYCalculator.Models
 
         public void GetBigCWDPFreq()
         {
-            if (!WP.IsBigCW) return;
+            if (!IsBigChenWu) return;
             double CW_DP;
             var CW_DPkey = nameof(CW_DP);
             CW_DP = SkillEvents[CW_DPkey].TriggerFreq(FinalSkillFreq[SkillKeyConst._夺魄箭_释放]);
             FinalSkillFreq.AddByFreq(CW_DPkey, CW_DP);
+        }
+
+        public void GetBigZMFreq()
+        {
+            if (!IsBigChenWu) return;
+            double ratio = IsXW ? 8 / (9.25 * 2) : 32 / 110.0;
+            FinalSkillFreq.AddCWZMByRatio(ratio);
         }
 
         public void GetBigCWFreq()
@@ -314,11 +310,6 @@ namespace JYCalculator.Models
                 FinalSkillFreq.RefreshJYGFFreq();
                 FinalSkillFreq.AddSkillFreq(SkillKeyConst.逐星箭, ZX_Extra_Num / Total_Interval_Time); // 增加逐星频率
 
-                if (QiXue.星落如雨)
-                {
-                    FinalSkillFreq[SkillKeyConst.星斗阑干] += 3 / Total_Interval_Time; // 逐星DOT本身也增加
-                }
-
                 if (QiXue.穿林打叶)
                 {
                     FinalSkillFreq[SkillKeyConst.穿林打叶] = FinalSkillFreq[SkillKeyConst.逐星箭];
@@ -333,7 +324,6 @@ namespace JYCalculator.Models
             FinalSkillFreq.Data.TryGetValue(SkillKeyConst.穿心弩, out var newCXL);
             var deltaCXL = oldCXL - newCXL;
             FinalSkillFreq.MoveDPToCXL(deltaCXL); // 穿心弩的频率不能减少
-
         }
 
 
@@ -351,21 +341,11 @@ namespace JYCalculator.Models
         }
 
 
-        /// <summary>
-        /// 分配蹑景追命技能数
-        /// </summary>
-        public void CalcNieJingZhuiMingFreq()
-        {
-            if (!QiXue.蹑景追风) return;
-            if (百步凝形_丝路风语) return;
-            FinalSkillFreq.CalcNieJingZhuiMingFreq();
-        }
-
         public void CalcLveYingQiongCangFreq()
         {
             if (!QiXue.掠影穹苍) return;
             if (百步凝形_丝路风语) return;
-            FinalSkillFreq.CalcLveYingQiongCangFreq();
+            FinalSkillFreq.CalcLveYingQiongCangFreq(IsBigChenWu);
         }
 
         #endregion

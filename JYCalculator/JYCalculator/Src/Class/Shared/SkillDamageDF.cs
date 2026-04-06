@@ -62,8 +62,9 @@ namespace JYCalculator.Class
             {
                 var key = KVP.Key;
                 var freq = KVP.Value.Freq;
-                Data[key].SetFreq(freq);
-                Data[key].GetDPS();
+                if (!Data.TryGetValue(key, out var item)) continue;
+                item.SetFreq(freq);
+                item.GetDPS();
             }
         }
 

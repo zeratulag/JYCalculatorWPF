@@ -3,19 +3,23 @@ using CommunityToolkit.Mvvm.Messaging;
 using JX3CalculatorShared.Class;
 using JX3CalculatorShared.Globals;
 using JX3CalculatorShared.Messages;
+using JX3CalculatorShared.Models;
 using JX3CalculatorShared.Utils;
 using JX3CalculatorShared.ViewModels;
 using JX3PZ.Models;
 using JX3PZ.ViewModels;
 using JYCalculator.Class;
 using JYCalculator.Data;
+using JYCalculator.DB;
 using JYCalculator.Globals;
 using JYCalculator.Messages;
 using JYCalculator.Models;
 using JYCalculator.Src;
 using JYCalculator.Views;
+using JYCalculator.Views.UserControls;
 using Microsoft.Win32;
 using Newtonsoft.Json;
+using Serilog;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.ComponentModel;
@@ -24,9 +28,6 @@ using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using JX3CalculatorShared.Models;
-using JYCalculator.DB;
-using Serilog;
 
 namespace JYCalculator.ViewModels
 {
@@ -34,7 +35,7 @@ namespace JYCalculator.ViewModels
     /// MainWindow的ViewModel，同时也是存储各个子ViewModels的类
     /// </summary>
     public partial class MainWindowViewModels : AbsDependViewModel<AbsViewModel>, IRecipient<StringMessage>,
-        IRecipient<PzPlanMessage>
+        IRecipient<PzPlanMessage>, IRecipient<ImportDataMessage>
     {
         #region 成员
 
@@ -61,6 +62,7 @@ namespace JYCalculator.ViewModels
         public CalculatorShell CalcShell => Model.CalcShell;
 
         private PzMainWindowViewModels _PZMW => _MW._PzMainWindow._VM;
+        public FullCharacter FinalCharPanelVM { get; private set; }
 
         // 输出界面的VM
         public ProfitChartViewModel ProfitChartVM { get; private set; }
@@ -105,7 +107,7 @@ namespace JYCalculator.ViewModels
 
         // 命令
         public RelayCommand OpenDebugWindowCmd { get; }
-        public RelayCommand OpenImportJBBBDialogCmd { get; }
+        public RelayCommand OpenImportDataDialogCmd { get; }
         public RelayCommand SaveAsCmd { get; }
         public RelayCommand SaveCurrentCmd { get; }
         public RelayCommand OpenFileCmd { get; }
@@ -168,12 +170,13 @@ namespace JYCalculator.ViewModels
             // 注册信息接收处理
             WeakReferenceMessenger.Default.Register<StringMessage>(this);
             WeakReferenceMessenger.Default.Register<PzPlanMessage>(this);
+            WeakReferenceMessenger.Default.Register<ImportDataMessage>(this);
 
             Model = new MainWindowModel(this);
 
             // 初始化命令
             OpenDebugWindowCmd = new RelayCommand(OpenDebugWindow);
-            OpenImportJBBBDialogCmd = new RelayCommand(OpenImportJBPanelDialog);
+            OpenImportDataDialogCmd = new RelayCommand(OpenImportDataDialog);
             NewCmd = new RelayCommand(New);
             SaveAsCmd = new RelayCommand(SaveAs);
             SaveCurrentCmd = new RelayCommand(SaveCurrent);
@@ -345,7 +348,7 @@ namespace JYCalculator.ViewModels
             FightTimeSummaryVM.UpdateResult();
             FinalDPStxt = CalcShell.FinalDPStxt;
             var kernel = CalcShell.CDPSKernel;
-
+            FinalCharPanelVM = CalcShell.FullCharGroup.NormalFinal;
             CombatStatTable = kernel.FinalCombatStat.Items;
             CombatStatGroupTable = kernel.FinalCombatStat.Groups;
             FinalDPS = kernel.FinalDPS;
@@ -530,9 +533,9 @@ namespace JYCalculator.ViewModels
         }
 
 
-        public void OpenImportJBPanelDialog()
+        public void OpenImportDataDialog()
         {
-            InitInputVM.OpenImportJBBBDialog();
+            InitInputVM.OpenImportDataDialog();
         }
 
         #endregion
@@ -781,6 +784,21 @@ namespace JYCalculator.ViewModels
             var title = GlobalContext.ViewModels.PzOverview.OverviewVM.Title;
             var res = $"配装器模式 - {title}";
             return res;
+        }
+
+        public void Receive(ImportDataMessage message)
+        {
+
+            switch (message.ImportType)
+            {
+                case ImportDataType.JX3BOXPanel:
+                {
+
+                    var res = (JBBB)message.Data;
+                    InitInputVM.ImportJBBB(res);
+                    break;
+                }
+            }
         }
     }
 }

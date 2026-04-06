@@ -231,8 +231,8 @@ namespace JX3CalculatorShared.Data
         public EquipSubTypeEnum SubType { get; set; }
         public int Quality { get; set; }
         public int Score { get; set; }
-        public int Level_Min { get; set; }
-        public int Level_Max { get; set; }
+        public int MinEquipLevel { get; set; }
+        public int MaxEquipLevel { get; set; }
         public int Rank { get; set; }
         public int Magic { get; set; }
         public int Physics { get; set; }
@@ -258,7 +258,7 @@ namespace JX3CalculatorShared.Data
         public int Order { get; set; }
         public int Quality { get; set; }
         public int ExpansionPackLevel { get; set; }
-
+        public int Rank { get; set; }
         public int BuffID { get; set; }
         public int BuffLevel { get; set; }
         public string BuffRawID { get; set; }
@@ -306,6 +306,8 @@ namespace JX3CalculatorShared.Data
         public string Associate { get; set; }
         public bool IsExclude { get; set; } = false;
         public string SkillNameTag { get; set; }
+        public int SkillIconID { get; set; }
+        public string SkillToolTip { get; set; }
 
         public string RawSkillNames { get; set; } = ""; // 当此项不为空时，会直接解析生效的技能名；否则需要对比SkillID进行求解生效技能名
 
@@ -343,6 +345,7 @@ namespace JX3CalculatorShared.Data
         public string Build { get; set; }
         public string GameVersion { get; set; }
         public int IsDefault { get; set; } = 0;
+        public bool IsValid { get; set; } = false;
         public int Priority { get; set; } = 0;
         public string RawEssentialQiXues { get; set; }
         public string RawBannedQiXues { get; set; }
@@ -398,6 +401,7 @@ namespace JX3CalculatorShared.Data
         public int SkillEventID { get; set; } = -1;
         public int SkillID { get; set; } = -1;
         public int SkillLevel { get; set; } = -1;
+        public int EquipSubType { get; set; }
         public EquipSpecialEffectTypeEnum SpecialEffectType { get; set; }
         public EquipSpecialEffectBaseTypeEnum SpecialEffectBaseType { get; set; }
         public string SkillScriptFileName { get; set; }

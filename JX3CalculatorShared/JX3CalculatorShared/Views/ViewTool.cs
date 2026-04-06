@@ -12,6 +12,7 @@ using System.Windows.Markup;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Xml;
+using Ookii.Dialogs.Wpf;
 
 namespace JX3CalculatorShared.Views
 {
@@ -54,6 +55,24 @@ namespace JX3CalculatorShared.Views
             var res = tabControl.Items.OfType<TabItem>().ToArray();
             return res;
         }
+        public static string OpenSelectFolder(string selectFolder = null)
+        {
+            var dialog = new VistaFolderBrowserDialog();
+            if (selectFolder != null)
+            {
+                dialog.SelectedPath = selectFolder;
+            }
+
+            var result = dialog.ShowDialog();
+
+            if (result == true)
+            {
+                string selectedFolder = dialog.SelectedPath;
+                return selectedFolder;
+            }
+            return null;
+        }
+
     }
 
 
@@ -231,7 +250,6 @@ namespace JX3CalculatorShared.Views
             Horizontal // ——
         }
 
-
     }
 
     public static class HandlerTool
@@ -250,4 +268,6 @@ namespace JX3CalculatorShared.Views
             e.Handled = true;
         }
     }
+
+
 }

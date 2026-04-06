@@ -28,6 +28,7 @@ namespace JX3PZ.Data
         public string Desc { get; set; } = "";
         public string ShortDesc { get; set; } = "";
         public string ItemDesc { get; set; } = "";
+        public int MaxEquipLevel { get; set; } = int.MaxValue;
 
         #endregion
 
@@ -75,12 +76,12 @@ namespace JX3PZ.Data
             string path;
             if (e == null)
             {
-                color = ColorConst.Inactive;
+                color = ColorConst.Gray;
                 path = BindingTool.ImageName2Path("enhance-null");
             }
             else
             {
-                color = ColorConst.Enhance;
+                color = ColorConst.Blue;
                 path = BindingTool.ImageName2Path("enhance");
             }
 

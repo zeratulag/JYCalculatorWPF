@@ -44,7 +44,6 @@ namespace JX3PZ.Data
             LevelDesc = desc.ToImmutableArray();
             LevelItems = DiamondLevelItem.GetLevelItems(this).ToImmutableArray();
             IsEmpty = false;
-
         }
 
         public DiamondTabItem(int id) : this(AttributeTabLib.Get(id))
@@ -112,27 +111,24 @@ namespace JX3PZ.Data
             string middle = "";
             if (level <= 0 || level > PzConst.MAX_DIAMOND_LEVEL)
             {
+                string suffix;
+                string body;
                 if (simple)
                 {
-                    middle = Attribute.SimpleDesc + "?";
+                    suffix = "+?";
+                    body = Attribute.SimpleDesc;
                 }
                 else
                 {
-                    middle = Attribute.FullBaseDesc + "?";
+                    suffix = "?";
+                    body = Attribute.FullBaseDesc;
                 }
+                middle = $"{body}{suffix}";
             }
             else
             {
-                if (simple)
-                {
-                    middle = Attribute.GetSimpleDesc(LevelValues[level]);
-                }
-                else
-                {
-                    middle = Attribute.GetFullDesc(LevelValues[level]);
-                }
+                middle = simple ? Attribute.GetSimpleDesc(LevelValues[level]) : Attribute.GetFullDesc(LevelValues[level]);
             }
-
             return middle;
         }
 
@@ -144,7 +140,7 @@ namespace JX3PZ.Data
         public int GetValue(int level)
         {
             var v = GetCoef(level);
-            var res = (int)(Value * v);
+            var res = (int) (Value * v);
             return res;
         }
 
@@ -161,7 +157,7 @@ namespace JX3PZ.Data
                 res = 1.3 * (0.65 * level - 3.2);
             }
 
-            res *= PzScore.TaiJiDiamondCoef; // 太极秘录修改
+            res *= PzScore.ShanHaiDiamondCoef; // 太极秘录修改
             return res;
         }
 
@@ -172,8 +168,8 @@ namespace JX3PZ.Data
         /// <returns></returns>
         public static int GetQuality(int level)
         {
-            var res = 1 + ((double)level + 1) / 2;
-            return (int)res;
+            var res = 1 + ((double) level + 1) / 2;
+            return (int) res;
         }
 
         /// <summary>

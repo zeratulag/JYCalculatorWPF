@@ -32,9 +32,23 @@
         </Setter>
     </Style>
 
+    <!--  秘籍扩展器Header模板  -->
+    <DataTemplate x:Key="DataTemplate.ExpanderMiJiHeader">
+        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+            <StackPanel.ToolTip>
+                <TextBlock Text="{Binding SkillToolTip}" Style="{StaticResource Style.ToolTipTextBlock}" />
+            </StackPanel.ToolTip>
+            <Image Width="24" Height="24"
+                   Margin="0,0,5,0"
+                   Source="{Binding SkillIconID, Converter={StaticResource IconIDToImgConverter}}" />
+            <TextBlock Text="{Binding HeaderName}" VerticalAlignment="Center"/>
+        </StackPanel>
+    </DataTemplate>
+
     <!--  秘籍扩展器  -->
     <Style x:Key="Style.ExpanderMiJi" TargetType="Expander">
-        <Setter Property="Header" Value="{Binding Path=HeaderName}" />
+        <Setter Property="Header" Value="{Binding}" />
+        <Setter Property="HeaderTemplate" Value="{StaticResource DataTemplate.ExpanderMiJiHeader}" />
         <Setter Property="Foreground" Value="{Binding Path=Color}" />
     </Style>
 

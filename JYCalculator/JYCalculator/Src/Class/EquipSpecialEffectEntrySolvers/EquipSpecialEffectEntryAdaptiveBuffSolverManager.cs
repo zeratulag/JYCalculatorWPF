@@ -114,23 +114,46 @@ namespace JYCalculator.Class
 
         public static BuffRecord BOTTOMS__AdaptivePower(this EquipSpecialEffectEntry entry, FullCharacter fChar)
         {
-            switch (entry.SkillLevel)
+            var res =  BOTTOMS__AdaptivePowerSolver(entry, fChar);
+            return res;
+            //switch (entry.SkillLevel)
+            //{
+            //    case 1:
+            //    {
+            //        return BOTTOMS__AdaptivePower_Level1(fChar);
+            //        break;
+            //    }
+            //    case 2:
+            //    {
+            //        return BOTTOMS__AdaptivePower_Level2(fChar);
+            //        break;
+            //    }
+            //    default:
+            //    {
+            //        throw new ArgumentOutOfRangeException("Invalid SkillLevel");
+            //    }
+            //}
+        }
+
+        public static BuffRecord BOTTOMS__AdaptivePowerSolver(this EquipSpecialEffectEntry entry, FullCharacter fChar)
+        {
+            const double nStrainRate_YZ = 0.9;
+            var currentStrain = fChar.FinalStrainValue; // 最终无双值
+            int buffID = 0;
+            int buffLevel = 0;
+            if (currentStrain < nStrainRate_YZ)
             {
-                case 1:
-                {
-                    return BOTTOMS__AdaptivePower_Level1(fChar);
-                    break;
-                }
-                case 2:
-                {
-                    return BOTTOMS__AdaptivePower_Level2(fChar);
-                    break;
-                }
-                default:
-                {
-                    throw new ArgumentOutOfRangeException("Invalid SkillLevel");
-                }
+                buffID = entry.BuffID1;
+                buffLevel = entry.BuffLevel1; // 无双低于阈值加无双
             }
+            else
+            {
+                buffID = entry.BuffID2;
+                buffLevel = entry.BuffLevel2; 
+            }
+
+            var res = MakeBuffRecord(buffID, buffLevel);
+            return res;
         }
 
         public static BuffRecord HAT__AdaptivePower(this EquipSpecialEffectEntry entry, FullCharacter SnapfChar)
@@ -161,8 +184,8 @@ namespace JYCalculator.Class
         }
 
         public static ImmutableArray<int> NECKLACE__CriticalStrike_To_CriticalPower_LevelToStackDenominator
-            = ImmutableArray.Create(0, 4748, 4942, 5302, 5683);
-        // 项链会心加会效计算BUFF层数专用
+            = ImmutableArray.Create(0, 4748, 4942, 5302, 5683, 6006, 6526);
+        // 项链会心加会效计算BUFF层数专用，数据来源是 黄字项链会心加会效.lua
 
         public static BuffRecord NECKLACE__CriticalStrike_To_CriticalPower(this EquipSpecialEffectEntry entry, FullCharacter SnapfChar)
         {
@@ -177,8 +200,8 @@ namespace JYCalculator.Class
         }
 
         public static ImmutableArray<int> NECKLACE__Overcome_To_AttackPower_LevelToStackDenominator =
-            ImmutableArray.Create(0, 5427, 5648, 6060, 6496);
-        // 项链破防加攻击计算BUFF层数专用
+            ImmutableArray.Create(0, 5427, 5648, 6060, 6496, 6864, 7456);
+        // 项链破防加攻击计算BUFF层数专用，数据来源是 黄字项链破防加攻击.lua
         public static BuffRecord NECKLACE__Overcome_To_AttackPower(this EquipSpecialEffectEntry entry, FullCharacter SnapfChar)
         {
             // 黄字项链破防加攻击

@@ -13,9 +13,9 @@
         Range,
     }
 
-
     public enum EquipSlotEnum
     {
+        INVALID = -1,
         HAT = 0,
         JACKET = 1,
         BELT = 2,
@@ -28,7 +28,7 @@
         RING_2 = 9,
         SECONDARY_WEAPON = 10,
         PRIMARY_WEAPON = 11,
-        TERTIARY_WEAPON = 12
+        TERTIARY_WEAPON = 12,
     }
 
     public enum AttributeEntryTypeEnum

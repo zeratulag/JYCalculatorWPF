@@ -54,6 +54,7 @@ namespace JYCalculator.Class
 
             AllShieldIgnore = 0.0;
             PhysicsDamageAdd = 0.0;
+            SkillDamageFinalCoefficient = 0.0;
 
             Name = iChar.Name;
             EquipScore = iChar.EquipScore;
@@ -95,6 +96,7 @@ namespace JYCalculator.Class
 
             AllShieldIgnore = old.AllShieldIgnore;
             PhysicsDamageAdd = old.PhysicsDamageAdd;
+            SkillDamageFinalCoefficient = old.SkillDamageFinalCoefficient;
 
             Name = old.Name;
             EquipScore = old.EquipScore;

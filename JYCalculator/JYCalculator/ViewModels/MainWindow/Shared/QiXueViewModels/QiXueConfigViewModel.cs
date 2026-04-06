@@ -77,7 +77,7 @@ namespace JYCalculator.ViewModels
 
         public string GetHeaderName()
         {
-            int step = 6;
+            int step = StaticConst.HalfNumberOfQiXue;
             var nameline = new List<string>();
 
             var itempnames = (from _ in Data select _.SelectedItem.ItemName).ToArray();

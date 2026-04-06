@@ -12,6 +12,7 @@ namespace JYCalculator.Class
         public EquipSpecialEffectEntry[] AddBuff { get; }
         public EquipSpecialEffectEntry[] RandomBuff { get; }
         public EquipSpecialEffectEntry[] AdaptiveBuff { get; }
+        public EquipSpecialEffectEntry[] DOTSuperCustomDamage { get; }
 
         public EquipSpecialEffectConfigArg(
             IDictionary<EquipSpecialEffectBaseTypeEnum, EquipSpecialEffectEntry[]> groupedItems)
@@ -19,6 +20,9 @@ namespace JYCalculator.Class
             SuperCustomDamage = groupedItems.GetValueOrUseDefault(EquipSpecialEffectBaseTypeEnum.SuperCustomDamage, Array.Empty<EquipSpecialEffectEntry>());
             AddBuff = groupedItems.GetValueOrUseDefault(EquipSpecialEffectBaseTypeEnum.AddBuff, Array.Empty<EquipSpecialEffectEntry>());
             RandomBuff = groupedItems.GetValueOrUseDefault(EquipSpecialEffectBaseTypeEnum.RandomBuff, Array.Empty<EquipSpecialEffectEntry>());
+            DOTSuperCustomDamage = groupedItems.GetValueOrUseDefault(
+                EquipSpecialEffectBaseTypeEnum.DOTSuperCustomDamage, Array.Empty<EquipSpecialEffectEntry>());
+
             var adaptiveBuff = groupedItems.GetValueOrUseDefault(EquipSpecialEffectBaseTypeEnum.AdaptiveBuff, Array.Empty<EquipSpecialEffectEntry>());
             AdaptiveBuff = adaptiveBuff.SortAdaptiveBuffEntriesByCalcOrder();
         }

@@ -9,7 +9,7 @@
         mc:Ignorable="d"
         ShowInTaskbar="False"
         ResizeMode ="NoResize"
-        Title="关于计算器" Height="360" Width="600">
+        Title="关于计算器" Height="400" Width="640">
 
     <Grid>
 		<Grid.RowDefinitions>
@@ -52,6 +52,9 @@
             <LineBreak/>
 			<Run Text="构建时间："/>
 			<Run Text="{Binding Path=BuildDateTime}"/>
+            <LineBreak/>
+            <Run Text="交流群号(BUG反馈/新版内测)："/>
+            <Run Text="{Binding Path=QQGroupNumber}"/>
 
 			<LineBreak/>
             <Run>鸣谢：</Run>
@@ -82,7 +85,7 @@
 
         <TextBlock Grid.Row="4" Grid.Column="2" TextWrapping="Wrap" Margin="0 10">
 			<Run>声明：计算器只是木桩伤害的模拟，</Run>
-			<Run Foreground="Red" FontWeight="Bold">仅能用于配装参考，不能用于其他用途，</Run>
+			<Run Foreground="Red" FontWeight="Bold">仅能用于配装参考，不能用于其他用途。</Run>
             <Run>严禁使用本计算器进行跨心法/门派比较，</Run>
             <Run>请勿使用本计算器牟利。</Run>
             <LineBreak/>

@@ -23,7 +23,10 @@ namespace JYCalculator.Class
             Data = new Dictionary<string, CombatStatItem>(Df.ValidSkillNames.Length);
             foreach (var name in Df.ValidSkillNames)
             {
-                Data.Add(name, new CombatStatItem(Df.DamageDF.Data[name], Df.Time));
+                if (Df.DamageDF.Data.TryGetValue(name, out var item))
+                {
+                    Data.Add(name, new CombatStatItem(item, Df.Time));
+                }
             }
         }
 

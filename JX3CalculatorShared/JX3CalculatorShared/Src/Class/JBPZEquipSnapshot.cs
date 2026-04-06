@@ -1,4 +1,6 @@
-﻿namespace JX3CalculatorShared.Class
+﻿using MingYiTools;
+
+namespace JX3CalculatorShared.Class
 {
     public class JBPZEquipSnapshot
     {
@@ -11,7 +13,35 @@
 
         public JBPZEquipSnapshot()
         {
-
         }
+
+        /// <summary>
+        /// 基于茗伊数据构建
+        /// </summary>
+        /// <param name="item"></param>
+        public JBPZEquipSnapshot(MingYiItemData item)
+        {
+            id = $"{item.dwTabType}_{item.dwTabIndex}";
+            stone = item.dwItemFEAEnchantID;
+            enchant = item.dwTemporaryEnchantID;
+            enhance = item.dwPermanentEnchantID;
+            strength = item.nStrengthLevel ?? 0;
+            embedding = item.GetDiamondLevelArray();
+        }
+
+        /// <summary>
+        /// 基于茗伊数据库构建
+        /// </summary>
+        /// <param name="item"></param>
+        public JBPZEquipSnapshot(MingYiEquipItemEntity item)
+        {
+            id = $"{item.TabType}_{item.TabIndex}";
+            stone = item.FeaEnchant;
+            enchant = item.TemporaryEnchant;
+            enhance = item.PermanentEnchant;
+            strength = item.Strength;
+            embedding = item.GetDiamondLevelArray();
+        }
+
     }
 }

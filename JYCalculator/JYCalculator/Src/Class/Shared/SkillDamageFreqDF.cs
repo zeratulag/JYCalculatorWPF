@@ -47,7 +47,10 @@ namespace JYCalculator.Class
             RawDPS = 0;
             foreach (var name in ValidSkillNames)
             {
-                RawDPS += DamageDF.Data[name].DPS;
+                if (DamageDF.Data.TryGetValue(name, out var item))
+                {
+                    RawDPS += item.DPS;
+                }
             }
         }
 
@@ -75,12 +78,13 @@ namespace JYCalculator.Class
             RawDamageDeriv = new DamageDeriv("收益");
             foreach (var name in ValidSkillNames)
             {
-                var item = DamageDF.Data[name];
-                RawDamageDeriv.WeightedAdd(item.Deriv, item.Freq);
+                if (DamageDF.Data.TryGetValue(name, out var item))
+                {
+                    RawDamageDeriv.WeightedAdd(item.Deriv, item.Freq);
+                }
             }
 
             return RawDamageDeriv;
         }
-
     }
 }

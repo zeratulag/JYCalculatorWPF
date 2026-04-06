@@ -53,6 +53,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)Src\Class\PzSetAttribute.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Src\Class\PzSubSet.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Src\Class\WeaponBaseAttrs.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Src\Data\DiamondDatabase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Src\Data\DiamondItemEntry.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Src\Data\StoneAttribute.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Src\Data\StoneCondition.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\AttributeEntry\AttributeEntryViewModel.cs" />

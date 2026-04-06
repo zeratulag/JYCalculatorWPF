@@ -11,12 +11,13 @@ namespace JYCalculator.Data
         public string Skill { get; set; }
         public string SkillName { get; set; }
         public int XinWu { get; set; }
-        public int ChengWu { get; set; }
+        public bool ChengWu { get; set; }
         public int Num { get; set; }
         public string BaseSkillName { get; set; }
         public int BaseSkillNum { get; set; }
         public double BaseSkillRatio { get; set; }
         public string BaseSkillKey { get; set; }
+        public int Rank { get; set; }
 
         public ImmutableArray<SkillBuff> SkillBuffs { get; private set; }
         public SkillBuffGroup BuffGroup { get; private set; }

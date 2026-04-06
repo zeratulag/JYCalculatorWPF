@@ -30,8 +30,9 @@
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" MinWidth="500"/>
+            <ColumnDefinition Width="5"/>
+            <ColumnDefinition Width="Auto" MinWidth="300" MaxWidth="400"/>
         </Grid.ColumnDefinitions>
 
         <TabControl Name="TabControl_Pz" Grid.Column="0" TabStripPlacement="Left">
@@ -122,17 +123,25 @@
 
         </TabControl>
 
-        <DockPanel Grid.Column="1" Margin="10" LastChildFill="True">
+        <GridSplitter x:Name="GridSplitter1"
+                      Grid.Column="1"
+                      Width="5"
+                      HorizontalAlignment="Center"
+                      VerticalAlignment="Stretch"
+                      ResizeDirection="Columns"
+                      ResizeBehavior="PreviousAndNext"/>
+
+        <DockPanel Grid.Column="2" Margin="5 10 10 10" LastChildFill="True">
             <DockPanel.Resources>
                 <Style TargetType="GroupBox" BasedOn="{x:Null}"/>
                 <Style TargetType="Expander" BasedOn="{x:Null}"/>
             </DockPanel.Resources>
             <hc:SimpleStackPanel DockPanel.Dock="Top">
                 <hc:UniformSpacingPanel Margin="10 5" HorizontalAlignment="Center" Spacing="15">
-                    <Button Command="{Binding OpenImportJBBBDialogCmd}" Height="30" x:Name="OpenImportJB_Btn">
+                    <Button Command="{Binding OpenImportDataDialogCmd}" Height="30" x:Name="OpenImportJB_Btn" Width="100">
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-                            <Image Source="pack://application:,,,/Resource/Images/JB_Logo.png" Height="18" Width="18" />
-                            <TextBlock Margin="0" VerticalAlignment="Center">导入JX3BOX</TextBlock>
+                            <Image Source="pack://application:,,,/Resource/Images/ImportData.png" Height="18" Width="18" />
+                            <TextBlock Margin="0" VerticalAlignment="Center">导入配装</TextBlock>
                         </StackPanel>
                     </Button>
                     <Button Content="保存" Command="{Binding SavePZCmd}"

@@ -3,6 +3,7 @@ using JX3CalculatorShared.Common;
 using JYCalculator.Data;
 using System.Collections.Generic;
 using System.Linq;
+using JYCalculator.Globals;
 
 namespace JYCalculator.Class
 {
@@ -26,7 +27,14 @@ namespace JYCalculator.Class
         public SkillFreqCTs(string name)
         {
             Name = name;
-            SkillName = StaticXFData.DB.AllSkillInfo.Get(Name).SkillName;
+            if (Name == SkillKeyConst.穿心弩DOT_Hit)
+            {
+                SkillName = SkillNameConst.穿心弩DOT_Hit;
+            }
+            else
+            {
+                SkillName = StaticXFData.DB.AllSkillInfo.Get(Name).SkillName;
+            }
         }
 
         public SkillFreqCTs(SkillFreqCriticalStrike data) : this(data.Name)
@@ -78,6 +86,7 @@ namespace JYCalculator.Class
                     res.Add(KVP.Value);
                 }
             }
+
             return res.ToArray();
         }
     }

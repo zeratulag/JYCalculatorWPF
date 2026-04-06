@@ -119,6 +119,11 @@ namespace JYCalculator.Class
             ProcessPhysicsFinalOvercome(fChar, value * fChar.PhysicsBaseOvercome);
         }
 
+        public static void ProcessAllBaseOvercome(this FullCharacter fChar, double value)
+        {
+            ProcessPhysicsBaseOvercome(fChar, value);
+        }
+
         public static void ProcessBaseAgility(this FullCharacter fChar, double value) //身法
         {
             ProcessPhysicsCriticalStrike(fChar, value * XFConsts.AgilityToPhysicsCriticalStrike);
@@ -133,6 +138,11 @@ namespace JYCalculator.Class
         public static void ProcessPhysicsDamageAdd(this FullCharacter fChar, double value)
         {
             fChar.PhysicsDamageAdd += value;
+        }
+
+        public static void ProcessSkillDamageFinalCoefficient(this FullCharacter fChar, double value)
+        {
+            fChar.SkillDamageFinalCoefficient += value;
         }
 
         public static void ProcessAllDamageAdd(this FullCharacter fChar, double value)
@@ -260,11 +270,13 @@ namespace JYCalculator.Class
 
                 {ZAttributeType.PhysicsBaseOvercome, FullCharacterModifier.ProcessPhysicsBaseOvercome},
                 {ZAttributeType.PhysicsOvercomePercent, FullCharacterModifier.ProcessPhysicsOvercomePercent},
+                {ZAttributeType.AllBaseOvercome, FullCharacterModifier.ProcessAllBaseOvercome},
 
                 {ZAttributeType.StrainRate, FullCharacterModifier.ProcessStrainRate},
                 {ZAttributeType.FinalStrain, FullCharacterModifier.ProcessFinalStrain},
                 {ZAttributeType.BaseStrain, FullCharacterModifier.ProcessBaseStrain},
                 {ZAttributeType.StrainPercent, FullCharacterModifier.ProcessStrainPercent},
+                {ZAttributeType.SkillDamageFinalCoefficient, FullCharacterModifier.ProcessSkillDamageFinalCoefficient},
             };
             ModifierDict = dict.ToImmutableDictionary();
         }
@@ -278,7 +290,7 @@ namespace JYCalculator.Class
             }
             else
             {
-                //Log.Information($"无效的属性！ {key}:{value} ");
+                Log.Information($"无效的属性！ {key}:{value} ");
             }
         }
 
@@ -292,7 +304,7 @@ namespace JYCalculator.Class
             }
             else
             {
-                //Log.Information($"未知的属性！ {key}:{value}");
+                Log.Information($"未知的属性！ {key}:{value}");
             }
         }
     }

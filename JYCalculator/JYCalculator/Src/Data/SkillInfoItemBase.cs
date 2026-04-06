@@ -60,6 +60,7 @@ namespace JYCalculator.Data
 
         public bool IsPZ => Type == SkillDataTypeEnum.PZ; // 是否为类破招技能
         public bool IsMultiChannel => Type == SkillDataTypeEnum.MultiChannel; // 是否为多段倒读条
+        public bool IsDOT => Type == SkillDataTypeEnum.DOT || Type == SkillDataTypeEnum.NormalDOT; // 是否为DOT
         public bool IsDerived { get; set; } = false; // 是否为衍生技能
 
         public SkillInfoItemBase()

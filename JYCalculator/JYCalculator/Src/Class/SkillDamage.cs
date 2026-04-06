@@ -69,28 +69,28 @@ namespace JYCalculator.Class
             ParaPhysicsDamageCoefficient = CTarget.PhysicsDamageCoefficient;
             ParaLevelCrush = DamageTool.LevelCrushCoef(CTarget.Level);
 
-            if (IsSuperCustom)
-            {
-                ParaPhysicsFinalOvercomeValue = 1.0;
-                ParaPhysicsDamageAdd = 1.0;
-                ParaFinalStrainValue = 1.0;
-                ParaNPC_Coef = 1.0;
-            }
-            else
-            {
-                ParaPhysicsFinalOvercomeValue = 1 + FChar.PhysicsFinalOvercomeValue;
-                ParaPhysicsDamageAdd = 1 + FChar.PhysicsDamageAdd + Data.AddDamage;
-                ParaFinalStrainValue = 1 + FChar.FinalStrainValue;
-                ParaNPC_Coef = 1 + FChar.NPC_Coef + Data.AddNPC_Coef;
-            }
+            ParaPhysicsFinalOvercomeValue = 1.0;
+            ParaPhysicsDamageAdd = 1.0;
+            ParaFinalStrainValue = 1.0;
+            ParaNPC_Coef = 1.0;
+            ParaSkillDamageFinalCoefficient = 1.0;
+
+            if (IsSuperCustom) return;
+            ParaPhysicsFinalOvercomeValue += FChar.PhysicsFinalOvercomeValue;
+            ParaPhysicsDamageAdd += FChar.PhysicsDamageAdd + Data.AddDamage;
+            ParaFinalStrainValue += FChar.FinalStrainValue;
+            ParaNPC_Coef += (FChar.NPC_Coef + Data.AddNPC_Coef);
+            ParaSkillDamageFinalCoefficient += FChar.SkillDamageFinalCoefficient;
         }
 
         // 计算实际伤害
         public void GetRealDamage()
         {
-            var otherParas = ParaFinalStrainValue * ParaNPC_Coef * ParaLevelCrush; // 除了破防之外的其他系数之积
-            RealPhysicsDamage = StdPhysicsDmg * BearPhysicsDef * ParaPhysicsFinalOvercomeValue *
-                                ParaPhysicsDamageCoefficient * ParaPhysicsDamageAdd * otherParas;
+            var otherParas =
+                ParaSkillDamageFinalCoefficient * ParaPhysicsDamageCoefficient * ParaPhysicsDamageAdd *
+                ParaFinalStrainValue * ParaNPC_Coef *
+                ParaLevelCrush; // 除了破防之外的其他系数之积
+            RealPhysicsDamage = StdPhysicsDmg * BearPhysicsDef * ParaPhysicsFinalOvercomeValue * otherParas;
             RealDamage = RealPhysicsDamage;
         }
 

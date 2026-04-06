@@ -88,6 +88,18 @@ namespace JX3CalculatorShared.Class
         }
 
         /// <summary>
+        /// 计算加速档位（例如1段加速）
+        /// </summary>
+        /// <param name="HSP"></param>
+        /// <returns></returns>
+        public int CalcHasteRank(int HSP)
+        {
+            var frame = (int) CalcHasteFrame(StaticConst.GCD_FRAME, 1, HSP);
+            var res = StaticConst.GCD_FRAME - frame;
+            return res;
+        }
+
+        /// <summary>
         /// 计算引导类技能的加速时间
         /// </summary>
         /// <param name="frames"></param>
@@ -121,7 +133,7 @@ namespace JX3CalculatorShared.Class
 
 
         public (Dictionary<int, int> FPS2HSP, Dictionary<int, double> HSP2Time) Threshold_fps(
-            int fps = StaticConst.GCD_FPS,
+            int fps = StaticConst.GCD_FRAME,
             int extra_HSP = 0)
         {
             var fps2hsp = new Dictionary<int, int>(); // 最终帧数: 加速等级
@@ -180,8 +192,8 @@ namespace JX3CalculatorShared.Class
         /// </summary>
         public int GetT1GCD_HSP()
         {
-            var (fps2Hsp, hsp2Time) = Threshold_fps(StaticConst.GCD_FPS, 0);
-            return fps2Hsp[StaticConst.GCD_FPS - 1];
+            var (fps2Hsp, hsp2Time) = Threshold_fps(StaticConst.GCD_FRAME, 0);
+            return fps2Hsp[StaticConst.GCD_FRAME - 1];
         }
     }
 

@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.Messaging;
 using JX3CalculatorShared.Class;
 using JX3CalculatorShared.Messages;
 using JX3CalculatorShared.ViewModels;
+using JX3CalculatorShared.Views;
 using JX3PZ.Globals;
 using JX3PZ.Messages;
 using JX3PZ.Models;
@@ -11,12 +12,15 @@ using JYCalculator.Messages;
 using System;
 using System.Collections.Immutable;
 using System.Linq;
+using JX3CalculatorShared.Models;
+using MingYiTools;
 using CalcResultViewModel = JX3CalculatorShared.ViewModels.CalcResultViewModel;
 
 namespace JX3PZ.ViewModels
 {
     public class PzMainWindowViewModels : CollectionViewModel<PzTabItemViewModel>,
-        IRecipient<PzChangedMessage>, IRecipient<CalcResultMessage>, IRecipient<PzInfoMessage>
+        IRecipient<PzChangedMessage>, IRecipient<CalcResultMessage>, IRecipient<PzInfoMessage>,
+        IRecipient<ImportDataMessage>
     {
         public readonly PzPlanModel Model;
 
@@ -27,7 +31,7 @@ namespace JX3PZ.ViewModels
         public CalcResultViewModel CalcResultVM { get; }
         public CalcInputViewModel CalcInputVM { get; }
 
-        public bool _RecievePzTabMessage { get; private set; } = false;// 是否接收来自PzTab的消息
+        public bool _RecievePzTabMessage { get; private set; } = false; // 是否接收来自PzTab的消息
         public string FinalDPStxt { get; private set; }
         public string FinalDPStxtF;
         public string ProfitOrderDesc { get; private set; }
@@ -37,7 +41,7 @@ namespace JX3PZ.ViewModels
 
         private bool CanOpenOverView { get; set; } = false; // 是否可以预览
 
-        public RelayCommand OpenImportJBBBDialogCmd { get; }
+        public RelayCommand OpenImportDataDialogCmd { get; }
         public RelayCommand OpenLoadPZCmd { get; }
         public RelayCommand SavePZCmd { get; }
         public RelayCommand<string> OneKeyEmbedCmd { get; }
@@ -59,7 +63,7 @@ namespace JX3PZ.ViewModels
             CalcInputVM = new CalcInputViewModel();
 
             // 命令
-            OpenImportJBBBDialogCmd = new RelayCommand(OpenImportJBBBDialog);
+            OpenImportDataDialogCmd = new RelayCommand(OpenImportDataDialog);
             OneKeyEmbedCmd = new RelayCommand<string>(OneKeyEmbed);
             OneKeyStrengthCmd = new RelayCommand(OneKeyStrength);
             OneKeyEnchantCmd = new RelayCommand<string>(OneKeyEnchant, (_) => CCalcResult != null);
@@ -74,6 +78,7 @@ namespace JX3PZ.ViewModels
             WeakReferenceMessenger.Default.Register<PzChangedMessage>(this);
             WeakReferenceMessenger.Default.Register<PzInfoMessage>(this);
             WeakReferenceMessenger.Default.Register<CalcResultMessage>(this);
+            WeakReferenceMessenger.Default.Register<ImportDataMessage>(this);
             PzGlobalContext.ViewModels.PzMain = this;
 
 
@@ -119,6 +124,7 @@ namespace JX3PZ.ViewModels
         }
 
         #region 一键操作
+
         public void OneKeyAction(Action act)
         {
             // 一键操作系列
@@ -136,6 +142,7 @@ namespace JX3PZ.ViewModels
         {
             OneKeyAction(() => act(param));
         }
+
         #endregion
 
         public void OneKeyEmbed(string l = "6")
@@ -182,7 +189,8 @@ namespace JX3PZ.ViewModels
         }
 
         private void _OneKeyEnhance()
-        { // 一键小附魔
+        {
+            // 一键小附魔
             var model = new PzOneKeyEnhanceModel(this);
             model.Calc();
             OneKeyAction(_LoadEnhance, model.FinalIdx);
@@ -273,7 +281,7 @@ namespace JX3PZ.ViewModels
 
             foreach (var kvp in Dict)
             {
-                var slot = (EquipSlotEnum)kvp.Key;
+                var slot = (EquipSlotEnum) kvp.Key;
                 var slotStr = slot.ToString();
                 var snap = jc.Dict[slotStr];
                 kvp.Value.Load(snap);
@@ -304,13 +312,10 @@ namespace JX3PZ.ViewModels
             Load(j);
         }
 
-        private void OpenImportJBBBDialog()
+        private void OpenImportDataDialog()
         {
-            var (success, j) = ImportJX3BOXViewModel.TryReadFromDialog();
-            if (success)
-            {
-                Load(j);
-            }
+            ImportDataDialog dialog = new ImportDataDialog(isImportJBPZ: true);
+            dialog.ShowDialog();
         }
 
         protected override void _RefreshCommands()
@@ -326,6 +331,7 @@ namespace JX3PZ.ViewModels
             {
                 CalcSet();
             }
+
             AfterUpdate();
             if (_SendMessage) SendPzMessage();
         }
@@ -380,6 +386,35 @@ namespace JX3PZ.ViewModels
         {
             Title = title;
             Model.XFPanel.Name = title;
+        }
+
+        public void Receive(ImportDataMessage message)
+        {
+            switch (message.ImportType)
+            {
+                case ImportDataType.JX3BOXPZ:
+                {
+                    var jbpz = (JBBB) message.Data;
+                    Load(jbpz);
+                    break;
+                }
+
+                case ImportDataType.MingYiPZ:
+                {
+                    var mingyipz = (MingYiPZData) message.Data;
+                    var jbpz = mingyipz.ConvertToJBBB();
+                    Load(jbpz);
+                    break;
+                }
+
+                case ImportDataType.MingYiDBPZ:
+                {
+                    var d = (MingYiOwnerSuitEquipModel) message.Data;
+                    var jbpz = d.ConvertToJBBB();
+                    Load(jbpz);
+                    break;
+                }
+            }
         }
     }
 }

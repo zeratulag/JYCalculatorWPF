@@ -17,6 +17,7 @@ namespace JX3CalculatorShared.ViewModels
         public string GitUrl { get; set; }
         public string JBUrl { get; set; }
         public string TMUrl { get; set; }
+        public int QQGroupNumber { get; set; }
     }
 
 }

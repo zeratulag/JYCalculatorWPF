@@ -41,6 +41,16 @@ namespace JYCalculator.Class
             UpdateFChar(fchar);
         }
 
+        public SkillFreqCriticalStrike(string name, FullCharacter fchar, double freq)
+        {
+            Name = name;
+            AddCriticalStrikeRate = 0;
+            Freq = freq;
+
+            CriticalStrikeValue = Math.Min(fchar.PhysicsCriticalStrikeValue + AddCriticalStrikeRate, 1);
+            UpdateFChar(fchar);
+        }
+
         public SkillFreqCriticalStrike Copy()
         {
             return new SkillFreqCriticalStrike(this);

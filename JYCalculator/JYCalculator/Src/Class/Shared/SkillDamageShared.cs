@@ -35,6 +35,8 @@ namespace JYCalculator.Class
         public double ParaFinalStrainValue { get; set; } // 无双增伤
         public double ParaPhysicsDamageAdd { get; set; } // 外功伤害提高
         public double ParaNPC_Coef { get; set; } // 非侠士增伤
+        public double ParaSkillDamageFinalCoefficient { get; set; } //最终伤害提高
+
         public double ParaLevelCrush { get; set; } // 等级压制系数
         public double RealPhysicsDamage { get; set; } // 实际外功伤害
         public double RealDamage { get; set; } // 实际伤害

@@ -45,7 +45,7 @@ namespace JYCalculator.Models
         /// </summary>
         public void CalcNormalSkillNum()
         {
-            CalcBL();
+            //CalcBL();
         }
 
     }

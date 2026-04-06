@@ -55,6 +55,9 @@ namespace JYCalculator.Class
         // 无视防御A
         public double AllShieldIgnore { get; set; }
 
+        // 最终伤害提高（山海源流版本新寒江）
+        public double SkillDamageFinalCoefficient { get; set; } = 0.0;
+
         public int EquipScore { get; set; } // 装备分数
 
         public double ExtraHaste { get; set; } = 0; // 额外加速率（仅在大心无期间有）
@@ -73,6 +76,9 @@ namespace JYCalculator.Class
             PhysicsFinalOvercome / XFStaticConst.CurrentLevelParams.Overcome; // 面板最终破防
 
         public double HasteValue => Math.Min(Haste / XFStaticConst.CurrentLevelParams.Haste, HasteBase.MAX_HS); // 面板加速值
+
+        public int HasteRank => XFStaticConst.CurrentHaste.CalcHasteRank((int)Haste);
+
         public double NPC_Coef = XFConsts.NPC_Coef; // 非侠士增伤
         [ExcelColumn(Index = 0)] public string Name { get; set; } = "F面板"; // 命名
 

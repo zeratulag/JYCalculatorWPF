@@ -33,6 +33,8 @@ namespace JYCalculator.Src
         public double CXDotCount; // 穿心DOT次数（百步凝形专用）
         public double PZ; // 破招次数
 
+        public double PZ_ChuanXinNu; // 破招(穿心弩)次数
+
         public double _DPCast => DP + DP_LaoJia; // 夺魄释放次数
         public double _ZM_SFCast => ZM_SF; // 追命释放次数
         public double _ZMCast => ZM; // 读条追命释放次数
@@ -64,8 +66,8 @@ namespace JYCalculator.Src
         public readonly int _CX_DOT_Stack; // 穿心dot叠的最大层数;
         public readonly bool 梨花带雨; // 是否为大暴雨
         public readonly bool 穿林打叶; // 是否为穿林穿心
-        public readonly bool 白雨跳珠;
         public bool 百步凝形 { get; set; } = false; // 是否为百步凝形
+        public bool 寒江凝形 { get; set; } = false; // 是否为山海源流版本的寒江凝形流
         public double ChuanLinDaYe => 穿林打叶 ? ZX : 0; // 穿林打叶数量
 
         public readonly string __CX_DOT_Key; // 穿心Dot的最终key
@@ -89,7 +91,10 @@ namespace JYCalculator.Src
             LveYingQiongCang = item.LveYingQiongCang;
             DP_LaoJia = item.DP_LaoJia;
             CXDotCount = item.CXDotCount;
-            PZ = item.PZ;
+            var PZ_Total = item.PZ_Total;
+
+            PZ_ChuanXinNu = item.CXL;
+            PZ = PZ_Total - PZ_ChuanXinNu;
 
             _BYCast = item.BY_Cast;
             _BYPerCast = qiXue.BYPerCast;
@@ -100,7 +105,6 @@ namespace JYCalculator.Src
             __DP_Key = qiXue.DP_Key;
 
             梨花带雨 = qiXue.梨花带雨;
-            白雨跳珠 = qiXue.白雨跳珠;
 
             SetLHBYNums(_BYCast);
             FieldToDictionary = GetFieldToDictionary();
@@ -189,12 +193,12 @@ namespace JYCalculator.Src
                 {nameof(KongQueLing), KongQueLing},
                 {nameof(LveYingQiongCang), LveYingQiongCang},
                 {nameof(ChuanLinDaYe), ChuanLinDaYe},
-                {nameof(PZ), PZ},
+                {nameof(PZ), PZ}, {nameof(PZ_ChuanXinNu), PZ_ChuanXinNu},
 
                 {"_ZX_Org", ZX},
                 {nameof(ZX_DOT), ZX_DOT}, {nameof(CXL), CXL},
                 {nameof(_BYCast), _BYCast}, {nameof(_BYTotalHitNum), _BYTotalHitNum},
-                {nameof(_CX_DOT_Hit), _CX_DOT_Hit},
+                {SkillKeyConst.穿心弩DOT_Hit, _CX_DOT_Hit},
 
                 {__CX_DOT_Key, CX_DOT},
                 {__DP_Key, DP},
@@ -231,7 +235,7 @@ namespace JYCalculator.Src
         public SkillFreqDict ToSkillFreqDict()
         {
             var dict = ToDict();
-            var arg = new SkillFreqArg(白雨跳珠, 百步凝形);
+            var arg = new SkillFreqArg(false, 百步凝形);
             return new SkillFreqDict(dict, _Time, arg);
         }
 
@@ -263,6 +267,7 @@ namespace JYCalculator.Src
             DP_LaoJia *= k;
             CXDotCount *= k;
             PZ *= k;
+            PZ_ChuanXinNu *= k;
 
             _BYCast *= k;
             SetLHBYNums(_BYCast);

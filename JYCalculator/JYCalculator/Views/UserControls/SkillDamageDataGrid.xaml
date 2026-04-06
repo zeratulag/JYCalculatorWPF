@@ -10,11 +10,10 @@
     mc:Ignorable="d">
     <Grid>
         <DataGrid
-            dgx:DataGridFilter.IsAutoFilterEnabled="True"
-            AutoGenerateColumns="False"
-            FrozenColumnCount="1"
-            ItemsSource="{Binding}"
-            VerticalScrollBarVisibility="Auto">
+                   dgx:DataGridFilter.IsAutoFilterEnabled="True"
+                   AutoGenerateColumns="False"
+                   FrozenColumnCount="1"
+                   ItemsSource="{Binding}">
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding Path=Name}" Header="Name" />
                 <DataGridTextColumn Binding="{Binding Path=SkillName}" Header="技能" />

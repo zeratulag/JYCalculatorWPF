@@ -24,6 +24,7 @@ namespace JYCalculator.Class
             RawFrame = data.Frame;
             nCount = data.nCount;
             IsMultiChannel = data.Info.IsMultiChannel;
+            IsDOT = data.Info.IsDOT;
         }
 
         // 基于静态数据构建
@@ -51,8 +52,8 @@ namespace JYCalculator.Class
         /// <param name="XWExtraHSP">心无额外加速</param>
         public void CalcHaste(int HSP, int XWExtraHSP = XFStaticConst.XinWuConsts.ExtraHaste)
         {
-            Frame = XFStaticConst.CurrentHaste.CalcHasteFrame(RawFrame, nCount, HSP, 0, IsMultiChannel);
-            XWFrame = XFStaticConst.CurrentHaste.CalcHasteFrame(RawFrame, nCount, HSP, XWExtraHSP, IsMultiChannel);
+            Frame = XFStaticConst.CurrentHaste.CalcHasteFrame(RawFrame, nCount, HSP, 0, IsMultiChannel || IsDOT);
+            XWFrame = XFStaticConst.CurrentHaste.CalcHasteFrame(RawFrame, nCount, HSP, XWExtraHSP, IsMultiChannel || IsDOT);
         }
 
         /// <summary>
@@ -61,7 +62,7 @@ namespace JYCalculator.Class
         /// <returns></returns>
         public new static HasteTableItem GetGCDItem()
         {
-            return new HasteTableItem("GCD", "公共CD", StaticConst.GCD_FPS, 1);
+            return new HasteTableItem("GCD", "公共CD", StaticConst.GCD_FRAME, 1);
         }
 
         #endregion

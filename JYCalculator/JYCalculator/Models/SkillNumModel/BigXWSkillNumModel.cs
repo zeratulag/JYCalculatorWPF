@@ -29,20 +29,20 @@ namespace JYCalculator.Models
         public void Calc()
         {
             CommonCalcBefore();
-            CalcBigXWSkillNum();
+            //CalcBigXWSkillNum();
         }
 
 
         // 计算大心无期间的技能数 
-        public void CalcBigXWSkillNum()
-        {
-            // 仅有白雨暴雨流需要计算
-            if (白雨流_万灵当歌)
-            {
-                var bl = GetBLFreqTime();
-                Num.BL = bl.Freq * Num._Time;
-            }
-        }
+        //public void CalcBigXWSkillNum()
+        //{
+        //    // 仅有白雨暴雨流需要计算
+        //    if (白雨流_万灵当歌)
+        //    {
+        //        var bl = GetBLFreqTime();
+        //        Num.BL = bl.Freq * Num._Time;
+        //    }
+        //}
     }
 
     // 剩余次数

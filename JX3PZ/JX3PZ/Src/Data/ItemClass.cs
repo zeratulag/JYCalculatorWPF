@@ -1,4 +1,5 @@
-﻿using JX3CalculatorShared.Globals;
+﻿using System;
+using JX3CalculatorShared.Globals;
 using JX3PZ.Globals;
 
 namespace JX3PZ.Data
@@ -39,7 +40,7 @@ namespace JX3PZ.Data
             IconID = -(100 + SubType);
 
             MaxStrengthLevel = 6;
-            if (SubTypeEnum == EquipSubTypeEnum.PRIMARY_WEAPON || SubTypeEnum == EquipSubTypeEnum.RING)
+            if (SubTypeEnum == EquipSubTypeEnum.PRIMARY_WEAPON || SubTypeEnum == EquipSubTypeEnum.RING || SubTypeEnum == EquipSubTypeEnum.PENDANT)
             {
                 MaxStrengthLevel = 8;
             }
@@ -53,6 +54,23 @@ namespace JX3PZ.Data
         public string Weapon { get; set; }
         public double Speed { get; set; }
     }
+
+    public class MingYiEquipMapItem
+    {
+        public int BoxIndex { get; set; }
+        public string EquipSlotName { get; set; }
+        public string Label { get; set; }
+        public EquipSlotEnum EquipPosition { get; set; } =  EquipSlotEnum.INVALID;
+
+        public void Parse()
+        {
+            if (Enum.TryParse<EquipSlotEnum>(EquipSlotName, out var pos))
+            {
+                EquipPosition = pos;
+            }
+        }
+    }
+
 
     public class PlayerLevelData
     {

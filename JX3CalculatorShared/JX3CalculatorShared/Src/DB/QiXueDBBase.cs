@@ -12,6 +12,7 @@ namespace JX3CalculatorShared.DB
     {
         public ImmutableDictionary<string, QiXueSkill> Data; // 所有奇穴的库
         public ImmutableArray<ImmutableArray<QiXueSkill>> QiXue;
+        //public ImmutableArray<QiXueSkill> MixedPooQiXue;
 
         public QiXueDBBase(IDictionary<string, QiXueItem> qixuedict)
         {
@@ -20,14 +21,13 @@ namespace JX3CalculatorShared.DB
             var qixue = new ImmutableArray<QiXueSkill>[StaticConst.NumberOfQiXue];
 
             var qixuegroup = from qixueitem in qixuedict.Values
-                             group qixueitem by qixueitem.position;
+                group qixueitem by qixueitem.position;
             foreach (var g in qixuegroup)
             {
                 qixue[g.Key - 1] = g.OrderBy(_ => _.order).Select(_ => new QiXueSkill(_)).ToImmutableArray();
             }
 
             QiXue = qixue.ToImmutableArray();
-
         }
 
         public QiXueSkill Get(string name)

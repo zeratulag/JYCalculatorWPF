@@ -17,9 +17,9 @@ namespace JX3CalculatorShared.DB
 
         public SkillBuildDBBase(IEnumerable<SkillBuildItem> items)
         {
-            var res = items.Select(_ => new SkillBuild(_));
+            var res = items.Where(e => e.IsValid).Select(e => new SkillBuild(e));
             Array = res.ToImmutableArray();
-            Data = Array.ToImmutableDictionary(_ => _.Name);
+            Data = Array.ToImmutableDictionary(e => e.Name);
             FindDefault();
         }
 

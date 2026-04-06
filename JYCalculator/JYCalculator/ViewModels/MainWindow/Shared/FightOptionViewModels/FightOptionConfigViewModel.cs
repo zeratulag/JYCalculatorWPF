@@ -25,7 +25,7 @@ namespace JYCalculator.ViewModels
         public bool ShortFight { get; set; } = true;
         public bool LongFight { get; set; }
         public bool TargetAllWaysFullHP { get; set; } = false;
-
+        public bool IsChecked { get; set; }
         public FightOptionSummaryViewModel Summary;
         #endregion
 

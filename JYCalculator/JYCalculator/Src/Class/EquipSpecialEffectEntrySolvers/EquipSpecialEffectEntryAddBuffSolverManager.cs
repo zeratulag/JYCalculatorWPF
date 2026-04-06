@@ -28,7 +28,8 @@ namespace JYCalculator.Class
                 {EquipSpecialEffectTypeEnum.PENDANT__Overcome, PENDANT__Overcome},
                 {EquipSpecialEffectTypeEnum.RING__Overcome, RING__Overcome},
                 {EquipSpecialEffectTypeEnum.RING__CriticalStrike, RING__CriticalStrike},
-                {EquipSpecialEffectTypeEnum.RING__Surplus, RING__Surplus}
+                {EquipSpecialEffectTypeEnum.RING__Surplus, RING__Surplus},
+                {EquipSpecialEffectTypeEnum.RING__Strain, RING__Strain}
             }.ToImmutableDictionary();
             ;
 
@@ -142,6 +143,13 @@ namespace JYCalculator.Class
         public static BuffRecord RING__Surplus(EquipSpecialEffectEntry entry)
         {
             // 精简戒指3加破招
+            var res = MakeDefaultBuffRecord(entry, level: entry.SkillLevel * 2 - 1);
+            return res;
+        }
+
+        public static BuffRecord RING__Strain(EquipSpecialEffectEntry entry)
+        {
+            // 防御戒指加气血（实际上是加无双）
             var res = MakeDefaultBuffRecord(entry, level: entry.SkillLevel * 2 - 1);
             return res;
         }

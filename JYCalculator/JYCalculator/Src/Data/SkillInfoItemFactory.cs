@@ -5,7 +5,7 @@ namespace JYCalculator.Data
 {
     public static class SkillInfoItemFactory
     {
-        public static readonly Dictionary<string, SkillInfoItem> Dict = new Dictionary<string, SkillInfoItem>(50);
+        public static Dictionary<string, SkillInfoItem> Dict { get; } = new Dictionary<string, SkillInfoItem>(50);
 
         public static SkillInfoItem GetDerivedSkillInfo(SkillInfoItem item, SkillBuffGroup group)
         {

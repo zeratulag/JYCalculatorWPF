@@ -241,8 +241,13 @@ namespace JX3PZ.Class
         /// <returns></returns>
         public bool FitEnchant(Enchant enchant)
         {
-            var res = enchant.Level_Max >= Level && enchant.Level_Min <= Level && enchant.DestItemSubType == SubType;
+            var res = enchant.MaxEquipLevel >= Level && enchant.MinEquipLevel <= Level && enchant.DestItemSubType == SubType;
             return res;
+        }
+
+        public bool FitEnhance(Enhance item)
+        {
+            return item.MaxEquipLevel >= Level && item.DestItemSubType == SubType;
         }
 
         public bool FitBigFM(BigFM bigFM)

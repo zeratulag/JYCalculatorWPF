@@ -58,7 +58,7 @@ namespace JX3PZ.ViewModels
             if (e.StrengthLevel > 0)
             {
                 Text2 = $"(+{e.StrengthLevel})";
-                Color2 = ColorConst.Strength;
+                Color2 = ColorConst.GreenStrength;
             }
         }
     }
@@ -87,7 +87,7 @@ namespace JX3PZ.ViewModels
             if (hasP2)
             {
                 Text2 = $"({t2b.ToString()})";
-                Color2 = ColorConst.Strength;
+                Color2 = ColorConst.GreenStrength;
             }
         }
     }

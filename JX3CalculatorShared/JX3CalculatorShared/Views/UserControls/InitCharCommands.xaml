@@ -14,7 +14,7 @@
                 <Button Margin="10 5"
                         Padding="5 5"
                         x:Name="InitChar_ImportJB_btn"
-                        Command="{Binding Path=OpenImportJBBBDialogCmd}">
+                        Command="{Binding Path=OpenImportDataDialogCmd}">
                     <Button.Resources>
                         <Style TargetType="{x:Type Border}">
                             <Setter Property="CornerRadius" Value="5" />
@@ -22,9 +22,9 @@
                     </Button.Resources>
 
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-                        <Image Source="pack://application:,,,/Resource/Images/JB_Logo.png"
+                        <Image Source="pack://application:,,,/Resource/Images/ImportData.png"
                                Height="18" Width="18" />
-                        <TextBlock Margin="5 0 0 0" VerticalAlignment="Center">导入JX3BOX属性</TextBlock>
+                        <TextBlock Margin="5 0 0 0" VerticalAlignment="Center">导入属性/配装</TextBlock>
                     </StackPanel>
 
                 </Button>

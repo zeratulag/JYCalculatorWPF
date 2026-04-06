@@ -44,7 +44,7 @@ namespace JX3PZ.ViewModels
             }
 
             Color1 = col;
-            Color2 = ColorConst.Strength;
+            Color2 = ColorConst.GreenStrength;
             Color3 = col;
         }
     }

@@ -8,11 +8,14 @@ namespace JYCalculator.Class
 {
     public static class EquipSpecialEffectEntryDamageSolverManager
     {
+        public static EquipSpecialEffectBaseTypeEnum[] ValidCustomDamageDamageTypes =
+            {EquipSpecialEffectBaseTypeEnum.SuperCustomDamage, EquipSpecialEffectBaseTypeEnum.DOTSuperCustomDamage};
+
         // 获取SuperCustomDamageEntry对应的伤害技能
         // 实现逻辑与 装备/黄字暗器dot.lua 同步
         public static SkillInfoItem GetSuperCustomDamageSkill(this EquipSpecialEffectEntry entry)
         {
-            entry.CheckSpecialEffectBaseType(EquipSpecialEffectBaseTypeEnum.SuperCustomDamage);
+            entry.CheckSpecialEffectBaseType(ValidCustomDamageDamageTypes);
             var skillID = entry.DamageSkillID;
             var level = entry.SkillLevel;
             var resList = StaticXFData.DB.AllSkillInfo.GetSkillByIDLevel(skillID, level);
@@ -20,6 +23,7 @@ namespace JYCalculator.Class
             {
                 Log.Error("{EquipSpecialEffectEntry}不能确定唯一技能！", entry);
             }
+
             return resList[0];
         }
     }

@@ -7,16 +7,19 @@ namespace JX3CalculatorShared.ViewModels
 {
     public class MiJiViewModelBase : IconToolTipCheckBoxViewModel
     {
-        public int RecipeID;
-        public string RawID;
-        public int SkillID;
-        public int TypeID;
-        public int DesignLevel;
-        public string Skill_key;
-        public string SAt_key1;
-        public int SAt_value1;
-        public string SkillName;
-        public Recipe Recipe;
+        public int RecipeID { get; }
+        public string RawID { get; }
+        public int SkillID { get; }
+        public int TypeID{ get; }
+        public int DesignLevel { get; }
+        public string Skill_key { get; }
+        public string SAt_key1 { get; }
+        public int SAt_value1 { get; }
+        public string SkillName { get; }
+        public Recipe Recipe { get; protected set; }
+        public int SkillIconID { get; }
+
+        public string SkillToolTip { get; }
 
         public MiJiViewModelBase(RecipeItem item)
         {
@@ -26,13 +29,14 @@ namespace JX3CalculatorShared.ViewModels
             RawID = GlobalFunctions.MergeIDLevel(item.RecipeID, item.RecipeLevel);
             //DescName = item.DescName;
             DesignLevel = item.DesignLevel;
-
+            SkillIconID = item.SkillIconID;
             SkillID = item.SkillID;
             Skill_key = item.Skill_key;
 
             TypeID = item.TypeID;
             Quality = item.Quality;
             ShortDesc = item.ShortDesc;
+            SkillToolTip = item.SkillToolTip;
 
             IconID = item.IconID;
 

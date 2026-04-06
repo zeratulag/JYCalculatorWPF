@@ -1,0 +1,66 @@
+﻿<UserControl
+    x:Class="JX3CalculatorShared.Views.UserControls.ImportDataJX3Box"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:hc="https://handyorg.github.io/handycontrol"
+    mc:Ignorable="d">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/HandyControl;component/Themes/SkinDefault.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/HandyControl;component/Themes/Theme.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Grid Margin="5">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <!-- 中间行占满剩余空间 -->
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0"
+                   FontSize="14"
+                   TextWrapping="Wrap">
+                    <Run>打开JX3BOX配装方案，点击</Run>
+                    <Run FontWeight="Bold" Foreground="Red">导出 → 数据版 → 点击复制</Run>
+                    <Run>，粘贴到下方输入框。</Run>
+                    <LineBreak />
+
+                    <Hyperlink>
+                        <Hyperlink.ToolTip>
+                            <ToolTip>
+                                <Image
+                                    Source="pack://application:,,,/Resource/Images/ImportJBTutorial.png" />
+                            </ToolTip>
+                        </Hyperlink.ToolTip>
+                        详细教程
+                    </Hyperlink>
+        </TextBlock>
+        <TextBox Grid.Row="1"
+                 Name="InputTextBox"
+                 Margin="0,10,0,10"
+                 TextWrapping="Wrap"
+                 MinHeight="100"
+                 AcceptsReturn="True"
+                 VerticalContentAlignment="Top"
+                 VerticalScrollBarVisibility="Visible"
+                 HorizontalScrollBarVisibility="Disabled"
+                 Text="{Binding Text, UpdateSourceTrigger=PropertyChanged}" />
+        <DockPanel Grid.Row="2" HorizontalAlignment="Stretch" Margin="5">
+            <GroupBox Name="选项" DockPanel.Dock="Left" VerticalAlignment="Center" Style="{x:Null}" Header="选项">
+                <StackPanel Orientation="Vertical">
+                    <RadioButton Content="导入属性" GroupName="ImportJBOptionGroup" ToolTip="仅导入角色属性数据，不导入配装" Margin="5" IsChecked="True"/>
+                    <RadioButton Content="导入配装" GroupName="ImportJBOptionGroup" IsChecked="{Binding IsImportPZ}" ToolTip="仅导入配装，不导入角色属性" Margin="5"/>
+                </StackPanel>
+            </GroupBox>
+            <Button DockPanel.Dock="Right" Command="{Binding ImportCmd}" VerticalAlignment="Center" HorizontalAlignment="Right" Content="导入" Style="{StaticResource ButtonPrimary}"
+                                Margin="5" Width="100" Height="30"/>
+        </DockPanel>
+    </Grid>
+</UserControl>

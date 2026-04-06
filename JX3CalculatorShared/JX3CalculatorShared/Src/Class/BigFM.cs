@@ -175,7 +175,7 @@ namespace JX3CalculatorShared.Class
         public BigFM(Enchant item) : this(item.Name, item.ItemName, item.ToolTip,
             item.IconID, item.UIID, item.ID,
             item.Quality, item.SubType,
-            item.Level_Min, item.Level_Max, item.Rank,
+            item.MinEquipLevel, item.MaxEquipLevel, item.Rank,
             magic: item.Magic, physics: item.Physics, tag: BottomsFMTag.NotBottoms)
         {
             ExpansionPackLevel = item.ExpansionPackLevel;
@@ -295,12 +295,12 @@ namespace JX3CalculatorShared.Class
             string path;
             if (b == null)
             {
-                color = ColorConst.Inactive;
+                color = ColorConst.Gray;
                 path = BindingTool.ImageName2Path("enchant-null");
             }
             else
             {
-                color = ColorConst.Enhance;
+                color = ColorConst.Blue;
                 path = BindingTool.ImageName2Path("enchant");
             }
 

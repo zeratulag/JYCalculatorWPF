@@ -60,7 +60,7 @@ namespace JYCalculator.Class
         {
             {SkillKeyConst._夺魄箭_释放, 1}, {SkillKeyConst._追命箭_释放, 1}, {SkillKeyConst._追命箭_瞬发_释放, 1},
             {SkillKeyConst.百里追魂, 1}, {SkillKeyConst.逐星箭, 1},
-            {SkillKeyConst.穿心弩, 1}, {SkillKeyConst.孔雀翎, 5 - 1}
+            {SkillKeyConst.穿心弩, 1}, {SkillKeyConst.孔雀翎, 5}
         }; // 每个技能附带的掠影穹苍数据
 
 
@@ -444,9 +444,10 @@ namespace JYCalculator.Class
         /// <summary>
         /// 追夺流下罡风会变少，进行修正
         /// </summary>
-        public void FixGangFengOnZhuiDuo()
+        public void FixGangFengOnZhuiDuo(bool isBigChenWu = false)
         {
-            Data[SkillKeyConst.罡风镖法] *= 0.845;
+            double ratio = isBigChenWu ? 0.664 : 0.566;
+            Data[SkillKeyConst.罡风镖法] *= ratio;
             ClearCache();
         }
 
@@ -473,11 +474,43 @@ namespace JYCalculator.Class
             ClearCache();
         }
 
+        /// <summary>
+        /// 基于追命箭·神兵相对追命的系数计算追命箭·神兵附加频率
+        /// </summary>
+        /// <param name="ratio"></param>
+        public void AddCWZMByRatio(double ratio)
+        {
+            var zmFreq = Data[SkillKeyConst._追命箭_释放];
+            Data.Add(SkillKeyConst.追命箭_神兵, zmFreq * ratio);
+            ClearCache();
+        }
+
+        /// <summary>
+        /// 基于枢甲相对追命的系数计算枢甲附加频率
+        /// </summary>
+        /// <param name="zhuimingRatio">相对于追命箭的比例</param>
+        /// <param name="duopoRatio">相对于夺魄的比例</param>
+        public void AddShuJiaByRatio(double zhuimingRatio, double duopoRatio)
+        {
+            var zmFreq = Data[SkillKeyConst._追命箭_释放];
+            var dpFreq = Data[SkillKeyConst._夺魄箭_释放];
+            var zm_sj = zmFreq * zhuimingRatio; // 追命枢甲频率
+            var dp_sj = dpFreq * duopoRatio; // 夺魄枢甲频率
+            //var res = zm_sj + dp_sj;
+            Data.Add(SkillKeyConst.枢甲_追命, zm_sj);
+            Data.Add(SkillKeyConst.枢甲_夺魄, dp_sj);
+            ClearCache();
+        }
+
         #endregion
 
-        public void CalcLveYingQiongCangFreq()
+        public void CalcLveYingQiongCangFreq(bool isBigChengWu = false)
         {
             double res = CalcSumByDict(LveYingQiongCangPerSkill);
+            if (isBigChengWu)
+            {
+                res -= Data[SkillKeyConst.孔雀翎] * 10 / 12.0;
+            }
             Data[SkillKeyConst.掠影穹苍] = res;
             ClearCache();
         }

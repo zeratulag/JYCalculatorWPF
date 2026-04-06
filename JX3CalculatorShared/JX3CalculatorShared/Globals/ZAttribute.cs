@@ -38,11 +38,12 @@
         BaseStrain,
         FinalStrain,
         StrainPercent,
-
+        SkillDamageFinalCoefficient,
 
         MagicBaseAttackPower,
 
         AllShieldIgnore,
+        AllBaseOvercome,
 
         MagicBaseShield, // 目标防御属性
         PhysicsBaseShield,

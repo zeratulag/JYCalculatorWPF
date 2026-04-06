@@ -183,7 +183,7 @@ namespace JX3PZ.ViewModels
             Paragraph para3 = new Paragraph { TextAlignment = TextAlignment.Right };
             // 添加Run元素到Paragraph
             Run runStrengthStr = new Run(StrengthStr)
-            { Foreground = SolidColorBrushLib.FromColor(ColorConst.Strength, true), Tag = nameof(StrengthStr) };
+            { Foreground = SolidColorBrushLib.FromColor(ColorConst.GreenStrength, true), Tag = nameof(StrengthStr) };
             // 将Run元素添加到Paragraph中
             para3.Inlines.Add(runStrengthStr);
             // 将Paragraph添加到TableCell中

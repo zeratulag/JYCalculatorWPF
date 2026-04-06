@@ -13,12 +13,8 @@ namespace JYCalculator.Models
         // 是否拥有如下奇穴
         public bool 梨花带雨 { get; private set; }
         public bool 百里追魂 { get; private set; }
-        public bool 秋声泠羽 { get; private set; }
-        public bool 白雨跳珠 { get; private set; }
-        public bool 回肠荡气 { get; private set; }
         public bool 摧心 { get; private set; }
         public bool 鹰扬虎视 { get; private set; }
-        public bool 星落如雨 { get; private set; }
         public bool 寒江夜雨 { get; private set; }
         public bool 空山独立 { get; private set; }
 
@@ -31,13 +27,15 @@ namespace JYCalculator.Models
         // 丝路风语
         public bool 凝形逐踪 { get; private set; }
         public bool 百步穿杨 { get; private set; }
-
         public int BYPerCast { get; private set; } // 暴雨一次释放的跳数
         public int CX_DOT_Stack { get; private set; } // 穿心dot叠的最大层数;
         public string CX_DOT_Key { get; private set; } // 穿心DOT的技能Key
         public string DP_Key { get; private set; } // 夺魄技能的Key
 
-        public const double HJYY_BBCD = 1.0; // 寒江降低百步穿杨CD时间;
+        // 山海源流
+        public bool 追锋断念 { get; private set; } // 追锋断念
+
+        public const double HJYY_BBCD = 0.0; // 寒江降低百步穿杨CD时间;
         // 流派
 
 
@@ -57,7 +55,6 @@ namespace JYCalculator.Models
             GetSelfBuffNames();
             //GetIsSupport();
             GetCompatibleSkillBuild();
-            GetGenre();
             GetCX_DOT_Key();
             GetDP_Key();
         }
@@ -68,12 +65,8 @@ namespace JYCalculator.Models
             聚精凝神 = Has(nameof(聚精凝神));
             梨花带雨 = Has(nameof(梨花带雨));
             百里追魂 = Has(nameof(百里追魂));
-            秋声泠羽 = Has(nameof(秋声泠羽));
-            白雨跳珠 = Has(nameof(白雨跳珠));
-            回肠荡气 = Has(nameof(回肠荡气));
             鹰扬虎视 = Has(nameof(鹰扬虎视));
             摧心 = Has(nameof(摧心));
-            星落如雨 = Has(nameof(星落如雨));
             寒江夜雨 = Has(nameof(寒江夜雨));
             空山独立 = Has(nameof(空山独立));
             穿林打叶 = Has(nameof(穿林打叶));
@@ -82,6 +75,7 @@ namespace JYCalculator.Models
             掠影穹苍 = Has(nameof(掠影穹苍));
             凝形逐踪 = Has(nameof(凝形逐踪));
             百步穿杨 = Has(nameof(百步穿杨));
+            追锋断念 = Has(nameof(追锋断念));
         }
 
         public void GetCX_DOT_Key()
@@ -108,33 +102,6 @@ namespace JYCalculator.Models
         /// <summary>
         /// 获取当前流派
         /// </summary>
-        protected void GetGenre()
-        {
-            string res = XFStaticConst.Genre.逐星百里_回肠;
-
-            if (百里追魂)
-            {
-                if (回肠荡气)
-                {
-                    res = XFStaticConst.Genre.逐星百里_回肠;
-                }
-                else if (白雨跳珠)
-                {
-                    if (鹰扬虎视)
-                    {
-                        res = XFStaticConst.Genre.逐星百里_白雨;
-                    }
-                    else
-                    {
-                        res = XFStaticConst.Genre.白雨流_万灵当歌;
-                    }
-                }
-            }
-
-            //SkillBaseNumGenre = res;
-            //Genre = res;
-        }
-
 
         /*/// <summary>
         /// 逐星流下，计算心无CD
@@ -174,7 +141,7 @@ namespace JYCalculator.Models
                 return xWCD;
             }
 
-            double HJReduceCD = 2.0; // 寒江减少CD时间
+            double HJReduceCD = 0.0; // 寒江减少CD时间
             double XW_LAG = 4.5; // 心无延迟释放
             var rawCD = (15 * HJReduceCD * normalFreq + xWCD - 15 * HJReduceCD * xwFreq) /
                         (1 + HJReduceCD * normalFreq);

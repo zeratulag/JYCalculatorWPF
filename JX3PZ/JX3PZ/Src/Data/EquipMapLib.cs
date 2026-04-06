@@ -1,6 +1,7 @@
 ﻿using JX3CalculatorShared.Globals;
 using JX3PZ.Globals;
 using System;
+using System.CodeDom.Compiler;
 using System.Collections.Immutable;
 using static JX3CalculatorShared.Utils.ImportTool;
 
@@ -19,12 +20,14 @@ namespace JX3PZ.Data
 
         public static int MAX_SUB_TYPE { get; private set; } = 0; // SubType最大值，注意从0开始，所以总数需要+1
         public static int MAX_POSITION { get; private set; } = 0; // Position的最大值
+        public static ImmutableDictionary<int, MingYiEquipMapItem> MingYiEquipMaps { get; private set; }
 
         public static void Load(string path)
         {
             Path = path;
             LoadEquipMap();
             LoadWeaponMap();
+            LoadMingYiEquipMap();
         }
 
         public static void LoadEquipMap()
@@ -58,7 +61,19 @@ namespace JX3PZ.Data
 
         public static void LoadWeaponMap()
         {
-            Weapon = ReadSheetAsDict<int, WeaponMapItem>(Path, "Weapon", _ => _.DetailType);
+            Weapon = ReadSheetAsDict<int, WeaponMapItem>(Path, "Weapon", e => e.DetailType);
+        }
+
+        public static void LoadMingYiEquipMap()
+        {
+            MingYiEquipMaps = ReadSheetAsDict<int, MingYiEquipMapItem>(Path, "MingYiEquip", e => e.BoxIndex);
+            MingYiEquipMaps.Values.ForEach(e => e.Parse());
+        }
+
+        public static EquipSlotEnum GetEquipSlotEnumFromMingYiEquip(int boxIndex)
+        {
+            var item = MingYiEquipMaps.GetValueOrDefault(boxIndex);
+            return item?.EquipPosition ?? EquipSlotEnum.INVALID;
         }
 
         /// <summary>

@@ -1,4 +1,5 @@
-﻿using JX3CalculatorShared.Models;
+﻿using JX3CalculatorShared.Globals;
+using JX3CalculatorShared.Models;
 using JYCalculator.Data;
 using JYCalculator.ViewModels;
 

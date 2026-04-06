@@ -1,5 +1,6 @@
 ﻿using JX3CalculatorShared.Globals;
 using JYCalculator.Class;
+using JYCalculator.Globals;
 
 namespace JYCalculator.Src
 {
@@ -35,7 +36,7 @@ namespace JYCalculator.Src
             if (AppStatic.XinFaTag == "JY")
             {
                 var CX_DOT_Name = Arg.SkillNum.QiXue.CX_DOT_Key;
-                string CX_DOT_Hit_Name = "_CX_DOT_Hit";
+                string CX_DOT_Hit_Name = SkillKeyConst.穿心弩DOT_Hit;
                 Fix_CombatStat_DOT_Hit(normal, xw, CX_DOT_Name, CX_DOT_Hit_Name);
                 Fix_CombatStat_DOT_Hit(normal, xw, "CW_DOT", "_CW_DOT_Hit");
             }

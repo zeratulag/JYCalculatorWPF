@@ -27,6 +27,8 @@ namespace JYCalculator.Models
         public bool IsBigXW; // 当前是否处于大心无状态
 
         public WPOption WP => Equip.WP;
+        public bool IsBigChenWu => Equip.WP.IsBigCW;
+
         public int AbilityRank; // 手法等级，0~3
         public Dictionary<string, SkillEventItem> SkillEvents;
         public SkillFreqDict BasicSkillFreq; // 未考虑橙武改变循环前的技能频率
@@ -95,6 +97,7 @@ namespace JYCalculator.Models
             {
                 res = SkillEvents[key].BuffCoverRate(FinalEventsHitFreq[key]);
             }
+
             return res;
         }
 
@@ -109,6 +112,7 @@ namespace JYCalculator.Models
             {
                 wristKey = "BigFM_WRIST_130";
             }
+
             var wristEvent = SkillEvents[wristKey];
             double wristInterval = 0.0;
             // 计算大附魔次数
@@ -215,12 +219,12 @@ namespace JYCalculator.Models
                 var realCD = XFStaticConst.CurrentHaste.CalcHasteTime(ph.CD, Arg.HS, eHSP);
                 var interval = ph.MeanTriggerInterval(hitfreq: EventsHitFreq[piaohuang], cd: realCD);
                 var freq = 1 / interval;
-                const double ZhuRuiCD = 60.0;
-                const double ZhuiRuiBuffCd = 30.0;
-                var zhuRuiCastPerCD = Arg.PiaoHuangCover * ZhuRuiCD / 20; // 药奶每分钟释放了多少次逐云寒蕊
-                zhuRuiCastPerCD = Math.Min(zhuRuiCastPerCD, ZhuRuiCD / ZhuiRuiBuffCd); // 逐云寒蕊每分钟最多触发2次，因为30秒内置cd
-                var maxFreq = zhuRuiCastPerCD * 6 / ZhuRuiCD; // 每次释放逐蕊最多造成6次伤害
-                var finalFreq = Math.Min(maxFreq, freq * Arg.PiaoHuangCover);
+                const double ZhuRuiCD = 50.0;
+                const double ZhuRuiBuffDuration = 30.0;
+                const double FullCoverage = ZhuRuiBuffDuration / ZhuRuiCD;
+                var maxFreq = 12.0/ ZhuRuiCD; // 每次释放逐蕊最多造成12次伤害
+                var ratio = Arg.PiaoHuangCover / FullCoverage; // 相比好了就放的覆盖率比例
+                var finalFreq = Math.Min(maxFreq * ratio, freq * Arg.PiaoHuangCover);
                 FinalSkillFreq.AddByFreq(SkillKeyConst.逐云寒蕊_130, finalFreq);
             }
         }

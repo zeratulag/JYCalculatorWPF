@@ -20,16 +20,16 @@ namespace JYCalculator.Models
             XW.FinalSkillFreq.CalcJYEnergyInjection();
             var normal = Normal.FinalSkillFreq.GetJYHanJiangFreq();
             var xw = XW.FinalSkillFreq.GetJYHanJiangFreq();
-            XWCD = QiXue.SetHJXWCD(normal, xw);
+            XWCD = QiXue.XWCD;
         }
 
-        public void CalcBaiYu()
-        {
-            if (QiXue.白雨跳珠)
-            {
-                Normal.FinalSkillFreq.CalcJYBaiYuTiaoZhu();
-                XW.FinalSkillFreq.CalcJYBaiYuTiaoZhu();
-            }
-        }
+        //public void CalcBaiYu()
+        //{
+        //    if (QiXue.白雨跳珠)
+        //    {
+        //        Normal.FinalSkillFreq.CalcJYBaiYuTiaoZhu();
+        //        XW.FinalSkillFreq.CalcJYBaiYuTiaoZhu();
+        //    }
+        //}
     }
 }

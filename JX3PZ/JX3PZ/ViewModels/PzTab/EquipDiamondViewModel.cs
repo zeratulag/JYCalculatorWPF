@@ -145,7 +145,7 @@ namespace JX3PZ.ViewModels
         // 载入五行石孔
         protected void _Load(int[] levels)
         {
-            if (levels == null)
+            if (levels == null || levels.Length == 0)
             {
                 DropDiamond();
             }
@@ -153,7 +153,8 @@ namespace JX3PZ.ViewModels
             {
                 for (int i = 0; i < DiamondSlotCount; i++)
                 {
-                    Data[i].Load(levels[i]);
+                    int v = i < levels.Length ? levels[i]: 0;
+                    Data[i].Load(v);
                 }
             }
         }

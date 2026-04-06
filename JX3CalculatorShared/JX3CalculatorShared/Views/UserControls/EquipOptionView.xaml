@@ -63,6 +63,7 @@
         </CheckBox>
         <CheckBox
             x:Name="EquipOption_SL_chb"
+            Visibility="Hidden"
             Grid.Row="3"
             Grid.Column="2"
             Margin="5"

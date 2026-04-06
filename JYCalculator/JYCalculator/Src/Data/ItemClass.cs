@@ -17,7 +17,7 @@ namespace JYCalculator.Data
         public double LveYingQiongCang { get; set; } = 0;
         public double DP_LaoJia { get; set; } = 0;
         public double CXDotCount { get; set; } = 0;
-        public double PZ { get; set; } = 0;
+        public double PZ_Total { get; set; } = 0;
 
         public GenreTypeEnum GenreEnum { get; private set; }
 

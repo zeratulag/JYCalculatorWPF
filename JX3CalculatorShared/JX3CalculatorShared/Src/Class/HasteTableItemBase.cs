@@ -21,7 +21,8 @@ namespace JX3CalculatorShared.Class
         public double XWTime => nCount * XWIntervalTime; // 心无期间加速后总时间
 
 
-        public bool IsMultiChannel;
+        public bool IsMultiChannel; // 是否为多段
+        public bool IsDOT = false; // 是否为DOT
 
         #endregion
 
@@ -46,6 +47,7 @@ namespace JX3CalculatorShared.Class
             SkillName = info.SkillName;
             RawFrame = info.Frame;
             IsMultiChannel = info.IsMultiChannel;
+            IsDOT = info.IsDOT;
         }
 
         /// <summary>
@@ -59,6 +61,7 @@ namespace JX3CalculatorShared.Class
             RawFrame = old.RawFrame;
             nCount = old.nCount;
             IsMultiChannel = old.IsMultiChannel;
+            IsDOT = old.IsDOT;
         }
 
 
@@ -74,7 +77,7 @@ namespace JX3CalculatorShared.Class
         /// <returns></returns>
         public static HasteTableItemBase GetGCDItem()
         {
-            return new HasteTableItemBase("GCD", "公共CD", StaticConst.GCD_FPS, 1);
+            return new HasteTableItemBase("GCD", "公共CD", StaticConst.GCD_FRAME, 1);
         }
     }
 }

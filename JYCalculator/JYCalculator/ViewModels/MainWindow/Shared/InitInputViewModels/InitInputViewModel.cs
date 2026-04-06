@@ -2,6 +2,7 @@
 using JX3CalculatorShared.Class;
 using JX3CalculatorShared.Globals;
 using JX3CalculatorShared.ViewModels;
+using JX3CalculatorShared.Views;
 using JYCalculator.Class;
 using JYCalculator.DB;
 using JYCalculator.Globals;
@@ -19,7 +20,7 @@ namespace JYCalculator.ViewModels
         public BigFMConfigViewModel BigFMVM { get; }
         public EquipSpecialEffectConfigViewModel EquipSpecialEffectVM { get; }
 
-        public RelayCommand OpenImportJBBBDialogCmd { get; set; }
+        public RelayCommand OpenImportDataDialogCmd { get; set; }
 
         public NamedAttrs BigFMAttrsDesc; // 大附魔提供的属性
         public InitCharacter NoneBigFMInitCharacter;
@@ -39,7 +40,7 @@ namespace JYCalculator.ViewModels
             BigFMVM = bigFmvm;
             EquipSpecialEffectVM = equipSpecialEffectVM;
 
-            OpenImportJBBBDialogCmd = new RelayCommand(OpenImportJBBBDialog);
+            OpenImportDataDialogCmd = new RelayCommand(OpenImportDataDialog);
             NoneBigFMInitCharacter = initchar;
             PostConstructor();
             _Update();
@@ -63,18 +64,10 @@ namespace JYCalculator.ViewModels
             ImportJBPZPanel(res);
         }
 
-        public void OpenImportJBBBDialog()
+        public void OpenImportDataDialog()
         {
-            var (success, j) = ImportJX3BOXViewModel.TryReadFromDialog();
-            if (success)
-            {
-                var jbPanel = new JBBBPZPanel(j);
-                jbPanel.Parse();
-                ImportJBPZPanel(jbPanel);
-            }
-            else
-            {
-            }
+            ImportDataDialog dialog = new ImportDataDialog(isImportJBPZ: false);
+            dialog.ShowDialog();
         }
 
         #endregion

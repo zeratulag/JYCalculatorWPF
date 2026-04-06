@@ -16,6 +16,11 @@
     <Compile Include="$(MSBuildThisFileDirectory)Globals\Globals.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Globals\KAttribute.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Globals\ZAttribute.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Messages\ImportDataMessage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\MingYiOwnerEquipModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\MingYiOwnerEquipModelBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\MingYiServerModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\MingYiOwnerSuitEquipModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\SkillBuildSav.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Src\Class\BuffCoverItem.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Src\Class\BuffRecord.cs" />
@@ -99,18 +104,30 @@
     <Compile Include="$(MSBuildThisFileDirectory)Src\Class\JBBB.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Src\Class\JBPZEquipSnapshotCollection.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Src\DPSKernelOptimizer\OptimizedICharResultBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Src\MingYiTools\LuaDataToMingYiItemMapper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Src\MingYiTools\MingYiEquipItem.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Src\MingYiTools\MingYiEquipItemEntityViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Src\MingYiTools\MingYiEquipPlanParser.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Src\MingYiTools\MingYiItemData.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Src\MingYiTools\MingYiPZData.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Src\MingYiTools\MingYiOwnerInfo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Src\MingYiTools\MingYiServerInfo.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\BindingTool.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\ClassExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\CommandTool.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utils\DbUtils\DatabaseConnection.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\DictTool.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\EnumTool.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\FlowDocumentTool.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utils\FlowDocumentXamlCache.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\FuncTool.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\HashSetTool.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\IEnumerableTool.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\ImportTool.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\ArrayTool.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\ListTool.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utils\LuaUtils\LuaTableParser.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utils\LuaUtils\LuaUtils.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\MiscTools.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\OptimizationTool.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\ReflectionTool.cs" />
@@ -122,7 +139,10 @@
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Commands.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Common\AbsDependViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Common\AbsViewModel.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ImportJX3BOXViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ImportDataDialog\ImportDataDialogViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ImportDataDialog\ImportDataMingYiDatabaseViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ImportDataDialog\ImportDataMingYiTextViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ImportDataDialog\ImportDataJX3BoxViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\MainWindow\BuffViewModel\AllBuffConfigViewModelBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\MainWindow\BuffViewModel\BuffConfigViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\MainWindow\BuffViewModel\BuffViewModel.cs" />
@@ -147,7 +167,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\MainWindow\SkillBuildManagerViewModelBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\Converter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\Dialogs\AboutDialog.xaml.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Views\Dialogs\ImportJBDialog.xaml.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\Dialogs\ImportDataDialog.xaml.cs">
+      <DependentUpon>ImportDataDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Views\InputDialog.xaml.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\RichTextBoxHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\UserControls\AllBuffConfigView.xaml.cs" />
@@ -161,6 +183,15 @@
       <DependentUpon>EquipSpecialEffectConfigView.xaml</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Views\UserControls\FightOptionView.xaml.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\UserControls\ImportData\ImportDataMingDatabase.xaml.cs">
+      <DependentUpon>ImportDataMingDatabase.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\UserControls\ImportData\ImportDataMingYiText.xaml.cs">
+      <DependentUpon>ImportDataMingYiText.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\UserControls\ImportData\ImportDataJX3Box.xaml.cs">
+      <DependentUpon>ImportDataJX3Box.xaml</DependentUpon>
+    </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Views\UserControls\InitCharCommands.xaml.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\UserControls\ItemDTConfigView.xaml.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\UserControls\Items\EquipSpecialEffectItemView.xaml.cs">
@@ -195,7 +226,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="$(MSBuildThisFileDirectory)Views\Dialogs\ImportJBDialog.xaml">
+    <Page Include="$(MSBuildThisFileDirectory)Views\Dialogs\ImportDataDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -276,6 +307,18 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="$(MSBuildThisFileDirectory)Views\UserControls\FightOptionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\UserControls\ImportData\ImportDataMingDatabase.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\UserControls\ImportData\ImportDataMingYiText.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\UserControls\ImportData\ImportDataJX3Box.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

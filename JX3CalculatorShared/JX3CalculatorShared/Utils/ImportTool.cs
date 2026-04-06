@@ -27,8 +27,8 @@ namespace JX3CalculatorShared.Utils
         {
             var stream = GetStreamFromResource(fileName);
             var rows = MiniExcel.Query<TItem>(stream, sheetName: sheetName);
-            var res = rows.ToDictionary(x => x.GetPropertyValue<TKey>(keyName));
-            return res.ToImmutableDictionary();
+            var res = rows.ToImmutableDictionary(x => x.GetPropertyValue<TKey>(keyName));
+            return res;
         }
 
         public static ImmutableDictionary<TKey, TItem> ReadSheetAsDict<TKey, TItem>(string fileName, string sheetName,
@@ -36,8 +36,8 @@ namespace JX3CalculatorShared.Utils
         {
             var stream = GetStreamFromResource(fileName);
             var rows = MiniExcel.Query<TItem>(stream, sheetName: sheetName);
-            var res = rows.ToDictionary(_ => f(_));
-            return res.ToImmutableDictionary();
+            var res = rows.ToImmutableDictionary(_ => f(_));
+            return res;
         }
 
         public static ImmutableArray<TItem> ReadSheetAsArray<TItem>(string fileName, string sheetName)
@@ -45,7 +45,7 @@ namespace JX3CalculatorShared.Utils
         {
             var stream = GetStreamFromResource(fileName);
             var rows = MiniExcel.Query<TItem>(stream, sheetName: sheetName);
-            var res = rows.ToArray().ToImmutableArray();
+            var res = rows.ToImmutableArray();
             return res;
         }
 

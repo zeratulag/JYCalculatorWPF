@@ -56,7 +56,7 @@ namespace JX3CalculatorShared.Class
             return res;
         }
 
-        public static (bool Success, JBBB J) TryReadFromJSON(string jsontxt)
+        public static (bool Success, JBBB JBData) TryReadFromJSON(string jsontxt)
         {
             JBBB res = null;
             bool success = false;

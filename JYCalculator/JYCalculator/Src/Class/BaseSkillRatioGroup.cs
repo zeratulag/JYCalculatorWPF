@@ -26,7 +26,7 @@ namespace JYCalculator.Class
             BaseSkillName = RatioItems.First().BaseSkillName;
             BaseSkillKey = RatioItems.First().BaseSkillKey;
             IsXinWu = RatioItems.First().XinWu > 0;
-            IsChengWu = RatioItems.First().ChengWu > 0;
+            IsChengWu = RatioItems.First().ChengWu;
 
             // 判断所有 items 的 BaseSkillName 是否一致
             if (RatioItems.Any(item => item.BaseSkillName != BaseSkillName))
@@ -62,6 +62,7 @@ namespace JYCalculator.Class
     public class BaseSkillRatioGroup
     {
         public ImmutableDictionary<string, BaseSkillRatio> RatioGroup { get; }
+        public int Rank { get; }
 
         // 基于SkillRatioItem的BaseSkillName进行分组构建BaseSkillRatio对象
         public BaseSkillRatioGroup(IEnumerable<SkillRatioItem> items)
@@ -70,6 +71,7 @@ namespace JYCalculator.Class
             RatioGroup = groupedItems.ToImmutableDictionary(
                 group => group.Key,
                 group => new BaseSkillRatio(group));
+            Rank = items.First().Rank;
         }
 
         public Dictionary<string, double> CalcSkillNum(IDictionary<string, double> baseSkillNumDict)
@@ -115,8 +117,8 @@ namespace JYCalculator.Class
         {
             var gItems = items.GroupBy(item => item.ChengWu);
             var res_dict = gItems.ToDictionary(g => g.Key, MakePeriodBaseSkillRatioGroup);
-            var normal = res_dict[0];
-            var chengWu = res_dict[1];
+            var normal = res_dict[false];
+            var chengWu = res_dict[true];
             var res = new Period<BaseSkillRatioGroup>[] { normal, chengWu};
             return res;
         }

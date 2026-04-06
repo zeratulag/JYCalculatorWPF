@@ -21,9 +21,11 @@ namespace JX3CalculatorShared.Class
 
         public FightTimeSummaryBase()
         {
-            Data = new FightTimeSummaryItem[] {
+            Data = new FightTimeSummaryItem[]
+            {
                 new FightTimeSummaryItem("NULL0"),
-                new FightTimeSummaryItem("NULL1")};
+                new FightTimeSummaryItem("NULL1")
+            };
         }
 
         /// <summary>
@@ -32,12 +34,14 @@ namespace JX3CalculatorShared.Class
         /// <param name="totalTime">总战斗时间（s）</param>
         /// <param name="xwCD">心无CD</param>
         /// <param name="xwDuration">心无持续时间</param>
-        public FightTimeSummaryBase(double totalTime, double xwCD = XFStaticConst.XinWuConsts.CD, double xwDuration = XFStaticConst.XinWuConsts.Time) : this()
+        public FightTimeSummaryBase(double totalTime, double xwCD = XFStaticConst.XinWuConsts.CD,
+            double xwDuration = XFStaticConst.XinWuConsts.Time) : this()
         {
             Update(totalTime, xwCD, xwDuration);
         }
 
-        public void Update(double totalTime, double xwCD = XFStaticConst.XinWuConsts.CD, double xwDuration = XFStaticConst.XinWuConsts.Time, bool isShort = false)
+        public void Update(double totalTime, double xwCD = XFStaticConst.XinWuConsts.CD,
+            double xwDuration = XFStaticConst.XinWuConsts.Time, bool isShort = false)
         {
             TotalTime = totalTime;
             XWCD = xwCD;
@@ -53,8 +57,8 @@ namespace JX3CalculatorShared.Class
         public void UpdateXWCD(double xwCD)
         {
             var n = RawYZCD / xwCD; // 腰坠期间能开几次心无
-            double real_n = (double)(int)n;
-            if (n - (int)n < 0.05)
+            double real_n = (double) (int) n;
+            if (n - (int) n < 0.05)
             {
                 XWCD = RawYZCD / n;
                 YZCD = RawYZCD; // 此时心无等腰坠
@@ -70,7 +74,7 @@ namespace JX3CalculatorShared.Class
             ShortItem = GetTimeSummary("短时间", shorttime);
             ShortItem.IsShort = true;
             LongItem = GetTimeSummary("长时间", longtime);
-            Data = new FightTimeSummaryItem[] { ShortItem, LongItem };
+            Data = new FightTimeSummaryItem[] {ShortItem, LongItem};
         }
 
         /// <summary>
@@ -112,18 +116,13 @@ namespace JX3CalculatorShared.Class
 
         public FightTimeSummaryItem GetTimeSummary(string name, (double XW, double YZ) totalDurationTime)
         {
-            double XW_Cover = totalDurationTime.XW / TotalTime;
-            double YZ_Cover = totalDurationTime.YZ / TotalTime;
-            double Normal_Cover = 1 - XW_Cover;
-            double YZ_Over_XW_Cover = totalDurationTime.YZ / totalDurationTime.XW;
-
-
             var numXW = totalDurationTime.XW / XWDuration;
             var numYZ = totalDurationTime.YZ / YZDuration;
             double normalTime = TotalTime - totalDurationTime.XW;
 
             var summary = new FightTimeSummaryItem(name, numXW, numYZ, TotalTime,
-                totalDurationTime.XW, totalDurationTime.YZ, normalTime);
+                totalDurationTime.XW, totalDurationTime.YZ, normalTime,
+                XWDuration, YZDuration);
             return summary;
         }
     }

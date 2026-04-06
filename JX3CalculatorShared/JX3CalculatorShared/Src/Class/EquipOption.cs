@@ -1,4 +1,5 @@
-﻿using HandyControl.Controls;
+﻿using System;
+using HandyControl.Controls;
 using JX3CalculatorShared.Data;
 using JX3CalculatorShared.Globals;
 using Newtonsoft.Json;
@@ -42,12 +43,15 @@ namespace JX3CalculatorShared.Class
 
         public int IconID { get; }
         public int Quality { get; }
+        public int Rank { get; }
 
         public KAttributeID BuffKAttributeID { get; private set; }
 
         public readonly bool IsWater; // 是否为水特效
         public readonly bool IsWind; // 是否为风特效
         public readonly bool IsBigCW; // 是否为大橙武
+        public readonly bool IsSmallCW; // 是否为小橙武
+        public readonly bool IsSmallChengWuAdvance; // 是否为顶级小橙武（带5%会心秘籍特效）
 
         public CharAttrCollection SCharAttr { get; protected set; }
         public NamedAttrs AttrsDesc { get; protected set; }
@@ -89,6 +93,7 @@ namespace JX3CalculatorShared.Class
             IsWater = Tag == "WaterWeapon";
             IsWind = Tag == "WindYZ";
             IsBigCW = Tag.StartsWith("BigChengWu");
+            IsSmallCW = Tag.StartsWith("SmallChengWu");
         }
 
         public EquipOption(EquipOptionItem item)
@@ -99,6 +104,9 @@ namespace JX3CalculatorShared.Class
             OptionType = item.Type;
             ExpansionPackLevel = item.ExpansionPackLevel;
             RawIDs = item.EIDs_Str;
+            Rank = item.Rank;
+
+            IsSmallChengWuAdvance = IsSmallCW && Rank >= 5;
 
             BuffID = item.BuffID;
             BuffLevel = item.BuffLevel;
@@ -134,7 +142,7 @@ namespace JX3CalculatorShared.Class
         {
             var res = new Dictionary<string, double>();
 
-            if (IsWater || IsWind || IsBigCW)
+            if (IsWater || IsWind || IsBigCW || IsSmallCW)
             {
                 var key = Get_S_ID();
                 if (key != null)
@@ -259,13 +267,14 @@ namespace JX3CalculatorShared.Class
         // 获取新的提示
         public void GetToolTip()
         {
+            // TODO: 新增更多的描述
             string newstr = "";
             if (Value > 0 && IsWater)
             {
                 newstr = $"特效提升{Value}{DamageTypeDesc}攻击力";
             }
 
-            if (Value > 0 && IsBigCW)
+            if (Value > 0 && (IsBigCW || IsSmallCW))
             {
                 newstr = $"特效提升{Value}无双等级";
             }

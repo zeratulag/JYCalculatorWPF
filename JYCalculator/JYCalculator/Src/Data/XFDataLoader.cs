@@ -35,6 +35,7 @@ namespace JYCalculator.Data
         public CalcSetting Setting; // _Settings.json
         public Period<BaseSkillRatioGroup> DefaultBaseSkillRatioGroups { get; private set; } // 默认紫武的
         public Period<BaseSkillRatioGroup> ChengWuBaseSkillRatioGroups { get; private set; } // 橙武的
+        public SkillRatioManager CSkillRatioManager { get; private set; }
 
         #endregion
 
@@ -153,7 +154,7 @@ namespace JYCalculator.Data
 
         protected void LoadSkillRatio()
         {
-            SkillRatios = ReadSheetAsArray<SkillRatioItem>(DataFile, "NingXingSkillRatio");
+            SkillRatios = ReadSheetAsArray<SkillRatioItem>(DataFile, "NieYingSkillRatio");
             foreach (var item in SkillRatios)
             {
                 item.Parse();
@@ -170,7 +171,14 @@ namespace JYCalculator.Data
             CollectDerivedSkillInfoItem();
             CollectAllSkillInfoItems();
             UpdateSkillModifierInfo();
+            ManagerSkillRatioGroup();
             MakeDefaultBaseSkillRatioGroups();
+        }
+
+        private void ManagerSkillRatioGroup()
+        {
+            CSkillRatioManager = new SkillRatioManager(SkillRatios);
+            CSkillRatioManager.run();
         }
 
         public void UpdateSkillModifierInfo()
@@ -196,6 +204,7 @@ namespace JYCalculator.Data
 
         public void CollectDerivedSkillInfoItem()
         {
+            ZhuiMingSkillMapper.BuildDerivedSkills();
             DerivedSkillInfoItem = SkillInfoItemFactory.Dict.Values.ToList();
         }
 
