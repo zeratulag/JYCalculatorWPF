@@ -2,9 +2,9 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using JX3CalculatorShared.Class;
+using JX3CalculatorShared.Utils;
 using JYCalculator.Messages;
 using System.Windows;
-using System.Windows.Media;
 using HandyControl.Controls;
 
 namespace JX3CalculatorShared.ViewModels
@@ -13,14 +13,13 @@ namespace JX3CalculatorShared.ViewModels
     {
         public double PreviousDPS { get; private set; }
         public double FinalDPS { get; private set; }
-        public double Delta { get; private set; } // 相对改变量
+        public double DeltaDPSPct { get; private set; } // 相对改变量
         public bool HasResult { get; private set; } = false;
         public string ProfitOrderDesc { get; private set; } = string.Empty;
         public RelayCommand CopyCalcResultCmd { get; }
         public bool ShowDelta { get; private set; } = false; // 是否显示改变量
 
-        public string FormattedDelta => Delta >= 0 ? $"+{Delta:P2}" : $"{Delta:P2}";
-        public Brush DeltaColor => GetDeltaColor(Delta);
+        public string DeltaColor => DeltaDisplayTool.GetPercentColor(DeltaDPSPct);
 
         public CalcResultViewModel()
         {
@@ -53,16 +52,6 @@ namespace JX3CalculatorShared.ViewModels
             }
         }
 
-        public static Brush GetDeltaColor(double delta)
-        {
-            if (Math.Abs(delta) <= 1e-6)
-            {
-                return Brushes.Gray;
-            }
-
-            return delta > 0 ? Brushes.Green : Brushes.Red;
-        }
-
         // 更新结果
         public void UpdateResult(bool hasResult, double finalDPS, string profitOrderDesc)
         {
@@ -73,11 +62,11 @@ namespace JX3CalculatorShared.ViewModels
             if (PreviousDPS > 0)
             {
                 ShowDelta = true;
-                Delta = (FinalDPS - PreviousDPS) / PreviousDPS;
+                DeltaDPSPct = (FinalDPS - PreviousDPS) / PreviousDPS;
             }
         }
 
-        public void UpdateResult(CalcResult result)
+        public void UpdateResult(CalcResultBase result)
         {
             UpdateResult(result.Success, result.FinalDPS, result.ProfitOrderDesc);
         }

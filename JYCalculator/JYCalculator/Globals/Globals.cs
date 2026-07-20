@@ -31,7 +31,13 @@ namespace JYCalculator.Globals
         public static readonly string FileFilter; // 打开方式的Filter;
         public static readonly string SkillBuildFileFilter; // 武学方案Filter
 
-        public const string GameVersion = "山海源流";
+        public const string GameVersion = "暗影千机";
+
+#if DEBUG
+        public const bool LoadDefaultPzOnStartUp = true; // 初始化时加载配装还是仅加载属性
+#else
+        public const bool LoadDefaultPzOnStartUp = false;
+#endif
 
 
         public const string JX3BOXURL = @"https://www.jx3box.com/bps/49353"; // JX3BOX主页
@@ -49,10 +55,10 @@ namespace JYCalculator.Globals
 
         #region 技改后需要修改
 
-        public const string XFTutorialURL = @"https://www.jx3box.com/bps/103768"; // 当前版本惊羽攻略
-        public static readonly DateTime LastPatchTime = new DateTime(2026, 1, 19); // 最新技改时间
+        public const string XFTutorialURL = @"https://www.jx3box.com/bps/107397"; // 当前版本惊羽攻略
+        public static readonly DateTime LastPatchTime = new DateTime(2026, 05, 21); // 最新技改时间
         public const string
-            LastPatchURL = @"https://jx3.xoyo.com/index/index.html#/article-details?kid=1335246"; // 最新技改内容
+            LastPatchURL = @"https://kefu.xoyo.com/?r=gonggao&id=1335528&game_name=jx3"; // 最新技改内容
 
         #endregion
 
@@ -150,7 +156,7 @@ namespace JYCalculator.Globals
                                                       StaticConst
                                                           .G_KILO_NUM; // 力道提高0.59会心，STRENGTH_TO_PHYSICS_CRITICAL_STRIKE_COF 604
 
-        public const double
+        public static readonly double
             NPC_Coef = (double) JYXinFa.DST_NPC_DAMAGE_COEFFICIENT /
                        StaticConst.G_KILO_NUM; // DST_NPC_DAMAGE_COEFFICIENT
 
@@ -196,7 +202,7 @@ namespace JYCalculator.Globals
     public static class XFStaticConst
     {
         public static readonly XFGlobalParams CurrentLevelParams; // 当前等级的心法转换系数
-        public const double XinFaPZCoef = (0.78 - 1); // 心法破招系数，唐门惊羽破招子技能.lua  dwSkillLevel == 1
+        public const double XinFaPZCoef = (514221.67039999994 / 1024 / 1024 - 1); // 心法破招系数，唐门惊羽破招子技能.lua  dwSkillLevel == 1
         public const double BaiYuPZCoef = (0.5328765 - 1); // 白雨破招系数， dwSkillLevel == 2
         public const double PZ_BaiYuPer_Normal_ZX = 1.486; // 非心无期间，平均每个逐星附带的白雨破招数量
         public const int EnergyInjectionFreqToPZCoef = 3; // 3次注能触发一次破招

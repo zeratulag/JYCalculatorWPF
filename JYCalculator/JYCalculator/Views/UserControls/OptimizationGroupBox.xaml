@@ -18,7 +18,7 @@
         <TabControl
             Visibility="{Binding IsChecked,ElementName=GroupBox_Optimization_chb,Converter={StaticResource BooleanToVisibility}}"
             SelectionChanged="TabControl_SelectionChanged">
-            <TabItem Header="多重阵眼比较" x:Name="TabItem_MultiZhen">
+            <TabItem Header="阵法对比" x:Name="TabItem_MultiZhen">
                 <userControls:MultiZhenFaDataGrid x:Name="SfDataGrid_MultiZhen" />
             </TabItem>
             <TabItem Header="最优初始属性" Visibility="Collapsed">

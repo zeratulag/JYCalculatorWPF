@@ -14,9 +14,10 @@ namespace JX3PZ.Models
         public EquipEnhanceViewModel[] EnhanceVMs;
 
         public int[] CurrentIdx;
-        public BestEnhanceResult[] BestRes;
+        public EquipEnhanceViewModel.BestEnhanceResult[] BestRes;
         public int[] HasteIdx;
         public int[] FinalIdx;
+        public bool[] CurrentIsHaste;
 
         public HashSet<PzType> HasteSource;
 
@@ -29,6 +30,7 @@ namespace JX3PZ.Models
         public void GetCondition()
         {
             CurrentIdx = EnhanceVMs.Select(_ => _.SelectedEnhanceIndex).ToArray(); // 当前附魔
+            CurrentIsHaste = EnhanceVMs.Select(_ => _.SelectedEnhance != null && _.SelectedEnhance.IsHaste).ToArray(); // 当前附魔是否为加速
             BestRes = EnhanceVMs.Select(_ => _.GetBestEnhanceByCalcResult(MainVM.CCalcResult)).ToArray(); // 最优附魔
             HasteIdx = EnhanceVMs.Select(_ => _.HasteEnhanceIdx).ToArray();
         }
@@ -55,6 +57,18 @@ namespace JX3PZ.Models
         private void AddHaste()
         {
             FinalIdx = BestRes.Select(_ => _.Index).ToArray();
+            for (int i = 0; i < CurrentIsHaste.Length; i++)
+            {
+                if (CurrentIsHaste[i])
+                {
+                    FinalIdx[i] = CurrentIdx[i];
+                }
+            }
+
+            if (CurrentIsHaste.Any())
+            {
+                return;
+            }
 
             if (HasteSource.Contains(PzType.Equip) || HasteSource.Contains(PzType.Stone))
             {
@@ -62,7 +76,7 @@ namespace JX3PZ.Models
                 return;
             }
 
-            var loss = new BestEnhanceResult[FinalIdx.Length];
+            var loss = new EquipEnhanceViewModel.BestEnhanceResult[FinalIdx.Length];
             // 若没有装备加速且没有加速五彩石
             for (int i = 0; i < HasteIdx.Length; i++)
             {

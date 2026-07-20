@@ -1,0 +1,83 @@
+<Window x:Class="JX3PZ.Views.BuildCompare.PzBuildCompareExportProgressWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="计算中..."
+        Height="230"
+        Width="440"
+        MinHeight="230"
+        MinWidth="440"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterOwner"
+        ShowInTaskbar="False"
+        FontFamily="Microsoft YaHei UI"
+        FontSize="13"
+        Background="#F4F7FB">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/HandyControl;component/Themes/SkinDefault.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/HandyControl;component/Themes/Theme.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    <Grid Margin="18">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="22" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0"
+                   Text="{Binding Message}"
+                   FontSize="15"
+                   FontWeight="SemiBold"
+                   Foreground="#1F2D3D"
+                   TextTrimming="CharacterEllipsis" />
+
+        <Grid Grid.Row="1" Margin="0 18 0 0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <TextBlock Text="整体进度" Foreground="#607080" />
+            <TextBlock Grid.Column="1"
+                       Text="{Binding OverallProgressText}"
+                       FontWeight="SemiBold"
+                       Foreground="#1F2D3D" />
+        </Grid>
+
+        <ProgressBar Grid.Row="2"
+                     Height="14"
+                     Minimum="0"
+                     Style="{StaticResource ProgressBarWarning}"
+                     Maximum="{Binding TotalSlots, Mode=OneWay}"
+                     Value="{Binding CompletedSlots, Mode=OneWay}"
+                     Margin="0 5 0 0"
+                     Background="#E9EEF5" />
+
+        <Grid Grid.Row="3" Margin="0 24 0 0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <TextBlock Text="{Binding CurrentSlot.Header, TargetNullValue=写入文件}"
+                       Foreground="#607080"
+                       TextTrimming="CharacterEllipsis" />
+            <TextBlock Grid.Column="1"
+                       Text="{Binding CurrentSlot.ProgressText}"
+                       FontWeight="SemiBold"
+                       Foreground="#1F2D3D" />
+        </Grid>
+
+        <ProgressBar Grid.Row="4"
+                     Height="14"
+                     Minimum="0"
+                     Style="{StaticResource ProgressBarSuccess}"
+                     Maximum="{Binding CurrentSlot.ProgressMaximum, Mode=OneWay, FallbackValue=1, TargetNullValue=1}"
+                     Value="{Binding CurrentSlot.Completed, Mode=OneWay, FallbackValue=0, TargetNullValue=0}"
+                     Margin="0 5 0 0"
+                     Background="#E9EEF5" />
+    </Grid>
+</Window>

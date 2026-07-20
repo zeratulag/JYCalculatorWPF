@@ -15,6 +15,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Messages\PzStaticMessager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\AttributeEntry\AttributeEntryCollection.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\AttributeEntry\EquipSnapShotAttributeEntry.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\BuildCompareModel\PzBuildCompareReportExporter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\CharacterPanel\CharacterPanelBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\CharacterPanel\CharacterPanelOvercome.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\CharacterPanel\CharacterPanelCriticalDamage.cs" />
@@ -42,6 +43,10 @@
     <Compile Include="$(MSBuildThisFileDirectory)Models\Equip\EquipStoneModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Equip\EquipStrengthDiamondModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Equip\EquipStrengthModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\BuildCompareModel\PzBuildToInitInputModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\BuildCompareModel\PzBuildVariantFactory.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\BuildCompareModel\PzBuildCompareReport.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\BuildCompareModel\PzEquipBuildCompareCandidateProvider.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\PanelAttributeSlots\PanelWeaponSlot.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\PzMainSav.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\PzOneKeyEnhanceModel.cs" />
@@ -90,6 +95,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)Globals\PzEnums.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Src\StaticPzData.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Equip\EquipShowBoxModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\BuildCompareModel\PzBuildCompareExportProgressViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\BuildCompareModel\RelativeDeltaBarViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\EquipShow\EquipShowBoxViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\EquipShow\EquipShowEnhanceViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\EquipShow\EquipShowExtraViewModel.cs" />
@@ -110,6 +117,10 @@
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\PanelAttributeSlots\PanelMaxLifeSlotViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\PanelAttributeSlots\PanelAttackSlotViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\PanelAttributeSlots\PanelPrimarySlotViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\BuildCompareModel\PzBuildCompareRowViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\BuildCompareModel\PzBuildCompareSlotStatus.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\BuildCompareModel\PzBuildCompareSlotViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\BuildCompareModel\PzBuildCompareWindowViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\PzMainWindowViewModels.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\PzOverview\PzOverviewViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\PzOverview\PzOverviewWindowViewModel.cs" />
@@ -125,6 +136,18 @@
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\PzTab\EquipStoneSelectViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\PzTab\PzEquipSummaryViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\PzTab\PzTabItemViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\BuildCompare\PzBuildCompareExportProgressWindow.xaml.cs">
+      <DependentUpon>PzBuildCompareExportProgressWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\BuildCompare\PzBuildCompareWindow.xaml.cs">
+      <DependentUpon>PzBuildCompareWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\BuildCompare\PzBuildCompareSlotView.xaml.cs">
+      <DependentUpon>PzBuildCompareSlotView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\BuildCompare\RelativeDeltaBarCell.xaml.cs">
+      <DependentUpon>RelativeDeltaBarCell.xaml</DependentUpon>
+    </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Views\PzMainWindow.xaml.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\UserControls\EquipShow\EquipShowBox.xaml.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\UserControls\Items\ItemDTSmallView.xaml.cs" />
@@ -169,6 +192,22 @@
     <Compile Include="$(MSBuildThisFileDirectory)Views\ViewTool.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="$(MSBuildThisFileDirectory)Views\BuildCompare\PzBuildCompareExportProgressWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\BuildCompare\PzBuildCompareWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\BuildCompare\PzBuildCompareSlotView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\BuildCompare\RelativeDeltaBarCell.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="$(MSBuildThisFileDirectory)Views\PzMainWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

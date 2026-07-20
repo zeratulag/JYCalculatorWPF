@@ -42,6 +42,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Src\Class\KAttributeEntry.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Src\Class\KBuffEntity.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Src\Class\PiaoHuangDamage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Src\Class\ProfitItemInfo.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Src\Class\SimpleAttributeEntry.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Src\Class\SkillAttrCollection.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Src\Class\SkillBuild.cs" />
@@ -116,6 +117,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Utils\ClassExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\CommandTool.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\DbUtils\DatabaseConnection.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utils\DeltaDisplayTool.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\DictTool.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\EnumTool.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\FlowDocumentTool.cs" />
@@ -160,6 +162,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\MainWindow\InitInputViewModels\EquipSpecialEffectSlotViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\MainWindow\ItemDTViewModels\ItemDTConfigViewModelBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\MainWindow\ItemDTViewModels\ItemDTSlotViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\MainWindow\ItemDTViewModels\ItemDTViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\MainWindow\MiJiViewModels\MiJiViewModelBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\MainWindow\OptimizationViewModelBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\MainWindow\QiXueViewModels\QiXueSlotViewModel.cs" />

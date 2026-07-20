@@ -27,7 +27,7 @@ namespace JYCalculator.Models
         public readonly bool 追夺流_雾海寻龙 = false;
         public readonly bool 百步凝形_丝路风语 = false;
         public readonly bool 百步凝形_丝路风语_橙武 = false;
-        public readonly bool 寒江凝形_山海源流 = false;
+        public readonly bool 寒江凝形_暗影千机 = false;
         public bool CXMaintainThroughout => !百步凝形_丝路风语; // 穿心是否能全程保持
         public HasteTableItem ChuanXinHaste = null; // 穿心
         public string ChuanXinDOTKey = null;
@@ -52,8 +52,8 @@ namespace JYCalculator.Models
             追夺流_雾海寻龙 = abilityitem.GenreEnum == GenreTypeEnum.追夺流_雾海寻龙;
             百步凝形_丝路风语_橙武 = abilityitem.GenreEnum == GenreTypeEnum.百步凝形_丝路风语_橙武;
             百步凝形_丝路风语 = abilityitem.GenreEnum == GenreTypeEnum.百步凝形_丝路风语 || 百步凝形_丝路风语_橙武;
-            寒江凝形_山海源流 = abilityitem.GenreEnum == GenreTypeEnum.寒江凝形_山海源流 ||
-                        abilityitem.GenreEnum == GenreTypeEnum.寒江凝形_山海源流_橙武;
+            寒江凝形_暗影千机 = abilityitem.GenreEnum == GenreTypeEnum.寒江凝形_暗影千机 ||
+                        abilityitem.GenreEnum == GenreTypeEnum.寒江凝形_暗影千机_橙武;
 
             switch (abilityitem.GenreEnum)
             {
@@ -142,26 +142,27 @@ namespace JYCalculator.Models
             {
                 double zhuimingRatio = 0;
                 double duopoRatio = 0;
-                
+
                 if (IsBigChenWu)
                 {
                     zhuimingRatio = IsXW
-                        ? (8.0 + 10) / (8.0 + 11.0)
-                        : (4 * 8.0 + 4 * 11.0) / 110.0; // 5分钟一共开了12次凝形，其中4次心无凝形，8次常规凝形，常规凝形中有4次橙武凝形。
+                        ? 1
+                        : 94.0 / 118.0; // 5分钟一共开了12次凝形，其中4次心无凝形，8次常规凝形，常规凝形中有4次橙武凝形。
                     // 因此非心无阶段260s一共有 4*7 + 4*10次枢甲，对应110次追命。
 
                     duopoRatio = IsXW
-                        ? 1.0
-                        : (4 * 4.0) / 63.0; // 5分钟一共开了12次凝形，其中4次心无凝形，8次常规凝形，常规凝形中有4次橙武凝形，4次非橙武凝形。
+                        ? 1.0 / 2.0
+                        : 25.0 / 103.0; // 5分钟一共开了12次凝形，其中4次心无凝形，8次常规凝形，常规凝形中有4次橙武凝形，4次非橙武凝形。
                     // 橙武凝形中0次夺魄，非橙武凝形中4次夺魄。
                     // 因此非心无阶段260s一共有 4*4.0次枢甲，对应63次夺魄。
                 }
                 else
                 {
-                    zhuimingRatio = IsXW ? 1.0 : 8.0 * 7 / 92.0; // 5分钟一共开了12次凝形，其中4次心无凝形，8次常规凝形。因此非心无阶段260s一共有8*7次枢甲，对应92次追命。
+                    zhuimingRatio =
+                        IsXW ? 6.0 / 6.0 : 76.0 / 99.0; // 5分钟一共开了12次凝形，其中4次心无凝形，8次常规凝形。因此非心无阶段260s一共有8*7次枢甲，对应92次追命。
                     duopoRatio = IsXW
-                        ? 1.0
-                        : (8 * 4.0) / 79.0; // 5分钟一共开了12次凝形，其中4次心无凝形，8次常规凝形。因此非心无阶段260s一共有8*4次枢甲，对应79次夺魄。
+                        ? 4.0 / 5.0
+                        : 40.0 / 119.0; // 5分钟一共开了12次凝形，其中4次心无凝形，8次常规凝形。因此非心无阶段260s一共有8*4次枢甲，对应79次夺魄。
                 }
 
                 FinalSkillFreq.AddShuJiaByRatio(zhuimingRatio, duopoRatio);
@@ -256,7 +257,7 @@ namespace JYCalculator.Models
             FinalSkillFreq = FinalNum.ToSkillFreqDict();
             //GetBigCWFreq(); // 惊羽需要先计算橙武频率，再计算其他频率
             GetBigCWDPFreq();
-            GetBigZMFreq();
+            GetBigCWZMFreq();
             GetFinalEventHitFreq();
             GetBasicSLCover();
             GetBigFMFreq();
@@ -273,10 +274,10 @@ namespace JYCalculator.Models
             FinalSkillFreq.AddByFreq(CW_DPkey, CW_DP);
         }
 
-        public void GetBigZMFreq()
+        public void GetBigCWZMFreq()
         {
             if (!IsBigChenWu) return;
-            double ratio = IsXW ? 8 / (9.25 * 2) : 32 / 110.0;
+            double ratio = IsXW ? 5.5 / 8.75 : 32 / 118.0;
             FinalSkillFreq.AddCWZMByRatio(ratio);
         }
 

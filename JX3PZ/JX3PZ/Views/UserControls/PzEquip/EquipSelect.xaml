@@ -7,6 +7,7 @@
              xmlns:pzGlobals="clr-namespace:JX3PZ.Globals"
              xmlns:hc="https://handyorg.github.io/handycontrol"
              xmlns:sf="http://schemas.syncfusion.com/wpf"
+             xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
              xmlns:userControls="clr-namespace:J3PZ.Views.UserControls"
              mc:Ignorable="d"
              d:DesignHeight="500" d:DesignWidth="500"
@@ -22,6 +23,16 @@
                 </ResourceDictionary.MergedDictionaries>
                 <Style TargetType="Label" BasedOn="{StaticResource Style.PzEquipLabel}" />
                 <Style TargetType="sf:CheckListBox" BasedOn="{StaticResource Style.FilterCheckListBoxHorizontal}" />
+                <Style x:Key="CopyIconButton" TargetType="Button">
+                    <Setter Property="Width" Value="24" />
+                    <Setter Property="Height" Value="24" />
+                    <Setter Property="Margin" Value="0 10 16 10" />
+                    <Setter Property="Padding" Value="0" />
+                    <Setter Property="BorderThickness" Value="0" />
+                    <Setter Property="Background" Value="Transparent" />
+                    <Setter Property="Cursor" Value="Hand" />
+                    <Setter Property="VerticalAlignment" Value="Center" />
+                </Style>
 
             </ResourceDictionary>
         </Grid.Resources>
@@ -111,8 +122,31 @@
             </sf:CheckListBox.ItemsPanel>
         </sf:CheckListBox>
 
-        <hc:SimpleText Grid.Row="3" Grid.Column="0" Margin="0 10"
-                       Text="装备选择" Style="{StaticResource Style.PzEquipSimpleTextLabel}"/>
+        <StackPanel Grid.Row="3" Grid.Column="0" Margin="0 10" Orientation="Vertical"
+                    VerticalAlignment="Center">
+            <hc:SimpleText Text="装备选择" Style="{StaticResource Style.PzEquipSimpleTextLabel}" />
+            <Button Content="智能对比" ToolTip ="快捷键 Alt + C"
+                    Command="{Binding DataContext.OpenBuildCompareCmd, RelativeSource={RelativeSource AncestorType=local:PzTabItem}}"
+                    Height="22" Margin="0 4 0 0" Padding="8 0"
+                    Background="#1565C0" Foreground="White" BorderThickness="0" Cursor="Hand" FontSize="11">
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                                CornerRadius="3" Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#1976D2" />
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" Value="#0D47A1" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+        </StackPanel>
 
         <StackPanel Grid.Row="3" Grid.Column="2" Orientation="Horizontal" Margin="0 10">
             <hc:ComboBox x:Name="EquipSelect_cbb"
@@ -130,6 +164,11 @@
             <Button Margin="0 10" Style="{StaticResource ButtonIcon}"
                     hc:IconElement.Geometry="{StaticResource CloseGeometry}" HorizontalAlignment="Left"
                     Command="{Binding DropEquipCmd}" ToolTip ="取下装备"/>
+            <Button Style="{StaticResource CopyIconButton}" HorizontalAlignment="Left"
+                    Command="{Binding CopyEquipNameCmd}" ToolTip="复制装备名"
+                    Visibility="{Binding HasSelectedItem, Converter={StaticResource BooleanToVisibility}}">
+                <fa:IconImage Icon="Copy" Width="14" Height="14" />
+            </Button>
         </StackPanel>
 
     </Grid>

@@ -13,6 +13,7 @@ using System.Diagnostics;
 using System.Linq;
 using MethodTimer;
 using JYCalculator.Globals;
+using JYCalculator.Utils;
 
 namespace JYCalculator.Src
 {
@@ -70,6 +71,8 @@ namespace JYCalculator.Src
         public string FinalDPStxtF; // 更加精确的DPS值
 
         public int CalcStatus { get; private set; } = -1; // 表示计算结果， 0表示计算成功
+        public CalcResultStatus ResultStatus { get; private set; } = CalcResultStatus.Default;
+        public CalcResult CCalcResult { get; private set; }
         public SkillBuild CSkillBuild { get; protected set; } = null; // 流派
         public bool IsSupport { get; protected set; } = false; // 是否支持
 
@@ -146,6 +149,9 @@ namespace JYCalculator.Src
         [Time]
         public CalculatorShell Calc() // 全流程计算
         {
+            ResultStatus = CalcResultStatus.Default;
+            CCalcResult = null;
+            CalcStatus = -1;
             GetSkillBuild();
             if (AppStatic.XinFaTag == "TL")
             {
@@ -174,12 +180,15 @@ namespace JYCalculator.Src
             if (!IsSupport)
             {
                 SetUnSupportBuild();
-                CalcStatus = 1;
             }
-            else
+
+            if (ResultStatus == CalcResultStatus.Default)
             {
-                CalcStatus = 0;
+                ResultStatus = CalcResultStatus.Success;
             }
+
+            CalcStatus = ResultStatus == CalcResultStatus.Success ? 0 : 1;
+            CCalcResult = BuildCalcResult();
 
             return this;
         }
@@ -259,7 +268,10 @@ namespace JYCalculator.Src
         public void CalcDPSKernelShell()
         {
             KernelShell.CalcAll();
-            KernelShell.CalcProfit();
+            if (Arg.EnableProfit)
+            {
+                KernelShell.CalcProfit();
+            }
         }
 
         public void CollectFChars()
@@ -277,10 +289,11 @@ namespace JYCalculator.Src
         {
             if (CSkillBuild != null)
             {
-                if (FullCharGroup.NormalFinal.HasteRank >= 3)
+                if (HasteSupportTool.IsSupportedHasteRank(FullCharGroup.NormalFinal.HasteRank))
                 {
                     FinalDPStxt = $"{CDPSKernel.FinalDPS:F0}";
                     FinalDPStxtF = $"{CDPSKernel.FinalDPS:F2}";
+                    ResultStatus = CalcResultStatus.Success;
                 }
                 else
                 {
@@ -300,12 +313,14 @@ namespace JYCalculator.Src
         {
             FinalDPStxt = "不支持的奇穴/秘籍！";
             FinalDPStxtF = FinalDPStxt;
+            ResultStatus = CalcResultStatus.UnsupportedSkillBuild;
         }
 
         public void SetUnSupportHaste()
         {
             FinalDPStxt = "不支持的加速！";
             FinalDPStxtF = FinalDPStxt;
+            ResultStatus = CalcResultStatus.UnsupportedHaste;
         }
 
         public void CalcFightTime()
@@ -331,12 +346,20 @@ namespace JYCalculator.Src
 
         public CalcResult GetCalcResult()
         {
+            return CCalcResult ?? (CCalcResult = BuildCalcResult());
+        }
+
+        private CalcResult BuildCalcResult()
+        {
+            var normalFinal = FullCharGroup.NormalFinal;
             var res = new CalcResult()
             {
-                Success = (CalcStatus == 0),
-                FinalDPS = CDPSKernel.FinalDPS,
-                ProfitOrderDesc = CDPSKernel.FinalScoreProfit.OrderDesc,
-                DamageDeriv = CDPSKernel.FinalProfitDF.PointDeriv
+                Status = ResultStatus,
+                FinalDPS = ResultStatus == CalcResultStatus.Success ? CDPSKernel.FinalDPS : 0,
+                NormalFinal = normalFinal,
+                ProfitOrderDesc = ResultStatus == CalcResultStatus.Success ? CDPSKernel.FinalScoreProfit?.OrderDesc : null,
+                DamageDeriv = ResultStatus == CalcResultStatus.Success ? CDPSKernel.FinalProfitDF?.PointDeriv : null,
+                FailReason = ResultStatus == CalcResultStatus.Success ? null : FinalDPStxt
             };
             return res;
         }

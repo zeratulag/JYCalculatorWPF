@@ -157,7 +157,7 @@ namespace JX3PZ.Data
                 res = 1.3 * (0.65 * level - 3.2);
             }
 
-            res *= PzScore.ShanHaiDiamondCoef; // 太极秘录修改
+            res *= PzScore.CurrentDiamondCoef; // 太极秘录后每个版本都在变
             return res;
         }
 

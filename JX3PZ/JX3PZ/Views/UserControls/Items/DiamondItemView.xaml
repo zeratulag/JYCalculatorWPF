@@ -58,6 +58,7 @@
         <hc:SimpleText Grid.Column="5"
                        Margin="3 0 0 0"
                        VerticalAlignment="Center"
+                       HorizontalAlignment="Left"
                        FontSize="11"
                        Text="{Binding Path=SimpleDesc}"
                        Width="80"/>

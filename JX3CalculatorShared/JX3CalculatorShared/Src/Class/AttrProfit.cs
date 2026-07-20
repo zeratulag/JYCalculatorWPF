@@ -1,4 +1,5 @@
-﻿using JX3PZ.Data;
+using JX3CalculatorShared.Data;
+using JX3PZ.Data;
 using JYCalculator.Globals;
 using System.Collections.Generic;
 using System.Linq;
@@ -125,6 +126,26 @@ namespace JX3CalculatorShared.Class
         public double CalcProfit(Enhance e)
         {
             return CalcProfit(e.SEntry);
+        }
+
+        public double CalcProfit(ItemDT item)
+        {
+            if (item == null || !item.IsValid || item.Data == null)
+            {
+                return 0;
+            }
+
+            double res = 0;
+            foreach (var kvp in item.Data)
+            {
+                var attr = AttributeIDLoader.GetAttributeID(kvp.Key);
+                if (attr.IsValue && !string.IsNullOrWhiteSpace(attr.SID))
+                {
+                    res += CalcProfit(new SimpleAttributeEntry(attr.SID, kvp.Value / attr.Denominator));
+                }
+            }
+
+            return res;
         }
 
     }

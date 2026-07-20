@@ -80,7 +80,7 @@
                     Visibility="{Binding HasSelectedStone, Converter={StaticResource BooleanToVisibility}}"
                     hc:IconElement.Geometry="{StaticResource CloseGeometry}" HorizontalAlignment="Left"
                     Command="{Binding DropStoneCmd}" ToolTip="取下五彩石" />
-            <ToggleButton Margin="0 10" ToolTip="选择新的五彩石"
+            <ToggleButton Margin="0 10" ToolTip="选择新的五彩石" Style="{StaticResource ToggleButtonPrimary.Small}"
                           IsChecked="{Binding IsOpen,ElementName=StoneSelectDrawer}">
                 选择五彩石
             </ToggleButton>

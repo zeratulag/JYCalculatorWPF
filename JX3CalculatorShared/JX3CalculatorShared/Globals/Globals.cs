@@ -39,8 +39,8 @@ namespace JX3CalculatorShared.Globals
         public const double FRAMES_PER_SECOND = 16.0; // 每秒16逻辑帧
         public const double GCD = 1.5;
         public const int GCD_FRAME = 24;
-        public const int NumberOfQiXue = 10; // 奇穴数量
-        public const int HalfNumberOfQiXue = NumberOfQiXue / 2; // 奇穴数量的一半
+        public const int NumberOfQiXue = 9; // 奇穴数量
+        public static readonly int HalfNumberOfQiXue = (int) Math.Ceiling(NumberOfQiXue / 2.0); // 奇穴数量的一半
         public const double G_KILO_NUM = 1024.0; // 郭氏千
         public const double G_KILO_SQUARE_NUM = 1048576.0; // 郭氏千平方
         public static readonly GlobalParams CurrentLevelGlobalParams;
@@ -133,11 +133,12 @@ namespace JX3CalculatorShared.Globals
 
     public static class GlobalParamLUA
     {
+        // Source: globalparam.lua
         public const double fPlayerCriticalCof = 0.75; //裸体会效
         public const double fCriticalStrikeParam = 9.985; //会心
         public const double fCriticalStrikePowerParam = 3.679; //会效
         public const double fDefCriticalStrikeParam = 9.985; //御劲
-        public const double fDecriticalStrikePowerParam = 1.669; //化劲
+        public const double fDecriticalStrikePowerParam = 1.521; //化劲
         public const double fHitValueParam = 7.644; //命中
         public const double fDodgeParam = 4.628; //闪避
         public const double fParryParam = 5.432; //招架
@@ -147,7 +148,7 @@ namespace JX3CalculatorShared.Globals
         public const double fOvercomeParam = 11.412; //破防
         public const double fHasteRate = 10.610; //急速
         public const double fToughnessDecirDamageCof = 2.784; //御劲效果
-        public const double fSurplusParam = 7.421; //破招伤害
+        public const double fSurplusParam = 8.534; //破招伤害
         public const double fAssistedPowerCof = 9.985; //凝神
     }
 

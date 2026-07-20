@@ -4,9 +4,10 @@ using JX3PZ.Class;
 using JX3PZ.Globals;
 using JX3PZ.Models;
 using JYCalculator.Globals;
+using Syncfusion.Linq;
+using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
-using Syncfusion.Linq;
 
 namespace JYCalculator.Src
 {
@@ -68,13 +69,18 @@ namespace JYCalculator.Src
             }.ToImmutableArray();
 
             HuaJinData =
-                new int[] { 18, 32, 51, 69, 87, 106, 124, 143, 161, 356, 782, 1725 }
+                new int[] {18, 32, 51, 69, 87, 106, 124, 143, 161, 356, 782, 1725}
                     .ToImmutableArray(); // atDecriticalDamagePowerBase
         }
 
         #endregion
 
-        public const int DST_NPC_DAMAGE_COEFFICIENT = 195; // 非侠士增伤 @唐门_内功_箭弩.lua
+        public const int KungFuNPCInterfaceValue = 19; // tSkillKungfuConst.INTERFACE.NPC[10224]=19 (2026-05-31)
+
+        public static readonly int
+            DST_NPC_DAMAGE_COEFFICIENT =
+                ToNpcLogicValue(KungFuNPCInterfaceValue); // 非侠士增伤 @唐门_内功_箭弩.lua ← kungfuconst.lh, tSkillKungfuConst.LOGIC.NPC[10224]
+
         public const int STRENGTH_TO_PHYSICS_ATTACK_POWER_COF = 1731; // 力道提高1.69外功AP
         public const int STRENGTH_TO_PHYSICS_CRITICAL_STRIKE_COF = 707; // 力道提高0.69会心
         public const int CURRENTLEVEL = 14; // 当前版本心法等级 130级 = 14，120级 = 13
@@ -100,13 +106,14 @@ namespace JYCalculator.Src
             {
                 MAGIC_SHIELD += 950;
                 PHYSICS_SHIELD_BASE += 950;
-            } else if (Level >= 14)  // 130级专用
+            }
+            else if (Level >= 14) // 130级专用
             {
                 MAGIC_SHIELD += 2850;
                 PHYSICS_SHIELD_BASE += 2850;
             }
 
-            MAX_LIFE_PERCENT_ADD = (Level * 1 + 10) * 1024 / 100;
+            MAX_LIFE_PERCENT_ADD = (Level * 1 + 16) * 1024 / 100;
             var sd = SkillData[Level - 1];
             PHYSICS_OVERCOME_BASE = sd.nPhysicsOvercome; // LUA表下标从1开始
             PHYSICS_ATTACK_POWER_BASE = sd.nPhysicsAttackPower;
@@ -123,6 +130,12 @@ namespace JYCalculator.Src
 
             LuaDictionary = luaDict.ToImmutableDictionary();
             AttributeEntries = GetAttributes().ToImmutableArray();
+        }
+
+        public static int ToNpcLogicValue(int kungFuNPCInterfaceValue)
+        {
+            int res = (int) Math.Floor(kungFuNPCInterfaceValue / 100.0 * 1024 + 0.5);
+            return res;
         }
 
         public List<AttributeEntry> GetAttributes()

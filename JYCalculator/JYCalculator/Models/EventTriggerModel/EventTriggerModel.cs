@@ -45,7 +45,7 @@ namespace JYCalculator.Models
                 new EquipSpecialEffectSuperCustomDamageModel(Arg.EquipSpecialEffectConfig, SkillNum);
             EquipSpecialEffectSuperCustomDamageSolver.Calc();
 
-            EquipSpecialEffectNormalBuffSolver = new EquipSpecialEffectNormalBuffModel(Arg.EquipSpecialEffectConfig, SkillNum);
+            EquipSpecialEffectNormalBuffSolver = new EquipSpecialEffectNormalBuffModel(Arg.EquipSpecialEffectConfig, SkillNum, BuffedFChars);
             EquipSpecialEffectNormalBuffSolver.Calc();
 
             EquipSpecialEffectAdaptiveBuffSolver =

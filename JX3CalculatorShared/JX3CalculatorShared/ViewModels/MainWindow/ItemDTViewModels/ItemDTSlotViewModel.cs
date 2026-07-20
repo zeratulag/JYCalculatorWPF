@@ -1,13 +1,15 @@
-﻿using JX3CalculatorShared.Class;
+using JX3CalculatorShared.Class;
 using JX3CalculatorShared.Globals;
 using JX3CalculatorShared.Messages;
+using JYCalculator.Class;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
+using System.Linq;
 
 namespace JX3CalculatorShared.ViewModels
 {
-    public class ItemDTSlotViewModel : ComboBoxViewModel<ItemDT>
+    public class ItemDTSlotViewModel : ComboBoxViewModel<ItemDTViewModel>
     {
         #region 成员
 
@@ -18,27 +20,31 @@ namespace JX3CalculatorShared.ViewModels
         public readonly ItemDTTypeEnum Type;
         public readonly string ItemDTType;
         public string ItemDTShowType { get; }
-        public int SelectedUIID => SelectedItem.UIID;
-        public string SelectedRawID => SelectedItem.RawID;
+        public ItemDT SelectedItemDT => SelectedItem?.ItemDT;
+        public int SelectedUIID => SelectedItemDT.UIID;
+        public string SelectedRawID => SelectedItemDT.RawID;
+        public double BaseDps { get; private set; }
+        private CalcResult ProfitCalcResult;
 
         #endregion
 
-        public ItemDTSlotViewModel(IEnumerable<ItemDT> data) : base(data, _ => _.ExpansionPackLevel >= StaticConst.CurrentLevel)
+        public ItemDTSlotViewModel(IEnumerable<ItemDT> data) : base(
+            data.Where(item => item.ExpansionPackLevel >= StaticConst.CurrentLevel).Select(item => new ItemDTViewModel(item)))
         {
             var dict = ImmutableDictionary.CreateBuilder<int, int>();
             var rdictb = ImmutableDictionary.CreateBuilder<string, int>();
 
             for (int i = 0; i < ItemsSource.Length; i++)
             {
-                dict.Add(ItemsSource[i].UIID, i);
-                rdictb.Add(ItemsSource[i].RawID, i);
+                dict.Add(ItemsSource[i].ItemDT.UIID, i);
+                rdictb.Add(ItemsSource[i].ItemDT.RawID, i);
             }
 
             Item2Index = dict.ToImmutable();
             RawID2Index = rdictb.ToImmutable();
 
-            ItemDTType = ItemsSource[0].ItemDTType;
-            Type = ItemsSource[0].Type;
+            ItemDTType = ItemsSource[0].ItemDT.ItemDTType;
+            Type = ItemsSource[0].ItemDT.Type;
             ItemDTShowType = GetItemDTShowType();
         }
 
@@ -79,6 +85,69 @@ namespace JX3CalculatorShared.ViewModels
             {
                 SelectedIndex = 0;
             }
+        }
+
+        public void UpdateProfitsFromCalcResult(CalcResult result)
+        {
+            ProfitCalcResult = result;
+            if (result == null || !result.Success || result.DamageDeriv?.ProfitList == null)
+            {
+                ClearProfits();
+                return;
+            }
+
+            BaseDps = result.FinalDPS;
+            RefreshRelativeProfits();
+        }
+
+        private void RefreshRelativeProfits()
+        {
+            if (ProfitCalcResult == null || !ProfitCalcResult.Success ||
+                ProfitCalcResult.DamageDeriv?.ProfitList == null)
+            {
+                ClearProfits();
+                return;
+            }
+
+            var profitList = ProfitCalcResult.DamageDeriv.ProfitList;
+            var selectedProfit = SelectedItemDT == null ? 0 : profitList.CalcProfit(SelectedItemDT);
+            var selectedHasteValue = GetHasteValue(SelectedItemDT);
+            foreach (var item in ItemsSource)
+            {
+                item.ItemDTProfit.IsCurrent = item == SelectedItem;
+                var hasteDelta = GetHasteValue(item.ItemDT) - selectedHasteValue;
+                item.ItemDTProfit.IsUnsupportedHasteChange = !ProfitCalcResult.IsHasteChangeSupported(hasteDelta);
+                item.ItemDTProfit.Value = profitList.CalcProfit(item.ItemDT) - selectedProfit;
+                item.ItemDTProfit.Percent = BaseDps > 0 ? item.ItemDTProfit.Value / BaseDps : 0;
+            }
+        }
+
+        private void ClearProfits()
+        {
+            BaseDps = 0;
+            foreach (var item in ItemsSource)
+            {
+                item.ItemDTProfit.Clear();
+            }
+        }
+
+        private double GetHasteValue(ItemDT item)
+        {
+            if (item == null || item.Data == null)
+            {
+                return 0;
+            }
+
+            return item.Data.TryGetValue(AppStatic.HasteModifyType, out var value) ? value : 0;
+        }
+
+        protected override void _Update()
+        {
+            RefreshRelativeProfits();
+        }
+
+        protected override void _RefreshCommands()
+        {
         }
     }
 

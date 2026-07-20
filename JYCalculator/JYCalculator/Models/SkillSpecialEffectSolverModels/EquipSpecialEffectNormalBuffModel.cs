@@ -23,11 +23,14 @@ namespace JYCalculator.Models.SkillSpecialEffectSolverModels
 
         public Period<BaseBuff[]> FinalBuffs; // 最终的Buff结果，包含了所有的Buff（包括覆盖率和非覆盖率的）
 
+        public readonly Period<FullCharacter> BuffedFChars; // 存储计算了特殊BUFF，但是未考虑腰坠后的面板（腰坠的属性需要结合时间计算）
+
         public EquipSpecialEffectNormalBuffModel(EquipSpecialEffectConfigArg equipSpecialEffectConfig,
-            SkillNumModel skillNum)
+            SkillNumModel skillNum, Period<FullCharacter> buffedChars)
         {
             EquipSpecialEffectConfig = equipSpecialEffectConfig;
             SkillNum = skillNum;
+            BuffedFChars = buffedChars;
         }
 
         // 仅计算，不修改属性和技能数
@@ -75,8 +78,8 @@ namespace JYCalculator.Models.SkillSpecialEffectSolverModels
             foreach (var e in EquipSpecialEffectConfig.RandomBuff)
             {
                 var cover = SkillNum.CalcCDBuffCoverRate(e.SkillEvent);
-                PeriodRandomBuffResults.Normal.AddRange(e.GetRandomBuffRecord(cover.normalCover));
-                PeriodRandomBuffResults.XinWu.AddRange(e.GetRandomBuffRecord(cover.xwCover));
+                PeriodRandomBuffResults.Normal.AddRange(e.GetRandomBuffRecord(cover.normalCover, BuffedFChars.Normal));
+                PeriodRandomBuffResults.XinWu.AddRange(e.GetRandomBuffRecord(cover.xwCover, BuffedFChars.XinWu));
             }
         }
 

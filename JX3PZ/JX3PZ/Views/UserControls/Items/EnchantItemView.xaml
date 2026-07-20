@@ -38,7 +38,7 @@
 
         <hc:SimpleText Grid.Row="1" Grid.Column="2"
                        VerticalAlignment="Bottom"
-                       FontSize="11"
+                       FontSize="12"
                        Text="{Binding Path=Desc}" />
     </Grid>
 </UserControl>

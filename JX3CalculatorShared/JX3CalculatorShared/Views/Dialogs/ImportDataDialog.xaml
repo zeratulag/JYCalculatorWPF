@@ -47,16 +47,7 @@
             </TabItem.Header>
             <userControls:ImportDataJX3Box />
         </TabItem>
-        <TabItem DataContext="{Binding MingYiTextVM}">
-            <TabItem.Header>
-                <StackPanel Orientation="Horizontal">
-                    <Image Source="pack://application:,,,/Resource/Images/MingYi_Logo.png"
-                           Style="{StaticResource TabHeaderImage}" />
-                    <TextBlock Text="茗伊角色统计" Style="{StaticResource TabHeaderText}" />
-                </StackPanel>
-            </TabItem.Header>
-            <userControls:ImportDataMingYiText />
-        </TabItem>
+
         <TabItem DataContext="{Binding MingYiDatabaseVM}">
             <TabItem.Header>
                 <StackPanel Orientation="Horizontal">
@@ -67,5 +58,17 @@
             </TabItem.Header>
             <userControls:ImportDataMingDatabase />
         </TabItem>
+
+        <TabItem DataContext="{Binding MingYiTextVM}">
+            <TabItem.Header>
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="pack://application:,,,/Resource/Images/MingYi_Logo.png"
+                           Style="{StaticResource TabHeaderImage}" />
+                    <TextBlock Text="茗伊角色统计" Style="{StaticResource TabHeaderText}" />
+                </StackPanel>
+            </TabItem.Header>
+            <userControls:ImportDataMingYiText />
+        </TabItem>
+
     </TabControl>
 </Window>

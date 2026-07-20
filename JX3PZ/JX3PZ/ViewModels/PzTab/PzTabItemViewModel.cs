@@ -1,14 +1,19 @@
 ﻿using JX3CalculatorShared.Class;
 using JX3CalculatorShared.Globals;
 using JX3CalculatorShared.ViewModels;
+using JX3PZ.Class;
 using JX3PZ.Data;
+using JX3PZ.Globals;
 using JX3PZ.Messages;
 using JX3PZ.Models;
+using JX3PZ.Views.BuildCompare;
 using System.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 
 namespace JX3PZ.ViewModels
 {
-    public class PzTabItemViewModel : AbsViewModel
+    public class PzTabItemViewModel : AbsViewModel, IRecipient<PzSetEquipMessage>
     {
         public readonly EquipMapItem Map;
         public EquipSelectViewModel EquipSelectVM { get; }
@@ -31,6 +36,7 @@ namespace JX3PZ.ViewModels
         }
 
         public PzEquipSummaryViewModel Summary { get; }
+        public RelayCommand OpenBuildCompareCmd { get; }
 
         public string Header { get; set; }
         public int Position { get; set; }
@@ -56,11 +62,12 @@ namespace JX3PZ.ViewModels
             EquipShowVM = new EquipShowViewModel();
 
             Summary = new PzEquipSummaryViewModel(position);
+            OpenBuildCompareCmd = new RelayCommand(OpenBuildCompare);
+            WeakReferenceMessenger.Default.Register<PzSetEquipMessage, int>(this, Position);
 
             _SendMessage = false;
             _Update();
             _SendMessage = true;
-
         }
 
         private void _ChangeSelectedEquip()
@@ -139,6 +146,7 @@ namespace JX3PZ.ViewModels
         protected void _Load(JBPZEquipSnapshot s)
         {
             EquipSelectVM.Load(s);
+            _ChangeSelectedEquip();
             EquipEnhanceVM.Load(s);
             EquipDiamondVM.Load(s);
             EquipStoneSelectVM.Load(s);
@@ -149,6 +157,58 @@ namespace JX3PZ.ViewModels
             _SendMessage = false;
             ActionUpdateOnce(_Load, s);
             _SendMessage = true;
+        }
+
+        public void SetEquip(Equip equip)
+        {
+            SetEquip(equip?.EID);
+        }
+
+        public void SetEquip(string EID)
+        {
+            var oldRaiseOutput = EquipSelectVM._RaiseOutChanged;
+            EquipSelectVM._RaiseOutChanged = false;
+            try
+            {
+                if (string.IsNullOrEmpty(EID))
+                {
+                    EquipSelectVM.DropEquip();
+                }
+                else
+                {
+                    EquipSelectVM.Load(EID);
+                }
+            }
+            finally
+            {
+                EquipSelectVM._RaiseOutChanged = oldRaiseOutput;
+            }
+
+            EquipSelectVM.ApplyFilter();
+            ChangeSelectedEquip();
+        }
+
+        public void Receive(PzSetEquipMessage message)
+        {
+            if (Position == message.Position)
+            {
+                SetEquip(message.EID);
+            }
+        }
+
+        private void OpenBuildCompare()
+        {
+            var pzMainVM = PzGlobalContext.ViewModels.PzMain;
+            if (pzMainVM == null)
+            {
+                return;
+            }
+
+            var window = new PzBuildCompareWindow(pzMainVM, this)
+            {
+                Owner = PzGlobalContext.Views.PzMain
+            };
+            window.ShowDialog();
         }
 
         protected override void _RefreshCommands()

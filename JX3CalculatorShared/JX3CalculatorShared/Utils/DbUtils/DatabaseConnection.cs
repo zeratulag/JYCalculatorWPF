@@ -59,10 +59,6 @@ namespace JX3CalculatorShared.Utils.DbUtils
         // ==========================================
         public List<T> GetAll<T>() where T : class, new()
         {
-            if (Client != null)
-            {
-                return Client.Queryable<T>().ToList();
-            }
             using (var db = GetClient())
             {
                 return db.Queryable<T>().ToList();

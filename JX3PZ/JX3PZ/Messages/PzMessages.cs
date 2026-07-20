@@ -45,6 +45,18 @@ namespace JX3PZ.Messages
         }
     }
 
+    public class PzSetEquipMessage
+    {
+        public readonly int Position;
+        public readonly string EID;
+
+        public PzSetEquipMessage(int position, string EID)
+        {
+            Position = position;
+            this.EID = EID;
+        }
+    }
+
     public class PzInfoMessage
     {
         public readonly string Title;

@@ -6,6 +6,7 @@ using JX3CalculatorShared.Globals;
 using JX3CalculatorShared.Messages;
 using JX3PZ.Globals;
 using JX3PZ.Messages;
+using JYCalculator.Class;
 using JYCalculator.Globals;
 using JYCalculator.Messages;
 

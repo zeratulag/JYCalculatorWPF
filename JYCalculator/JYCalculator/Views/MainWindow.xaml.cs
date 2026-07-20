@@ -47,10 +47,11 @@ namespace JYCalculator.Views
             BindViewModels();
 
             MakeCommands();
-            LoadDefault();
 
             _DebugMainWindow = new DebugMainWindow(_VM.DebugVM);
             _PzMainWindow = new PzMainWindow();
+
+            LoadDefault();
 
             Show();
             _DebugMainWindow.Owner = this;
@@ -126,7 +127,7 @@ namespace JYCalculator.Views
 
         #region 加载初始值
 
-        // 加载默认奇穴
+        // 加载默认方案
         public void LoadDefault()
         {
             _VM.LoadDefault();

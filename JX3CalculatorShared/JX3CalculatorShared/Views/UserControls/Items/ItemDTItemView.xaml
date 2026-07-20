@@ -4,45 +4,83 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:JX3CalculatorShared.Views.UserControls"
+             xmlns:utils="clr-namespace:JX3CalculatorShared.Utils"
              mc:Ignorable="d"
-             d:DesignHeight="40" d:DesignWidth="100"
+             d:DesignHeight="40" d:DesignWidth="120"
+             HorizontalAlignment="Stretch"
              Style="{StaticResource Style.ControlWithToolTip}">
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
-
+    <Grid HorizontalAlignment="Stretch">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="8" />
             <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
 
-        <Image Grid.Row="0"
-               Grid.RowSpan="2"
-               Grid.Column="0"
-               Width="32"
-               Height="32"
-               Source="{Binding Path=IconID, Converter={StaticResource IconIDToImgConverter}}" />
+        <Grid Grid.Column="0"
+              DataContext="{Binding Path=ItemDT}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
 
-        <Image Grid.Row="0"
-               Grid.RowSpan="2"
-               Grid.Column="0"
-               Width="32"
-               Height="32"
-               Source="{Binding Path=Quality, Converter={StaticResource FileNameToImgConverter}}" />
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="8" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
 
-        <TextBlock VerticalAlignment="Center"
-                   Grid.Row="0"
-                   Grid.Column="2"
-                   FontSize="12"
-                   Foreground="{Binding Path=Quality, Converter={StaticResource QualityToColorConverter}}"
-                   Text="{Binding Path=ItemNamePart1}" />
-        <TextBlock VerticalAlignment="Center"
-                   Grid.Row="1"
-                   Grid.Column="2"
-                   FontSize="11"
-                   Text="{Binding Path=ItemNamePart2}" />
+            <Image Grid.Row="0"
+                   Grid.RowSpan="2"
+                   Grid.Column="0"
+                   Width="32"
+                   Height="32"
+                   Source="{Binding Path=IconID, Converter={StaticResource IconIDToImgConverter}}" />
+
+            <Image Grid.Row="0"
+                   Grid.RowSpan="2"
+                   Grid.Column="0"
+                   Width="32"
+                   Height="32"
+                   Source="{Binding Path=Quality, Converter={StaticResource FileNameToImgConverter}}" />
+
+            <TextBlock VerticalAlignment="Center"
+                       Grid.Row="0"
+                       Grid.Column="2"
+                       FontSize="12"
+                       Foreground="{Binding Path=Quality, Converter={StaticResource QualityToColorConverter}}"
+                       Text="{Binding Path=ItemNamePart1}" />
+            <TextBlock VerticalAlignment="Center"
+                       Grid.Row="1"
+                       Grid.Column="2"
+                       FontSize="11"
+                       Text="{Binding Path=ItemNamePart2}" />
+        </Grid>
+
+        <Grid Grid.Column="1"
+              HorizontalAlignment="Right"
+              Margin="8 0 5 0"
+              VerticalAlignment="Center"
+              DataContext="{Binding Path=ItemDTProfit}"
+              Visibility="{Binding Path=Show, Converter={StaticResource BooleanToVisibility}}">
+            <StackPanel Orientation="Vertical"
+                        Visibility="{Binding Path=ShowValue, Converter={StaticResource BooleanToVisibility}}">
+                <TextBlock FontSize="12"
+                           HorizontalAlignment="Right"
+                           Foreground="{Binding Path=Color}"
+                           Text="{Binding Path=Value, StringFormat={x:Static utils:DeltaDisplayTool.PointStringFormat}}"
+                           TextAlignment="Right" />
+                <TextBlock FontSize="12"
+                           HorizontalAlignment="Right"
+                           Foreground="{Binding Path=Color}"
+                           Text="{Binding Path=Percent, StringFormat={x:Static utils:DeltaDisplayTool.PercentStringFormat}}"
+                           TextAlignment="Right" />
+            </StackPanel>
+            <TextBlock FontSize="12"
+                       HorizontalAlignment="Right"
+                       VerticalAlignment="Center"
+                       Text="{x:Static utils:DeltaDisplayTool.HasteChanged}"
+                       Foreground="{x:Static utils:DeltaDisplayTool.HasteChangedColor}"
+                       TextAlignment="Right"
+                       Visibility="{Binding Path=ShowUnsupportedHasteChange, Converter={StaticResource BooleanToVisibility}}" />
+        </Grid>
     </Grid>
 </UserControl>

@@ -16,7 +16,7 @@
     <hc:SimpleStackPanel Orientation="Vertical">
         <userControls:RichTextBoxExt x:Name="equipShowRichTextBox" Width="300"
                                      DocumentSource="{Binding Path=FDocument, Mode=OneWay}" 
-                                     IsReadOnly="True" Background="{x:Static globals:ColorConst.EquipBackgroundBrush}" Padding="-14 -4" BorderThickness="0" FontSize="14"/>
+                                     IsReadOnly="True" Background="{x:Static globals:ColorConst.EquipBackgroundBrush}" Padding="-25 -4" BorderThickness="0" FontSize="14"/>
         <local:EquipShowExtra DataContext="{Binding Extra}" Margin="-4 15 0 0"/>
     </hc:SimpleStackPanel>
 </UserControl>

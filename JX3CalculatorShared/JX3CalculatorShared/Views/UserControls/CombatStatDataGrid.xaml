@@ -5,6 +5,16 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:sf="http://schemas.syncfusion.com/wpf"
              mc:Ignorable="d">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/HandyControl;component/Themes/SkinDefault.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/HandyControl;component/Themes/Theme.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            <Style TargetType="GroupBox" BasedOn="{x:Null}" />
+            <Style TargetType="ProgressBar" BasedOn="{x:Null}" />
+        </ResourceDictionary>
+    </UserControl.Resources>
 
     <TabControl>
         <TabItem Header="简版">

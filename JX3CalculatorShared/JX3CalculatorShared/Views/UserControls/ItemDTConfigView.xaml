@@ -3,16 +3,92 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:hc="https://handyorg.github.io/handycontrol"
+             xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
              mc:Ignorable="d" >
+    <UserControl.Resources>
+        <Style x:Key="Style.ValidItemDTTagCloseButton" TargetType="Button">
+            <Setter Property="Width" Value="18" />
+            <Setter Property="Height" Value="18" />
+            <Setter Property="Margin" Value="4,0,0,0" />
+            <Setter Property="Padding" Value="0" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <DataTemplate x:Key="DataTemplate.ValidItemDTTag">
+            <Border
+                Margin="2"
+                Padding="3,3"
+                Background="#EEF0F3"
+                CornerRadius="10"
+                ToolTip="{Binding ToolTip}">
+                <StackPanel Orientation="Horizontal">
+                    <Grid Width="22" Height="22" Margin="0,0,5,0">
+                        <Image Source="{Binding IconID, Converter={StaticResource IconIDToImgConverter}}" />
+                        <Image Source="{Binding Quality, Converter={StaticResource FileNameToImgConverter}}" />
+                    </Grid>
+                    <TextBlock
+                        VerticalAlignment="Center"
+                        FontSize="12"
+                        Foreground="{Binding Quality, Converter={StaticResource QualityToColorConverter}}"
+                        Text="{Binding DescName}" />
+                    <Button
+                        Command="{Binding CancelThisCmd}"
+                        Content="×"
+                        FontSize="14"
+                        FontWeight="Bold"
+                        Foreground="#303030"
+                        Style="{StaticResource Style.ValidItemDTTagCloseButton}"
+                        ToolTip="取消该单体" />
+                </StackPanel>
+            </Border>
+        </DataTemplate>
+    </UserControl.Resources>
     <GroupBox Name="GroupBox_ItemDT">
         <GroupBox.Header>
-            <CheckBox x:Name="GroupBox_ItemDT_chb" Style="{StaticResource Style.CenterCheckBox}">单体</CheckBox>
+            <StackPanel Orientation="Horizontal">
+                <CheckBox x:Name="GroupBox_ItemDT_chb" Style="{StaticResource Style.CenterCheckBox}">单体</CheckBox>
+                <Button Style="{StaticResource Style.HandyButton}"
+                    Margin="8,0,0,0"
+                    Padding="6,1"
+                    Command="{Binding OneKeyBestItemDTCmd}"
+                    Content="一键拉满"
+                    ToolTip="按当前收益和总加速档位选择最优单体" />
+                <Button x:Name="CopyAllItemDTNamesBtn" Style="{StaticResource CopyIconButton}"
+                    Margin="6,0,0,0"
+                    Command="{Binding CopyAllItemDTNamesCmd}"
+                    ToolTip="复制当前全部单体名">
+                    <fa:IconImage Icon="Copy" Width="14" Height="14" />
+                </Button>
+            </StackPanel>
         </GroupBox.Header>
-        <Expander
-            x:Name="Expander_ItemDT"
-            IsExpanded="True"
-            Style="{StaticResource Style.MultiLineHeaderedExpander}">
-            <ItemsControl x:Name="ItemsControl_ItemDT" Style="{StaticResource Style.ItemDT}" />
-        </Expander>
+        <StackPanel>
+            <hc:TagContainer
+                Margin="0,2,0,6"
+                ItemsSource="{Binding ValidItemDTItems}"
+                ItemTemplate="{StaticResource DataTemplate.ValidItemDTTag}"
+                hc:TagContainer.ShowCloseButton="False">
+                <hc:TagContainer.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel />
+                    </ItemsPanelTemplate>
+                </hc:TagContainer.ItemsPanel>
+            </hc:TagContainer>
+            <Expander
+                x:Name="Expander_ItemDT"
+                Header=""
+                IsExpanded="True">
+                <ItemsControl x:Name="ItemsControl_ItemDT" Style="{StaticResource Style.ItemDT}" />
+            </Expander>
+        </StackPanel>
     </GroupBox>
 </UserControl>

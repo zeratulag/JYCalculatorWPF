@@ -84,7 +84,7 @@ namespace JYCalculator.ViewModels
 
             int skiped = 0;
 
-            while (skiped + step <= NSLOTS)
+            while (skiped + step <= NSLOTS + 1)
             {
                 var part = itempnames.Skip(skiped).Take(step).ToArray();
                 var namepart = part.Join(" - ");

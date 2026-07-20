@@ -14,11 +14,11 @@ namespace JX3CalculatorShared.Class
         #region 成员
 
         public readonly string Name;
-        public readonly string DescName;
+        public string DescName { get; }
         public int IconID { get; } = -1;
         public readonly int UIID = -1;
         public readonly ItemDTTypeEnum Type;
-        public readonly string ItemName;
+        public string ItemName { get; }
         public readonly Dictionary<string, double> Data;
         public readonly BaseBuff Buff;
         public readonly KeyValuePair<string, double> SimpleAttr;
@@ -34,7 +34,6 @@ namespace JX3CalculatorShared.Class
         public string ItemNamePart2 { get; }
         public string ToolTip { get; }
         public string ItemDTType { get; } // 中文类型（食品增强，食品辅助……）
-
         public RelayCommand CancelThisCmd { get; }
 
         #endregion

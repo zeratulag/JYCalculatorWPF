@@ -1,5 +1,5 @@
 ﻿using JX3CalculatorShared.Class;
-using JYCalculator.ViewModels;
+using JYCalculator.Models;
 using Newtonsoft.Json;
 
 
@@ -26,7 +26,6 @@ namespace JYCalculator.Class
 
         public void Parse()
         {
-            Plan.Parse();
             GetInitInput();
         }
 
@@ -36,9 +35,8 @@ namespace JYCalculator.Class
         /// <returns></returns>
         public InitInputSav GetInitInput()
         {
-            var initChar = new InitCharacter(this);
-            InitInput = new InitInputSav(initChar, Plan.EquipOptionSav, Plan.BigFMConfig, Plan.EquipDict);
-            return InitInput;
+            var model = new InitInputModel(this);
+            return model.Calc();
         }
 
         #endregion

@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:JX3CalculatorShared.Views.UserControls"
              xmlns:hc="https://handyorg.github.io/handycontrol"
+             xmlns:utils="clr-namespace:JX3CalculatorShared.Utils"
              mc:Ignorable="d">
     <Grid HorizontalAlignment="Center">
         <Grid.ColumnDefinitions>
@@ -38,7 +39,7 @@
             <hc:SimpleText DockPanel.Dock="Left" Text="更换后" FontSize="12"
                            HorizontalAlignment="Left" VerticalAlignment="Center"
                            Margin="20 0 3 0"/>
-            <TextBox DockPanel.Dock="Right" Text="{Binding Path=FormattedDelta, Mode=OneWay}"
+            <TextBox DockPanel.Dock="Right" Text="{Binding Path=DeltaDPSPct, Mode=OneWay, StringFormat={x:Static utils:DeltaDisplayTool.PercentStringFormat}}"
                      HorizontalAlignment="Right" VerticalAlignment="Center"
                      Style="{StaticResource Style.TextBlockBox}"
                      Foreground="{Binding DeltaColor}"/>

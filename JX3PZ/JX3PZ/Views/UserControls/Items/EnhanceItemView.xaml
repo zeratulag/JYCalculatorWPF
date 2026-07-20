@@ -5,41 +5,80 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:J3PZ.Views.UserControls"
              xmlns:hc="https://handyorg.github.io/handycontrol"
+             xmlns:utils="clr-namespace:JX3CalculatorShared.Utils"
              mc:Ignorable="d"
              d:DesignHeight="40" d:DesignWidth="100"
+             HorizontalAlignment="Stretch"
              Style="{StaticResource Style.ControlWithToolTip}">
 
-    <Grid>
+    <Grid HorizontalAlignment="Stretch">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="10" />
             <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-        </Grid.RowDefinitions>
 
-        <Image Grid.Row="0" Grid.Column="0" Grid.RowSpan="2"
-               Width="28"
-               Height="28"
-               Source="{Binding Path=IconID, Converter={StaticResource IconIDToImgConverter}}" />
+        <Grid Grid.Column="0"
+              DataContext="{Binding Path=Enhance}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="10" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
 
-        <Image Grid.Row="0" Grid.Column="0" Grid.RowSpan="2"
-               Width="28"
-               Height="28"
-               Source="{Binding Path=Quality, Converter={StaticResource FileNameToImgConverter}}" />
+            <Image Grid.Row="0" Grid.Column="0" Grid.RowSpan="2"
+                   Width="28"
+                   Height="28"
+                   Source="{Binding Path=IconID, Converter={StaticResource IconIDToImgConverter}}" />
 
-        <hc:SimpleText Grid.Row="0" Grid.Column="2"
+            <Image Grid.Row="0" Grid.Column="0" Grid.RowSpan="2"
+                   Width="28"
+                   Height="28"
+                   Source="{Binding Path=Quality, Converter={StaticResource FileNameToImgConverter}}" />
+
+            <hc:SimpleText Grid.Row="0" Grid.Column="2"
+                           VerticalAlignment="Center"
+                           FontSize="13"
+                           Foreground="{Binding Path=Quality, Converter={StaticResource QualityToColorConverter}}"
+                           Text="{Binding Path=ItemName}" />
+
+            <hc:SimpleText Grid.Row="1" Grid.Column="2"
+                           VerticalAlignment="Bottom"
+                           FontSize="12"
+                           Text="{Binding Path=Desc}" />
+        </Grid>
+
+        <Grid Grid.Column="1"
+              x:Name="ProfitGrid"
+              HorizontalAlignment="Right"
+              Margin="0 0 5 0"
+              VerticalAlignment="Center"
+              DataContext="{Binding Path=EnhanceProfit}"
+              Visibility="{Binding Path=Show, Converter={StaticResource BooleanToVisibility}}">
+            <StackPanel Orientation="Vertical"
+                        Visibility="{Binding Path=ShowValue, Converter={StaticResource BooleanToVisibility}}">
+                <TextBlock FontSize="12"
+                           HorizontalAlignment="Right"
+                           Foreground="{Binding Path=Color}"
+                           Text="{Binding Path=Value, StringFormat={x:Static utils:DeltaDisplayTool.PointStringFormat}}"
+                           TextAlignment="Right" />
+                <TextBlock FontSize="12"
+                           HorizontalAlignment="Right"
+                           Foreground="{Binding Path=Color}"
+                           Text="{Binding Path=Percent, StringFormat={x:Static utils:DeltaDisplayTool.PercentStringFormat}}"
+                           TextAlignment="Right" />
+            </StackPanel>
+            <TextBlock FontSize="12"
+                       HorizontalAlignment="Right"
                        VerticalAlignment="Center"
-                       FontSize="13"
-                       Foreground="{Binding Path=Quality, Converter={StaticResource QualityToColorConverter}}"
-                       Text="{Binding Path=ItemName}" />
-
-        <hc:SimpleText Grid.Row="1" Grid.Column="2"
-                       VerticalAlignment="Bottom"
-                       FontSize="11"
-                       Text="{Binding Path=Desc}" />
+                       Text="{x:Static utils:DeltaDisplayTool.HasteChanged}"
+                       Foreground="{x:Static utils:DeltaDisplayTool.HasteChangedColor}"
+                       TextAlignment="Right"
+                       Visibility="{Binding Path=ShowUnsupportedHasteChange, Converter={StaticResource BooleanToVisibility}}" />
+        </Grid>
 
     </Grid>
 </UserControl>

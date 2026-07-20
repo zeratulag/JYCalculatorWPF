@@ -7,6 +7,7 @@
              xmlns:hc="https://handyorg.github.io/handycontrol"
              xmlns:sf="http://schemas.syncfusion.com/wpf"
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+             xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
              xmlns:userControls="clr-namespace:J3PZ.Views.UserControls"
              mc:Ignorable="d"
              d:DesignHeight="500" d:DesignWidth="500"
@@ -21,6 +22,7 @@
                     <ResourceDictionary Source="/Views/Resources/BigFM.xaml" />
                 </ResourceDictionary.MergedDictionaries>
                 <Style TargetType="Label" BasedOn="{StaticResource Style.PzEquipLabel}" />
+
             </ResourceDictionary>
         </Grid.Resources>
 
@@ -34,12 +36,13 @@
             <ColumnDefinition Width="10" />
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
 
         <!--<hc:Divider Grid.Row="0" Grid.RowSpan="4" Grid.Column="1" LineStrokeThickness="8" Orientation="Vertical" Width="200"></hc:Divider>-->
         <hc:SimpleText Grid.Row="0" Grid.Column="0" Margin="0 10"
                        Text="精炼" Style="{StaticResource Style.PzEquipSimpleTextLabel}" />
-        <StackPanel Grid.Row="0" Grid.Column="2" Orientation="Horizontal" Margin="0 10">
+        <StackPanel Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="3" Orientation="Horizontal" Margin="0 10">
             <hc:Rate x:Name="EquipStrength_Rate"
                      Value="{Binding Path=StrengthLevel, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                      Count="{Binding Path= MaxStrengthLevel, Mode=OneWay}"
@@ -61,10 +64,17 @@
         <hc:ComboBox Grid.Row="1" Grid.Column="2" x:Name="Enhance_cbb"
                      ItemsSource="{Binding EnhanceSource}"
                      SelectedIndex="{Binding SelectedEnhanceIndex}" Margin="0 10"
-                     SelectedItem="{Binding SelectedEnhance}"
+                     SelectedItem="{Binding SelectedEnhanceItem}"
                      Style="{StaticResource ComboBoxExtend}"
                      hc:InfoElement.Placeholder="空"
-                     Width="260" Height="44" HorizontalAlignment="Left">
+                     Width="260" Height="44" HorizontalAlignment="Left"
+                     HorizontalContentAlignment="Stretch">
+            <hc:ComboBox.ItemContainerStyle>
+                <Style TargetType="ComboBoxItem" BasedOn="{StaticResource Style.ComboBoxItemToolTip}">
+                    <Setter Property="Width" Value="{Binding ElementName=Enhance_cbb, Path=ActualWidth}" />
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                </Style>
+            </hc:ComboBox.ItemContainerStyle>
             <hc:ComboBox.ItemTemplate>
                 <DataTemplate>
                     <userControls:EnhanceItemView />
@@ -74,6 +84,12 @@
         <Button Grid.Row="1" Grid.Column="3" Style="{StaticResource ButtonIcon}" Margin="0 10"
                 hc:IconElement.Geometry="{StaticResource CloseGeometry}" HorizontalAlignment="Left"
                 Command="{Binding DropEnhanceCmd}" CommandParameter="0" ToolTip="取下附魔" />
+        <Button Grid.Row="1" Grid.Column="4" Style="{StaticResource CopyIconButton}"
+                HorizontalAlignment="Left" Command="{Binding CopyEnhanceNameCmd}" CommandParameter="0"
+                Visibility="{Binding HasSelectedEnhance, Converter={StaticResource BooleanToVisibility}}"
+                ToolTip="复制附魔名">
+            <fa:IconImage Icon="Copy" Width="14" Height="14" />
+        </Button>
 
         <hc:SimpleText Grid.Row="2" Grid.Column="0" Margin="0 10"
                        Text="大附魔" Style="{StaticResource Style.PzEquipSimpleTextLabel}"
@@ -101,5 +117,11 @@
                 IsEnabled="{Binding HasBigFM}"
                 Visibility="{Binding HasBigFM, Converter={StaticResource BooleanToVisibility}}"
                 ToolTip="取下附魔" />
+        <Button Grid.Row="2" Grid.Column="4" Style="{StaticResource CopyIconButton}"
+                HorizontalAlignment="Left" Command="{Binding CopyEnhanceNameCmd}" CommandParameter="1"
+                Visibility="{Binding HasSelectedBigFM, Converter={StaticResource BooleanToVisibility}}"
+                ToolTip="复制附魔名">
+            <fa:IconImage Icon="Copy" Width="14" Height="14" />
+        </Button>
     </Grid>
 </UserControl>

@@ -34,7 +34,7 @@
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
 
-            <Expander Grid.Row="0" Header="装备选择" IsExpanded="True">
+            <Expander Grid.Row="0" IsExpanded="True" Header="装备选择">
                 <local:EquipSelect DataContext="{Binding EquipSelectVM}" MinLevel="{Binding MinLevel}"
                                    MaxLevel="{Binding MaxLevel}" />
             </Expander>
@@ -47,11 +47,6 @@
             </Expander>
         </Grid>
 
-        <Expander Grid.Row="0" Grid.Column="0" Style="{StaticResource Expander.Small}"
-                  Margin="0" Header="" ExpandDirection="Left"
-                  IsExpanded="{Binding EquipShowVM.HasEquip, Mode=OneWay}">
-            <local:EquipShow DataContext="{Binding EquipShowVM}"
-                             />
-        </Expander>
+        <local:EquipShow Grid.Row="0" Grid.Column="0" DataContext="{Binding EquipShowVM}" Margin="3 2"/>
     </Grid>
 </UserControl>

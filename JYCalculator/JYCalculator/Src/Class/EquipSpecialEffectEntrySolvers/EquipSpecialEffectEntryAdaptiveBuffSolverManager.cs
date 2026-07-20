@@ -183,8 +183,8 @@ namespace JYCalculator.Class
             return pos;
         }
 
-        public static ImmutableArray<int> NECKLACE__CriticalStrike_To_CriticalPower_LevelToStackDenominator
-            = ImmutableArray.Create(0, 4748, 4942, 5302, 5683, 6006, 6526);
+        //public static ImmutableArray<int> NECKLACE__CriticalStrike_To_CriticalPower_LevelToStackDenominator
+        //    = ImmutableArray.Create(0, 4748, 4942, 5302, 5683, 6006, 6526, 7901, 8586);
         // 项链会心加会效计算BUFF层数专用，数据来源是 黄字项链会心加会效.lua
 
         public static BuffRecord NECKLACE__CriticalStrike_To_CriticalPower(this EquipSpecialEffectEntry entry, FullCharacter SnapfChar)
@@ -192,22 +192,24 @@ namespace JYCalculator.Class
             // 黄字项链会心加会效
             int hx = (int) SnapfChar.PhysicsCriticalStrike; // 基础会心等级
             int lv = entry.SkillLevel;
-            int denominator = NECKLACE__CriticalStrike_To_CriticalPower_LevelToStackDenominator[entry.SkillLevel];
+            //int denominator_old = NECKLACE__CriticalStrike_To_CriticalPower_LevelToStackDenominator[entry.SkillLevel];
+            int denominator = entry.Value1;
             int nStack = (int) hx / denominator;
             const int BuffID = 29528;
             var res = new BuffRecord(BuffID, lv, 1.0, nStack);
             return res;
         }
 
-        public static ImmutableArray<int> NECKLACE__Overcome_To_AttackPower_LevelToStackDenominator =
-            ImmutableArray.Create(0, 5427, 5648, 6060, 6496, 6864, 7456);
+        //public static ImmutableArray<int> NECKLACE__Overcome_To_AttackPower_LevelToStackDenominator =
+        //    ImmutableArray.Create(0, 5427, 5648, 6060, 6496, 6864, 7456, 7901, 8586);
         // 项链破防加攻击计算BUFF层数专用，数据来源是 黄字项链破防加攻击.lua
         public static BuffRecord NECKLACE__Overcome_To_AttackPower(this EquipSpecialEffectEntry entry, FullCharacter SnapfChar)
         {
             // 黄字项链破防加攻击
             int pf = (int)SnapfChar.PhysicsBaseOvercome; // 基础破防等级
             int lv = entry.SkillLevel;
-            int denominator = NECKLACE__Overcome_To_AttackPower_LevelToStackDenominator[entry.SkillLevel];
+            //int denominator_old = NECKLACE__Overcome_To_AttackPower_LevelToStackDenominator[entry.SkillLevel];
+            int denominator = entry.Value1;
             int nStack = (int) pf / denominator;
             const int BuffID = 29529;
             var res = new BuffRecord(BuffID, lv, 1.0, nStack);

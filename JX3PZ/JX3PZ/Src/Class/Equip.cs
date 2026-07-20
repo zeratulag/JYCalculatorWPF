@@ -258,7 +258,7 @@ namespace JX3PZ.Class
 
         public static int CalcEquipScore(int level, int quality, EquipSubTypeEnum subType)
         {
-            decimal qualityCoef = 1.8m + 0.7m * (quality - 4);
+            decimal qualityCoef = 1.8m + 0.2m * (quality - 4); // 紫武(quality4) = 1.8，橙武(quality5) = 2
             var typeCoef = EquipMapLib.GetEquipMapItemBySubType(subType).ScoreCoef;
             var res0 = level * qualityCoef * typeCoef;
             var res = res0.MathRound();

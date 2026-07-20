@@ -69,11 +69,14 @@ namespace JYCalculator.Src
 
         public void Calc()
         {
+            var sw = Stopwatch.StartNew();
             //GetInputs();
             GetInputsParallel();
             //BenchmarkGetInputs();
             GetRelative();
             GetRank();
+            sw.Stop();
+            Log.Information("[MultiZhenFa] 阵法对比完成，共 {Num} 个阵法，耗时 {Elapsed:F0} ms", Num, sw.Elapsed.TotalMilliseconds);
         }
 
         public void BenchmarkGetInputs()

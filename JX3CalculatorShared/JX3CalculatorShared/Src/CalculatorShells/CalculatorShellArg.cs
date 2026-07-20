@@ -17,6 +17,7 @@ namespace JX3CalculatorShared.Src
         public bool AllSkillMiJiIsSupport => RecipeCompatibleSkillBuilds.Length > 0; // 秘籍是否支持
         public SkillBuild[] RecipeCompatibleSkillBuilds { get; }
         public bool EnableOptimization { get; } // 是否启用优化建议
+        public bool EnableProfit { get; } // 是否计算属性收益
         public double ShortTimeBonus { get; } // 短时间战斗红利系数
         public bool TargetAllWaysFullHP { get; } // 目标永远满血
         public EquipSpecialEffectConfigArg EquipSpecialEffectConfig { get; }
@@ -24,12 +25,13 @@ namespace JX3CalculatorShared.Src
         public CalculatorShellArg(IEnumerable<SkillBuild> recipeCompatibleSkillBuilds, int hs,
             bool opt, BigFMConfigArg bigFM,
             BuffSpecialArg buffSpecial, EquipSpecialEffectConfigArg equipSpecialEffectConfig,
-            bool targetAllWaysFullHP = false, double shortTimeBonus = 0.0)
+            bool targetAllWaysFullHP = false, double shortTimeBonus = 0.0, bool enableProfit = true)
         {
             RecipeCompatibleSkillBuilds = recipeCompatibleSkillBuilds.ToArray();
             BigFM = bigFM;
             HS = hs;
             EnableOptimization = opt;
+            EnableProfit = enableProfit;
             BuffSpecial = buffSpecial;
             ShortTimeBonus = shortTimeBonus;
             EquipSpecialEffectConfig = equipSpecialEffectConfig;
@@ -38,6 +40,7 @@ namespace JX3CalculatorShared.Src
 
         public CalculatorShellArg()
         {
+            EnableProfit = true;
         }
 
         public CalculatorShellArg(CalculatorShellArg old)
@@ -46,6 +49,7 @@ namespace JX3CalculatorShared.Src
             BigFM = old.BigFM;
             HS = old.HS;
             EnableOptimization = old.EnableOptimization;
+            EnableProfit = old.EnableProfit;
             BuffSpecial = old.BuffSpecial;
             ShortTimeBonus = old.ShortTimeBonus;
             TargetAllWaysFullHP = old.TargetAllWaysFullHP;

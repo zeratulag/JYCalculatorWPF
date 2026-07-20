@@ -13,9 +13,9 @@ namespace JX3PZ.Globals
         public const int MAX_STRENGTH_LEVEL = 8; // 最大精炼等级
         public const int POSITIONS = 12; // 装备部位总数
         public const int MIN_EQUIP_LEVEL = 19000; // 装备筛选全局最小品级
-        public const int MAX_EQUIP_LEVEL = 40000; // 装备筛选全局最大品级
-        public const int DEFAULT_MIN_EQUIP_LEVEL = 27000; // 当前版本装备筛选最小品级
-        public const int DEFAULT_MAX_EQUIP_LEVEL = 36000; // 当前版本装备筛选最小品级
+        public const int MAX_EQUIP_LEVEL = 44000; // 装备筛选全局最大品级
+        public const int DEFAULT_MIN_EQUIP_LEVEL = 32000; // 当前版本装备筛选最小品级
+        public const int DEFAULT_MAX_EQUIP_LEVEL = 43000; // 当前版本装备筛选最小品级
         public const decimal GKiloDenominator = 1024.0m;
     }
 
@@ -91,7 +91,7 @@ namespace JX3PZ.Globals
 
         public static readonly ImmutableArray<decimal> DiamondScores;
         public static readonly ImmutableArray<decimal> StoneScores;
-        public const double ShanHaiDiamondCoef = 37400.0 / 27800.0; //山海源流版本提高了镶嵌的属性和装分
+        public const double CurrentDiamondCoef = 43900.0 / 27800.0; //暗影千机版本提高了镶嵌的属性和装分
 
         static PzScore()
         {
@@ -113,7 +113,7 @@ namespace JX3PZ.Globals
                 res = 0.195m * A * B * level;
             }
 
-            res *= (decimal) ShanHaiDiamondCoef;
+            res *= (decimal) CurrentDiamondCoef;
             return res;
         }
 

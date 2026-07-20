@@ -371,7 +371,9 @@ namespace JX3CalculatorShared.Data
         public string DescName { get; set; }
         public string EventName { get; set; }
         public bool NeedCalcEventFreq { get; set; }
+
         public string ItemName { get; set; }
+
         // 以下属性由解析得到
         public bool IsValid { get; private set; }
         public string SpecialEffectColor { get; private set; }
@@ -392,10 +394,9 @@ namespace JX3CalculatorShared.Data
         {
             SpecialEffectEntry = entry;
         }
-
     }
 
-    public partial class EquipSpecialEffectEntry: AbsGeneralItem
+    public partial class EquipSpecialEffectEntry : AbsGeneralItem
     {
         public int EquipLevel { get; set; } = -1;
         public int SkillEventID { get; set; } = -1;
@@ -426,7 +427,7 @@ namespace JX3CalculatorShared.Data
         public string DescName { get; set; }
         public bool NeedCalcEventFreq { get; set; }
         public string EventName { get; set; }
-
+        public int Value1 { get; set; } = -1;
         public bool IsSnapAdaptiveBuff { get; private set; }
 
         public SkillEventItem SkillEvent { get; private set; }

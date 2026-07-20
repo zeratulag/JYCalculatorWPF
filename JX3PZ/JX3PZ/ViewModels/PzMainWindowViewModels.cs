@@ -7,11 +7,14 @@ using JX3CalculatorShared.Views;
 using JX3PZ.Globals;
 using JX3PZ.Messages;
 using JX3PZ.Models;
+using JX3PZ.Views.BuildCompare;
+using JYCalculator.Class;
 using JYCalculator.Globals;
 using JYCalculator.Messages;
 using System;
 using System.Collections.Immutable;
 using System.Linq;
+using System.Threading.Tasks;
 using JX3CalculatorShared.Models;
 using MingYiTools;
 using CalcResultViewModel = JX3CalculatorShared.ViewModels.CalcResultViewModel;
@@ -49,6 +52,9 @@ namespace JX3PZ.ViewModels
         public RelayCommand<string> OneKeyEnchantCmd { get; }
         public RelayCommand OpenOverviewCmd { get; }
         public RelayCommand SaveOverviewImageCmd { get; }
+        public RelayCommand OpenBuildCompareCmd { get; }
+        public RelayCommand OneKeyEquipCompareCmd { get; }
+        public int SelectedIndex { get; set; }
 
         public CalcResult CCalcResult;
 
@@ -71,6 +77,8 @@ namespace JX3PZ.ViewModels
             SavePZCmd = new RelayCommand(SavePZ);
             OpenOverviewCmd = new RelayCommand(OpenOverview, () => CanOpenOverView);
             SaveOverviewImageCmd = new RelayCommand(SaveOverviewImage, () => CanOpenOverView);
+            OpenBuildCompareCmd = new RelayCommand(OpenBuildCompare);
+            OneKeyEquipCompareCmd = OpenBuildCompareCmd;
 
 
             // 注册信息接收处理
@@ -97,6 +105,18 @@ namespace JX3PZ.ViewModels
         private void OpenOverview()
         {
             PzGlobalContext.Views.PzMain.ShowOverview();
+        }
+
+        private void OpenBuildCompare()
+        {
+            if (SelectedIndex < 0 || SelectedIndex >= Data.Length) return;
+
+            var tab = Data[SelectedIndex];
+            var window = new PzBuildCompareWindow(this, tab)
+            {
+                Owner = PzGlobalContext.Views.PzMain
+            };
+            window.ShowDialog();
         }
 
         public PzMainSav Export()
@@ -368,11 +388,37 @@ namespace JX3PZ.ViewModels
             CalcResultVM.UpdateFrom(message);
             CalcInputVM.UpdateFrom(message);
             CCalcResult = message.Result;
+            UpdateEnhanceProfits();
+        }
+
+        private CalcResult _latestEnhanceProfitResult;
+        private bool _enhanceProfitsPending;
+
+        private void UpdateEnhanceProfits(CalcResult result = null)
+        {
+            if (result == null) result = CCalcResult;
+            if (result == null) return;
+
+            _latestEnhanceProfitResult = result;
+
+            if (!_enhanceProfitsPending)
+            {
+                _enhanceProfitsPending = true;
+                System.Windows.Application.Current.Dispatcher.InvokeAsync(() =>
+                {
+                    _enhanceProfitsPending = false;
+                    var r = _latestEnhanceProfitResult;
+                    foreach (var item in Data)
+                    {
+                        item.EquipEnhanceVM.UpdateProfitsFromCalcResult(r);
+                    }
+                }, System.Windows.Threading.DispatcherPriority.Background);
+            }
         }
 
         public PzEquipSummaryViewModel[] GetEquipSummaryViewModels()
         {
-            var res = Data.Select(_ => _.Summary).ToArray();
+            var res = Data.Select(e => e.Summary).ToArray();
             return res;
         }
 

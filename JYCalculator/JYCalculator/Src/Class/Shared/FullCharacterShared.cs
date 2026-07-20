@@ -15,7 +15,7 @@ using JYCalculator.Src.Class;
 
 namespace JYCalculator.Class
 {
-    public partial class FullCharacter : ObservableObject
+    public partial class FullCharacter : ObservableObject, IFinalCharacterPanel
     {
         #region 成员
 

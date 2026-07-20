@@ -28,18 +28,26 @@
 
             <!-- MingYiOwnerInfoItem 下拉项模板 -->
             <DataTemplate x:Key="MingYiOwnerInfoItemTemplate" DataType="{x:Type mi:MingYiOwnerInfoEntity}">
-                <Grid Margin="2" Width="200">
+                <Grid Margin="2" Width="230">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
 
-                    <DockPanel Grid.Row="0">
+                    <Image Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" Source="pack://application:,,,/Resource/Images/jy_player_avatar.png"
+                           Width="40" Height="40" Margin="0 0 5 0"/>
+
+                    <DockPanel Grid.Row="0" Grid.Column="1">
                         <TextBlock DockPanel.Dock="Left" Text="{Binding OwnerName}" FontWeight="Bold" Foreground="#4b7128" FontSize="16" VerticalAlignment="Center" Margin="0 2"/>
                         <TextBlock DockPanel.Dock="Right" Text="{Binding OwnerLevel, StringFormat='等级{0}'}" HorizontalAlignment="Right" VerticalAlignment="Center"/>
                     </DockPanel>
 
-                    <DockPanel Grid.Row="1">
+                    <DockPanel Grid.Row="1" Grid.Column="1">
                         <TextBlock DockPanel.Dock="Left" Text="快照时间" FontSize="12" VerticalAlignment="Center"/>
                         <TextBlock DockPanel.Dock="Right" Text="{Binding LastTime, StringFormat='{}{0:yyyy-MM-dd HH:mm}'}" Foreground="Gray" FontSize="14" HorizontalAlignment="Right" VerticalAlignment="Center"/>
                     </DockPanel>
@@ -50,7 +58,7 @@
             <DataTemplate x:Key="MingYiOwnerSuitTemplate">
                 <StackPanel Orientation="Vertical" Width="160">
                     <TextBlock Text="{Binding SuitIndex, StringFormat='{}第 {0} 套装备'}" FontSize="14"/>
-                    <TextBlock Text="{Binding Score, StringFormat='{}{0} 装备分数'}" FontSize="14"/>
+                    <TextBlock Text="{Binding Score, StringFormat='{}装备分数 {0}'}" FontSize="14"/>
                 </StackPanel>
             </DataTemplate>
 
@@ -131,13 +139,13 @@
             <ComboBox x:Name="MingYiOwnerInfoComboBox" Margin="10 5"
                       SelectedItem="{Binding SelectedMingYiOwnerInfoEntity}"
                       SelectedIndex="{Binding SelectedMingYiOwnerInfoIndex}"
-                      ItemsSource="{Binding CurrentServerMingYiOwnerInfoList}" Width="250"
+                      ItemsSource="{Binding CurrentServerMingYiOwnerInfoList}" Width="290"
                       hc:InfoElement.TitlePlacement="Top" hc:InfoElement.Title="角色"
                       Style="{StaticResource ComboBoxExtend}"
                       ItemTemplate="{StaticResource MingYiOwnerInfoItemTemplate}"/>
         </StackPanel>
 
-        <GroupBox Grid.Row="2" Header="装备详情" Style="{x:Null}" Margin="5" Visibility="{Binding IsDatabaseLoaded, Converter={StaticResource Boolean2VisibilityConverter}}">
+        <GroupBox Grid.Row="2" Header="装备详情" Style="{x:Null}" Margin="5" Visibility="{Binding IsCurrentOwnerEquipLoaded, Converter={StaticResource Boolean2VisibilityConverter}}">
             <!-- 用 Grid 替代 StackPanel，使右侧区域能在垂直方向被约束，从而启用滚动 -->
             <Grid Margin="5">
                 <Grid.ColumnDefinitions>

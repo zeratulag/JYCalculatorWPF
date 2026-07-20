@@ -8,7 +8,7 @@
              xmlns:globals="clr-namespace:JX3PZ.Globals"
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="355"
-             Width="355" Padding="8">
+             Width="355" Padding="0">
 
     <UserControl.Resources>
         <ResourceDictionary>

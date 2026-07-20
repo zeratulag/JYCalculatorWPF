@@ -1,9 +1,12 @@
-﻿using System;
-using JX3CalculatorShared.Data;
+﻿using JX3CalculatorShared.Data;
 using JYCalculator.Class;
 using JYCalculator.Data;
+using SqlSugar;
+using Syncfusion.Data.Extensions;
 using Syncfusion.Windows.Shared;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace JYCalculator.Models.SkillSpecialEffectSolverModels
 {
@@ -42,10 +45,27 @@ namespace JYCalculator.Models.SkillSpecialEffectSolverModels
             }
         }
 
+        // 特效不叠加，取最高品级对应的特效
+        public EquipSpecialEffectEntry[] UniqueDOTSuperCustomDamage()
+        {
+            if (DOTSuperCustomDamage == null || DOTSuperCustomDamage.Length == 0)
+            {
+                return Array.Empty<EquipSpecialEffectEntry>();
+            }
+
+            var maxEntry = DOTSuperCustomDamage
+                .OrderByDescending(e => e.EquipLevel)
+                .First();
+
+            return new[] { maxEntry };
+        }
+
+
+        // 精简护手腰带加速DOT
         public void CalcDOTSuperCustomDamage()
         {
             var exitSkills = new List<SkillInfoItem>();
-            foreach (var e in DOTSuperCustomDamage)
+            foreach (var e in UniqueDOTSuperCustomDamage())
             {
                 var skill = e.GetSuperCustomDamageSkill();
                 if (exitSkills.Contains(skill)) continue;

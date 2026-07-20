@@ -1,5 +1,198 @@
-{"DefaultJB":
-	
-{"Vitality":159467,"Agility":44,"Spirit":44,"Spunk":44,"Strength":13137,"PhysicsAttackPowerBase":46146,"PhysicsAttackPower":68353,"PhysicsCriticalStrikeRate":0.31658108374683236,"PhysicsCriticalStrike":60612,"PhysicsCriticalDamagePowerPercent":1.877244173180569,"PhysicsCriticalDamagePower":9269,"PhysicsOvercomePercent":0.3222330207083099,"StrainPercent":0.7459732459732459,"HastePercent":0.103515625,"SurplusValue":505,"MaxHealth":2175576,"PhysicsShieldPercent":0.06192434479903994,"LunarShieldPercent":0.05422153369481022,"ToughnessDefCriticalPercent":0,"DecriticalDamagePercent":0.099609375,"MeleeWeaponAttackSpeed":16,"MeleeWeaponDamage":4684,"MeleeWeaponDamageRand":3122,"PVXAllRound":0,"PhysicsOvercome":72811,"Strain":99463,"Haste":21771,"EquipList":{"HAT":{"id":"7_104757","stone":"","enchant":15946,"enhance":16026,"strength":6,"embedding":[6,6]},"BELT":{"id":"7_104695","stone":"","enchant":15942,"enhance":16139,"strength":6,"embedding":[6,6]},"SHOES":{"id":"7_104726","stone":"","enchant":15943,"enhance":16081,"strength":6,"embedding":[6,6]},"WRIST":{"id":"7_104970","stone":"","enchant":15944,"enhance":16076,"strength":6,"embedding":[6,6]},"JACKET":{"id":"7_104788","stone":"","enchant":15945,"enhance":16138,"strength":6,"embedding":[6,6]},"RING_1":{"id":"8_43071","stone":"","enchant":"","enhance":16148,"strength":6,"embedding":[]},"RING_2":{"id":"8_42971","stone":"","enchant":"","enhance":16148,"strength":6,"embedding":[]},"BOTTOMS":{"id":"7_104988","stone":"","enchant":"","enhance":16021,"strength":6,"embedding":[6,6]},"PENDANT":{"id":"8_42989","stone":"","enchant":"","enhance":16142,"strength":6,"embedding":[6]},"NECKLACE":{"id":"8_42977","stone":"","enchant":"","enhance":16140,"strength":6,"embedding":[6]},"PRIMARY_WEAPON":{"id":"6_41270","stone":14427,"enchant":"","enhance":16008,"strength":6,"embedding":[6,6,6]},"SECONDARY_WEAPON":{"id":"6_41179","stone":"","enchant":"","enhance":16157,"strength":6,"embedding":[6]}},"Title":"【山海源流】天极3速过渡配装","TalentCode":[{"id":30588,"name":"凝形逐踪"},{"id":42927,"name":"寒江夜雨"},{"id":21724,"name":"掠影穹苍"},{"id":37324,"name":"蹑景追风"},{"id":14851,"name":"空山独立"},{"id":37325,"name":"牢甲利兵"},{"id":42490,"name":"追锋断念"},{"id":6473,"name":"千里无痕"},{"id":0,"name":"第九重"},{"id":0,"name":"第十重"}],"Mount":10224,"Score":588536}
-
+{
+	"DefaultJB": {
+		"Vitality": 220092,
+		"Agility": 44,
+		"Spirit": 44,
+		"Spunk": 44,
+		"Strength": 17973,
+		"PhysicsAttackPowerBase": 58448,
+		"PhysicsAttackPower": 88830,
+		"PhysicsCriticalStrikeRate": 0.394526284376059,
+		"PhysicsCriticalStrike": 76022,
+		"PhysicsCriticalDamagePowerPercent": 1.8784522309257292,
+		"PhysicsCriticalDamagePower": 9357,
+		"PhysicsOvercomePercent": 0.3124081686121644,
+		"StrainPercent": 0.8442233442233441,
+		"HastePercent": 0.208984375,
+		"SurplusValue": 37845,
+		"MaxHealth": 2926876,
+		"PhysicsShieldPercent": 0.0755849525567419,
+		"LunarShieldPercent": 0.0653477449464905,
+		"ToughnessDefCriticalPercent": 0,
+		"DecriticalDamagePercent": 0.099609375,
+		"MeleeWeaponAttackSpeed": 16,
+		"MeleeWeaponDamage": 6850,
+		"MeleeWeaponDamageRand": 4567,
+		"PVXAllRound": 0,
+		"PhysicsOvercome": 70591,
+		"Strain": 112563,
+		"Haste": 43924,
+		"EquipList": {
+			"HAT": {
+				"id": "7_109239",
+				"stone": "",
+				"enchant": 16453,
+				"enhance": 16252,
+				"strength": 6,
+				"embedding": [
+					6,
+					6
+				]
+			},
+			"BELT": {
+				"id": "7_109175",
+				"stone": "",
+				"enchant": 16449,
+				"enhance": 16365,
+				"strength": 6,
+				"embedding": [
+					6,
+					6
+				]
+			},
+			"SHOES": {
+				"id": "7_109207",
+				"stone": "",
+				"enchant": 16450,
+				"enhance": 16307,
+				"strength": 6,
+				"embedding": [
+					6,
+					6
+				]
+			},
+			"WRIST": {
+				"id": "7_109143",
+				"stone": "",
+				"enchant": 16451,
+				"enhance": 16302,
+				"strength": 6,
+				"embedding": [
+					6,
+					6
+				]
+			},
+			"JACKET": {
+				"id": "7_109271",
+				"stone": "",
+				"enchant": 16452,
+				"enhance": 16364,
+				"strength": 6,
+				"embedding": [
+					6,
+					6
+				]
+			},
+			"RING_1": {
+				"id": "8_47879",
+				"stone": "",
+				"enchant": "",
+				"enhance": 16431,
+				"strength": 6,
+				"embedding": []
+			},
+			"RING_2": {
+				"id": "8_44426",
+				"stone": "",
+				"enchant": "",
+				"enhance": 16431,
+				"strength": 6,
+				"embedding": []
+			},
+			"BOTTOMS": {
+				"id": "7_109310",
+				"stone": "",
+				"enchant": "",
+				"enhance": 16247,
+				"strength": 6,
+				"embedding": [
+					6,
+					6
+				]
+			},
+			"PENDANT": {
+				"id": "8_47998",
+				"stone": "",
+				"enchant": "",
+				"enhance": 16423,
+				"strength": 6,
+				"embedding": [
+					6
+				]
+			},
+			"NECKLACE": {
+				"id": "8_47992",
+				"stone": "",
+				"enchant": "",
+				"enhance": 16421,
+				"strength": 6,
+				"embedding": [
+					6
+				]
+			},
+			"PRIMARY_WEAPON": {
+				"id": "6_44280",
+				"stone": 14445,
+				"enchant": "",
+				"enhance": 16234,
+				"strength": 8,
+				"embedding": [
+					6,
+					6,
+					6
+				]
+			},
+			"SECONDARY_WEAPON": {
+				"id": "6_44363",
+				"stone": "",
+				"enchant": "",
+				"enhance": 16383,
+				"strength": 6,
+				"embedding": [
+					6
+				]
+			}
+		},
+		"Title": "【暗影千机】玄阙毕业",
+		"TalentCode": [
+			{
+				"id": 30588,
+				"name": "凝形逐踪"
+			},
+			{
+				"id": 42927,
+				"name": "寒江夜雨"
+			},
+			{
+				"id": 37324,
+				"name": "蹑景追风"
+			},
+			{
+				"id": 14851,
+				"name": "空山独立"
+			},
+			{
+				"id": 37325,
+				"name": "牢甲利兵"
+			},
+			{
+				"id": 42490,
+				"name": "追锋断念"
+			},
+			{
+				"id": 6473,
+				"name": "千里无痕"
+			},
+			{
+				"id": 6461,
+				"name": "秋风散影"
+			},
+			{
+				"id": 6439,
+				"name": "夺魄之威"
+			}
+		],
+		"Mount": 10224,
+		"Score": 801919
+	}
 }

@@ -244,14 +244,14 @@ namespace JYCalculator.Src
         {
             //FixLveYingQiongCangFreq();
             //FixNieJingZhuiMing();
-            FixNingXingStartZhuiMing();
+            //FixNingXingStartZhuiMing();
             FixChuanXingDOT();
-            FixNingXingStartXinWuStartZhuiMing();
+            //FixNingXingStartXinWuStartZhuiMing();
         }
 
         private void FixNingXingStartXinWuStartZhuiMing()
         {
-            if (!SkillNum.Normal.寒江凝形_山海源流) return;
+            if (!SkillNum.Normal.寒江凝形_暗影千机) return;
 
             var nieJingLevel = 1;
             var rank = SkillNum.XfAbility.Normal.Rank;
@@ -281,7 +281,7 @@ namespace JYCalculator.Src
         // 修正凝形流起手的那个追命
         private void FixNingXingStartZhuiMing()
         {
-            if (SkillNum.Normal.百步凝形_丝路风语 || SkillNum.Normal.寒江凝形_山海源流)
+            if (SkillNum.Normal.百步凝形_丝路风语 || SkillNum.Normal.寒江凝形_暗影千机)
             {
                 const double num = 1.0;
                 var longFreq = num / FightTime.LongItem.NormalTime;
@@ -327,12 +327,12 @@ namespace JYCalculator.Src
 
         private void FixChuanXingDOT()
         {
-            if (SkillNum.Normal.寒江凝形_山海源流)
+            if (SkillNum.Normal.寒江凝形_暗影千机)
             {
                 var cxDOTKey = SkillNum.QiXue.CX_DOT_Key;
                 var cxStack = SkillNum.QiXue.CX_DOT_Stack;
                 var cxHaste = SkillNum.Normal.ChuanXinHaste;
-                const double xwNoChuanXinTime = 9;
+                const double xwNoChuanXinTime = 0;
                 var xwLossNum = xwNoChuanXinTime / cxHaste.XWIntervalTime;
                 var xwHitLoss = 0;
                 var xwCountLoss = xwLossNum * 1;
@@ -342,7 +342,7 @@ namespace JYCalculator.Src
                 ShortSkillFreqCTDFs.XinWu.ModifyAddSkillFreq(cxDOTKey, -xwCountLoss, FightTime.ShortItem.XWTime, false);
                 ShortSkillFreqCTDFs.XinWu.ModifyAddSkillFreq(SkillKeyConst.穿心弩DOT_Hit, -xwHitLoss, FightTime.ShortItem.XWTime, true);
 
-                var normalLossNum = 3.25 / cxHaste.IntervalTime;
+                var normalLossNum = 0 / cxHaste.IntervalTime;
                 var normalSingleNum = 0;
                 var normalHitLoss = normalLossNum;
                 var normalCountLoss = normalLossNum * cxStack + normalSingleNum;

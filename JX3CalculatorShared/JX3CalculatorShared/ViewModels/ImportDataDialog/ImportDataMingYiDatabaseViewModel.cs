@@ -10,7 +10,9 @@ using JX3CalculatorShared.Messages;
 using JX3CalculatorShared.Models;
 using JX3CalculatorShared.Utils.DbUtils;
 using JX3CalculatorShared.Views;
+using Microsoft.Win32;
 using MingYiTools;
+using PropertyChanged;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Design;
@@ -19,14 +21,14 @@ using System.Linq;
 using System.Runtime.Remoting.Contexts;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using Microsoft.Win32;
-using PropertyChanged;
+using System.Windows.Threading;
 
 namespace JX3CalculatorShared.ViewModels
 {
     public class ImportDataMingYiDatabaseViewModel : ObservableObject
     {
         public static string LastConfirmedFolder { get; private set; } = null;
+        public static string LastConfirmedMYEquipStatFile { get; private set; } = null;
 
         public const string MYEquipStatFile =
             @"Interface\MY#DATA\!all-users@zhcn_hd\userdata\role_statistics\equip_stat.v4.db";
@@ -44,10 +46,11 @@ namespace JX3CalculatorShared.ViewModels
         public MingYiServerInfo[] MingYiServerInfoList { get; private set; } = null;
 
         [AlsoNotifyFor(nameof(CurrentServerMingYiOwnerInfoList))]
-        public int SelectedMingYiServerInfoIndex { get; set; } 
+        public int SelectedMingYiServerInfoIndex { get; set; }
         public MingYiServerInfo SelectedMingYiServerInfo { get; set; } // 当前选择的服务器信息
 
         public bool IsDatabaseLoaded { get; set; } = false;
+        public bool IsCurrentOwnerEquipLoaded { get; set; } = false;
 
         public MingYiOwnerInfoEntity[] MingYiOwnerInfoList { get; private set; }
         public MingYiOwnerInfoEntity[] CurrentServerMingYiOwnerInfoList => SelectedMingYiServerInfo?.Items;
@@ -74,6 +77,14 @@ namespace JX3CalculatorShared.ViewModels
             {
                 JX3Folder = LastConfirmedFolder;
             }
+
+            if (LastConfirmedMYEquipStatFile != null)
+            {
+                FindLocalClients();
+                EquipStatDbPath = LastConfirmedMYEquipStatFile;
+                LoadDatabase();
+            }
+
             else
             {
                 FindLocalClients();
@@ -126,6 +137,7 @@ namespace JX3CalculatorShared.ViewModels
                 return;
             }
 
+            LastConfirmedMYEquipStatFile = EquipStatDbPath;
             // 执行核心的数据库加载逻辑（无论手动选择还是默认路径）
             Task.Run(ExecuteDatabaseLoading);
         }
@@ -150,6 +162,7 @@ namespace JX3CalculatorShared.ViewModels
             SelectedMingYiOwnerInfoIndex = 0;
             IsDatabaseLoaded = true;
             LoadSelectedOwnerEquipItems();
+            UpdateCurrentOwnerEquip();
         }
 
 
@@ -182,14 +195,13 @@ namespace JX3CalculatorShared.ViewModels
             if (dialog.ShowDialog() != true) return false;
             EquipStatDbPath = dialog.FileName;
             // 通知属性变更（如果有其他地方依赖此属性）
-            OnPropertyChanged(nameof(EquipStatDbPath));
             return true;
         }
 
         public void LoadSelectedOwnerEquipItems()
         {
-            var equipItems = EquipStatDb.Client.Queryable<MingYiEquipItem>()
-                .Where(e => e.OwnerKey == SelectedMingYiOwnerInfoEntity.OwnerKey).ToArray();
+            var equipItems = EquipStatDb.Query<MingYiEquipItem>(e => e.OwnerKey == SelectedMingYiOwnerInfoEntity.OwnerKey)
+                .ToArray();
             var equipItemEntities = equipItems.Select(e => new MingYiEquipItemEntity(e)).ToArray();
             equipItemEntities.ForEach(e => e.Parse());
             CurrentOwnerEquipModel = new MingYiOwnerEquipModel(SelectedMingYiOwnerInfoEntity, equipItemEntities);
@@ -200,7 +212,17 @@ namespace JX3CalculatorShared.ViewModels
             CurrentOwnerEquipModel.Calc();
             MingYiOwnerSuitList = CurrentOwnerEquipModel.SuitEquipModels.Values.ToArray();
             SelectedSuitIndex = 0;
-            ImportCmd.NotifyCanExecuteChanged();
+            IsCurrentOwnerEquipLoaded = true;
+
+            var dispatcher = System.Windows.Application.Current?.Dispatcher;
+            if (dispatcher != null && !dispatcher.CheckAccess())
+            {
+                dispatcher.Invoke(() => ImportCmd.NotifyCanExecuteChanged());
+            }
+            else
+            {
+                ImportCmd.NotifyCanExecuteChanged();
+            }
         }
 
         public void OnSelectedMingYiOwnerSuitChanged()

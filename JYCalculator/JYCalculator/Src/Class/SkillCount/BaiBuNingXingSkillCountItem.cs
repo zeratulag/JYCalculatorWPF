@@ -28,8 +28,7 @@ namespace JYCalculator.Class.SkillCount
             ZM = ZM_SF; // 扣掉起手的追命
             ZM_SF = 0;
             if (!_XW)
-            {
-                ZM -= 1; // 扣掉起手的那个长读条追命，后续在 DPSKernelShell.FixNingXingZhuiMing 补回来
+            { // 扣掉起手的那个长读条追命，后续在 DPSKernelShell.FixNingXingZhuiMing 补回来
             }
         }
 

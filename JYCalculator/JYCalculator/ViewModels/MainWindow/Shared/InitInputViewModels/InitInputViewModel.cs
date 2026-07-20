@@ -6,7 +6,7 @@ using JX3CalculatorShared.Views;
 using JYCalculator.Class;
 using JYCalculator.DB;
 using JYCalculator.Globals;
-using System.Collections.Generic;
+using JYCalculator.Models;
 
 
 namespace JYCalculator.ViewModels
@@ -53,14 +53,14 @@ namespace JYCalculator.ViewModels
         public void ImportJBPZPanel(JBBBPZPanel jbPanel)
         {
             // 导入JB配装信息
-            Load(jbPanel.InitInput);
+            var model = new InitInputModel(jbPanel);
+            Load(model.Calc());
             JBPanelTitle = jbPanel.BaseJBBB.Title;
         }
 
         public void ImportJBBB(JBBB j)
         {
             var res = new JBBBPZPanel(j);
-            res.Parse();
             ImportJBPZPanel(res);
         }
 
@@ -150,21 +150,4 @@ namespace JYCalculator.ViewModels
         }
     }
 
-    // 序列化存储
-    public class InitInputSav
-    {
-        public readonly InitCharacter InitChar;
-        public readonly EquipOptionConfigSav EquipOption;
-        public readonly BigFMSlotConfig[] BigFM;
-        public readonly IDictionary<string, string> EquipSpecialEffect;
-
-        public InitInputSav(InitCharacter initChar, EquipOptionConfigSav equipOption, BigFMSlotConfig[] bigFM,
-            IDictionary<string, string> equipSpecialEffect)
-        {
-            InitChar = initChar;
-            EquipOption = equipOption;
-            BigFM = bigFM;
-            EquipSpecialEffect = equipSpecialEffect;
-        }
-    }
 }

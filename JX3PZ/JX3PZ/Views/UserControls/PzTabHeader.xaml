@@ -34,6 +34,30 @@
             <ColumnDefinition Width="40" />
         </Grid.ColumnDefinitions>
 
+        <Border Grid.Row="0"
+                Grid.RowSpan="2"
+                Grid.Column="0"
+                Grid.ColumnSpan="4"
+                BorderThickness="1"
+                Margin="-4"
+                CornerRadius="3">
+            <Border.Style>
+                <Style TargetType="Border">
+                    <Setter Property="Background" Value="Transparent" />
+                    <Setter Property="BorderBrush" Value="Transparent" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsMouseOver, RelativeSource={RelativeSource AncestorType=TabItem}}" Value="True">
+                            <Setter Property="Background" Value="#F5F9FF" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource AncestorType=TabItem}}" Value="True">
+                            <Setter Property="Background" Value="#EEF6FF" />
+                            <Setter Property="BorderBrush" Value="#9CC2FF" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Border.Style>
+        </Border>
+
         <Image Grid.Row="0" Grid.RowSpan="2" Grid.Column="0" 
                Width="40"
                Height="40"
@@ -48,7 +72,18 @@
 
         <StackPanel Grid.Row="0" Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Top">
             <hc:SimpleText Grid.Row="0" Grid.Column="2" Text="{Binding Path=SlotName, Mode=OneWay}" FontSize="14"
-                           Foreground="Gray" VerticalAlignment="Center" />
+                           Foreground="Gray" VerticalAlignment="Center">
+                <hc:SimpleText.Style>
+                    <Style TargetType="hc:SimpleText">
+                        <Setter Property="FontWeight" Value="Normal" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource AncestorType=TabItem}}" Value="True">
+                                <Setter Property="FontWeight" Value="SemiBold" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </hc:SimpleText.Style>
+            </hc:SimpleText>
             <hc:SimpleText Text="{Binding Path=StrengthStr, Mode=OneWay, StringFormat={}({0})}" FontSize="12"
                            Foreground="Gray" VerticalAlignment="Center" Margin="2 0 0 0" />
             <hc:SimpleText Text="{Binding Level, StringFormat={}{0}品}" VerticalAlignment="Center" Foreground="Gray" Margin="5 0 0 0"
@@ -56,7 +91,18 @@
         </StackPanel>
 
         <hc:SimpleText Grid.Row="1" Grid.Column="2" Text="{Binding Path=EquipName, Mode=OneWay}" FontSize="15"
-                       VerticalAlignment="Center"/>
+                       VerticalAlignment="Center">
+            <hc:SimpleText.Style>
+                <Style TargetType="hc:SimpleText">
+                    <Setter Property="FontWeight" Value="Normal" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource AncestorType=TabItem}}" Value="True">
+                            <Setter Property="FontWeight" Value="SemiBold" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </hc:SimpleText.Style>
+        </hc:SimpleText>
         <StackPanel Grid.Row="1" Grid.Column="3" Orientation="Horizontal" HorizontalAlignment="Right">
 
             <StackPanel.Resources>

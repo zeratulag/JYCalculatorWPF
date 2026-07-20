@@ -114,6 +114,7 @@ namespace JYCalculator.ViewModels
 
         public RelayCommand NewCmd { get; }
         public RelayCommand CloseCmd { get; }
+        public RelayCommand RestoreCmd { get; }
 
         public RelayCommand OpenPZWindowCmd { get; }
 
@@ -182,6 +183,7 @@ namespace JYCalculator.ViewModels
             SaveCurrentCmd = new RelayCommand(SaveCurrent);
             OpenFileCmd = new RelayCommand(OpenFile);
             CloseCmd = new RelayCommand(Exit);
+            RestoreCmd = new RelayCommand(Restore, CanRestore);
 
             OpenPZWindowCmd = new RelayCommand(OpenPZWindow);
 
@@ -278,6 +280,12 @@ namespace JYCalculator.ViewModels
             var sample = CalcData.GetSample();
             Load(sample);
             SkillBuildManagerVM.LoadDefault();
+
+            if (XFAppStatic.LoadDefaultPzOnStartUp && sample.JBPz?.EquipList != null)
+            {
+                GlobalContext.ViewModels.PzMain.Load(sample.JBPz);
+                GlobalContext.IsPZSyncWithCalc = true;
+            }
         }
 
         #endregion
@@ -315,11 +323,8 @@ namespace JYCalculator.ViewModels
         protected void UpdateResults()
         {
             FinalDPStxt = CalcShell.FinalDPStxt;
-            if (Model.CalcShellStatus == 0)
-            {
-                UpdateResultTables();
-                UpdateOptimization();
-            }
+            UpdateResultTables();
+            UpdateOptimization();
 
             DebugVM.Update(); // 同步到Debug界面
         }
@@ -356,6 +361,28 @@ namespace JYCalculator.ViewModels
             DPSTable = kernel.FinalDPSTable.Items;
 
             ProfitChartVM.UpdateSourceDF(kernel.FinalProfitDF);
+            UpdateItemDTProfits(CalcShell.GetCalcResult());
+        }
+
+        private CalcResult _latestItemDTProfitResult;
+        private bool _itemDTProfitsPending;
+
+        private void UpdateItemDTProfits(CalcResult result = null)
+        {
+            if (result == null) result = CalcShell.GetCalcResult();
+            if (result == null) return;
+
+            _latestItemDTProfitResult = result;
+
+            if (!_itemDTProfitsPending)
+            {
+                _itemDTProfitsPending = true;
+                System.Windows.Application.Current.Dispatcher.InvokeAsync(() =>
+                {
+                    _itemDTProfitsPending = false;
+                    ItemDTVM.UpdateProfitsFromCalcResult(_latestItemDTProfitResult);
+                }, System.Windows.Threading.DispatcherPriority.Background);
+            }
         }
 
 
@@ -437,6 +464,7 @@ namespace JYCalculator.ViewModels
             }
 
             IsDirty = true;
+            RefreshRestoreCommand();
             if (autoUpdate)
             {
                 EnableAutoUpdate();
@@ -551,6 +579,7 @@ namespace JYCalculator.ViewModels
             HadSaveAs = false;
             CurrentFileName = NewFileName;
             CurrentFilePath = null;
+            RefreshRestoreCommand();
         }
 
         public void SaveToFile(string filepath)
@@ -561,6 +590,7 @@ namespace JYCalculator.ViewModels
             IsDirty = false;
             IsNew = false;
             InitInputVM.ClearJBTitle();
+            RefreshRestoreCommand();
         }
 
         // 保存当前
@@ -600,6 +630,7 @@ namespace JYCalculator.ViewModels
 
                 SaveToFile(saveFileDialog.FileName);
                 HadSaveAs = true;
+                RefreshRestoreCommand();
             }
         }
 
@@ -616,6 +647,7 @@ namespace JYCalculator.ViewModels
                 IsDirty = false;
                 IsNew = false;
                 InitInputVM.ClearJBTitle();
+                RefreshRestoreCommand();
             }
             else
             {
@@ -675,9 +707,30 @@ namespace JYCalculator.ViewModels
                 IsDirty = false;
                 IsNew = false;
                 InitInputVM.ClearJBTitle();
+                RefreshRestoreCommand();
             }
         }
 
+        /// <summary>
+        /// 恢复：放弃当前更改，恢复到文件打开时的初始状态
+        /// </summary>
+        public void Restore()
+        {
+            if (CanRestore())
+            {
+                ReadFile(CurrentFilePath);
+            }
+        }
+
+        private bool CanRestore()
+        {
+            return CurrentFilePath != null && File.Exists(CurrentFilePath);
+        }
+
+        private void RefreshRestoreCommand()
+        {
+            RestoreCmd.NotifyCanExecuteChanged();
+        }
 
         // 退出
 

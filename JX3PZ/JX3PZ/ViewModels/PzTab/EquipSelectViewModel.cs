@@ -7,13 +7,16 @@ using JX3PZ.Data;
 using JX3PZ.Globals;
 using JX3PZ.Messages;
 using JX3PZ.Src;
+using PropertyChanged;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
+using System.Windows;
 using System.Windows.Data;
+using HandyControl.Controls;
 
 namespace JX3PZ.ViewModels
 {
@@ -26,7 +29,9 @@ namespace JX3PZ.ViewModels
         public ImmutableArray<Equip> Source; // 所有装备的来源
         public ICollectionView ItemsSourceView { get; private set; }
         public int SelectedIndex { get; set; } = -1;
+        [AlsoNotifyFor(nameof(HasSelectedItem))]
         public Equip SelectedItem { get; set; }
+        public bool HasSelectedItem => SelectedItem != null;
 
         public int MaxLevel { get; set; } = PzConst.DEFAULT_MAX_EQUIP_LEVEL;
         public int MinLevel { get; set; } = PzConst.DEFAULT_MIN_EQUIP_LEVEL;
@@ -40,6 +45,7 @@ namespace JX3PZ.ViewModels
         public EquipFilterArg FilterArg { get; set; }
 
         public RelayCommand DropEquipCmd { get; }
+        public RelayCommand CopyEquipNameCmd { get; }
 
         private bool _HandlingReceivePzEquipFilterMessage = false; // 正在处理同步
 
@@ -80,6 +86,7 @@ namespace JX3PZ.ViewModels
             ItemsSourceView.Filter = (_ => CanFilter((Equip)_));
 
             DropEquipCmd = new RelayCommand(DropEquip);
+            CopyEquipNameCmd = new RelayCommand(CopyEquipName, CanCopyEquipName);
             ApplyFilter(); // 筛选一次
             RegisterFilterEvents();
             WeakReferenceMessenger.Default.Register<PzEquipFilterMessage>(this);
@@ -133,6 +140,7 @@ namespace JX3PZ.ViewModels
             FilterArg = null;
             var i = Source.IndexOf(e);
             SelectedIndex = i;
+            SelectedItem = i >= 0 ? Source[i] : null;
         }
 
         public void Load(string eid)
@@ -141,6 +149,7 @@ namespace JX3PZ.ViewModels
             FilterArg = null;
             var i = Source.IndexOf(_ => _.EID == eid);
             SelectedIndex = i;
+            SelectedItem = i >= 0 ? Source[i] : null;
             FilterArg = oldFilterArg;
         }
 
@@ -159,6 +168,7 @@ namespace JX3PZ.ViewModels
 
         protected override void _RefreshCommands()
         {
+            CopyEquipNameCmd.NotifyCanExecuteChanged();
         }
 
         public static EquipSelectViewModel[] GetVMs()
@@ -176,6 +186,18 @@ namespace JX3PZ.ViewModels
         {
             // 脱下装备
             SelectedIndex = -1;
+            SelectedItem = null;
+        }
+
+        private void CopyEquipName()
+        {
+            Clipboard.SetText(SelectedItem.Name);
+            Growl.Success("复制成功");
+        }
+
+        private bool CanCopyEquipName()
+        {
+            return SelectedItem != null;
         }
 
         protected void GetFilterArg(object sender, NotifyCollectionChangedEventArgs e) => GetFilterArg();

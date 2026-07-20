@@ -8,6 +8,7 @@ namespace JX3CalculatorShared.Class
         public string Name { get; set; }
         public double PhysicsBaseAttackPower { get; set; } // 基础攻击
         public double PhysicsBaseOvercome { get; set; } // 基础破防
+        public double AllBaseOvercome => PhysicsBaseOvercome; // 全破防
         public double BaseSurplus { get; set; } // 破招
         public double FinalStrain { get; set; } // 最终无双
         public double BaseStrain { get; set; } // 基础无双
@@ -100,6 +101,7 @@ namespace JX3CalculatorShared.Class
                 new AttrProfitItem(nameof(PhysicsFinalOvercome), "最终破防", PhysicsFinalOvercome),
                 new AttrProfitItem(nameof(PhysicsBaseAttackPower), "基础攻击", PhysicsBaseAttackPower),
                 new AttrProfitItem(nameof(PhysicsBaseOvercome), "基础破防", PhysicsBaseOvercome),
+                new AttrProfitItem(nameof(AllBaseOvercome), "全破防", AllBaseOvercome),
                 new AttrProfitItem(nameof(BaseSurplus), "破招", BaseSurplus),
                 new AttrProfitItem(nameof(FinalStrain), "最终无双", FinalStrain),
                 new AttrProfitItem(nameof(BaseStrain), "基础无双", BaseStrain),

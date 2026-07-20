@@ -8,15 +8,18 @@
         xmlns:su="clr-namespace:JX3CalculatorShared.Views.UserControls"
         xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
         xmlns:fam="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp.material"
-        SizeToContent="Width"
         mc:Ignorable="d"
         Icon="pack://application:,,,/Resource/Images/PzIcon.png"
-        Title="配装器" Height="800" Width="1350" AllowDrop="True" Drop="PzMainWindow_OnDrop" DragOver="PzMainWindow_OnDragOver">
+        Title="配装器" Height="800" Width="1400" AllowDrop="True" Drop="PzMainWindow_OnDrop"
+        DragOver="PzMainWindow_OnDragOver">
+    <Window.InputBindings>
+        <KeyBinding Modifiers="Alt" Key="C" Command="{Binding OpenBuildCompareCmd}" />
+    </Window.InputBindings>
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="pack://application:,,,/HandyControl;component/Themes/SkinDefault.xaml"/>
-                <ResourceDictionary Source="pack://application:,,,/HandyControl;component/Themes/Theme.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/HandyControl;component/Themes/SkinDefault.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/HandyControl;component/Themes/Theme.xaml" />
                 <ResourceDictionary Source="/Views/Resources/PzApp.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <Style TargetType="GroupBox" BasedOn="{x:Null}" />
@@ -30,12 +33,15 @@
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" MinWidth="500"/>
-            <ColumnDefinition Width="5"/>
-            <ColumnDefinition Width="Auto" MinWidth="300" MaxWidth="400"/>
+            <ColumnDefinition Width="*" MinWidth="500" />
+            <ColumnDefinition Width="5" />
+            <ColumnDefinition Width="Auto" MinWidth="300" MaxWidth="400" />
         </Grid.ColumnDefinitions>
 
-        <TabControl Name="TabControl_Pz" Grid.Column="0" TabStripPlacement="Left">
+        <TabControl Name="TabControl_Pz" Grid.Column="0" TabStripPlacement="Left"
+                    HorizontalAlignment="Stretch"
+                    HorizontalContentAlignment="Stretch"
+                    SelectedIndex="{Binding SelectedIndex, Mode=TwoWay}">
 
             <TabItem>
                 <TabItem.Header>
@@ -129,18 +135,20 @@
                       HorizontalAlignment="Center"
                       VerticalAlignment="Stretch"
                       ResizeDirection="Columns"
-                      ResizeBehavior="PreviousAndNext"/>
+                      ResizeBehavior="PreviousAndNext" />
 
         <DockPanel Grid.Column="2" Margin="5 10 10 10" LastChildFill="True">
             <DockPanel.Resources>
-                <Style TargetType="GroupBox" BasedOn="{x:Null}"/>
-                <Style TargetType="Expander" BasedOn="{x:Null}"/>
+                <Style TargetType="GroupBox" BasedOn="{x:Null}" />
+                <Style TargetType="Expander" BasedOn="{x:Null}" />
             </DockPanel.Resources>
             <hc:SimpleStackPanel DockPanel.Dock="Top">
                 <hc:UniformSpacingPanel Margin="10 5" HorizontalAlignment="Center" Spacing="15">
-                    <Button Command="{Binding OpenImportDataDialogCmd}" Height="30" x:Name="OpenImportJB_Btn" Width="100">
+                    <Button Command="{Binding OpenImportDataDialogCmd}" Height="30" x:Name="OpenImportJB_Btn"
+                            Width="100">
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-                            <Image Source="pack://application:,,,/Resource/Images/ImportData.png" Height="18" Width="18" />
+                            <Image Source="pack://application:,,,/Resource/Images/ImportData.png" Height="18"
+                                   Width="18" />
                             <TextBlock Margin="0" VerticalAlignment="Center">导入配装</TextBlock>
                         </StackPanel>
                     </Button>
@@ -158,7 +166,8 @@
                             HorizontalAlignment="Center" HorizontalContentAlignment="Center">
 
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                            <Image Source="pack://application:,,,/Resource/Images/OverviewIcon.png" Height="18" Width="18" />
+                            <Image Source="pack://application:,,,/Resource/Images/OverviewIcon.png" Height="18"
+                                   Width="18" />
                             <TextBlock Margin="10 0 0 0" VerticalAlignment="Center" HorizontalAlignment="Center"
                                        TextAlignment="Center">
                                 配装总览
@@ -171,9 +180,16 @@
                             Style="{StaticResource ButtonSuccess}" />
                 </hc:UniformSpacingPanel>
 
-                <GroupBox Header="快速操作" >
+                <GroupBox Header="快速操作" x:Name="QuickActions">
+                    <hc:UniformSpacingPanel HorizontalSpacing="20" Margin="40 5 0 5"
+                                            VerticalSpacing="10"
+                                            HorizontalAlignment="Center" 
+                                            Width="200" 
+                                            ChildWrapping="Wrap" >
 
-                    <hc:UniformSpacingPanel Margin="10 5" Spacing="15" HorizontalAlignment="Center">
+                        <Button Content="智能对比" Command="{Binding OneKeyEquipCompareCmd}" ToolTip="智能对比所有装备"
+                                Style="{StaticResource ButtonInfo}" />
+
                         <Button Content="一键精炼" Command="{Binding OneKeyStrengthCmd}" ToolTip="精炼所有装备到最大等级"
                                 Style="{StaticResource ButtonInfo}" />
 
@@ -216,18 +232,18 @@
                                     </StackPanel.Resources>
 
                                     <MenuItem Header="6级" CommandParameter="6"
-                                              ToolTip="全声镶嵌6级五行石" />
+                                              ToolTip="全部镶嵌6级五行石" />
                                     <MenuItem Header="7级" CommandParameter="7"
-                                              ToolTip="全身镶嵌7级五行石" />
+                                              ToolTip="全部镶嵌7级五行石" />
                                     <MenuItem Header="8级" CommandParameter="8"
-                                              ToolTip="全身镶嵌8级五行石" />
+                                              ToolTip="全部镶嵌8级五行石" />
                                 </StackPanel>
                             </hc:SplitButton.DropDownContent>
                         </hc:SplitButton>
                     </hc:UniformSpacingPanel>
                 </GroupBox>
 
-                <GroupBox  DataContext="{Binding CalcResultVM}"
+                <GroupBox DataContext="{Binding CalcResultVM}"
                           Visibility="{Binding HasResult, Converter={StaticResource BooleanToVisibility}}">
                     <GroupBox.Header>
                         <hc:SimpleStackPanel Orientation="Horizontal">
@@ -243,34 +259,38 @@
             <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
                 <hc:SimpleStackPanel Orientation="Vertical">
                     <Expander Header="配装属性" IsExpanded="True">
-                        <GroupBox Header="配装属性" >
+                        <GroupBox Header="配装属性">
                             <local:PzResultShow Margin="0 20" MaxWidth="240" DataContext="{Binding PzResultVM}" />
                         </GroupBox>
                     </Expander>
 
-                    <Expander Header="计算条件" x:Name="GroupBox_CalcInput" DataContext="{Binding CalcInputVM}" IsExpanded="True">
+                    <Expander Header="计算条件" x:Name="GroupBox_CalcInput" DataContext="{Binding CalcInputVM}"
+                              IsExpanded="True">
                         <hc:SimpleStackPanel Orientation="Vertical">
 
                             <GroupBox Header="战斗选项">
-                                <su:FightOptionSummaryView DataContext="{Binding FightOption}" Margin="0 5 0 0"/>
+                                <su:FightOptionSummaryView DataContext="{Binding FightOption}" Margin="0 5 0 0" />
                             </GroupBox>
 
                             <GroupBox Header="奇穴">
                                 <ItemsControl ItemsSource="{Binding QiXues}"
-                                          Style="{StaticResource Style.QiXueSmallList}" />
+                                              Style="{StaticResource Style.QiXueSmallList}" />
                             </GroupBox>
 
-                            <GroupBox Header="BUFF" Visibility="{Binding HasBuffs, Converter={StaticResource BooleanToVisibility}}">
+                            <GroupBox Header="BUFF"
+                                      Visibility="{Binding HasBuffs, Converter={StaticResource BooleanToVisibility}}">
                                 <ItemsControl ItemsSource="{Binding Buffs}"
                                               Style="{StaticResource Style.BuffSmallList}" />
                             </GroupBox>
 
-                            <GroupBox Header="DEBUFF" Visibility="{Binding HasDeBuffs, Converter={StaticResource BooleanToVisibility}}">
+                            <GroupBox Header="DEBUFF"
+                                      Visibility="{Binding HasDeBuffs, Converter={StaticResource BooleanToVisibility}}">
                                 <ItemsControl ItemsSource="{Binding DeBuffs}"
                                               Style="{StaticResource Style.BuffSmallList}" />
                             </GroupBox>
 
-                            <GroupBox Header="单体" Visibility="{Binding HasItemDT, Converter={StaticResource BooleanToVisibility}}">
+                            <GroupBox Header="单体"
+                                      Visibility="{Binding HasItemDT, Converter={StaticResource BooleanToVisibility}}">
                                 <ItemsControl ItemsSource="{Binding ItemDTs}"
                                               Style="{StaticResource Style.ItemDTSmallList}" />
                             </GroupBox>
